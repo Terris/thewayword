@@ -1,0 +1,28 @@
+{
+  "name": "@repo/convex",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "build": "npx convex deploy",
+    "dev": "convex dev",
+    "setup": "convex dev --until-success"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@clerk/clerk-sdk-node": "^4.13.9",
+    "convex": "^1.9.0",
+    "convex-helpers": "^0.1.7",
+    "openai": "^4.26.0",
+    "resend": "^3.1.0",
+    "stripe": "^14.16.0",
+    "svix": "^1.17.0"
+  },
+  "devDependencies": {
+    "@config/eslint-config": "workspace:*",
+    "@config/typescript-config": "workspace:*",
+    "@types/node": "^20.10.6",
+    "typescript": "^5.3.3"
+  }
+}
