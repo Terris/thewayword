@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { SignInButton, UserButton } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 import { useMeContext } from "@repo/auth/context";
-import { Button, Logo } from "@repo/ui";
+import { Logo } from "@repo/ui";
 import { ThemeModeToggle } from "@repo/ui/ThemeModeToggle";
 
 export function Masthead() {
@@ -33,22 +33,7 @@ export function Masthead() {
               Shop
             </Link>
           </>
-        ) : (
-          <>
-            <Link href="/" className="transition-opacity hover:opacity-80">
-              Features
-            </Link>
-            <Link href="/" className="transition-opacity hover:opacity-80">
-              FAQs
-            </Link>
-            <Link
-              href="/onboard"
-              className="transition-opacity hover:opacity-80"
-            >
-              Get started
-            </Link>
-          </>
-        )}
+        ) : null}
       </div>
       <div className="w-1/3 flex flex-row items-center justify-center">
         <Link href="/" className="mr-12">
@@ -61,7 +46,7 @@ export function Masthead() {
             href="/create"
             className="font-soleil transition-opacity hover:opacity-80"
           >
-            Create
+            Log an Adventure
           </Link>
         ) : null}
         <ThemeModeToggle />
@@ -74,11 +59,12 @@ export function Masthead() {
               },
             }}
           />
-        ) : (
+        ) : null}
+        {/*
           <SignInButton mode="modal">
             <Button>Sign in</Button>
           </SignInButton>
-        )}
+        */}
       </div>
     </div>
   );
