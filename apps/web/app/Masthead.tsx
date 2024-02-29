@@ -10,8 +10,8 @@ export function Masthead() {
   const { isAuthenticated } = useMeContext();
 
   return (
-    <div className="w-full py-8 px-9 flex flex-row items-center justify-between leading-none font-bold">
-      <div className="w-1/3 flex flex-row items-center justify-start gap-8">
+    <div className="w-full py-8 px-9 flex flex-col md:flex-row items-center justify-between leading-none font-bold">
+      <div className="md:w-1/3 flex flex-col md:flex-row items-center justify-start gap-8">
         {isAuthenticated ? (
           <>
             <Link
@@ -35,9 +35,9 @@ export function Masthead() {
           </>
         ) : null}
       </div>
-      <div className="w-1/3 flex flex-row items-center justify-center">
+      <div className="md:w-1/3 flex flex-row items-center justify-center">
         <Link href="/" className="mr-12">
-          <Logo width={160} className="fill-foreground" />
+          <Logo width={120} className="fill-foreground" />
         </Link>
       </div>
       <div className="w-1/3 flex flex-row items-center justify-end gap-4">
