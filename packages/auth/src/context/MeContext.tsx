@@ -3,25 +3,16 @@
 import type { ReactNode } from "react";
 import { createContext, useContext } from "react";
 import { useConvexAuth, useQuery } from "convex/react";
-import type { Id } from "@repo/convex";
 import { api } from "@repo/convex";
 import { LoadingScreen } from "@repo/ui";
 import type { UserId } from "../types";
 
-interface UserOrganization {
-  id: Id<"organizations">;
-  name: string;
-  slug: string;
-  isOwner: boolean;
-}
 interface User {
   id: UserId;
   name: string;
   email: string;
   roles?: string[];
   isAuthorizedUser: boolean;
-  orgUserId?: Id<"organizationUsers"> | null;
-  organization?: UserOrganization | null;
 }
 
 interface MeContextProps {
