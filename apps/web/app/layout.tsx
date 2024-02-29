@@ -19,9 +19,9 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
   return (
     <html lang="en">
       <head>
-        <link rel="stylesheet" href="https://use.typekit.net/mpd3heg.css" />
+        <link rel="stylesheet" href="https://use.typekit.net/crw6lsz.css" />
       </head>
-      <body className={cn("min-h-screen antialiased font-halcom")}>
+      <body className={cn("min-h-screen antialiased font-gelica")}>
         <AppProviders>
           <div className="flex flex-col w-full h-full min-h-screen flex-1">
             <Masthead />

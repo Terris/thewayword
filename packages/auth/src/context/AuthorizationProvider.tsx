@@ -14,8 +14,8 @@ export function AuthorizationProvider({
 }) {
   return (
     <ClerkProvider
-      afterSignInUrl={process.env.NEXT_PUBLIC_DASHBOARD_URL}
-      afterSignUpUrl={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/onboard`}
+      afterSignInUrl="/feed"
+      afterSignUpUrl="/feed"
       publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
     >
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>

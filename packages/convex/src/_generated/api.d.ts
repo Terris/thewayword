@@ -14,26 +14,14 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
-import type * as controllers_org_admin_billing from "../controllers/org/admin/billing.js";
-import type * as controllers_org_admin_invites from "../controllers/org/admin/invites.js";
-import type * as controllers_org_admin_users from "../controllers/org/admin/users.js";
 import type * as http from "../http.js";
 import type * as lib_authorization from "../lib/authorization.js";
-import type * as lib_ownership from "../lib/ownership.js";
 import type * as lib_stripe from "../lib/stripe.js";
 import type * as lib_transactional from "../lib/transactional.js";
 import type * as me from "../me.js";
-import type * as organizationActions from "../organizationActions.js";
-import type * as organizationInviteActions from "../organizationInviteActions.js";
-import type * as organizationInvites from "../organizationInvites.js";
-import type * as organizationUsers from "../organizationUsers.js";
-import type * as organizations from "../organizations.js";
-import type * as roomUsers from "../roomUsers.js";
-import type * as rooms from "../rooms.js";
-import type * as stripeActions from "../stripeActions.js";
 import type * as userActions from "../userActions.js";
-import type * as userWhitelists from "../userWhitelists.js";
 import type * as users from "../users.js";
+import type * as waitlist from "../waitlist.js";
 import type * as webhooks from "../webhooks.js";
 
 /**
@@ -45,26 +33,14 @@ import type * as webhooks from "../webhooks.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
-  "controllers/org/admin/billing": typeof controllers_org_admin_billing;
-  "controllers/org/admin/invites": typeof controllers_org_admin_invites;
-  "controllers/org/admin/users": typeof controllers_org_admin_users;
   http: typeof http;
   "lib/authorization": typeof lib_authorization;
-  "lib/ownership": typeof lib_ownership;
   "lib/stripe": typeof lib_stripe;
   "lib/transactional": typeof lib_transactional;
   me: typeof me;
-  organizationActions: typeof organizationActions;
-  organizationInviteActions: typeof organizationInviteActions;
-  organizationInvites: typeof organizationInvites;
-  organizationUsers: typeof organizationUsers;
-  organizations: typeof organizations;
-  roomUsers: typeof roomUsers;
-  rooms: typeof rooms;
-  stripeActions: typeof stripeActions;
   userActions: typeof userActions;
-  userWhitelists: typeof userWhitelists;
   users: typeof users;
+  waitlist: typeof waitlist;
   webhooks: typeof webhooks;
 }>;
 export declare const api: FilterApi<

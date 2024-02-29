@@ -5,7 +5,7 @@
 @layer base {
   :root {
     --background: #fbf6f1;
-    --foreground: #586059;
+    --foreground: #586659;
     --card: #f0ede6;
     --card-foreground: #414146;
     --popover: #f0ede6;
@@ -29,51 +29,33 @@
   }
 
   .dark {
-    --background: #ea5019;
-    --foreground: #fff9f0;
-    --card: #4c524c;
-    --card-foreground: #fff9f0;
-    --popover: #171717;
-    --popover-foreground: #fff9f0;
+    --background: #586659;
+    --foreground: #fbf6f1;
+    --card: #414146;
+    --card-foreground: #f0ede6;
+    --popover: #414146;
+    --popover-foreground: #f0ede6;
     --primary: #368163;
-    --primary-foreground: #fff9f0;
-    --secondary: #27272a;
-    --secondary-foreground: #fff9f0;
-    --muted: #262626;
-    --muted-foreground: #a1a1aa;
+    --primary-foreground: #fff1f2;
+    --secondary: #18181b;
+    --secondary-foreground: #f4f4f5;
+    --muted: #71717a;
+    --muted-foreground: #b2bfb7;
     --accent: #323236;
-    --accent-foreground: #fff9f0;
-    --destructive: #ff1616;
-    --destructive-foreground: #fff9f0;
+    --accent-foreground: #e5e2da;
+    --destructive: #ef4444;
+    --destructive-foreground: #fafafa;
     --success: #259e40;
-    --success-foreground: #fff9f0;
-    --border: #343438;
-    --input: #343438;
-    --ring: #7d7d7d;
+    --success-foreground: #f0ede6;
+    --border: #6f796f;
+    --input: #6f796f;
+    --ring: #6f796f;
+    --radius: 0.5rem;
   }
 
   .emergency {
     --background: #ea5019;
     --foreground: #fff9f0;
-    --card: #ea5019;
-    --card-foreground: #fff9f0;
-    --popover: #ea5019;
-    --popover-foreground: #fff9f0;
-    --primary: #ea5019;
-    --primary-foreground: #fff9f0;
-    --secondary: #ea5019;
-    --secondary-foreground: #fff9f0;
-    --muted: #ea5019;
-    --muted-foreground: #fff9f0;
-    --accent: #ea5019;
-    --accent-foreground: #fff9f0;
-    --destructive: #ea5019;
-    --destructive-foreground: #fff9f0;
-    --success: #ea5019;
-    --success-foreground: #fff9f0;
-    --border: #343438;
-    --input: #343438;
-    --ring: #7d7d7d;
   }
 }
 

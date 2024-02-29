@@ -33,27 +33,5 @@ http.route({
   }),
 });
 
-http.route({
-  path: "/webhooks/stripe",
-  method: "POST",
-  handler: httpAction(async (ctx, request) => {
-    const signature = request.headers.get("stripe-signature") as string;
-    try {
-      await ctx.runAction(internal.stripeActions.handleWebhook, {
-        signature,
-        requestString: await request.text(),
-      });
-      return new Response(null, {
-        status: 200,
-      });
-    } catch (error: unknown) {
-      const errorMessage = (error as Error).message;
-      return new Response(`Webhook Error ${errorMessage}`, {
-        status: 400,
-      });
-    }
-  }),
-});
-
 // Convex expects the router to be the default export of `convex/http.js`.
 export default http;

@@ -1,68 +1,69 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { SignInButton, UserButton } from "@clerk/nextjs";
 import { useMeContext } from "@repo/auth/context";
-import { Text } from "@repo/ui";
+import { Button, Logo } from "@repo/ui";
 import { ThemeModeToggle } from "@repo/ui/ThemeModeToggle";
-import { FlameKindling } from "lucide-react";
-import { cn } from "@repo/utils";
-import { paintFactory } from "./fonts";
 
 export function Masthead() {
-  const { isAuthenticated, me } = useMeContext();
-  const path = usePathname();
-  const isHomePath = path === "/";
-
-  const hideHeader = [
-    /^\/rsvp(?:\/.*)?$/, // /rsvp/[inviteToken]
-  ].some((matcher) => matcher.test(path));
-
-  if (hideHeader) return null;
+  const { isAuthenticated } = useMeContext();
 
   return (
-    <div className="flex flex-row items-center justify-between w-full px-8 py-2 text-sm leading-none">
-      <Link href="/" className=" flex flex-row items-center mr-6">
-        <FlameKindling strokeWidth={2} className="w-6 h-6 mr-2" />
-        <Text
-          className={cn(
-            paintFactory.className,
-            "text-xl font-bold tracking-wider"
-          )}
-        >
-          Bitty Brella
-        </Text>
-      </Link>
-
-      {Boolean(isHomePath) && (
-        <div className="flex flex-row items-center gap-8 mr-auto ml-4">
-          <Link href="/" className="font-bold">
-            How it works
-          </Link>
-          <Link href="/" className="font-bold">
-            Pricing
-          </Link>
-          <Link href="/" className="font-bold">
-            FAQs
-          </Link>
-          <Link href="/onboard" className="font-bold">
-            Get started
-          </Link>
-        </div>
-      )}
-      {me?.isAuthorizedUser && me.organization?.slug ? (
-        <div className="flex flex-row gap-8 ml-auto mr-8">
+    <div className="w-full py-8 px-9 flex flex-row items-center justify-between leading-none font-bold">
+      <div className="w-1/3 flex flex-row items-center justify-start gap-8">
+        {isAuthenticated ? (
+          <>
+            <Link
+              href="/feed"
+              className="font-soleil transition-opacity hover:opacity-80"
+            >
+              Feed
+            </Link>
+            <Link
+              href="/feed/popular"
+              className="font-soleil transition-opacity hover:opacity-80"
+            >
+              Popular
+            </Link>
+            <Link
+              href="/shop"
+              className="font-soleil transition-opacity hover:opacity-80"
+            >
+              Shop
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link href="/" className="transition-opacity hover:opacity-80">
+              Features
+            </Link>
+            <Link href="/" className="transition-opacity hover:opacity-80">
+              FAQs
+            </Link>
+            <Link
+              href="/onboard"
+              className="transition-opacity hover:opacity-80"
+            >
+              Get started
+            </Link>
+          </>
+        )}
+      </div>
+      <div className="w-1/3 flex flex-row items-center justify-center">
+        <Link href="/" className="mr-12">
+          <Logo width={160} className="fill-foreground" />
+        </Link>
+      </div>
+      <div className="w-1/3 flex flex-row items-center justify-end gap-4">
+        {isAuthenticated ? (
           <Link
-            href={`${process.env.NEXT_PUBLIC_DASHBOARD_URL}/org/${me.organization.slug}`}
-            className="font-bold"
+            href="/create"
+            className="font-soleil transition-opacity hover:opacity-80"
           >
-            Dashboard
+            Create
           </Link>
-        </div>
-      ) : null}
-
-      <div className="flex flex-row items-center justify-between gap-4">
+        ) : null}
         <ThemeModeToggle />
         {isAuthenticated ? (
           <UserButton
@@ -74,7 +75,9 @@ export function Masthead() {
             }}
           />
         ) : (
-          <SignInButton mode="modal" />
+          <SignInButton mode="modal">
+            <Button>Sign in</Button>
+          </SignInButton>
         )}
       </div>
     </div>

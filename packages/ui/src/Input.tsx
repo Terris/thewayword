@@ -11,7 +11,7 @@ const inputVariants = cva("flex w-full focus-visible:outline-none", {
     sizeY: {
       default: "h-10 px-4",
       sm: "h-9 rounded-md px-3",
-      lg: "h-11 rounded-md px-8",
+      lg: "h-11 rounded-md px-4",
       icon: "h-10 w-10",
     },
   },
@@ -26,11 +26,11 @@ export interface InputProps
     VariantProps<typeof inputVariants> {}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, variant, type, ...props }, ref) => {
+  ({ className, variant, sizeY, type, ...props }, ref) => {
     return (
       <input
         type={type}
-        className={cn(inputVariants({ variant, className }))}
+        className={cn(inputVariants({ variant, sizeY, className }))}
         ref={ref}
         {...props}
       />

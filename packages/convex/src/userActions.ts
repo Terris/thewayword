@@ -57,20 +57,12 @@ export const internalHandleClerkWebhook = internalAction({
             }
             const name = `${eventData.first_name} ${eventData.last_name}`;
 
-            // Check for whitelisted user email
-            const emailIsWhitelisted = await ctx.runQuery(
-              internal.userWhitelists.publicFindByEmail,
-              {
-                email,
-              }
-            );
-
             // Create db user
             await ctx.runMutation(internal.users.systemSaveNewClerkUser, {
               clerkId: eventData.id,
               email,
               name,
-              roles: emailIsWhitelisted ? ["user"] : [],
+              roles: ["user"],
             });
             handled = true;
           }

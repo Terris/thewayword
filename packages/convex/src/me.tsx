@@ -21,31 +21,12 @@ export const sessionedMe = query({
       .first();
     if (!meUser) return null;
 
-    const meOrgUser = await ctx.db
-      .query("organizationUsers")
-      .withIndex("by_user_id", (q) => q.eq("userId", meUser._id))
-      .first();
-
-    let meOrganization = null;
-    if (meOrgUser) {
-      meOrganization = await ctx.db.get(meOrgUser.organizationId);
-    }
-
     const me = {
       id: meUser._id,
       name: meUser.name,
       email: meUser.email,
       roles: meUser.roles,
       isAuthorizedUser: Boolean(meUser.roles?.includes("user")),
-      orgUserId: meOrgUser?._id,
-      organization: meOrganization
-        ? {
-            id: meOrganization._id,
-            name: meOrganization.name,
-            slug: meOrganization.slug,
-            isOwner: meOrganization.ownerId === meUser._id,
-          }
-        : null,
     };
     return me;
   },

@@ -15,7 +15,8 @@ const config = {
     },
     extend: {
       fontFamily: {
-        gelica: ["gelica", "sans-serif"],
+        gelica: ["gelica", "serif"],
+        soleil: ["soleil", "sans-serif"],
       },
       colors: {
         border: "var(--border)",
