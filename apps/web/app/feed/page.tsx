@@ -1,8 +1,10 @@
 "use client";
 
-import { api } from "@repo/convex";
-import { LoadingScreen, Text } from "@repo/ui";
+import { type Doc, api } from "@repo/convex";
+import { LoadingBox, LoadingScreen, Text } from "@repo/ui";
+import { cn } from "@repo/utils";
 import { useQuery } from "convex/react";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function FeedPage() {
@@ -12,13 +14,14 @@ export default function FeedPage() {
   if (isLoading) return <LoadingScreen />;
 
   return (
-    <div className="w-full p-8 flex flex-row gap-8">
+    <div className="w-full p-8 grid grid-cols-3 gap-8">
       {adventureLogs.map((adventureLog) => (
         <Link
           key={adventureLog._id}
           href={`/adventure-logs/${adventureLog._id}`}
-          className="w-1/3 border rounded px-4 py-8 cursor-pointer hover:border-foreground transition-all"
+          className="w-full border rounded px-4 py-8 cursor-pointer hover:border-muted transition-all"
         >
+          <LogBlockImage adventureLog={adventureLog} className="pb-8" />
           <Text className="text-center font-black text-xl pb-4">
             {adventureLog.title}
           </Text>
@@ -33,5 +36,36 @@ export default function FeedPage() {
         </Link>
       ))}
     </div>
+  );
+}
+
+function LogBlockImage({
+  adventureLog,
+  className,
+}: {
+  adventureLog: Doc<"adventureLogs">;
+  className?: string;
+}) {
+  const primaryImageBlock = adventureLog.blocks?.find(
+    (block) => block.type === "image" && block.fileId
+  );
+
+  const queryArgs = primaryImageBlock?.fileId
+    ? { id: primaryImageBlock.fileId }
+    : "skip";
+
+  const file = useQuery(api.files.findById, queryArgs);
+  const isLoading = file === undefined;
+
+  if (isLoading) return <LoadingBox />;
+  if (!primaryImageBlock || !file) return null;
+  return (
+    <Image
+      src={file.url}
+      width={file.dimensions?.width}
+      height={file.dimensions?.height}
+      alt={file.fileName}
+      className={cn("rounded", className)}
+    />
   );
 }

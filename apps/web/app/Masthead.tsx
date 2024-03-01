@@ -43,7 +43,7 @@ export function Masthead() {
       <div className="w-1/3 flex flex-row items-center justify-end gap-4">
         {isAuthenticated ? (
           <Link
-            href="/create"
+            href="/adventure-logs/create"
             className="font-soleil transition-opacity hover:opacity-80"
           >
             Log an Adventure

@@ -69,13 +69,39 @@ export const update = mutation({
     const { user } = await validateIdentity(ctx);
     const existingAdventureLog = await ctx.db.get(id);
     if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
-
     if (existingAdventureLog.userId !== user._id)
       throw new ConvexError("Not the owner of this adventure log");
 
     return ctx.db.patch(id, {
       title: title ?? existingAdventureLog.title,
       published: published ?? existingAdventureLog.published,
+    });
+  },
+});
+
+type BlockType = "text" | "image";
+
+export const addImageBlock = mutation({
+  args: { id: v.id("adventureLogs"), fileId: v.id("files") },
+  handler: async (ctx, { id, fileId }) => {
+    const { user } = await validateIdentity(ctx);
+    const existingAdventureLog = await ctx.db.get(id);
+    if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
+    if (existingAdventureLog.userId !== user._id)
+      throw new ConvexError("Not the owner of this adventure log");
+
+    const updatedLogBlocks = [
+      ...(existingAdventureLog.blocks ?? []),
+      {
+        type: "image" as BlockType,
+        order: (existingAdventureLog.blocks?.length ?? 0) + 1,
+        fileId,
+        content: "",
+      },
+    ];
+
+    return ctx.db.patch(id, {
+      blocks: updatedLogBlocks,
     });
   },
 });

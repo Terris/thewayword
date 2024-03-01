@@ -16,10 +16,37 @@ export default defineSchema({
         poiCategories: v.optional(v.array(v.string())),
       })
     ),
+    fileIds: v.optional(v.array(v.id("files"))),
     published: v.boolean(),
+    blocks: v.optional(
+      v.array(
+        v.object({
+          type: v.union(v.literal("text"), v.literal("image")),
+          order: v.number(),
+          content: v.string(),
+          fileId: v.optional(v.id("files")),
+        })
+      )
+    ),
   })
     .index("by_user_id", ["userId"])
     .index("by_published", ["published"]),
+  files: defineTable({
+    url: v.string(),
+    fileName: v.string(),
+    mimeType: v.string(),
+    type: v.string(),
+    size: v.number(),
+    dimensions: v.optional(
+      v.object({
+        width: v.optional(v.number()),
+        height: v.optional(v.number()),
+      })
+    ),
+    description: v.optional(v.string()),
+    userId: v.id("users"),
+    hash: v.optional(v.string()),
+  }),
   users: defineTable({
     name: v.string(),
     email: v.string(),

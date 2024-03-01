@@ -81,7 +81,7 @@ export default function CreatePage() {
         title: "Success",
         description: "Adventure log saved as draft!",
       });
-      router.push(`/create/${newAdventureLogId}`);
+      router.push(`/adventure-logs/${newAdventureLogId}/edit/`);
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
@@ -95,9 +95,7 @@ export default function CreatePage() {
 
   return (
     <div className="w-full max-w-[600px] p-8 mx-auto">
-      <Text className="text-2xl font-black uppercase italic pb-4">
-        Log an Adventure
-      </Text>
+      <Text className="text-2xl font-black italic pb-4">Log an Adventure!</Text>
       <Text className="font-soleil pb-4 ">Start by selecting a location</Text>
       <form onSubmit={handleSubmit}>
         {showSuggestions ? (

@@ -1,13 +1,16 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useMutation, useQuery } from "convex/react";
+import { ImageIcon } from "lucide-react";
+import { useParams, useRouter } from "next/navigation";
 import { type Id, api } from "@repo/convex";
 import { Button, LoadingScreen, Text } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
-import { useMutation, useQuery } from "convex/react";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { AddImageBlockButton } from "./AddImageBlockButton";
+import { EditableBlock } from "./EditableBlock";
 
-export default function CreateLogPage() {
+export default function EditLogPage() {
   const { id } = useParams();
   const { toast } = useToast();
   const router = useRouter();
@@ -75,7 +78,7 @@ export default function CreateLogPage() {
     <div className="w-full max-w-[1024px]  p-8 mx-auto">
       <form className="w-full" onSubmit={handleSubmit}>
         {adventureLog?.location?.name ? (
-          <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-8">
+          <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-4">
             {adventureLog.location.name}
           </Text>
         ) : null}
@@ -96,7 +99,26 @@ export default function CreateLogPage() {
           </Text>
         ) : null}
 
-        <div className="flex flex-row gap-4">
+        {adventureLog?.blocks?.map((block) => (
+          <div key={`block-${block.type}-${block.order}`} className="pb-8">
+            <EditableBlock
+              adventureLogId={id as Id<"adventureLogs">}
+              block={block}
+            />
+          </div>
+        ))}
+
+        <div className="border border-dashed rounded p-1 flex flex-row items-center justify-center gap-2">
+          <AddImageBlockButton
+            size="sm"
+            variant="outline"
+            adventureLogId={id as Id<"adventureLogs">}
+          >
+            <ImageIcon className="w-4 h-4" />
+          </AddImageBlockButton>
+        </div>
+
+        <div className="flex flex-row items-center justify-center gap-4">
           <Button
             type="submit"
             className="mt-16"
