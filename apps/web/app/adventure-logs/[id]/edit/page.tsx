@@ -7,9 +7,9 @@ import { useParams, useRouter } from "next/navigation";
 import { type Id, api } from "@repo/convex";
 import { Button, LoadingScreen, Text } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
+import { ImageBlock } from "../ImageBlock";
 import { AddImageBlockButton } from "./AddImageBlockButton";
 import { EditableBlock } from "./EditableBlock";
-import { ImageBlock } from "../ImageBlock";
 
 export default function EditLogPage() {
   const { id } = useParams();
@@ -110,10 +110,7 @@ export default function EditLogPage() {
 
           {adventureLog?.blocks?.map((block) => (
             <div key={`block-${block.type}-${block.order}`} className="pb-8">
-              <EditableBlock
-                adventureLogId={id as Id<"adventureLogs">}
-                block={block}
-              />
+              <EditableBlock block={block} />
             </div>
           ))}
 
