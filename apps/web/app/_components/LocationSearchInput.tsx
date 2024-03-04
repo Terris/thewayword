@@ -6,9 +6,9 @@ import type {
   SearchBoxFeatureProperties,
   SearchBoxSuggestion,
 } from "@mapbox/search-js-core/dist/searchbox/types";
+import { MapPinned } from "lucide-react";
 import { useDebounce, useGeoLocation } from "@repo/hooks";
 import { Text, Input, Loader } from "@repo/ui";
-import { MapPinned } from "lucide-react";
 
 export interface LocationInputValue {
   mapboxId: string;
