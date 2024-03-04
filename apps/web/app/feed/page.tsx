@@ -1,6 +1,6 @@
 "use client";
 
-import { type Doc, api } from "@repo/convex";
+import { type Id, api } from "@repo/convex";
 import { LoadingBox, LoadingScreen, Text } from "@repo/ui";
 import { AspectRatio } from "@repo/ui/AspectRatio";
 import { cn } from "@repo/utils";
@@ -22,7 +22,10 @@ export default function FeedPage() {
           href={`/adventure-logs/${adventureLog._id}`}
           className="w-full border rounded p-4 pb-8 cursor-pointer hover:border-muted transition-all"
         >
-          <LogBlockImage adventureLog={adventureLog} className="pb-8" />
+          <LogShowcaseImage
+            showcaseFileId={adventureLog.showcaseFileId}
+            className="pb-8"
+          />
           <Text className="text-center font-black text-xl pb-4">
             {adventureLog.title}
           </Text>
@@ -40,26 +43,20 @@ export default function FeedPage() {
   );
 }
 
-function LogBlockImage({
-  adventureLog,
+function LogShowcaseImage({
+  showcaseFileId,
   className,
 }: {
-  adventureLog: Doc<"adventureLogs">;
+  showcaseFileId?: Id<"files">;
   className?: string;
 }) {
-  const primaryImageBlock = adventureLog.blocks?.find(
-    (block) => block.type === "image" && block.fileId
-  );
-
-  const queryArgs = primaryImageBlock?.fileId
-    ? { id: primaryImageBlock.fileId }
-    : "skip";
+  const queryArgs = showcaseFileId ? { id: showcaseFileId } : "skip";
 
   const file = useQuery(api.files.findById, queryArgs);
   const isLoading = file === undefined;
 
+  if (!showcaseFileId || (!isLoading && file === null)) return null;
   if (isLoading) return <LoadingBox />;
-  if (!primaryImageBlock || !file) return null;
   return (
     <AspectRatio ratio={4 / 3} className="rounded">
       <Image

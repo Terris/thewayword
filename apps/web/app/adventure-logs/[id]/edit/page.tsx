@@ -9,6 +9,7 @@ import { Button, LoadingScreen, Text } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
 import { AddImageBlockButton } from "./AddImageBlockButton";
 import { EditableBlock } from "./EditableBlock";
+import { ImageBlock } from "../ImageBlock";
 
 export default function EditLogPage() {
   const { id } = useParams();
@@ -101,6 +102,10 @@ export default function EditLogPage() {
               {adventureLog.location.longitude},{" "}
               {adventureLog.location.latitude}
             </Text>
+          ) : null}
+
+          {adventureLog?.showcaseFileId ? (
+            <ImageBlock fileId={adventureLog.showcaseFileId} className="mb-4" />
           ) : null}
 
           {adventureLog?.blocks?.map((block) => (

@@ -2,8 +2,15 @@ import Image from "next/image";
 import { useQuery } from "convex/react";
 import { type Id, api } from "@repo/convex";
 import { LoadingBox } from "@repo/ui";
+import { cn } from "@repo/utils";
 
-export function ImageBlock({ fileId }: { fileId: Id<"files"> }) {
+export function ImageBlock({
+  fileId,
+  className,
+}: {
+  fileId: Id<"files">;
+  className?: string;
+}) {
   const file = useQuery(api.files.findById, { id: fileId });
   const isLoading = file === undefined;
 
@@ -16,7 +23,7 @@ export function ImageBlock({ fileId }: { fileId: Id<"files"> }) {
       width={file.dimensions?.width}
       height={file.dimensions?.height}
       alt="Adventure log image"
-      className="mx-auto rounded"
+      className={cn("mx-auto rounded", className)}
     />
   );
 }

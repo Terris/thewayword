@@ -16,7 +16,7 @@ export default defineSchema({
         poiCategories: v.optional(v.array(v.string())),
       })
     ),
-    fileIds: v.optional(v.array(v.id("files"))),
+    showcaseFileId: v.optional(v.id("files")),
     published: v.boolean(),
     blocks: v.optional(
       v.array(

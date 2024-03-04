@@ -36,7 +36,7 @@ export const findById = query({
   },
 });
 
-export const createWithLocation = mutation({
+export const create = mutation({
   args: {
     location: v.object({
       mapboxId: v.string(),
@@ -47,14 +47,16 @@ export const createWithLocation = mutation({
       full_address: v.string(),
       poiCategories: v.optional(v.array(v.string())),
     }),
+    showcaseFileId: v.id("files"),
   },
-  handler: async (ctx, { location }) => {
+  handler: async (ctx, { location, showcaseFileId }) => {
     const { user } = await validateIdentity(ctx);
     return ctx.db.insert("adventureLogs", {
       userId: user._id,
       title: "Untitled log",
       location,
       published: false,
+      showcaseFileId,
     });
   },
 });

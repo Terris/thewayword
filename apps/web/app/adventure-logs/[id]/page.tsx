@@ -7,6 +7,7 @@ import { MessageCircle, Pencil } from "lucide-react";
 import { type Id, api } from "@repo/convex";
 import { LoadingScreen, Text } from "@repo/ui";
 import { Block } from "./Block";
+import { ImageBlock } from "./ImageBlock";
 
 export default function AdventureLogPage() {
   const { id } = useParams();
@@ -32,6 +33,10 @@ export default function AdventureLogPage() {
           <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-8">
             {adventureLog.location.longitude}, {adventureLog.location.latitude}
           </Text>
+        ) : null}
+
+        {adventureLog?.showcaseFileId ? (
+          <ImageBlock fileId={adventureLog.showcaseFileId} />
         ) : null}
 
         {adventureLog?.blocks?.map((block) => (
