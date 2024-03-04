@@ -8,12 +8,12 @@ import { useMutation } from "convex/react";
 import { type Id, api } from "@repo/convex";
 import { useToast } from "@repo/ui/hooks";
 import { Text, Button } from "@repo/ui";
-import { UploadFileButton } from "../../components/UploadFileButton";
+import { UploadFileButton } from "../../_components/UploadFileButton";
 import { ImageBlock } from "../[id]/ImageBlock";
 import {
   LocationSearchInput,
   type LocationInputValue,
-} from "./LocationSearchInput";
+} from "../../_components/LocationSearchInput";
 
 const validationSchema = Yup.object().shape({
   location: Yup.object()
