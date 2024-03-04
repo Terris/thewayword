@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchBoxCore } from "@mapbox/search-js-react";
+import { MapPinned } from "lucide-react";
 import type {
   SearchBoxFeatureProperties,
   SearchBoxSuggestion,
 } from "@mapbox/search-js-core/dist/searchbox/types";
-import { MapPinned } from "lucide-react";
 import { useDebounce, useGeoLocation } from "@repo/hooks";
 import { Text, Input, Loader } from "@repo/ui";
 
@@ -18,6 +17,23 @@ export interface LocationInputValue {
   name: string;
   fullAddress: string;
   poiCategories: string[];
+}
+
+interface SuggestionResult {
+  attribution: string;
+  suggestions: SearchBoxSuggestion[];
+}
+interface FeatureResult {
+  type: string;
+  features: {
+    type: string;
+    geometry: {
+      coordinates: [number, number];
+      type: "Point";
+    };
+    properties: SearchBoxFeatureProperties;
+  }[];
+  attribution: string;
 }
 
 export function LocationSearchInput({
@@ -36,56 +52,50 @@ export function LocationSearchInput({
   const [selectedFeature, setSelectedFeature] =
     useState<SearchBoxFeatureProperties | null>(null);
 
-  const searchBoxCore = useSearchBoxCore({
-    accessToken: process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN ?? "",
-    country: "us",
-    language: "en",
-    proximity: geo?.coords
-      ? [geo.coords.longitude, geo.coords.latitude]
-      : undefined,
-  });
-
   useEffect(() => {
     async function handleSearch() {
       if (debouncedSearchValue) {
         setIsSearching(true);
-        const response = await searchBoxCore.suggest(debouncedSearchValue, {
-          sessionToken: "log-an-adventure",
-        });
-        setSuggestions(response.suggestions);
-        if (suggestions.length > 0) {
+        const proximity = geo?.coords
+          ? `${geo.coords.longitude},${geo.coords.latitude}`
+          : "";
+        const response = await fetch(
+          `https://api.mapbox.com/search/searchbox/v1/suggest` +
+            `?q=${debouncedSearchValue}` +
+            `&access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}` +
+            `&session_token=${searchToken}&proximity=${proximity}`
+        );
+        const data = (await response.json()) as SuggestionResult;
+        setSuggestions(data.suggestions);
+        if (data.suggestions.length > 0) {
           setShowSuggestions(true);
         }
         setIsSearching(false);
       }
     }
     void handleSearch();
-  }, [debouncedSearchValue, searchBoxCore, suggestions.length]);
+  }, [debouncedSearchValue, geo?.coords, searchToken]);
 
   async function handleSelectLocation(suggestion: SearchBoxSuggestion) {
-    const { features } = await searchBoxCore.retrieve(suggestion, {
-      sessionToken: searchToken,
-    });
-    if (!features[0]) return;
+    const response = await fetch(
+      `https://api.mapbox.com/search/searchbox/v1/retrieve/${suggestion.mapbox_id}` +
+        `?access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}` +
+        `&session_token=${searchToken}`
+    );
+    const data = (await response.json()) as FeatureResult;
+    if (data.features.length === 0) return;
 
-    // eslint-disable-next-line -- This is a bug in the search-js-core types
-    const newSelectedFeature = features[0].properties;
-    // eslint-disable-next-line -- This is a bug in the search-js-core types
+    const newSelectedFeature = data.features[0]?.properties;
+    if (!newSelectedFeature) return;
+
     setSelectedFeature(newSelectedFeature);
     onChange({
-      // eslint-disable-next-line -- This is a bug in the search-js-core types
       mapboxId: newSelectedFeature.mapbox_id,
-      // eslint-disable-next-line -- This is a bug in the search-js-core types
       type: newSelectedFeature.feature_type,
-      // eslint-disable-next-line -- This is a bug in the search-js-core types
       latitude: newSelectedFeature.coordinates.latitude.toString(),
-      // eslint-disable-next-line -- This is a bug in the search-js-core types
       longitude: newSelectedFeature.coordinates.longitude.toString(),
-      // eslint-disable-next-line -- This is a bug in the search-js-core types
       name: newSelectedFeature.name,
-      // eslint-disable-next-line -- This is a bug in the search-js-core types
       fullAddress: newSelectedFeature.full_address,
-      // eslint-disable-next-line -- This is a bug in the search-js-core types
       poiCategories: newSelectedFeature.poi_category,
     });
     setShowSuggestions(false);
