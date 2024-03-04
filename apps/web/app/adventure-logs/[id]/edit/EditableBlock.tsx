@@ -1,8 +1,8 @@
 import { type Id } from "@repo/convex";
 import { useState } from "react";
 import { cn } from "@repo/utils";
-import { ImageBlock } from "../ImageBlock";
-import { TextBlock } from "../TextBlock";
+import { ImageBlock } from "../../../_components/ImageBlock";
+import { TextBlock } from "../../../_components/TextBlock";
 
 interface Block {
   type: "text" | "image";

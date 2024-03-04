@@ -1,15 +1,15 @@
 "use client";
 
-import * as Yup from "yup";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Field, Form, Formik, type FieldProps } from "formik";
 import { useMutation } from "convex/react";
+import * as Yup from "yup";
 import { type Id, api } from "@repo/convex";
 import { useToast } from "@repo/ui/hooks";
 import { Text, Button } from "@repo/ui";
 import { UploadFileButton } from "../../_components/UploadFileButton";
-import { ImageBlock } from "../[id]/ImageBlock";
+import { ImageBlock } from "../../_components/ImageBlock";
 import {
   LocationSearchInput,
   type LocationInputValue,

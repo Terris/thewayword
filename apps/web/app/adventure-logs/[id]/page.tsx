@@ -6,8 +6,8 @@ import { useQuery } from "convex/react";
 import { MessageCircle, Pencil } from "lucide-react";
 import { type Id, api } from "@repo/convex";
 import { LoadingScreen, Text } from "@repo/ui";
-import { Block } from "./Block";
-import { ImageBlock } from "./ImageBlock";
+import { Block } from "../../_components/Block";
+import { ImageBlock } from "../../_components/ImageBlock";
 
 export default function AdventureLogPage() {
   const { id } = useParams();
