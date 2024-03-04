@@ -12,11 +12,10 @@ interface Block {
 }
 
 interface EditableBlockProps {
-  adventureLogId: Id<"adventureLogs">;
   block: Block;
 }
 
-export function EditableBlock({ adventureLogId, block }: EditableBlockProps) {
+export function EditableBlock({ block }: EditableBlockProps) {
   const [selected, setSelected] = useState(false);
 
   function handleSelect() {
