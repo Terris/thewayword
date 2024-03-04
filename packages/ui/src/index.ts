@@ -3,7 +3,6 @@ export * from "./AlertDialog";
 export * from "./Badge";
 export * from "./Button";
 export * from "./Card";
-export * from "./Command";
 export * from "./CopyToClipboardButton";
 export * from "./CurrencyInput";
 export * from "./DataTable";

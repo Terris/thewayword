@@ -372,9 +372,6 @@ importers:
       '@types/react':
         specifier: ^18.2.46
         version: 18.2.46
-      autoprefixer:
-        specifier: ^10.4.16
-        version: 10.4.17(postcss@8.4.35)
       postcss:
         specifier: ^8.4.5
         version: 8.4.35

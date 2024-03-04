@@ -1,7 +1,7 @@
 import { cn } from "@repo/utils";
 import { Toaster } from "@repo/ui";
-import "./app.css";
 import "@repo/ui/globals.css";
+import "./app.css";
 import { Masthead } from "./Masthead";
 import { AppProviders } from "./AppProviders";
 
