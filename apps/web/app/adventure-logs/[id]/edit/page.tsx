@@ -34,8 +34,9 @@ export default function EditLogPage() {
     try {
       await updateAdventureLog({ id: id as Id<"adventureLogs">, title });
       toast({
+        // duration: 3000,
         title: "Success",
-        description: "Saved adventure log",
+        description: "Saved draft adventure log",
       });
     } catch (error) {
       const errorMessage =
@@ -75,69 +76,80 @@ export default function EditLogPage() {
   if (isLoading) return <LoadingScreen />;
 
   return (
-    <div className="w-full max-w-[1024px]  p-8 mx-auto">
-      <form className="w-full" onSubmit={handleSubmit}>
-        {adventureLog?.location?.name ? (
-          <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-4">
-            {adventureLog.location.name}
-          </Text>
-        ) : null}
+    <>
+      <div className="w-full max-w-[1024px] p-8 mx-auto">
+        <form className="w-full" onSubmit={handleSubmit}>
+          {adventureLog?.location?.name ? (
+            <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-4">
+              {adventureLog.location.name}
+            </Text>
+          ) : null}
 
-        <input
-          className="w-full text-4xl mb-8 bg-transparent outline-none focus:underline"
-          value={title}
-          onChange={(e) => {
-            setTitle(e.currentTarget.value);
-          }}
-        />
-
-        <hr className="border-b-1 border-dashed mb-4" />
-
-        {adventureLog?.location?.longitude && adventureLog.location.latitude ? (
-          <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-8">
-            {adventureLog.location.longitude}, {adventureLog.location.latitude}
-          </Text>
-        ) : null}
-
-        {adventureLog?.blocks?.map((block) => (
-          <div key={`block-${block.type}-${block.order}`} className="pb-8">
-            <EditableBlock
-              adventureLogId={id as Id<"adventureLogs">}
-              block={block}
-            />
-          </div>
-        ))}
-
-        <div className="border border-dashed rounded p-1 flex flex-row items-center justify-center gap-2">
-          <AddImageBlockButton
-            size="sm"
-            variant="outline"
-            adventureLogId={id as Id<"adventureLogs">}
-          >
-            <ImageIcon className="w-4 h-4" />
-          </AddImageBlockButton>
-        </div>
-
-        <div className="flex flex-row items-center justify-center gap-4">
-          <Button
-            type="submit"
-            className="mt-16"
-            disabled={!canUpdateAdventureLog}
-          >
-            Save Draft
-          </Button>
-          <Button
-            type="button"
-            className="mt-16"
-            disabled={canUpdateAdventureLog}
-            onClick={() => {
-              void handlePublish();
+          <input
+            className="w-full text-4xl mb-4 bg-transparent outline-none focus:underline"
+            value={title}
+            onChange={(e) => {
+              setTitle(e.currentTarget.value);
             }}
-          >
-            Publish
-          </Button>
+          />
+
+          <hr className="border-b-1 border-dashed mb-4" />
+
+          {adventureLog?.location?.longitude &&
+          adventureLog.location.latitude ? (
+            <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-8">
+              {adventureLog.location.longitude},{" "}
+              {adventureLog.location.latitude}
+            </Text>
+          ) : null}
+
+          {adventureLog?.blocks?.map((block) => (
+            <div key={`block-${block.type}-${block.order}`} className="pb-8">
+              <EditableBlock
+                adventureLogId={id as Id<"adventureLogs">}
+                block={block}
+              />
+            </div>
+          ))}
+
+          <div className="border border-dashed rounded p-1 flex flex-row items-center justify-center gap-2">
+            <AddImageBlockButton
+              size="sm"
+              variant="ghost"
+              adventureLogId={id as Id<"adventureLogs">}
+            >
+              <ImageIcon className="w-4 h-4" />
+            </AddImageBlockButton>
+          </div>
+
+          <div className="flex flex-row items-center justify-center gap-4">
+            <Button
+              type="submit"
+              className="mt-16"
+              disabled={!canUpdateAdventureLog}
+            >
+              Save Draft
+            </Button>
+            <Button
+              type="button"
+              className="mt-16"
+              disabled={canUpdateAdventureLog}
+              onClick={() => {
+                void handlePublish();
+              }}
+            >
+              Publish
+            </Button>
+          </div>
+        </form>
+      </div>
+      <div className="fixed top-[50%] right-0 w-1/6 h-1 flex flex-col">
+        <div className="border border-dashed p-4 rounded-tl rounded-bl">
+          <Text className="font-soleil font-bold text-sm tracking-wide">
+            ADD A BLOCK
+          </Text>
         </div>
-      </form>
-    </div>
+      </div>
+    </>
   );
 }

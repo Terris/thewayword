@@ -36,7 +36,7 @@ export function Masthead() {
         ) : null}
       </div>
       <div className="md:w-1/3 flex flex-row items-center justify-center">
-        <Link href="/" className="mr-12">
+        <Link href={isAuthenticated ? "/feed" : "/"} className="mr-12">
           <Logo width={120} className="fill-foreground" />
         </Link>
       </div>

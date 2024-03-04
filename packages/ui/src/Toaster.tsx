@@ -8,7 +8,7 @@ import {
   ToastTitle,
   ToastViewport,
 } from "./Toast";
-import { useToast } from "./hooks";
+import { useToast } from "./hooks/useToast";
 
 export function Toaster() {
   const { toasts } = useToast();
@@ -19,10 +19,10 @@ export function Toaster() {
         return (
           <Toast key={id} {...props}>
             <div className="grid gap-1">
-              {Boolean(title) && <ToastTitle>{title}</ToastTitle>}
-              {Boolean(description) && (
+              {title ? <ToastTitle>{title}</ToastTitle> : null}
+              {description ? (
                 <ToastDescription>{description}</ToastDescription>
-              )}
+              ) : null}
             </div>
             {action}
             <ToastClose />

@@ -24,7 +24,7 @@ export default function AdventureLogPage() {
         <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-4">
           {adventureLog?.location?.name}
         </Text>
-        <Text className="w-full text-4xl mb-8 bg-transparent outline-none focus:underline">
+        <Text className="w-full text-4xl mb-4 bg-transparent outline-none focus:underline">
           {adventureLog?.title}
         </Text>
         <hr className="border-b-1 border-dashed mb-4" />

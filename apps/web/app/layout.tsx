@@ -1,9 +1,9 @@
 import { cn } from "@repo/utils";
 import { Toaster } from "@repo/ui";
-import { Masthead } from "./Masthead";
-import { AppProviders } from "./AppProviders";
 import "./app.css";
 import "@repo/ui/globals.css";
+import { Masthead } from "./Masthead";
+import { AppProviders } from "./AppProviders";
 
 export const metadata = {
   title: "Bitty Brella",

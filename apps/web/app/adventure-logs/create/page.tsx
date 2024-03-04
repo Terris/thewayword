@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useMutation } from "convex/react";
 import { useSearchBoxCore } from "@mapbox/search-js-react";
-import type { SearchBoxSuggestion } from "@mapbox/search-js-core";
-import type { SearchBoxFeatureProperties } from "@mapbox/search-js-core/dist/searchbox/types";
+import type {
+  SearchBoxFeatureProperties,
+  SearchBoxSuggestion,
+} from "@mapbox/search-js-core/dist/searchbox/types";
 import { api } from "@repo/convex";
 import { useDebounce, useGeoLocation } from "@repo/hooks";
-import { Text, Input, Button } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
-import { useRouter } from "next/navigation";
+import { Text, Input, Button } from "@repo/ui";
+import { MapPinned } from "lucide-react";
 
 const searchToken = "log-an-adventure";
 
@@ -78,6 +81,7 @@ export default function CreatePage() {
         },
       });
       toast({
+        duration: 5000,
         title: "Success",
         description: "Adventure log saved as draft!",
       });
@@ -94,69 +98,81 @@ export default function CreatePage() {
   }
 
   return (
-    <div className="w-full max-w-[600px] p-8 mx-auto">
-      <Text className="text-2xl font-black italic pb-4">Log an Adventure!</Text>
-      <Text className="font-soleil pb-4 ">Start by selecting a location</Text>
-      <form onSubmit={handleSubmit}>
-        {showSuggestions ? (
-          <div
-            className="fixed top-0 right-0 bottom-0 left-0 z-[0]"
-            onClick={() => {
-              setShowSuggestions(false);
-            }}
-            onKeyUp={() => {
-              setShowSuggestions(false);
-            }}
-            role="button"
-            tabIndex={0}
-          />
-        ) : null}
-        <div className="relative z-1 pb-4">
-          <Input
-            placeholder="Search for a place..."
-            value={searchValue}
-            onChange={(e) => {
-              setSearchValue(e.currentTarget.value);
-            }}
-            sizeY="lg"
-          />
-
+    <div className="fixed top-0 left-0 right-0 bg-background">
+      <div className="q-full p-8 flex flex-row ">
+        <Button variant-outline>Cancel</Button>
+      </div>
+      <div className="w-full min-h-screen max-w-[600px] p-8 mx-auto flex flex-col justify-center">
+        <Text className="text-2xl font-black italic pb-16 text-center">
+          Log an Adventure!
+        </Text>
+        <Text className="font-soleil pb-4">
+          Start by searching for your adventure location.
+        </Text>
+        <form onSubmit={handleSubmit} className=" mb-auto">
           {showSuggestions ? (
-            <div className="w-full flex flex-col border rounded">
-              {suggestions.map((suggestion) => (
-                <button
-                  type="button"
-                  key={suggestion.mapbox_id}
-                  className="text-left text-sm px-4 py-2 hover:bg-muted"
-                  onClick={() => {
-                    void handleSelectLocation(suggestion);
-                  }}
-                >
-                  <span className="block w-full font-bold">
-                    {suggestion.name}
-                  </span>
-                  {suggestion.full_address}
-                </button>
-              ))}
+            <div
+              className="fixed top-0 right-0 bottom-0 left-0 z-[0]"
+              onClick={() => {
+                setShowSuggestions(false);
+              }}
+              onKeyUp={() => {
+                setShowSuggestions(false);
+              }}
+              role="button"
+              tabIndex={0}
+            />
+          ) : null}
+          <div className="relative z-1 pb-4">
+            <Input
+              placeholder="Search for a place..."
+              value={searchValue}
+              onChange={(e) => {
+                setSearchValue(e.currentTarget.value);
+              }}
+              sizeY="lg"
+            />
+
+            {showSuggestions ? (
+              <div className="w-full flex flex-col border rounded">
+                {suggestions.map((suggestion) => (
+                  <button
+                    type="button"
+                    key={suggestion.mapbox_id}
+                    className="text-left text-sm px-4 py-2 hover:bg-muted"
+                    onClick={() => {
+                      void handleSelectLocation(suggestion);
+                    }}
+                  >
+                    <span className="block w-full font-bold">
+                      {suggestion.name}
+                    </span>
+                    {suggestion.full_address}
+                  </button>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
+          {selectedFeature ? (
+            <div className="flex flex-row items-center">
+              <MapPinned className="w-6 h-6 mx-4" />
+              <div>
+                <Text className="font-semibold">{selectedFeature.name}</Text>
+                <Text>{selectedFeature.full_address}</Text>
+              </div>
             </div>
           ) : null}
-        </div>
 
-        {selectedFeature ? (
-          <>
-            <Text className="font-semibold">{selectedFeature.name}</Text>
-            <Text className="pb-4">{selectedFeature.full_address}</Text>
-          </>
-        ) : null}
-
-        <Button
-          type="submit"
-          disabled={Boolean(!selectedFeature)}
-          className="w-full mt-8"
-        >
-          Next
-        </Button>
-      </form>
+          <Button
+            type="submit"
+            disabled={Boolean(!selectedFeature)}
+            className="w-full mt-8"
+          >
+            Next
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

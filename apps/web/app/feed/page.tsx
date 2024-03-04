@@ -2,6 +2,7 @@
 
 import { type Doc, api } from "@repo/convex";
 import { LoadingBox, LoadingScreen, Text } from "@repo/ui";
+import { AspectRatio } from "@repo/ui/AspectRatio";
 import { cn } from "@repo/utils";
 import { useQuery } from "convex/react";
 import Image from "next/image";
@@ -14,12 +15,12 @@ export default function FeedPage() {
   if (isLoading) return <LoadingScreen />;
 
   return (
-    <div className="w-full p-8 grid grid-cols-3 gap-8">
+    <div className="w-full p-8 grid grid-cols-4 gap-8">
       {adventureLogs.map((adventureLog) => (
         <Link
           key={adventureLog._id}
           href={`/adventure-logs/${adventureLog._id}`}
-          className="w-full border rounded px-4 py-8 cursor-pointer hover:border-muted transition-all"
+          className="w-full border rounded p-4 pb-8 cursor-pointer hover:border-muted transition-all"
         >
           <LogBlockImage adventureLog={adventureLog} className="pb-8" />
           <Text className="text-center font-black text-xl pb-4">
@@ -60,12 +61,14 @@ function LogBlockImage({
   if (isLoading) return <LoadingBox />;
   if (!primaryImageBlock || !file) return null;
   return (
-    <Image
-      src={file.url}
-      width={file.dimensions?.width}
-      height={file.dimensions?.height}
-      alt={file.fileName}
-      className={cn("rounded", className)}
-    />
+    <AspectRatio ratio={4 / 3} className="rounded">
+      <Image
+        src={file.url}
+        alt={file.fileName}
+        objectFit="cover"
+        layout="fill"
+        className={cn("rounded object-fill", className)}
+      />
+    </AspectRatio>
   );
 }
