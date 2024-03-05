@@ -20,7 +20,7 @@ export default function CreatePage() {
         </Button>
       </div>
       <div className="w-full max-w-[600px] p-8 mx-auto flex flex-col justify-center">
-        <Text className="text-2xl font-black italic pb-16 text-center">
+        <Text className="text-4xl font-black italic pb-16 text-center">
           Log an Adventure!
         </Text>
         <CreateLogForm />

@@ -13,7 +13,7 @@ interface BlockProps {
 
 export function Block({ block }: BlockProps) {
   return (
-    <div className="border-2 border-transparent rounded">
+    <div className="rounded">
       {block.type === "image" && block.fileId ? (
         <ImageBlock fileId={block.fileId} />
       ) : (

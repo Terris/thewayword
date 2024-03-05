@@ -1,12 +1,10 @@
 "use client";
 
-import { type Id, api } from "@repo/convex";
-import { LoadingBox, LoadingScreen, Text } from "@repo/ui";
-import { AspectRatio } from "@repo/ui/AspectRatio";
-import { cn } from "@repo/utils";
+import { api } from "@repo/convex";
+import { LoadingScreen, Text } from "@repo/ui";
 import { useQuery } from "convex/react";
-import Image from "next/image";
 import Link from "next/link";
+import { AdventureLogShowcaseImage } from "../_components/AdventureLogShowcaseImage";
 
 export default function FeedPage() {
   const adventureLogs = useQuery(api.adventureLogs.findAllPublished);
@@ -22,7 +20,7 @@ export default function FeedPage() {
           href={`/adventure-logs/${adventureLog._id}`}
           className="w-full border border-dashed rounded pb-8 cursor-pointer hover:border-muted transition-all"
         >
-          <LogShowcaseImage
+          <AdventureLogShowcaseImage
             showcaseFileId={adventureLog.showcaseFileId}
             className="pb-8"
           />
@@ -42,32 +40,5 @@ export default function FeedPage() {
         </Link>
       ))}
     </div>
-  );
-}
-
-function LogShowcaseImage({
-  showcaseFileId,
-  className,
-}: {
-  showcaseFileId?: Id<"files">;
-  className?: string;
-}) {
-  const queryArgs = showcaseFileId ? { id: showcaseFileId } : "skip";
-
-  const file = useQuery(api.files.findById, queryArgs);
-  const isLoading = file === undefined;
-
-  if (!showcaseFileId || (!isLoading && file === null)) return null;
-  if (isLoading) return <LoadingBox />;
-  return (
-    <AspectRatio ratio={4 / 3} className="rounded">
-      <Image
-        src={file.url}
-        alt={file.fileName}
-        objectFit="cover"
-        layout="fill"
-        className={cn("rounded object-fill", className)}
-      />
-    </AspectRatio>
   );
 }

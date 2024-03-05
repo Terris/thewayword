@@ -36,6 +36,32 @@ export const findById = query({
   },
 });
 
+export const findAllPublishedBySessionedUser = query({
+  args: {},
+  handler: async (ctx, {}) => {
+    const { user } = await validateIdentity(ctx);
+    return ctx.db
+      .query("adventureLogs")
+      .withIndex("by_user_id_published", (q) =>
+        q.eq("userId", user._id).eq("published", true)
+      )
+      .collect();
+  },
+});
+
+export const findAllDraftsBySessionedUser = query({
+  args: {},
+  handler: async (ctx, {}) => {
+    const { user } = await validateIdentity(ctx);
+    return ctx.db
+      .query("adventureLogs")
+      .withIndex("by_user_id_published", (q) =>
+        q.eq("userId", user._id).eq("published", false)
+      )
+      .collect();
+  },
+});
+
 export const create = mutation({
   args: {
     location: v.object({
@@ -48,16 +74,45 @@ export const create = mutation({
       poiCategories: v.optional(v.array(v.string())),
     }),
     showcaseFileId: v.id("files"),
+    tagsAsString: v.optional(v.string()),
   },
-  handler: async (ctx, { location, showcaseFileId }) => {
+  handler: async (ctx, { location, showcaseFileId, tagsAsString }) => {
     const { user } = await validateIdentity(ctx);
-    return ctx.db.insert("adventureLogs", {
+    const newAdventureLogId = await ctx.db.insert("adventureLogs", {
       userId: user._id,
       title: "Untitled log",
       location,
       published: false,
       showcaseFileId,
     });
+
+    if (tagsAsString) {
+      // Split the tags by comma, remove any leading/trailing whitespace, and lowercase all tags
+      const tags = tagsAsString
+        .split(",")
+        .map((tag) => tag.trim())
+        .map((tag) => tag.toLowerCase());
+      // Find or create the tags
+      await asyncMap(tags, async (tagName) => {
+        const existingTag = await ctx.db
+          .query("tags")
+          .withIndex("by_name", (q) => q.eq("name", tagName))
+          .first();
+        if (existingTag) {
+          await ctx.db.insert("adventureLogTags", {
+            adventureLogId: newAdventureLogId,
+            tagId: existingTag._id,
+          });
+        } else {
+          const newTagId = await ctx.db.insert("tags", { name: tagName });
+          await ctx.db.insert("adventureLogTags", {
+            adventureLogId: newAdventureLogId,
+            tagId: newTagId,
+          });
+        }
+      });
+    }
+    return newAdventureLogId;
   },
 });
 

@@ -40,14 +40,22 @@ export function Masthead() {
           <Logo width={120} className="fill-foreground" />
         </Link>
       </div>
-      <div className="w-1/3 flex flex-row items-center justify-end gap-4">
+      <div className="w-1/3 flex flex-row items-center justify-end gap-8">
         {isAuthenticated ? (
-          <Link
-            href="/adventure-logs/create"
-            className="font-soleil transition-opacity hover:opacity-80"
-          >
-            Log an Adventure
-          </Link>
+          <>
+            <Link
+              href="/me/adventure-logs"
+              className="font-soleil transition-opacity hover:opacity-80"
+            >
+              My Logs
+            </Link>
+            <Link
+              href="/adventure-logs/create"
+              className="font-soleil transition-opacity hover:opacity-80"
+            >
+              Log an Adventure
+            </Link>
+          </>
         ) : null}
         <ThemeModeToggle />
         {isAuthenticated ? (

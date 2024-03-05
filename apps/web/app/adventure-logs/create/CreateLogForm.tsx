@@ -7,7 +7,8 @@ import { useMutation } from "convex/react";
 import * as Yup from "yup";
 import { type Id, api } from "@repo/convex";
 import { useToast } from "@repo/ui/hooks";
-import { Button, Text } from "@repo/ui";
+import { Button, Input, Text } from "@repo/ui";
+import { cn } from "@repo/utils";
 import { UploadFileButton } from "../../_components/UploadFileButton";
 import { ImageBlock } from "../../_components/ImageBlock";
 import {
@@ -28,11 +29,13 @@ const validationSchema = Yup.object().shape({
     })
     .required("Location is required"),
   showcaseFileId: Yup.string().required("Showcase image is required"),
+  tagsAsString: Yup.string().required("At least one tag is required"),
 });
 
 interface CreateAdventureLogFormValues {
   location: LocationInputValue;
   showcaseFileId?: string;
+  tagsAsString: string;
 }
 
 export function CreateLogForm() {
@@ -55,6 +58,7 @@ export function CreateLogForm() {
           poiCategories: values.location.poiCategories,
         },
         showcaseFileId: values.showcaseFileId as Id<"files">,
+        tagsAsString: values.tagsAsString,
       });
       toast({
         duration: 5000,
@@ -86,6 +90,7 @@ export function CreateLogForm() {
           poiCategories: [""],
         },
         showcaseFileId: "",
+        tagsAsString: "",
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
@@ -98,7 +103,7 @@ export function CreateLogForm() {
                 <Text className="font-soleil pb-2">
                   Start by searching for your adventure location.
                 </Text>
-                <Field name="email">
+                <Field name="location">
                   {({ form, meta }: FieldProps) => (
                     <>
                       <LocationSearchInput
@@ -121,7 +126,7 @@ export function CreateLogForm() {
                   Add a showcase photo or image.
                 </Text>
 
-                <Field name="email">
+                <Field name="showcaseFileId">
                   {({ form, meta }: FieldProps) => (
                     <>
                       {values.showcaseFileId ? (
@@ -134,8 +139,15 @@ export function CreateLogForm() {
                         onSuccess={(fileIds) => {
                           void form.setFieldValue("showcaseFileId", fileIds[0]);
                         }}
+                        variant="outline"
+                        className={cn(
+                          "w-full border border-dashed",
+                          values.showcaseFileId ? "" : "p-16"
+                        )}
                       >
-                        Select showcase image
+                        {values.showcaseFileId
+                          ? "Select a different image"
+                          : "Select showcase image"}
                       </UploadFileButton>
                       {meta.touched && meta.error ? (
                         <Text className="text-destructive">{meta.error}</Text>
@@ -145,21 +157,48 @@ export function CreateLogForm() {
                 </Field>
               </>
             ) : null}
+
             {currentStep === 2 ? (
-              <Text className="font-soleil pb-2">
-                Almost there! You can save your adventure log as a draft now.
-              </Text>
+              <>
+                <Text className="font-soleil pb-2">
+                  Add some tags to help categorize your adventure.
+                </Text>
+                <Field name="tagsAsString">
+                  {({ meta, field }: FieldProps) => (
+                    <>
+                      <Input
+                        placeholder="Backpacking, Hiking, Camping..."
+                        {...field}
+                      />
+                      {meta.touched && meta.error ? (
+                        <Text className="text-destructive">{meta.error}</Text>
+                      ) : null}
+                    </>
+                  )}
+                </Field>
+              </>
             ) : null}
 
             {currentStep === 2 ? (
-              <Button
-                type="button"
-                disabled={isSubmitting}
-                className="w-full mt-8"
-                onClick={() => submitForm()}
-              >
-                Save Draft
-              </Button>
+              <div className="flex flex-row items-center gap-4">
+                <Button
+                  type="button"
+                  variant="outline"
+                  disabled={isSubmitting}
+                  className="w-full mt-8"
+                  onClick={() => submitForm()}
+                >
+                  Save Draft
+                </Button>
+                <Button
+                  type="button"
+                  disabled={isSubmitting}
+                  className="w-full mt-8"
+                  onClick={() => submitForm()}
+                >
+                  Publish Now
+                </Button>
+              </div>
             ) : (
               <Button
                 type="button"
@@ -172,6 +211,32 @@ export function CreateLogForm() {
                 Next
               </Button>
             )}
+            <div className=" my-16 flex flex-row items-center justify-center gap-4">
+              <div
+                className={cn(
+                  "w-[10px] h-[10px] rounded-full border",
+                  currentStep >= 0
+                    ? "border-foreground bg-foreground"
+                    : "bg-transparent"
+                )}
+              />
+              <div
+                className={cn(
+                  "w-[10px] h-[10px] rounded-full border",
+                  currentStep >= 1
+                    ? "border-foreground bg-foreground"
+                    : "bg-transparent"
+                )}
+              />
+              <div
+                className={cn(
+                  "w-[10px] h-[10px] rounded-full border",
+                  currentStep === 2
+                    ? "border-foreground bg-foreground"
+                    : "bg-transparent"
+                )}
+              />
+            </div>
           </Form>
         );
       }}

@@ -30,7 +30,12 @@ export default defineSchema({
     ),
   })
     .index("by_user_id", ["userId"])
-    .index("by_published", ["published"]),
+    .index("by_published", ["published"])
+    .index("by_user_id_published", ["userId", "published"]),
+  adventureLogTags: defineTable({
+    adventureLogId: v.id("adventureLogs"),
+    tagId: v.id("tags"),
+  }).index("by_adventure_log_id", ["adventureLogId"]),
   files: defineTable({
     url: v.string(),
     fileName: v.string(),
@@ -47,6 +52,9 @@ export default defineSchema({
     userId: v.id("users"),
     hash: v.optional(v.string()),
   }),
+  tags: defineTable({
+    name: v.string(),
+  }).index("by_name", ["name"]),
   users: defineTable({
     name: v.string(),
     email: v.string(),
