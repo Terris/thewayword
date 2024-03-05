@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useMutation, useQuery } from "convex/react";
-import { ImageIcon } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { type Id, api } from "@repo/convex";
 import { Button, LoadingScreen, Text } from "@repo/ui";
@@ -18,7 +17,6 @@ export default function EditLogPage() {
   const queryArgs = id ? { id: id as Id<"adventureLogs"> } : "skip";
   const adventureLog = useQuery(api.adventureLogs.findById, queryArgs);
   const isLoading = adventureLog === undefined;
-
   const [title, setTitle] = useState(adventureLog?.title ?? "");
 
   const updateAdventureLog = useMutation(api.adventureLogs.update);
@@ -105,7 +103,7 @@ export default function EditLogPage() {
           ) : null}
 
           {adventureLog?.showcaseFileId ? (
-            <ImageBlock fileId={adventureLog.showcaseFileId} className="mb-4" />
+            <ImageBlock fileId={adventureLog.showcaseFileId} className="mb-8" />
           ) : null}
 
           {adventureLog?.blocks?.map((block) => (
@@ -115,13 +113,7 @@ export default function EditLogPage() {
           ))}
 
           <div className="border border-dashed rounded p-1 flex flex-row items-center justify-center gap-2">
-            <AddImageBlockButton
-              size="sm"
-              variant="ghost"
-              adventureLogId={id as Id<"adventureLogs">}
-            >
-              <ImageIcon className="w-4 h-4" />
-            </AddImageBlockButton>
+            <AddImageBlockButton adventureLogId={id as Id<"adventureLogs">} />
           </div>
 
           <div className="flex flex-row items-center justify-center gap-4">
