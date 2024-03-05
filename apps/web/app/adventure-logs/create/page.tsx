@@ -8,7 +8,7 @@ export default function CreatePage() {
   const router = useRouter();
 
   return (
-    <div className="fixed top-0 left-0 right-0 bg-background">
+    <div className="absolute top-0 left-0 right-0 bg-background">
       <div className="q-full p-8 flex flex-row ">
         <Button
           variant="outline"
