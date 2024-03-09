@@ -8,6 +8,7 @@ import type {
 } from "@mapbox/search-js-core/dist/searchbox/types";
 import { useDebounce, useGeoLocation } from "@repo/hooks";
 import { Text, Input, Loader } from "@repo/ui";
+import { useMeContext } from "@repo/auth/context";
 
 export interface LocationInputValue {
   mapboxId: string;
@@ -19,10 +20,13 @@ export interface LocationInputValue {
   poiCategories: string[];
 }
 
-interface SuggestionResult {
-  attribution: string;
-  suggestions: SearchBoxSuggestion[];
-}
+type SuggestionResult =
+  | {
+      attribution: string;
+      suggestions: SearchBoxSuggestion[];
+    }
+  | null
+  | undefined;
 interface FeatureResult {
   type: string;
   features: {
@@ -43,6 +47,7 @@ export function LocationSearchInput({
   searchToken: string;
   onChange: (location: LocationInputValue) => void;
 }) {
+  const { me } = useMeContext();
   const { geo } = useGeoLocation();
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
@@ -54,27 +59,34 @@ export function LocationSearchInput({
 
   useEffect(() => {
     async function handleSearch() {
-      if (debouncedSearchValue) {
+      if (debouncedSearchValue && me) {
         setIsSearching(true);
         const proximity = geo?.coords
           ? `${geo.coords.longitude},${geo.coords.latitude}`
-          : "";
+          : "[]";
+        const query = debouncedSearchValue.split(" ").join("+");
         const response = await fetch(
-          `https://api.mapbox.com/search/searchbox/v1/suggest` +
-            `?q=${debouncedSearchValue}` +
+          `https://api.mapbox.com/search/searchbox/v1/suggest?` +
+            `q=${query}` +
+            "&language=en" +
+            "&types=country,region,district,postcode,locality,place,neighborhood,address,poi,street" +
             `&access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}` +
-            `&session_token=${searchToken}&proximity=${proximity}`
+            `&session_token=${me.id}-${searchToken}` +
+            `&proximity=${proximity}`
         );
-        const data = (await response.json()) as SuggestionResult;
-        setSuggestions(data.suggestions);
-        if (data.suggestions.length > 0) {
+        const data = (await response.json()) as
+          | SuggestionResult
+          | null
+          | undefined;
+        if (data?.suggestions) {
+          setSuggestions(data.suggestions);
           setShowSuggestions(true);
         }
         setIsSearching(false);
       }
     }
     void handleSearch();
-  }, [debouncedSearchValue, geo?.coords, searchToken]);
+  }, [debouncedSearchValue, geo?.coords, me, searchToken]);
 
   async function handleSelectLocation(suggestion: SearchBoxSuggestion) {
     const response = await fetch(

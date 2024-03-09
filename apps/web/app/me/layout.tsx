@@ -9,7 +9,7 @@ export default function MeLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="w-full p-8">
-      <div className="pb-4 w-full flex flex-row items-center gap-6 border-b border-dashed">
+      <div className="pb-4 w-full flex flex-row items-center border-b border-dashed">
         <MeLink
           href="/me/adventure-logs"
           active={pathname === "/me/adventure-logs"}
@@ -41,7 +41,7 @@ function MeLink({
     <Link
       href={href}
       className={cn(
-        "font-soleil block py-2 px-4 rounded-lg text-sm font-bold transition-opacity hover:opacity-80",
+        "font-soleil block pt-2 pb-2.5 px-4 rounded-lg text-sm font-bold transition-opacity hover:opacity-80",
         active && "bg-border"
       )}
     >

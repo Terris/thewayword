@@ -75,8 +75,18 @@ export default function EditLogPage() {
   if (isLoading) return <LoadingScreen />;
 
   return (
-    <>
-      <div className="w-full max-w-[1024px] p-8 mx-auto">
+    <div className="absolute top-0 left-0 right-0 bg-background">
+      <div className="q-full p-8 flex flex-row ">
+        <Button
+          variant="outline"
+          onClick={() => {
+            router.back();
+          }}
+        >
+          Cancel
+        </Button>
+      </div>
+      <div className="w-full max-w-[1024px] p-8 pt-0 mx-auto">
         <form className="w-full" onSubmit={handleSubmit}>
           {adventureLog?.location?.name ? (
             <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-4">
@@ -144,6 +154,6 @@ export default function EditLogPage() {
           </Text>
         </div>
       </div>
-    </>
+    </div>
   );
 }

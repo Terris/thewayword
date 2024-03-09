@@ -26,7 +26,7 @@ export function AdventureLogShowcaseImage({
         alt={file.fileName}
         objectFit="cover"
         layout="fill"
-        className={cn("rounded object-fill", className)}
+        className={cn("rounded object-cover", className)}
       />
     </AspectRatio>
   );
