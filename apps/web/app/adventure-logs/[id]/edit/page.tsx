@@ -112,8 +112,11 @@ export default function EditLogPage() {
             </Text>
           ) : null}
 
-          {adventureLog?.showcaseFileId ? (
-            <ImageBlock fileId={adventureLog.showcaseFileId} className="mb-8" />
+          {adventureLog?.coverImageFileId ? (
+            <ImageBlock
+              fileId={adventureLog.coverImageFileId}
+              className="mb-8"
+            />
           ) : null}
 
           {adventureLog?.blocks?.map((block) => (

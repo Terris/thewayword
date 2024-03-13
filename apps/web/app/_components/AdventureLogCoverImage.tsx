@@ -5,19 +5,19 @@ import { cn } from "@repo/utils";
 import { useQuery } from "convex/react";
 import Image from "next/image";
 
-export function AdventureLogShowcaseImage({
-  showcaseFileId,
+export function AdventureLogCoverImage({
+  coverImageFileId,
   className,
 }: {
-  showcaseFileId?: Id<"files">;
+  coverImageFileId?: Id<"files">;
   className?: string;
 }) {
-  const queryArgs = showcaseFileId ? { id: showcaseFileId } : "skip";
+  const queryArgs = coverImageFileId ? { id: coverImageFileId } : "skip";
 
   const file = useQuery(api.files.findById, queryArgs);
   const isLoading = file === undefined;
 
-  if (!showcaseFileId || (!isLoading && file === null)) return null;
+  if (!coverImageFileId || (!isLoading && file === null)) return null;
   if (isLoading) return <LoadingBox />;
   return (
     <AspectRatio ratio={1 / 1} className="rounded overflow-hidden">

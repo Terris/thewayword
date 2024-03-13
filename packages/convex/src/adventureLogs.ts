@@ -76,17 +76,17 @@ export const create = mutation({
       full_address: v.string(),
       poiCategories: v.optional(v.array(v.string())),
     }),
-    showcaseFileId: v.id("files"),
+    coverImageFileId: v.id("files"),
     tagsAsString: v.optional(v.string()),
   },
-  handler: async (ctx, { location, showcaseFileId, tagsAsString }) => {
+  handler: async (ctx, { location, coverImageFileId, tagsAsString }) => {
     const { user } = await validateIdentity(ctx);
     const newAdventureLogId = await ctx.db.insert("adventureLogs", {
       userId: user._id,
       title: "Untitled log",
       location,
       published: false,
-      showcaseFileId,
+      coverImageFileId,
     });
 
     if (tagsAsString) {

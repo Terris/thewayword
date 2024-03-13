@@ -4,7 +4,7 @@ import { api } from "@repo/convex";
 import { useQuery } from "convex/react";
 import { LoadingScreen, Text } from "@repo/ui";
 import Link from "next/link";
-import { AdventureLogShowcaseImage } from "../../_components/AdventureLogShowcaseImage";
+import { AdventureLogCoverImage } from "../../_components/AdventureLogCoverImage";
 
 export default function MeAdventureLogsPage() {
   const adventureLogs = useQuery(
@@ -24,8 +24,8 @@ export default function MeAdventureLogsPage() {
             href={`/adventure-logs/${adventureLog._id}`}
             className="w-full border border-dashed rounded pb-8 cursor-pointer hover:border-muted transition-all"
           >
-            <AdventureLogShowcaseImage
-              showcaseFileId={adventureLog.showcaseFileId}
+            <AdventureLogCoverImage
+              coverImageFileId={adventureLog.coverImageFileId}
               className="pb-8"
             />
             <div className="p-4">

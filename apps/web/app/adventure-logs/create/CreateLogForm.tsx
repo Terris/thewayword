@@ -28,13 +28,13 @@ const validationSchema = Yup.object().shape({
       poiCategories: Yup.array(Yup.string().required()),
     })
     .required("Location is required"),
-  showcaseFileId: Yup.string().required("Showcase image is required"),
+  coverImageFileId: Yup.string().required("Showcase image is required"),
   tagsAsString: Yup.string().required("At least one tag is required"),
 });
 
 interface CreateAdventureLogFormValues {
   location: LocationInputValue;
-  showcaseFileId?: string;
+  coverImageFileId?: string;
   tagsAsString: string;
 }
 
@@ -57,7 +57,7 @@ export function CreateLogForm() {
           full_address: values.location.fullAddress,
           poiCategories: values.location.poiCategories,
         },
-        showcaseFileId: values.showcaseFileId as Id<"files">,
+        coverImageFileId: values.coverImageFileId as Id<"files">,
         tagsAsString: values.tagsAsString,
       });
       toast({
@@ -89,7 +89,7 @@ export function CreateLogForm() {
           fullAddress: "",
           poiCategories: [""],
         },
-        showcaseFileId: "",
+        coverImageFileId: "",
         tagsAsString: "",
       }}
       validationSchema={validationSchema}
@@ -129,23 +129,26 @@ export function CreateLogForm() {
                 <Field name="showcaseFileId">
                   {({ form, meta }: FieldProps) => (
                     <>
-                      {values.showcaseFileId ? (
+                      {values.coverImageFileId ? (
                         <ImageBlock
-                          fileId={values.showcaseFileId as Id<"files">}
+                          fileId={values.coverImageFileId as Id<"files">}
                           className="mb-4"
                         />
                       ) : null}
                       <UploadFileButton
                         onSuccess={(fileIds) => {
-                          void form.setFieldValue("showcaseFileId", fileIds[0]);
+                          void form.setFieldValue(
+                            "coverImageFileId",
+                            fileIds[0]
+                          );
                         }}
                         variant="outline"
                         className={cn(
                           "w-full border border-dashed",
-                          values.showcaseFileId ? "" : "p-16"
+                          values.coverImageFileId ? "" : "p-16"
                         )}
                       >
-                        {values.showcaseFileId
+                        {values.coverImageFileId
                           ? "Select a different image"
                           : "Select showcase image"}
                       </UploadFileButton>
