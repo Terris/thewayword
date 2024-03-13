@@ -20,7 +20,7 @@ export function AdventureLogShowcaseImage({
   if (!showcaseFileId || (!isLoading && file === null)) return null;
   if (isLoading) return <LoadingBox />;
   return (
-    <AspectRatio ratio={4 / 3} className="rounded">
+    <AspectRatio ratio={1 / 1} className="rounded overflow-hidden">
       <Image
         src={file.url}
         alt={file.fileName}

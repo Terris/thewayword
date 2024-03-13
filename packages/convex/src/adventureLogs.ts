@@ -3,6 +3,14 @@ import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
 
+export const findById = query({
+  args: { id: v.id("adventureLogs") },
+  handler: async (ctx, { id }) => {
+    await validateIdentity(ctx);
+    return ctx.db.get(id);
+  },
+});
+
 export const findAllPublished = query({
   args: {},
   handler: async (ctx) => {
@@ -10,6 +18,7 @@ export const findAllPublished = query({
     const adventureLogs = await ctx.db
       .query("adventureLogs")
       .withIndex("by_published", (q) => q.eq("published", true))
+      .order("desc")
       .collect();
     if (!adventureLogs) throw new ConvexError("Adventure logs not found");
 
@@ -28,14 +37,6 @@ export const findAllPublished = query({
   },
 });
 
-export const findById = query({
-  args: { id: v.id("adventureLogs") },
-  handler: async (ctx, { id }) => {
-    await validateIdentity(ctx);
-    return ctx.db.get(id);
-  },
-});
-
 export const findAllPublishedBySessionedUser = query({
   args: {},
   handler: async (ctx, {}) => {
@@ -45,6 +46,7 @@ export const findAllPublishedBySessionedUser = query({
       .withIndex("by_user_id_published", (q) =>
         q.eq("userId", user._id).eq("published", true)
       )
+      .order("desc")
       .collect();
   },
 });
@@ -58,6 +60,7 @@ export const findAllDraftsBySessionedUser = query({
       .withIndex("by_user_id_published", (q) =>
         q.eq("userId", user._id).eq("published", false)
       )
+      .order("desc")
       .collect();
   },
 });
