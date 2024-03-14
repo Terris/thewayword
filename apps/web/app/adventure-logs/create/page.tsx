@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import * as Yup from "yup";
 import { Field, Form, Formik, type FieldProps } from "formik";
@@ -18,6 +18,7 @@ import {
   LocationSearchInput,
 } from "../../_components/LocationSearchInput";
 import "mapbox-gl/dist/mapbox-gl.css";
+import { AdventureLogMap } from "../../_components/AdventureLogMap";
 
 // eslint-disable-next-line -- fix
 mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
@@ -273,7 +274,7 @@ export default function CreatePage() {
                 </Form>
               </div>
             </div>
-            <div className="w-full md:w-1/2 h-[75vh]">
+            <div className="w-full md:w-1/2 h-[75vh] rounded border border-dashed p-2">
               <AdventureLogMap
                 defaultLongitude={-105.628997}
                 defaultLatitude={40.342441}
@@ -287,88 +288,5 @@ export default function CreatePage() {
         </div>
       )}
     </Formik>
-  );
-}
-
-const defaultZoom = 10;
-const featureZoom = 14;
-
-export function AdventureLogMap({
-  defaultLongitude,
-  defaultLatitude,
-  initialLongitude,
-  initialLatitude,
-  featureLongitude,
-  featureLatitude,
-}: {
-  defaultLongitude: number;
-  defaultLatitude: number;
-  initialLongitude?: number;
-  initialLatitude?: number;
-  featureLongitude?: number;
-  featureLatitude?: number;
-}) {
-  const map = useRef<mapboxgl.Map | null>(null);
-  const mapContainerRef = useRef<HTMLDivElement>(null);
-  const marker = useRef<mapboxgl.Marker | null>(null);
-  const [lng, setLng] = useState<number>(defaultLongitude);
-  const [lat, setLat] = useState<number>(defaultLatitude);
-  const [zoom, setZoom] = useState<number>(defaultZoom);
-
-  useEffect(() => {
-    map.current = new mapboxgl.Map({
-      container: mapContainerRef.current ?? "",
-      style: "mapbox://styles/mapbox/outdoors-v12",
-      center: [lng, lat],
-      zoom,
-    });
-
-    map.current.on("move", () => {
-      setLng(Number(map.current?.getCenter().lng.toFixed(4)));
-      setLat(Number(map.current?.getCenter().lat.toFixed(4)));
-      setZoom(Number(map.current?.getZoom().toFixed(2)));
-    });
-
-    // Clean up on unmount
-    return () => {
-      map.current?.remove();
-    };
-  }, []);
-
-  // once geo is loaded, update the map
-  useEffect(() => {
-    if (!map.current || featureLongitude || featureLatitude) return;
-    if (initialLongitude && initialLatitude) {
-      map.current.easeTo({
-        center: [initialLongitude, initialLatitude],
-        zoom,
-      });
-    }
-  }, [initialLongitude, initialLatitude, zoom]);
-
-  useEffect(() => {
-    if (!map.current) return;
-    if (featureLongitude && featureLatitude) {
-      marker.current?.remove();
-      marker.current = new mapboxgl.Marker().setLngLat([
-        featureLongitude,
-        featureLatitude,
-      ]);
-      marker.current.addTo(map.current);
-      map.current.easeTo({
-        center: [featureLongitude, featureLatitude],
-        zoom: featureZoom,
-      });
-    }
-  }, [featureLongitude, featureLatitude]);
-
-  return (
-    <div className="relative w-full h-full">
-      <div
-        ref={mapContainerRef}
-        style={{ width: "100%", height: "100%" }}
-        className="rounded"
-      />
-    </div>
   );
 }
