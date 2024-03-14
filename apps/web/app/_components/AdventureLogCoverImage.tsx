@@ -20,13 +20,16 @@ export function AdventureLogCoverImage({
   if (!coverImageFileId || (!isLoading && file === null)) return null;
   if (isLoading) return <LoadingBox />;
   return (
-    <AspectRatio ratio={1 / 1} className="rounded overflow-hidden">
+    <AspectRatio
+      ratio={1 / 1}
+      className={cn("rounded overflow-hidden", className)}
+    >
       <Image
         src={file.url}
         alt={file.fileName}
         objectFit="cover"
         layout="fill"
-        className={cn("rounded object-cover", className)}
+        className="rounded object-cover"
       />
     </AspectRatio>
   );

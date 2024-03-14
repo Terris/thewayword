@@ -18,12 +18,13 @@ export default function FeedPage() {
         <Link
           key={adventureLog._id}
           href={`/adventure-logs/${adventureLog._id}`}
-          className="w-full border border-dashed rounded pb-8 cursor-pointer hover:border-muted transition-all"
+          className="group w-full border border-dashed rounded pb-8 cursor-pointer hover:border-muted transition-all"
         >
-          <AdventureLogCoverImage
-            coverImageFileId={adventureLog.coverImageFileId}
-            className="pb-4"
-          />
+          <div className="pb-4 group-hover:p-4 transition-all">
+            <AdventureLogCoverImage
+              coverImageFileId={adventureLog.coverImageFileId}
+            />
+          </div>
           <div className="p-4">
             <Text className="text-center font-black text-xl pb-4">
               {adventureLog.title}

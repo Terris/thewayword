@@ -106,7 +106,7 @@ export default function EditLogPage() {
               e.preventDefault();
             }}
           >
-            <div className="absolute top-0 left-0 right-0 bg-background">
+            <div className="pb-32 absolute top-0 left-0 right-0 bg-background">
               <div className="w-full p-8 flex flex-row items-center gap-4">
                 <Button
                   variant="outline"

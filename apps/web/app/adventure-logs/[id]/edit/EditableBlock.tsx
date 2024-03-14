@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMutation } from "convex/react";
 import { api, type Id } from "@repo/convex";
 import { cn } from "@repo/utils";
-import { Text } from "@repo/ui";
-import { ImageBlock } from "../../../_components/ImageBlock";
+import { EditableTextBlock } from "./EditableTextBlock";
+import { EditableImageBlock } from "./EditableImageBlock";
 
 interface Block {
   type: "text" | "image";
@@ -25,9 +25,7 @@ export function EditableBlock({
 }: EditableBlockProps) {
   const [selected, setSelected] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(block.content);
-
-  // TODO: add ability to update an image block
-  // const [updatedFileId, setUpdatedFileId] = useState(block.fileId);
+  const [updatedFileId, setUpdatedFileId] = useState(block.fileId);
 
   const canUpdateBlock = updatedContent !== block.content;
 
@@ -43,6 +41,7 @@ export function EditableBlock({
         blockIndex,
         content:
           updatedContent !== block.content ? updatedContent : block.content,
+        fileId: updatedFileId !== block.fileId ? updatedFileId : block.fileId,
       });
     }
   }, [
@@ -53,13 +52,15 @@ export function EditableBlock({
     blockIndex,
     updatedContent,
     block.content,
+    block.fileId,
+    updatedFileId,
   ]);
 
   return (
     <>
       {selected ? (
         <div
-          className="fixed top-0 right-0 bottom-0 left-0 z-0"
+          className="fixed top-0 right-0 bottom-0 left-0 z-1"
           onClick={() => {
             setSelected(false);
           }}
@@ -73,8 +74,8 @@ export function EditableBlock({
 
       <div
         className={cn(
-          "relative z-10 w-full p-4 border-2 border-transparent rounded flex items-center",
-          selected ? "border-primary" : "hover:border-muted"
+          "relative z-10 w-full border-2 border-dashed border-transparent rounded flex flex-col items-center transition-all",
+          selected ? "border-primary p-4" : "hover:border-muted"
         )}
         onClick={() => {
           setSelected(true);
@@ -86,7 +87,13 @@ export function EditableBlock({
         tabIndex={0}
       >
         {block.type === "image" && block.fileId ? (
-          <ImageBlock fileId={block.fileId} />
+          <EditableImageBlock
+            selected={selected}
+            fileId={updatedFileId}
+            setFileId={(fileId) => {
+              setUpdatedFileId(fileId);
+            }}
+          />
         ) : (
           <EditableTextBlock
             selected={selected}
@@ -96,59 +103,5 @@ export function EditableBlock({
         )}
       </div>
     </>
-  );
-}
-
-function EditableTextBlock({
-  selected,
-  content,
-  setContent,
-}: {
-  selected: boolean;
-  content: string;
-  setContent: (value: string) => void;
-}) {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    if (selected && textareaRef.current) {
-      textareaRef.current.focus();
-    }
-  }, [selected]);
-
-  function handleChange(value: string) {
-    setContent(value);
-    resizeTextArea();
-  }
-
-  function resizeTextArea() {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
-  }
-
-  return (
-    <div className="w-full max-w-[600px] mx-auto">
-      {selected ? (
-        <textarea
-          ref={textareaRef}
-          placeholder="Start typing..."
-          value={content}
-          onChange={(e) => {
-            handleChange(e.currentTarget.value);
-          }}
-          onKeyUp={(e) => {
-            e.key === "Enter" && e.preventDefault();
-          }}
-          onFocus={resizeTextArea}
-          className="w-full min-h-4 text-lg bg-transparent outline-none"
-          style={{ resize: "none" }}
-        />
-      ) : (
-        <Text className="w-full text-lg whitespace-pre-wrap">
-          {content === "" ? "Start typing..." : content}
-        </Text>
-      )}
-    </div>
   );
 }
