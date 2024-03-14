@@ -36,7 +36,7 @@ export default function AdventureLogPage() {
         ) : null}
 
         {adventureLog?.coverImageFileId ? (
-          <ImageBlock fileId={adventureLog.coverImageFileId} className="mb-4" />
+          <ImageBlock fileId={adventureLog.coverImageFileId} className="mb-8" />
         ) : null}
 
         {adventureLog?.blocks?.map((block) => (

@@ -234,21 +234,34 @@ export default function CreatePage() {
                       </Button>
                     </div>
                   ) : (
-                    <Button
-                      type="button"
-                      disabled={!values.location.name}
-                      className="w-full mt-8"
-                      onClick={() => {
-                        setCurrentStep((s) => s + 1);
-                      }}
-                    >
-                      Next
-                    </Button>
+                    <div className="flex flex-row items-center gap-4">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        disabled={currentStep === 0}
+                        className="w-full mt-8"
+                        onClick={() => {
+                          setCurrentStep((s) => s - 1);
+                        }}
+                      >
+                        Back
+                      </Button>
+                      <Button
+                        type="button"
+                        disabled={!values.location.name}
+                        className="w-full mt-8"
+                        onClick={() => {
+                          setCurrentStep((s) => s + 1);
+                        }}
+                      >
+                        Next
+                      </Button>
+                    </div>
                   )}
                   <div className=" my-16 flex flex-row items-center justify-center gap-4">
                     <div
                       className={cn(
-                        "w-[10px] h-[10px] rounded-full border",
+                        "w-[12px] h-[12px] rounded-full border border-dashed",
                         currentStep >= 0
                           ? "border-foreground bg-foreground"
                           : "bg-transparent"
@@ -256,7 +269,7 @@ export default function CreatePage() {
                     />
                     <div
                       className={cn(
-                        "w-[10px] h-[10px] rounded-full border",
+                        "w-[12px] h-[12px] rounded-full border border-dashed",
                         currentStep >= 1
                           ? "border-foreground bg-foreground"
                           : "bg-transparent"
@@ -264,7 +277,7 @@ export default function CreatePage() {
                     />
                     <div
                       className={cn(
-                        "w-[10px] h-[10px] rounded-full border",
+                        "w-[12px] h-[12px] rounded-full border border-dashed",
                         currentStep === 2
                           ? "border-foreground bg-foreground"
                           : "bg-transparent"

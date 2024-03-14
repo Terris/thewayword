@@ -143,7 +143,7 @@ export function LocationSearchInput({
         </div>
 
         {showSuggestions ? (
-          <div className="absolute bg-background top-[43px] w-full flex flex-col border rounded">
+          <div className="z-10 absolute bg-background top-[43px] w-full flex flex-col border rounded">
             {suggestions.map((suggestion) => (
               <button
                 type="button"

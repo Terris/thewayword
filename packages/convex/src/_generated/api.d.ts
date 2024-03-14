@@ -20,6 +20,7 @@ import type * as http from "../http.js";
 import type * as lib_authorization from "../lib/authorization.js";
 import type * as lib_stripe from "../lib/stripe.js";
 import type * as lib_transactional from "../lib/transactional.js";
+import type * as lib_utils from "../lib/utils.js";
 import type * as me from "../me.js";
 import type * as userActions from "../userActions.js";
 import type * as users from "../users.js";
@@ -41,6 +42,7 @@ declare const fullApi: ApiFromModules<{
   "lib/authorization": typeof lib_authorization;
   "lib/stripe": typeof lib_stripe;
   "lib/transactional": typeof lib_transactional;
+  "lib/utils": typeof lib_utils;
   me: typeof me;
   userActions: typeof userActions;
   users: typeof users;

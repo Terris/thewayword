@@ -22,7 +22,7 @@ export default function FeedPage() {
         >
           <AdventureLogCoverImage
             coverImageFileId={adventureLog.coverImageFileId}
-            className="pb-8"
+            className="pb-4"
           />
           <div className="p-4">
             <Text className="text-center font-black text-xl pb-4">

@@ -2,6 +2,7 @@ import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
+import { toTitleCase } from "./lib/utils";
 
 export const findById = query({
   args: { id: v.id("adventureLogs") },
@@ -81,20 +82,26 @@ export const create = mutation({
   },
   handler: async (ctx, { location, coverImageFileId, tagsAsString }) => {
     const { user } = await validateIdentity(ctx);
+
+    // Split the tags by comma, remove any leading/trailing whitespace, and lowercase all tags
+    const tags = tagsAsString
+      ?.split(",")
+      .map((tag) => tag.trim())
+      .map((tag) => tag.toLowerCase());
+    // create a suggested title based on tags and location
+    const suggestedLogTitle = tags?.length
+      ? `${toTitleCase(tags[0])}, ${location.name}`
+      : `${location.name} Adventure`;
+
     const newAdventureLogId = await ctx.db.insert("adventureLogs", {
       userId: user._id,
-      title: "Untitled log",
+      title: suggestedLogTitle,
       location,
       published: false,
       coverImageFileId,
     });
 
-    if (tagsAsString) {
-      // Split the tags by comma, remove any leading/trailing whitespace, and lowercase all tags
-      const tags = tagsAsString
-        .split(",")
-        .map((tag) => tag.trim())
-        .map((tag) => tag.toLowerCase());
+    if (tags?.length) {
       // Find or create the tags
       await asyncMap(tags, async (tagName) => {
         const existingTag = await ctx.db
