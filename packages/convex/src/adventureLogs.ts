@@ -89,9 +89,10 @@ export const create = mutation({
       .map((tag) => tag.trim())
       .map((tag) => tag.toLowerCase());
     // create a suggested title based on tags and location
-    const suggestedLogTitle = tags?.length
-      ? `${toTitleCase(tags[0])}, ${location.name}`
-      : `${location.name} Adventure`;
+    const suggestedLogTitle =
+      tags?.length && tags.length > 0
+        ? `${toTitleCase(tags[0])}, ${location.name}`
+        : `${location.name} Adventure`;
 
     const newAdventureLogId = await ctx.db.insert("adventureLogs", {
       userId: user._id,
@@ -168,6 +169,60 @@ export const addImageBlock = mutation({
     ];
 
     return ctx.db.patch(id, {
+      blocks: updatedLogBlocks,
+    });
+  },
+});
+
+export const addTextBlock = mutation({
+  args: { id: v.id("adventureLogs") },
+  handler: async (ctx, { id }) => {
+    const { user } = await validateIdentity(ctx);
+    const existingAdventureLog = await ctx.db.get(id);
+    if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
+    if (existingAdventureLog.userId !== user._id)
+      throw new ConvexError("Not the owner of this adventure log");
+
+    const updatedLogBlocks = [
+      ...(existingAdventureLog.blocks ?? []),
+      {
+        type: "text" as BlockType,
+        order: (existingAdventureLog.blocks?.length ?? 0) + 1,
+        content: "",
+      },
+    ];
+
+    return ctx.db.patch(id, {
+      blocks: updatedLogBlocks,
+    });
+  },
+});
+
+export const updateAdventureLogBlock = mutation({
+  args: {
+    adventureLogId: v.id("adventureLogs"),
+    blockIndex: v.number(),
+    content: v.optional(v.string()),
+    fileId: v.optional(v.id("files")),
+  },
+  handler: async (ctx, { adventureLogId, blockIndex, content, fileId }) => {
+    const { user } = await validateIdentity(ctx);
+    const existingAdventureLog = await ctx.db.get(adventureLogId);
+    if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
+    if (existingAdventureLog.userId !== user._id)
+      throw new ConvexError("Not the owner of this adventure log");
+
+    const updatedLogBlocks = existingAdventureLog.blocks?.map((block, i) =>
+      i === blockIndex
+        ? {
+            ...block,
+            content: content ?? block.content,
+            fileId: fileId ?? block.fileId,
+          }
+        : block
+    );
+
+    return ctx.db.patch(adventureLogId, {
       blocks: updatedLogBlocks,
     });
   },

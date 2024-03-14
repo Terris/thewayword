@@ -6,11 +6,19 @@ import * as Yup from "yup";
 import { useMutation, useQuery } from "convex/react";
 import { useParams, useRouter } from "next/navigation";
 import { type Id, api } from "@repo/convex";
-import { Button, LoadingScreen, Text } from "@repo/ui";
+import {
+  Button,
+  LoadingScreen,
+  Text,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
 import { ImageBlock } from "../../../_components/ImageBlock";
 import { AddImageBlockButton } from "./AddImageBlockButton";
 import { EditableBlock } from "./EditableBlock";
+import { AddTextBlockButton } from "./AddTextBlockButton";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -93,7 +101,11 @@ export default function EditLogPage() {
           values.title !== adventureLog?.title && values.title !== "";
 
         return (
-          <Form>
+          <Form
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+          >
             <div className="absolute top-0 left-0 right-0 bg-background">
               <div className="w-full p-8 flex flex-row items-center gap-4">
                 <Button
@@ -126,6 +138,11 @@ export default function EditLogPage() {
                   Publish
                 </Button>
               </div>
+              <div className="w-full">
+                <Text className="text-4xl font-black italic pb-16 text-center">
+                  Tell your adventure story.
+                </Text>
+              </div>
               <div className="w-full max-w-[1024px] p-8 pt-0 mx-auto">
                 {adventureLog?.location?.name ? (
                   <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-4">
@@ -135,10 +152,18 @@ export default function EditLogPage() {
                 <Field name="title">
                   {({ field, meta }: FieldProps) => (
                     <>
-                      <input
-                        className="w-full text-4xl mb-4 bg-transparent outline-none focus:underline"
-                        {...field}
-                      />
+                      <Tooltip defaultOpen>
+                        <TooltipTrigger className="w-full">
+                          <input
+                            className="w-full text-4xl mb-4 bg-transparent outline-none focus:underline"
+                            {...field}
+                          />
+                        </TooltipTrigger>
+                        <TooltipContent side="left">
+                          Start by giving this log a title.
+                        </TooltipContent>
+                      </Tooltip>
+
                       {meta.touched && meta.error ? (
                         <Text className="text-destructive">{meta.error}</Text>
                       ) : null}
@@ -163,12 +188,16 @@ export default function EditLogPage() {
                   />
                 ) : null}
 
-                {adventureLog?.blocks?.map((block) => (
+                {adventureLog?.blocks?.map((block, index) => (
                   <div
                     key={`block-${block.type}-${block.order}`}
                     className="pb-8"
                   >
-                    <EditableBlock block={block} />
+                    <EditableBlock
+                      adventureLogId={id as Id<"adventureLogs">}
+                      block={block}
+                      blockIndex={index}
+                    />
                   </div>
                 ))}
 
@@ -176,15 +205,33 @@ export default function EditLogPage() {
                   <AddImageBlockButton
                     adventureLogId={id as Id<"adventureLogs">}
                   />
+                  <AddTextBlockButton
+                    adventureLogId={id as Id<"adventureLogs">}
+                  />
                 </div>
               </div>
-              <div className="fixed top-[50%] right-0 w-1/6 h-1 flex flex-col">
-                <div className="border border-dashed p-4 rounded-tl rounded-bl">
-                  <Text className="font-soleil font-bold text-sm tracking-wide">
+              {/* TODO: This is a fixed right sidebar that is meant to help with editing and adding blocks */}
+              {/* <div className="fixed top-[50%] right-0 w-1/6 h-1 flex flex-col justify-center">
+                <div className="border border-dashed p-4 rounded-tl rounded-bl flex flex-col gap-2 min-h-[300px]">
+                  <Text className="font-soleil font-bold text-sm tracking-wide pb-4">
                     ADD A BLOCK
                   </Text>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="justify-start"
+                  >
+                    Text
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="justify-start"
+                  >
+                    Image
+                  </Button>
                 </div>
-              </div>
+              </div> */}
             </div>
           </Form>
         );

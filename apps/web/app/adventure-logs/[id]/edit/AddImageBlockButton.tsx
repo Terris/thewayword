@@ -1,4 +1,4 @@
-import { ImageIcon } from "lucide-react";
+import { ImagePlusIcon } from "lucide-react";
 import { useToast } from "@repo/ui/hooks";
 import { useMutation } from "convex/react";
 import { type Id, api } from "@repo/convex";
@@ -31,7 +31,7 @@ export function AddImageBlockButton({ adventureLogId }: UploadButtonProps) {
 
   return (
     <UploadFileButton onSuccess={handleUploadSuccess}>
-      <ImageIcon className="w-4 h-4" />
+      <ImagePlusIcon className="w-4 h-4" />
     </UploadFileButton>
   );
 }
