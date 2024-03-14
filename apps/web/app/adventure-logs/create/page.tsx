@@ -104,25 +104,26 @@ export default function CreatePage() {
       onSubmit={onSubmit}
     >
       {({ values, isSubmitting, submitForm }) => (
-        <div className="absolute top-0 left-0 right-0 bg-background">
-          <div className="q-full p-8 flex flex-row ">
-            <Button
-              variant="outline"
-              onClick={() => {
-                router.back();
-              }}
-            >
-              Cancel
-            </Button>
-          </div>
-          <div className="w-full p-8 flex flex-col md:flex-row md:items-center gap-4">
-            <div className="w-full md:w-1/2">
-              <div className="max-w-[600px] mx-auto">
-                <Text className="text-4xl font-black italic pb-16 text-center">
-                  Log an Adventure!
-                </Text>
+        <Form>
+          <div className="absolute top-0 left-0 right-0 bg-background">
+            <div className="q-full p-8 flex flex-row ">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  router.push("/feed");
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
+            <div className="w-full p-8 flex flex-col md:flex-row md:items-center gap-4">
+              <div className="w-full md:w-1/2">
+                <div className="max-w-[600px] mx-auto">
+                  <Text className="text-4xl font-black italic pb-16 text-center">
+                    Log an Adventure!
+                  </Text>
 
-                <Form>
                   {currentStep === 0 ? (
                     <>
                       <Text className="font-soleil pb-2">
@@ -284,21 +285,21 @@ export default function CreatePage() {
                       )}
                     />
                   </div>
-                </Form>
+                </div>
+              </div>
+              <div className="w-full md:w-1/2 h-[75vh] rounded border border-dashed p-2">
+                <AdventureLogMap
+                  defaultLongitude={-105.628997}
+                  defaultLatitude={40.342441}
+                  initialLongitude={geo?.coords.longitude}
+                  initialLatitude={geo?.coords.latitude}
+                  featureLongitude={Number(values.location.longitude)}
+                  featureLatitude={Number(values.location.latitude)}
+                />
               </div>
             </div>
-            <div className="w-full md:w-1/2 h-[75vh] rounded border border-dashed p-2">
-              <AdventureLogMap
-                defaultLongitude={-105.628997}
-                defaultLatitude={40.342441}
-                initialLongitude={geo?.coords.longitude}
-                initialLatitude={geo?.coords.latitude}
-                featureLongitude={Number(values.location.longitude)}
-                featureLatitude={Number(values.location.latitude)}
-              />
-            </div>
           </div>
-        </div>
+        </Form>
       )}
     </Formik>
   );
