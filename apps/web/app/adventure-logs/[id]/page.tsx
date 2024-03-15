@@ -41,19 +41,19 @@ export default function AdventureLogPage() {
 
         <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
       </div>
-      <div className="fixed top-[50vh] h-[1px] right-0 p-8 flex flex-col justify-center items-center">
-        <div className="flex flex-col gap-4">
+      <div className="p-8 flex justify-center items-center w-full lg:w-auto lg:flex-col lg:fixed lg:top-[50vh] lg:h-[1px] lg:right-0  ">
+        <div className="flex flex-row lg:flex-col gap-4">
           <Link
             href={`/adventure-logs/${id as string}/edit`}
             type="button"
-            className="border rounded-full p-3"
+            className="bg-background border rounded-full p-3 hover:bg-muted"
           >
             <Pencil className="w-4 h-4 " />
           </Link>
           <Link
             href={`/adventure-logs/${id as string}/edit`}
             type="button"
-            className="border rounded-full p-3"
+            className="bg-background border rounded-full p-3 hover:bg-muted"
           >
             <MessageCircle className="w-4 h-4 " />
           </Link>

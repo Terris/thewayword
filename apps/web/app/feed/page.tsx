@@ -18,15 +18,15 @@ export default function FeedPage() {
         <Link
           key={adventureLog._id}
           href={`/adventure-logs/${adventureLog._id}`}
-          className="group w-full border border-dashed rounded pb-8 cursor-pointer hover:border-muted transition-all"
+          className="group w-full text-background bg-foreground hover:bg-muted hover:text-foreground rounded pb-8 cursor-pointer transition-all"
         >
-          <div className="pb-4 group-hover:p-4 group-hover:pb-8 transition-all">
+          <div className="p-2 pb-4">
             <AdventureLogCoverImage
               coverImageFileId={adventureLog.coverImageFileId}
             />
           </div>
           <div className="p-4">
-            <Text className="text-center font-black text-xl pb-4">
+            <Text className="w-full pb-4 text-center font-black text-xl whitespace-nowrap  text-ellipsis overflow-hidden">
               {adventureLog.title}
             </Text>
             <hr className="w-[30px] mx-auto mb-4" />

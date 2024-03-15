@@ -91,7 +91,7 @@ export const create = mutation({
     // create a suggested title based on tags and location
     const suggestedLogTitle =
       tags?.length && tags.length > 0
-        ? `${toTitleCase(tags[0])}, ${location.name}`
+        ? `${toTitleCase(tags[0])}`
         : `${location.name} Adventure`;
 
     const newAdventureLogId = await ctx.db.insert("adventureLogs", {

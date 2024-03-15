@@ -192,7 +192,7 @@ export default function EditLogPage() {
                   adventureLogId={id as Id<"adventureLogs">}
                 />
 
-                <div className="border border-dashed rounded p-1 flex flex-row items-center justify-center gap-2">
+                <div className="border border-dashed rounded p-2 flex flex-row items-center justify-center gap-2">
                   <AddImageBlockButton
                     adventureLogId={id as Id<"adventureLogs">}
                   />
