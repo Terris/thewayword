@@ -13,14 +13,14 @@ export default function FeedPage() {
   if (isLoading) return <LoadingScreen />;
 
   return (
-    <div className="w-full p-8 grid grid-cols-4 gap-8">
+    <div className="w-full p-8 grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {adventureLogs.map((adventureLog) => (
         <Link
           key={adventureLog._id}
           href={`/adventure-logs/${adventureLog._id}`}
           className="group w-full border border-dashed rounded pb-8 cursor-pointer hover:border-muted transition-all"
         >
-          <div className="pb-4 group-hover:p-4 transition-all">
+          <div className="pb-4 group-hover:p-4 group-hover:pb-8 transition-all">
             <AdventureLogCoverImage
               coverImageFileId={adventureLog.coverImageFileId}
             />
