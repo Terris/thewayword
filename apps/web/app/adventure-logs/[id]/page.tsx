@@ -6,8 +6,8 @@ import { useQuery } from "convex/react";
 import { MessageCircle, Pencil } from "lucide-react";
 import { type Id, api } from "@repo/convex";
 import { LoadingScreen, Text } from "@repo/ui";
-import { Block } from "../../_components/Block";
 import { ImageBlock } from "../../_components/ImageBlock";
+import { AdventureLogBlocks } from "./AdventureLogBlocks";
 
 export default function AdventureLogPage() {
   const { id } = useParams();
@@ -39,11 +39,7 @@ export default function AdventureLogPage() {
           <ImageBlock fileId={adventureLog.coverImageFileId} className="mb-8" />
         ) : null}
 
-        {adventureLog?.blocks?.map((block) => (
-          <div key={`block-${block.type}-${block.order}`} className="pb-8">
-            <Block block={block} />
-          </div>
-        ))}
+        <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
       </div>
       <div className="fixed top-[50vh] h-[1px] right-0 p-8 flex flex-col justify-center items-center">
         <div className="flex flex-col gap-4">

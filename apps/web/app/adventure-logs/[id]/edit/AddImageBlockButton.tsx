@@ -10,13 +10,14 @@ interface UploadButtonProps {
 
 export function AddImageBlockButton({ adventureLogId }: UploadButtonProps) {
   const { toast } = useToast();
-  const addImageBlock = useMutation(api.adventureLogs.addImageBlock);
+  const addImageBlock = useMutation(api.adventureLogBlocks.create);
 
   async function handleUploadSuccess(fileIds: Id<"files">[]) {
     if (!fileIds[0]) return;
     try {
       await addImageBlock({
-        id: adventureLogId,
+        adventureLogId,
+        type: "image",
         fileId: fileIds[0],
       });
     } catch (error) {

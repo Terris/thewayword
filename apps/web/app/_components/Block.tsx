@@ -1,17 +1,8 @@
-import { type Id } from "@repo/convex";
+import { type Doc } from "@repo/convex";
 import { ImageBlock } from "./ImageBlock";
 import { TextBlock } from "./TextBlock";
 
-interface BlockProps {
-  block: {
-    type: "text" | "image";
-    order: number;
-    content: string;
-    fileId?: Id<"files">;
-  };
-}
-
-export function Block({ block }: BlockProps) {
+export function Block({ block }: { block: Doc<"adventureLogBlocks"> }) {
   return (
     <div className="rounded">
       {block.type === "image" && block.fileId ? (

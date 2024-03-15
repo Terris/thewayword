@@ -17,8 +17,8 @@ import {
 import { useToast } from "@repo/ui/hooks";
 import { ImageBlock } from "../../../_components/ImageBlock";
 import { AddImageBlockButton } from "./AddImageBlockButton";
-import { EditableBlock } from "./EditableBlock";
 import { AddTextBlockButton } from "./AddTextBlockButton";
+import { EditableAdventureLogBlocks } from "./EditableAdventureLogBlocks";
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
@@ -188,18 +188,9 @@ export default function EditLogPage() {
                   />
                 ) : null}
 
-                {adventureLog?.blocks?.map((block, index) => (
-                  <div
-                    key={`block-${block.type}-${block.order}`}
-                    className="pb-8"
-                  >
-                    <EditableBlock
-                      adventureLogId={id as Id<"adventureLogs">}
-                      block={block}
-                      blockIndex={index}
-                    />
-                  </div>
-                ))}
+                <EditableAdventureLogBlocks
+                  adventureLogId={id as Id<"adventureLogs">}
+                />
 
                 <div className="border border-dashed rounded p-1 flex flex-row items-center justify-center gap-2">
                   <AddImageBlockButton

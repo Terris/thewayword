@@ -7,7 +7,7 @@ export function EditableTextBlock({
   setContent,
 }: {
   selected: boolean;
-  content: string;
+  content?: string;
   setContent: (value: string) => void;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -47,7 +47,7 @@ export function EditableTextBlock({
           style={{ resize: "none" }}
         />
       ) : (
-        <Text className="w-full text-lg whitespace-pre-wrap">
+        <Text className="w-full min-h-4 text-lg whitespace-pre-wrap">
           {content === "" ? "Start typing..." : content}
         </Text>
       )}

@@ -1,64 +1,45 @@
 import { useEffect, useState } from "react";
 import { useMutation } from "convex/react";
 import { MoveDown, MoveUp, Trash2 } from "lucide-react";
-import { api, type Id } from "@repo/convex";
+import { api, type Doc } from "@repo/convex";
 import { cn } from "@repo/utils";
 import { EditableTextBlock } from "./EditableTextBlock";
 import { EditableImageBlock } from "./EditableImageBlock";
 
-interface Block {
-  type: "text" | "image";
-  order: number;
-  content: string;
-  fileId?: Id<"files">;
-}
-
-interface EditableBlockProps {
-  adventureLogId: Id<"adventureLogs">;
-  block: Block;
-  blockIndex: number;
-}
-
-export function EditableBlock({
-  adventureLogId,
-  block,
-  blockIndex,
-}: EditableBlockProps) {
+export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
   const [selected, setSelected] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(block.content);
   const [updatedFileId, setUpdatedFileId] = useState(block.fileId);
 
   const canUpdateBlock = updatedContent !== block.content;
 
-  const updateAdventureLog = useMutation(
-    api.adventureLogs.updateAdventureLogBlock
+  const updateAdventureLogBlock = useMutation(api.adventureLogBlocks.update);
+
+  const moveBlockOrderUp = useMutation(api.adventureLogBlocks.moveBlockOrderUp);
+  const moveBlockOrderDown = useMutation(
+    api.adventureLogBlocks.moveBlockOrderDown
   );
 
-  const moveBlockUp = useMutation(api.adventureLogs.moveBlockUp);
-  const moveBlockDown = useMutation(api.adventureLogs.moveBlockDown);
-
-  const deleteAdventureLogBlock = useMutation(api.adventureLogs.deleteBlock);
+  const deleteAdventureLogBlock = useMutation(api.adventureLogBlocks.destroy);
 
   // Attempt to save updated block when block is deselected
   useEffect(() => {
     if (!selected && canUpdateBlock) {
-      void updateAdventureLog({
-        adventureLogId,
-        blockIndex,
+      void updateAdventureLogBlock({
+        id: block._id,
         content:
           updatedContent !== block.content ? updatedContent : block.content,
         fileId: updatedFileId !== block.fileId ? updatedFileId : block.fileId,
       });
     }
   }, [
-    selected,
-    canUpdateBlock,
-    updateAdventureLog,
-    adventureLogId,
-    blockIndex,
-    updatedContent,
+    block._id,
     block.content,
     block.fileId,
+    canUpdateBlock,
+    selected,
+    updateAdventureLogBlock,
+    updatedContent,
     updatedFileId,
   ]);
 
@@ -112,14 +93,14 @@ export function EditableBlock({
             <button
               type="button"
               className="w-4 h-4 hover:text-primary"
-              onClick={() => moveBlockUp({ adventureLogId, blockIndex })}
+              onClick={() => moveBlockOrderUp({ id: block._id })}
             >
               <MoveUp className="w-4 h-4" />
             </button>
             <button
               type="button"
               className="w-4 h-4"
-              onClick={() => moveBlockDown({ adventureLogId, blockIndex })}
+              onClick={() => moveBlockOrderDown({ id: block._id })}
             >
               <MoveDown className="w-4 h-4 hover:text-primary" />
             </button>
@@ -127,9 +108,7 @@ export function EditableBlock({
             <button type="button" className="w-4 h-4 hover:text-primary">
               <Trash2
                 className="w-4 h-4"
-                onClick={() =>
-                  deleteAdventureLogBlock({ adventureLogId, blockIndex })
-                }
+                onClick={() => deleteAdventureLogBlock({ id: block._id })}
               />
             </button>
           </div>

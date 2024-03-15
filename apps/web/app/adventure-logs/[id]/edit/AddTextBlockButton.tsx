@@ -8,13 +8,14 @@ interface UploadButtonProps {
 }
 
 export function AddTextBlockButton({ adventureLogId }: UploadButtonProps) {
-  const addTextBlock = useMutation(api.adventureLogs.addTextBlock);
+  const addTextBlock = useMutation(api.adventureLogBlocks.create);
 
   return (
     <Button
       onClick={() =>
         void addTextBlock({
-          id: adventureLogId,
+          adventureLogId,
+          type: "text",
         })
       }
     >

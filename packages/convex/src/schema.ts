@@ -18,20 +18,20 @@ export default defineSchema({
     ),
     coverImageFileId: v.optional(v.id("files")),
     published: v.boolean(),
-    blocks: v.optional(
-      v.array(
-        v.object({
-          type: v.union(v.literal("text"), v.literal("image")),
-          order: v.number(),
-          content: v.string(),
-          fileId: v.optional(v.id("files")),
-        })
-      )
-    ),
   })
     .index("by_user_id", ["userId"])
     .index("by_published", ["published"])
     .index("by_user_id_published", ["userId", "published"]),
+  adventureLogBlocks: defineTable({
+    adventureLogId: v.id("adventureLogs"),
+    type: v.union(v.literal("text"), v.literal("image")),
+    order: v.number(),
+    content: v.optional(v.string()),
+    fileId: v.optional(v.id("files")),
+  })
+    .index("by_adventure_log_id", ["adventureLogId"])
+    .index("by_order", ["order"])
+    .index("by_adventure_log_id_order", ["adventureLogId", "order"]),
   adventureLogTags: defineTable({
     adventureLogId: v.id("adventureLogs"),
     tagId: v.id("tags"),
