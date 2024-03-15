@@ -46,7 +46,7 @@ export function Masthead() {
         </div>
         <div className="w-1/3 flex flex-row items-center justify-end gap-8">
           {isAuthenticated ? (
-            <div className="hidden md:flex flex-row items-center">
+            <div className="hidden md:flex flex-row items-center justify-end gap-8">
               <MastheadLink href="/me/adventure-logs">My Logs</MastheadLink>
               <MastheadLink href="/adventure-logs/create">
                 Log an Adventure
@@ -107,7 +107,7 @@ function MastheadLink({
   return (
     <Link
       href={href}
-      className="p-2 rounded font-soleil transition-opacity hover:opacity-80 hover:bg-muted"
+      className="p-2 rounded font-soleil hover:bg-muted transition-all"
     >
       {children}
     </Link>

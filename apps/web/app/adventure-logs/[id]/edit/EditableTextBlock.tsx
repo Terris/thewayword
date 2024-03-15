@@ -43,7 +43,7 @@ export function EditableTextBlock({
             e.key === "Enter" && e.preventDefault();
           }}
           onFocus={resizeTextArea}
-          className="w-full min-h-4 text-lg bg-transparent outline-none"
+          className="w-full h-1 text-lg bg-transparent outline-none"
           style={{ resize: "none" }}
         />
       ) : (

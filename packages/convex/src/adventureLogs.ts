@@ -2,7 +2,11 @@ import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
-import { toTitleCase } from "./lib/utils";
+import {
+  moveItemAtIndexOnePositionDown,
+  moveItemAtIndexOnePositionUp,
+  toTitleCase,
+} from "./lib/utils";
 
 export const findById = query({
   args: { id: v.id("adventureLogs") },
@@ -147,6 +151,19 @@ export const update = mutation({
   },
 });
 
+export const destroy = mutation({
+  args: { id: v.id("adventureLogs") },
+  handler: async (ctx, { id }) => {
+    const { user } = await validateIdentity(ctx);
+    const existingAdventureLog = await ctx.db.get(id);
+    if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
+    if (existingAdventureLog.userId !== user._id)
+      throw new ConvexError("Not the owner of this adventure log");
+
+    return ctx.db.delete(id);
+  },
+});
+
 type BlockType = "text" | "image";
 
 export const addImageBlock = mutation({
@@ -220,6 +237,67 @@ export const updateAdventureLogBlock = mutation({
             fileId: fileId ?? block.fileId,
           }
         : block
+    );
+
+    return ctx.db.patch(adventureLogId, {
+      blocks: updatedLogBlocks,
+    });
+  },
+});
+
+export const deleteBlock = mutation({
+  args: { adventureLogId: v.id("adventureLogs"), blockIndex: v.number() },
+  handler: async (ctx, { adventureLogId, blockIndex }) => {
+    const { user } = await validateIdentity(ctx);
+    const existingAdventureLog = await ctx.db.get(adventureLogId);
+    if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
+    if (existingAdventureLog.userId !== user._id)
+      throw new ConvexError("Not the owner of this adventure log");
+
+    const updatedLogBlocks = existingAdventureLog.blocks?.filter(
+      (_, i) => i !== blockIndex
+    );
+
+    return ctx.db.patch(adventureLogId, {
+      blocks: updatedLogBlocks,
+    });
+  },
+});
+
+export const moveBlockUp = mutation({
+  args: { adventureLogId: v.id("adventureLogs"), blockIndex: v.number() },
+  handler: async (ctx, { adventureLogId, blockIndex }) => {
+    const { user } = await validateIdentity(ctx);
+    const existingAdventureLog = await ctx.db.get(adventureLogId);
+    if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
+    if (existingAdventureLog.userId !== user._id)
+      throw new ConvexError("Not the owner of this adventure log");
+    if (!existingAdventureLog.blocks) return;
+
+    const updatedLogBlocks = moveItemAtIndexOnePositionUp(
+      existingAdventureLog.blocks,
+      blockIndex
+    );
+
+    return ctx.db.patch(adventureLogId, {
+      blocks: updatedLogBlocks,
+    });
+  },
+});
+
+export const moveBlockDown = mutation({
+  args: { adventureLogId: v.id("adventureLogs"), blockIndex: v.number() },
+  handler: async (ctx, { adventureLogId, blockIndex }) => {
+    const { user } = await validateIdentity(ctx);
+    const existingAdventureLog = await ctx.db.get(adventureLogId);
+    if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
+    if (existingAdventureLog.userId !== user._id)
+      throw new ConvexError("Not the owner of this adventure log");
+    if (!existingAdventureLog.blocks) return;
+
+    const updatedLogBlocks = moveItemAtIndexOnePositionDown(
+      existingAdventureLog.blocks,
+      blockIndex
     );
 
     return ctx.db.patch(adventureLogId, {

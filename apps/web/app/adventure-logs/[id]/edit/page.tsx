@@ -36,6 +36,7 @@ export default function EditLogPage() {
   const router = useRouter();
   const queryArgs = id ? { id: id as Id<"adventureLogs"> } : "skip";
   const adventureLog = useQuery(api.adventureLogs.findById, queryArgs);
+  console.log(adventureLog);
   const isLoading = adventureLog === undefined;
   const updateAdventureLog = useMutation(api.adventureLogs.update);
 
