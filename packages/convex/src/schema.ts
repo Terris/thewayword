@@ -52,6 +52,13 @@ export default defineSchema({
     userId: v.id("users"),
     hash: v.optional(v.string()),
   }),
+  likes: defineTable({
+    userId: v.id("users"),
+    adventureLogId: v.id("adventureLogs"),
+  })
+    .index("by_user_id", ["userId"])
+    .index("by_adventure_log_id", ["adventureLogId"])
+    .index("by_user_id_adventure_log_id", ["userId", "adventureLogId"]),
   tags: defineTable({
     name: v.string(),
   }).index("by_name", ["name"]),

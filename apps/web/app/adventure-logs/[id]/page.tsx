@@ -2,10 +2,11 @@
 
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { useQuery } from "convex/react";
-import { MessageCircle, Pencil } from "lucide-react";
+import { useMutation, useQuery } from "convex/react";
+import { Heart, MessageCircle, Pencil } from "lucide-react";
 import { type Id, api } from "@repo/convex";
 import { LoadingScreen, Text } from "@repo/ui";
+import { cn } from "@repo/utils";
 import { ImageBlock } from "../../_components/ImageBlock";
 import { AdventureLogBlocks } from "./AdventureLogBlocks";
 
@@ -14,7 +15,6 @@ export default function AdventureLogPage() {
   const adventureLog = useQuery(api.adventureLogs.findById, {
     id: id as Id<"adventureLogs">,
   });
-
   const isLoading = adventureLog === undefined;
 
   if (isLoading) return <LoadingScreen />;
@@ -45,14 +45,13 @@ export default function AdventureLogPage() {
         <div className="flex flex-row lg:flex-col gap-4">
           <Link
             href={`/adventure-logs/${id as string}/edit`}
-            type="button"
             className="bg-background border rounded-full p-3 hover:bg-muted"
           >
             <Pencil className="w-4 h-4 " />
           </Link>
+          <AdventureLogLikeButton adventureLogId={id as Id<"adventureLogs">} />
           <Link
             href={`/adventure-logs/${id as string}/edit`}
-            type="button"
             className="bg-background border rounded-full p-3 hover:bg-muted"
           >
             <MessageCircle className="w-4 h-4 " />
@@ -60,5 +59,36 @@ export default function AdventureLogPage() {
         </div>
       </div>
     </>
+  );
+}
+
+function AdventureLogLikeButton({
+  adventureLogId,
+}: {
+  adventureLogId: Id<"adventureLogs">;
+}) {
+  const userLikesAdventureLog = useQuery(
+    api.likes.findBySessionedUserAndAdventureLogId,
+    {
+      adventureLogId,
+    }
+  );
+  const likeAdventureLog = useMutation(api.likes.create);
+
+  return (
+    <button
+      type="button"
+      className={cn(
+        "bg-background border rounded-full p-3 hover:bg-muted",
+        userLikesAdventureLog && "bg-muted"
+      )}
+      onClick={() => {
+        void likeAdventureLog({
+          adventureLogId,
+        });
+      }}
+    >
+      <Heart className="w-4 h-4 " />
+    </button>
   );
 }
