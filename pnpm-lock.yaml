@@ -236,11 +236,11 @@ importers:
         specifier: ^4.13.9
         version: 4.13.9(react@18.2.0)
       convex:
-        specifier: ^1.9.0
-        version: 1.9.0(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^1.10.0
+        version: 1.10.0(react@18.2.0)
       convex-helpers:
         specifier: ^0.1.7
-        version: 0.1.15(convex@1.9.0)(react@18.2.0)
+        version: 0.1.15(convex@1.10.0)(react@18.2.0)
       openai:
         specifier: ^4.26.0
         version: 4.28.0
@@ -5085,6 +5085,22 @@ packages:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
     dev: true
 
+  /convex-helpers@0.1.15(convex@1.10.0)(react@18.2.0):
+    resolution: {integrity: sha512-G9MNXH4CsBfnwNCsFH3vjVBpiWGiz2cRYz6oHLEyKjqGJe6XKbD7B0y5r3pAOCokaY6q6NcfamqAFwrMdUIOJw==}
+    peerDependencies:
+      convex: ^1.8.0
+      react: ^17.0.2 || ^18.0.0
+      zod: ^3.22.4
+    peerDependenciesMeta:
+      react:
+        optional: true
+      zod:
+        optional: true
+    dependencies:
+      convex: 1.10.0(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
   /convex-helpers@0.1.15(convex@1.9.0)(react@18.2.0):
     resolution: {integrity: sha512-G9MNXH4CsBfnwNCsFH3vjVBpiWGiz2cRYz6oHLEyKjqGJe6XKbD7B0y5r3pAOCokaY6q6NcfamqAFwrMdUIOJw==}
     peerDependencies:
@@ -5099,6 +5115,33 @@ packages:
     dependencies:
       convex: 1.9.0(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
+    dev: false
+
+  /convex@1.10.0(react@18.2.0):
+    resolution: {integrity: sha512-dGU3K3z63e4JQSq4AQthgxUADux1/0qfgFBtOsolcPo+ilV2Dp5wfBJYMOvLi7wkmNvJ+b3I90XfLPGfGzQrWw==}
+    engines: {node: '>=16.15.1', npm: '>=7.0.0'}
+    hasBin: true
+    peerDependencies:
+      '@auth0/auth0-react': ^2.0.1
+      '@clerk/clerk-react': ^4.12.8
+      react: ^17.0.2 || ^18.0.0
+      react-dom: ^17.0.2 || ^18.0.0
+    peerDependenciesMeta:
+      '@auth0/auth0-react':
+        optional: true
+      '@clerk/clerk-react':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      esbuild: 0.17.19
+      jwt-decode: 3.1.2
+      node-fetch: 2.7.0
+      react: 18.2.0
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /convex@1.9.0(react-dom@18.2.0)(react@18.2.0):
