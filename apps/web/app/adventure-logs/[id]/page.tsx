@@ -73,22 +73,27 @@ function AdventureLogLikeButton({
       adventureLogId,
     }
   );
-  const likeAdventureLog = useMutation(api.likes.create);
+  const toggleLikeAdventureLog = useMutation(
+    api.likes.toggleLikeBySessionedUserAndAdventureLogId
+  );
 
   return (
     <button
       type="button"
       className={cn(
         "bg-background border rounded-full p-3 hover:bg-muted",
-        userLikesAdventureLog && "bg-muted"
+        userLikesAdventureLog && "text-red-500"
       )}
       onClick={() => {
-        void likeAdventureLog({
+        void toggleLikeAdventureLog({
           adventureLogId,
         });
       }}
     >
-      <Heart className="w-4 h-4 " />
+      <Heart
+        className="w-4 h-4"
+        fill={userLikesAdventureLog ? "red" : "transparent"}
+      />
     </button>
   );
 }
