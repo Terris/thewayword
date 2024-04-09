@@ -8,6 +8,8 @@ import { Button, Logo } from "@repo/ui";
 import { ThemeModeToggle } from "@repo/ui/ThemeModeToggle";
 import { Menu, X } from "lucide-react";
 import { useLockBodyScroll } from "@repo/hooks";
+import { usePathname } from "next/navigation";
+import { cn } from "@repo/utils";
 
 export function Masthead() {
   const { isAuthenticated } = useMeContext();
@@ -104,10 +106,15 @@ function MastheadLink({
   href: string;
   children: ReactNode;
 }) {
+  const pathname = usePathname();
+  const isActive = pathname === href;
   return (
     <Link
       href={href}
-      className="p-2 rounded font-soleil hover:bg-muted transition-all"
+      className={cn(
+        "p-2 rounded font-soleil hover:bg-muted transition-all",
+        isActive && "bg-muted"
+      )}
     >
       {children}
     </Link>
