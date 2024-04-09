@@ -56,12 +56,14 @@ export const internalHandleClerkWebhook = internalAction({
               throw new ConvexError("Error occured -- no email");
             }
             const name = `${eventData.first_name} ${eventData.last_name}`;
+            const avatarUrl = eventData.image_url;
 
             // Create db user
             await ctx.runMutation(internal.users.systemSaveNewClerkUser, {
               clerkId: eventData.id,
               email,
               name,
+              avatarUrl,
               roles: ["user"],
             });
             handled = true;

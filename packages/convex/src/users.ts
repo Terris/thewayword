@@ -65,9 +65,10 @@ export const systemSaveNewClerkUser = internalMutation({
     clerkId: v.string(),
     email: v.string(),
     name: v.string(),
+    avatarUrl: v.optional(v.string()),
     roles: v.optional(v.array(v.string())),
   },
-  handler: async (ctx, { clerkId, email, name, roles }) => {
+  handler: async (ctx, { clerkId, email, name, avatarUrl, roles }) => {
     const tokenIdentifier = `${process.env.CLERK_JWT_ISSUER_DOMAIN}|${clerkId}`;
     const user = await ctx.db
       .query("users")
@@ -86,6 +87,7 @@ export const systemSaveNewClerkUser = internalMutation({
     const newUserId = await ctx.db.insert("users", {
       name,
       email,
+      avatarUrl,
       tokenIdentifier,
       roles,
     });

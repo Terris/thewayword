@@ -66,6 +66,7 @@ export default defineSchema({
     name: v.string(),
     email: v.string(),
     tokenIdentifier: v.string(),
+    avatarUrl: v.optional(v.string()),
     roles: v.optional(v.array(v.string())),
   })
     .index("by_token", ["tokenIdentifier"])

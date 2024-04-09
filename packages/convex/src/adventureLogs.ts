@@ -25,12 +25,13 @@ export const findAllPublished = query({
 
     const adventureLogsWithUser = await asyncMap(adventureLogs, async (log) => {
       const user = await ctx.db.get(log.userId);
-      if (!user) return log;
+      if (!adventureLogs) throw new ConvexError("Adventure log user not found");
       return {
         ...log,
         user: {
-          id: user._id,
-          name: user.name,
+          id: user?._id,
+          name: user?.name,
+          avatarUrl: user?.avatarUrl,
         },
       };
     });

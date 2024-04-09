@@ -7,6 +7,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "bittybrella.s3.amazonaws.com",
       },
+      {
+        protocol: "https",
+        hostname: "img.clerk.com",
+      },
     ],
   },
 };
