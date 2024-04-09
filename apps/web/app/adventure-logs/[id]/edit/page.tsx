@@ -144,11 +144,6 @@ export default function EditLogPage() {
                 </Text>
               </div>
               <div className="w-full max-w-[1024px] p-8 pt-0 mx-auto">
-                {adventureLog?.location?.name ? (
-                  <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-4">
-                    {adventureLog.location.name}
-                  </Text>
-                ) : null}
                 <Field name="title">
                   {({ field, meta }: FieldProps) => (
                     <>
@@ -172,7 +167,11 @@ export default function EditLogPage() {
                 </Field>
 
                 <hr className="border-b-1 border-dashed mb-4" />
-
+                {adventureLog?.location?.name ? (
+                  <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
+                    {adventureLog.location.name}
+                  </Text>
+                ) : null}
                 {adventureLog?.location?.longitude &&
                 adventureLog.location.latitude ? (
                   <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-8">

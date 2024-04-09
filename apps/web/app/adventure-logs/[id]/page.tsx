@@ -22,13 +22,13 @@ export default function AdventureLogPage() {
   return (
     <>
       <div className="w-full max-w-[1024px] p-8 mx-auto">
-        <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-4">
-          {adventureLog?.location?.name}
-        </Text>
         <Text className="w-full text-4xl mb-4 bg-transparent outline-none focus:underline">
           {adventureLog?.title}
         </Text>
         <hr className="border-b-1 border-dashed mb-4" />
+        <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
+          {adventureLog?.location?.name}
+        </Text>
         {adventureLog?.location?.longitude && adventureLog.location.latitude ? (
           <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-8">
             {adventureLog.location.longitude}, {adventureLog.location.latitude}
