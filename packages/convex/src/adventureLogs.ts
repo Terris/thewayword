@@ -75,7 +75,7 @@ export const create = mutation({
       latitude: v.number(),
       longitude: v.number(),
       name: v.string(),
-      full_address: v.string(),
+      full_address: v.optional(v.string()),
       poiCategories: v.optional(v.array(v.string())),
     }),
     coverImageFileId: v.id("files"),

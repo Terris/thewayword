@@ -1,9 +1,5 @@
-import { Text } from "@repo/ui";
+import { redirect } from "next/navigation";
 
-export default function MyAdventureLogsPage() {
-  return (
-    <div className="w-full p-8">
-      <Text>My Logs</Text>
-    </div>
-  );
+export default function AdventureLogsPage() {
+  redirect("/feed");
 }

@@ -31,7 +31,7 @@ const validationSchema = Yup.object().shape({
       latitude: Yup.string().required(),
       longitude: Yup.string().required(),
       name: Yup.string().required(),
-      fullAddress: Yup.string().required(),
+      fullAddress: Yup.string(),
       poiCategories: Yup.array(Yup.string().required()),
     })
     .required("Location is required"),
@@ -213,40 +213,28 @@ export default function CreatePage() {
                       </Field>
                     </>
                   ) : null}
-
-                  {currentStep === 2 ? (
-                    <div className="flex flex-row items-center gap-4">
+                  <div className="flex flex-row items-center gap-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      disabled={currentStep === 0}
+                      className="w-full mt-8"
+                      onClick={() => {
+                        setCurrentStep((s) => s - 1);
+                      }}
+                    >
+                      Back
+                    </Button>
+                    {currentStep === 2 ? (
                       <Button
                         type="button"
-                        variant="outline"
                         disabled={isSubmitting}
                         className="w-full mt-8"
                         onClick={() => submitForm()}
                       >
-                        Save Draft
+                        Next
                       </Button>
-                      <Button
-                        type="button"
-                        disabled={isSubmitting}
-                        className="w-full mt-8"
-                        onClick={() => submitForm()}
-                      >
-                        Publish Now
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="flex flex-row items-center gap-4">
-                      <Button
-                        type="button"
-                        variant="outline"
-                        disabled={currentStep === 0}
-                        className="w-full mt-8"
-                        onClick={() => {
-                          setCurrentStep((s) => s - 1);
-                        }}
-                      >
-                        Back
-                      </Button>
+                    ) : (
                       <Button
                         type="button"
                         disabled={!values.location.name}
@@ -257,8 +245,8 @@ export default function CreatePage() {
                       >
                         Next
                       </Button>
-                    </div>
-                  )}
+                    )}
+                  </div>
                   <div className=" my-16 flex flex-row items-center justify-center gap-4">
                     <div
                       className={cn(

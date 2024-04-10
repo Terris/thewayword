@@ -138,11 +138,7 @@ export default function EditLogPage() {
                   Publish
                 </Button>
               </div>
-              <div className="w-full">
-                <Text className="text-4xl font-black italic pb-16 text-center">
-                  Tell your adventure story.
-                </Text>
-              </div>
+
               <div className="w-full max-w-[1024px] p-8 pt-0 mx-auto">
                 <Field name="title">
                   {({ field, meta }: FieldProps) => (
