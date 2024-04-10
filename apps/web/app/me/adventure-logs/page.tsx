@@ -3,8 +3,7 @@
 import { api } from "@repo/convex";
 import { useQuery } from "convex/react";
 import { LoadingScreen, Text } from "@repo/ui";
-import Link from "next/link";
-import { AdventureLogCoverImage } from "../../_components/AdventureLogCoverImage";
+import { AdventureLogFeedItem } from "../../_components/AdventureLogFeedItem";
 
 export default function MeAdventureLogsPage() {
   const adventureLogs = useQuery(
@@ -19,29 +18,10 @@ export default function MeAdventureLogsPage() {
     <>
       <div className="w-full py-8 grid grid-cols-4 gap-8">
         {adventureLogs.map((adventureLog) => (
-          <Link
+          <AdventureLogFeedItem
             key={adventureLog._id}
-            href={`/adventure-logs/${adventureLog._id}`}
-            className="w-full border border-dashed rounded pb-8 cursor-pointer hover:border-muted transition-all"
-          >
-            <AdventureLogCoverImage
-              coverImageFileId={adventureLog.coverImageFileId}
-              className="pb-8"
-            />
-            <div className="p-4">
-              <Text className="text-center font-black text-xl pb-4">
-                {adventureLog.title}
-              </Text>
-              <hr className="w-[30px] mx-auto mb-4" />
-              <Text className="font-soleil text-center font-bold uppercase text-xs tracking-wider pb-2">
-                {adventureLog.location?.name}
-              </Text>
-              <Text className="text-center text-xs">
-                {adventureLog.location?.latitude},{" "}
-                {adventureLog.location?.longitude}
-              </Text>
-            </div>
-          </Link>
+            adventureLog={adventureLog}
+          />
         ))}
       </div>
       {!adventureLogs.length && (

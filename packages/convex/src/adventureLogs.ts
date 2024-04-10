@@ -43,13 +43,26 @@ export const findAllPublishedBySessionedUser = query({
   args: {},
   handler: async (ctx, {}) => {
     const { user } = await validateIdentity(ctx);
-    return ctx.db
+    const adventureLogs = ctx.db
       .query("adventureLogs")
       .withIndex("by_user_id_published", (q) =>
         q.eq("userId", user._id).eq("published", true)
       )
       .order("desc")
       .collect();
+    const adventureLogsWithUser = await asyncMap(adventureLogs, async (log) => {
+      const user = await ctx.db.get(log.userId);
+      if (!adventureLogs) throw new ConvexError("Adventure log user not found");
+      return {
+        ...log,
+        user: {
+          id: user?._id,
+          name: user?.name,
+          avatarUrl: user?.avatarUrl,
+        },
+      };
+    });
+    return adventureLogsWithUser;
   },
 });
 
@@ -57,13 +70,26 @@ export const findAllDraftsBySessionedUser = query({
   args: {},
   handler: async (ctx, {}) => {
     const { user } = await validateIdentity(ctx);
-    return ctx.db
+    const adventureLogs = ctx.db
       .query("adventureLogs")
       .withIndex("by_user_id_published", (q) =>
         q.eq("userId", user._id).eq("published", false)
       )
       .order("desc")
       .collect();
+    const adventureLogsWithUser = await asyncMap(adventureLogs, async (log) => {
+      const user = await ctx.db.get(log.userId);
+      if (!adventureLogs) throw new ConvexError("Adventure log user not found");
+      return {
+        ...log,
+        user: {
+          id: user?._id,
+          name: user?.name,
+          avatarUrl: user?.avatarUrl,
+        },
+      };
+    });
+    return adventureLogsWithUser;
   },
 });
 
