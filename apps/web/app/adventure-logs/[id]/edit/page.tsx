@@ -90,15 +90,15 @@ export default function EditLogPage() {
   return (
     <Formik<EditAdventureLogFormValues>
       initialValues={{
-        title: adventureLog?.title ?? "Untitled log",
-        coverImageFileId: adventureLog?.coverImageFileId,
+        title: adventureLog.title,
+        coverImageFileId: adventureLog.coverImageFileId,
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
       {({ values, isSubmitting, submitForm }) => {
         const canUpdateAdventureLog =
-          values.title !== adventureLog?.title && values.title !== "";
+          values.title !== adventureLog.title && values.title !== "";
 
         return (
           <Form
@@ -163,12 +163,12 @@ export default function EditLogPage() {
                 </Field>
 
                 <hr className="border-b-1 border-dashed mb-4" />
-                {adventureLog?.location?.name ? (
+                {adventureLog.location?.name ? (
                   <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
                     {adventureLog.location.name}
                   </Text>
                 ) : null}
-                {adventureLog?.location?.longitude &&
+                {adventureLog.location?.longitude &&
                 adventureLog.location.latitude ? (
                   <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-8">
                     {adventureLog.location.longitude},{" "}
@@ -176,7 +176,7 @@ export default function EditLogPage() {
                   </Text>
                 ) : null}
 
-                {adventureLog?.coverImageFileId ? (
+                {adventureLog.coverImageFileId ? (
                   <ImageBlock
                     fileId={adventureLog.coverImageFileId}
                     className="mb-8"
