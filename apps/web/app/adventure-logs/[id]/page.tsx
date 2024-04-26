@@ -22,18 +22,17 @@ export default function AdventureLogPage() {
 
   return (
     <>
-      {adventureLog ? (
-        <div className="w-full h-[45vh]">
-          <AdventureLogMap
-            defaultLongitude={-105.628997}
-            defaultLatitude={40.342441}
-            initialLongitude={adventureLog.location?.longitude}
-            initialLatitude={adventureLog.location?.longitude}
-            featureLongitude={adventureLog.location?.longitude}
-            featureLatitude={adventureLog.location?.latitude}
-          />
-        </div>
-      ) : null}
+      <div className="w-full h-[45vh]">
+        <AdventureLogMap
+          defaultLongitude={-105.628997}
+          defaultLatitude={40.342441}
+          initialLongitude={adventureLog.location?.longitude}
+          initialLatitude={adventureLog.location?.longitude}
+          featureLongitude={adventureLog.location?.longitude}
+          featureLatitude={adventureLog.location?.latitude}
+        />
+      </div>
+
       <div className="relative z-50 w-full container bg-background -mt-28 pt-8 px-10 mx-auto">
         <div className="max-w-[900px] mx-auto">
           <Text className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline">
@@ -58,7 +57,7 @@ export default function AdventureLogPage() {
             </Text>
           </div>
         </div>
-        {adventureLog?.coverImageFileId ? (
+        {adventureLog.coverImageFileId ? (
           <ImageBlock fileId={adventureLog.coverImageFileId} className="mb-8" />
         ) : null}
 
