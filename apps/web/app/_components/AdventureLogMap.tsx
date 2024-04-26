@@ -17,6 +17,7 @@ export function AdventureLogMap({
   initialLatitude,
   featureLongitude,
   featureLatitude,
+  moveable,
 }: {
   defaultLongitude: number;
   defaultLatitude: number;
@@ -24,6 +25,7 @@ export function AdventureLogMap({
   initialLatitude?: number;
   featureLongitude?: number;
   featureLatitude?: number;
+  moveable?: boolean;
 }) {
   const map = useRef<mapboxgl.Map | null>(null);
   const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -38,6 +40,7 @@ export function AdventureLogMap({
       style: "mapbox://styles/mapbox/outdoors-v12",
       center: [lng, lat],
       zoom,
+      interactive: moveable,
     });
 
     map.current.on("move", () => {

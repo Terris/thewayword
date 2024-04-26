@@ -30,23 +30,24 @@ export default function AdventureLogPage() {
           initialLatitude={adventureLog.location?.longitude}
           featureLongitude={adventureLog.location?.longitude}
           featureLatitude={adventureLog.location?.latitude}
+          moveable={false}
         />
       </div>
 
-      <div className="relative z-50 w-full container bg-background -mt-28 pt-8 px-10 mx-auto">
-        <div className="max-w-[900px] mx-auto">
+      <div className="relative z-50 w-full container bg-background -mt-28">
+        <div className="max-w-[900px] mx-auto p-10">
           <Text className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline">
             {adventureLog.title}
           </Text>
           <hr className="border-b-1 border-dashed mb-4" />
-          <div className="flex flex-row items-start">
+          <div className="flex flex-row items-start pb-4">
             <div className="w-1/2">
               <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
                 {adventureLog.location?.name}
               </Text>
               {adventureLog.location?.longitude &&
               adventureLog.location.latitude ? (
-                <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-16">
+                <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
                   {adventureLog.location.longitude},{" "}
                   {adventureLog.location.latitude}
                 </Text>

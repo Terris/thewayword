@@ -15,13 +15,13 @@ export function AdventureLogFeedItem({
       href={`/adventure-logs/${adventureLog._id}`}
       className="group w-full pb-4 cursor-pointer"
     >
-      <div className="relative flex items-center justify-center">
+      <div className="relative flex items-center justify-center bg-primary rounded">
         <AdventureLogCoverImage
           coverImageFileId={adventureLog.coverImageFileId}
-          className="group-hover:opacity-20 transition-opacity"
+          className="group-hover:opacity-10 transition-opacity"
         />
-        <div className="opacity-0 max-w-full absolute p-4 group-hover:opacity-100 transition-opacity">
-          <Text className="w-full pb-2 font-black text-xl whitespace-nowrap text-ellipsis overflow-hidden">
+        <div className="opacity-0 max-w-full absolute p-16 group-hover:opacity-100 transition-opacity">
+          <Text className="w-full font-black text-xl text-center text-background overflow-hidden">
             {adventureLog.title}
           </Text>
         </div>
