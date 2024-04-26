@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import * as Yup from "yup";
 import { Field, Form, Formik, type FieldProps } from "formik";
 import { useMutation } from "convex/react";
-import mapboxgl from "mapbox-gl";
 import { type Id, api } from "@repo/convex";
 import { useGeoLocation } from "@repo/hooks";
 import { Input, Text, Button } from "@repo/ui";
@@ -19,9 +18,6 @@ import {
 } from "../../_components/LocationSearchInput";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { AdventureLogMap } from "../../_components/AdventureLogMap";
-
-// eslint-disable-next-line -- fix
-mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
 
 const validationSchema = Yup.object().shape({
   location: Yup.object()

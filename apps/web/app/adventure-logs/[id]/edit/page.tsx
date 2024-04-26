@@ -139,18 +139,18 @@ export default function EditLogPage() {
                 </Button>
               </div>
 
-              <div className="w-full max-w-[1024px] p-8 pt-0 mx-auto">
+              <div className="w-full container p-8 pt-0 mx-auto">
                 <Field name="title">
                   {({ field, meta }: FieldProps) => (
                     <>
                       <Tooltip defaultOpen>
                         <TooltipTrigger className="w-full">
                           <input
-                            className="w-full text-4xl mb-4 bg-transparent outline-none focus:underline"
+                            className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline"
                             {...field}
                           />
                         </TooltipTrigger>
-                        <TooltipContent side="left">
+                        <TooltipContent side="top">
                           Start by giving this log a title.
                         </TooltipContent>
                       </Tooltip>

@@ -13,26 +13,29 @@ export function AdventureLogFeedItem({
   return (
     <Link
       href={`/adventure-logs/${adventureLog._id}`}
-      className="group w-full pb-4 text-background bg-foreground hover:bg-black rounded cursor-pointer transition-all"
+      className="group w-full pb-4 cursor-pointer"
     >
-      <div className="p-2">
+      <div className="relative flex items-center justify-center">
         <AdventureLogCoverImage
           coverImageFileId={adventureLog.coverImageFileId}
+          className="group-hover:opacity-20 transition-opacity"
         />
+        <div className="opacity-0 max-w-full absolute p-4 group-hover:opacity-100 transition-opacity">
+          <Text className="w-full pb-2 font-black text-xl whitespace-nowrap text-ellipsis overflow-hidden">
+            {adventureLog.title}
+          </Text>
+        </div>
       </div>
-      <div className="py-4">
-        <Text className="w-full pb-4 text-center font-black text-xl whitespace-nowrap  text-ellipsis overflow-hidden">
-          {adventureLog.title}
-        </Text>
-        <Text className="font-soleil text-center font-bold uppercase text-xs tracking-wider pb-2">
+      <div className="py-2">
+        <Text className="font-soleil font-bold uppercase text-xs tracking-wider">
           {adventureLog.location?.name}
         </Text>
-        <Text className="text-center text-xs pb-3">
+        <Text className="text-xs pb-2">
           {adventureLog.location?.latitude}, {adventureLog.location?.longitude}
         </Text>
-        <hr className="w-[30px] mx-auto mb-4" />
-        <Text className="w-full text-center text-sm font-bold">
-          {adventureLog.user.name}
+
+        <Text className="w-full text-sm">
+          By <span className="italic">{adventureLog.user.name}</span>
         </Text>
       </div>
     </Link>

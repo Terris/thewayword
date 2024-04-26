@@ -5,7 +5,6 @@ import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import { useMeContext } from "@repo/auth/context";
 import { Button, Logo } from "@repo/ui";
-import { ThemeModeToggle } from "@repo/ui/ThemeModeToggle";
 import { Menu, X } from "lucide-react";
 import { useLockBodyScroll } from "@repo/hooks";
 import { usePathname } from "next/navigation";
@@ -17,7 +16,7 @@ export function Masthead() {
 
   return (
     <>
-      <div className="w-full py-8 px-9 flex flex-row items-center justify-between leading-none font-bold">
+      <div className="w-full container pt-8 pb-7 px-9 flex flex-row items-center justify-between leading-none font-bold">
         <Button
           variant="ghost"
           onClick={() => {
@@ -55,7 +54,6 @@ export function Masthead() {
               </MastheadLink>
             </div>
           ) : null}
-          <ThemeModeToggle />
           {isAuthenticated ? (
             <UserButton
               afterSignOutUrl="/"
@@ -112,8 +110,8 @@ function MastheadLink({
     <Link
       href={href}
       className={cn(
-        "p-2 rounded font-soleil hover:bg-muted transition-all",
-        isActive && "bg-muted"
+        "p-2 rounded font-soleil whitespace-nowrap hover:text-muted transition-all",
+        isActive && "bg-muted text-muted-foreground hover:text-foreground"
       )}
     >
       {children}

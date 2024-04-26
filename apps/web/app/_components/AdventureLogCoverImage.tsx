@@ -20,13 +20,13 @@ export function AdventureLogCoverImage({
   if (!coverImageFileId || (!isLoading && file === null)) return null;
   if (isLoading) return <LoadingBox />;
   return (
-    <AspectRatio ratio={1.25 / 1} className={cn(className)}>
+    <AspectRatio ratio={1.25 / 1} className={cn("bg-black rounded", className)}>
       <Image
         src={file.url}
         alt={file.fileName}
         objectFit="cover"
         layout="fill"
-        className="rounded-t object-cover"
+        className="rounded object-cover"
       />
     </AspectRatio>
   );

@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
+// eslint-disable-next-line -- fix
+mapboxgl.accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN!;
+
 const defaultZoom = 10;
 const featureZoom = 14;
 

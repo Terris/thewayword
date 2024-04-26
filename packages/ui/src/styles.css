@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    --background: #fbf6f1;
+    --background: #ffffff;
     --foreground: #586659;
     --card: #f0ede6;
     --card-foreground: #414146;
@@ -14,7 +14,7 @@
     --primary-foreground: #fff1f2;
     --secondary: #f4f4f5;
     --secondary-foreground: #18181b;
-    --muted: #b2bfb7;
+    --muted: #c9ddd8;
     --muted-foreground: #71717a;
     --accent: #e5e2da;
     --accent-foreground: #323236;

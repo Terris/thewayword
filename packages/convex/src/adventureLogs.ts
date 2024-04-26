@@ -8,7 +8,13 @@ export const findById = query({
   args: { id: v.id("adventureLogs") },
   handler: async (ctx, { id }) => {
     await validateIdentity(ctx);
-    return ctx.db.get(id);
+    const adventureLog = await ctx.db.get(id);
+    if (!adventureLog) throw new ConvexError("Adventure log not found");
+    const adventureLogWithUser = {
+      ...adventureLog,
+      user: await ctx.db.get(adventureLog.userId),
+    };
+    return adventureLogWithUser;
   },
 });
 
