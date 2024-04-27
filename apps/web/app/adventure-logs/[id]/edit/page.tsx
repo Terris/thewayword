@@ -6,14 +6,7 @@ import * as Yup from "yup";
 import { useMutation, useQuery } from "convex/react";
 import { useParams, useRouter } from "next/navigation";
 import { type Id, api } from "@repo/convex";
-import {
-  Button,
-  LoadingScreen,
-  Text,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@repo/ui";
+import { Button, LoadingScreen, Switch, Text } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
 import { ImageBlock } from "../../../_components/ImageBlock";
 import { AddImageBlockButton } from "./AddImageBlockButton";
@@ -23,11 +16,13 @@ import { EditableAdventureLogBlocks } from "./EditableAdventureLogBlocks";
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   coverImageFileId: Yup.string(),
+  published: Yup.boolean().required(),
 });
 
 interface EditAdventureLogFormValues {
   title: string;
   coverImageFileId?: string;
+  published: boolean;
 }
 
 export default function EditLogPage() {
@@ -41,37 +36,16 @@ export default function EditLogPage() {
 
   // Submitting the form only updates the record as a draft
   async function onSubmit(values: EditAdventureLogFormValues) {
-    if (values.title === adventureLog?.title || values.title === "") return;
+    if (values.title === "") return;
     try {
       await updateAdventureLog({
         id: id as Id<"adventureLogs">,
         title: values.title,
+        published: values.published,
       });
       toast({
         title: "Success",
         description: "Saved draft adventure log",
-      });
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Unknown error";
-      toast({
-        title: "Error",
-        description: errorMessage,
-        variant: "destructive",
-      });
-    }
-  }
-
-  // Publish does not save any field updates
-  async function handlePublish() {
-    try {
-      await updateAdventureLog({
-        id: id as Id<"adventureLogs">,
-        published: true,
-      });
-      toast({
-        title: "Success",
-        description: "Published adventure log",
       });
       router.push(`/adventure-logs/${id as string}`);
     } catch (error) {
@@ -92,14 +66,12 @@ export default function EditLogPage() {
       initialValues={{
         title: adventureLog.title,
         coverImageFileId: adventureLog.coverImageFileId,
+        published: adventureLog.published,
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {({ values, isSubmitting, submitForm }) => {
-        const canUpdateAdventureLog =
-          values.title !== adventureLog.title && values.title !== "";
-
+      {({ isSubmitting, submitForm, dirty }) => {
         return (
           <Form
             onSubmit={(e) => {
@@ -107,35 +79,41 @@ export default function EditLogPage() {
             }}
           >
             <div className="pb-32 absolute top-0 left-0 right-0 bg-background">
-              <div className="w-full p-8 flex flex-row items-center gap-4">
+              <div className="w-full p-8 flex flex-row items-center gap-8">
                 <Button
                   variant="outline"
                   onClick={() => {
                     router.back();
                   }}
                   disabled={isSubmitting}
+                  className="mr-auto"
                 >
                   Cancel
                 </Button>
-
+                <div className="ml-auto flex flex-row items-center gap-2">
+                  <Field name="published">
+                    {({ form, field }: FieldProps) => (
+                      <>
+                        Published
+                        <Switch
+                          checked={field.value as boolean}
+                          onCheckedChange={(v) => {
+                            void form.setFieldValue("published", v);
+                          }}
+                          {...field}
+                        />
+                      </>
+                    )}
+                  </Field>
+                </div>
                 <Button
                   type="button"
-                  disabled={!canUpdateAdventureLog || isSubmitting}
-                  className="ml-auto"
+                  disabled={!dirty || isSubmitting}
                   onClick={() => {
                     void submitForm();
                   }}
                 >
-                  Save Draft
-                </Button>
-                <Button
-                  type="button"
-                  disabled={canUpdateAdventureLog || isSubmitting}
-                  onClick={() => {
-                    void handlePublish();
-                  }}
-                >
-                  Publish
+                  Save
                 </Button>
               </div>
 
@@ -143,18 +121,10 @@ export default function EditLogPage() {
                 <Field name="title">
                   {({ field, meta }: FieldProps) => (
                     <>
-                      <Tooltip defaultOpen>
-                        <TooltipTrigger className="w-full">
-                          <input
-                            className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline"
-                            {...field}
-                          />
-                        </TooltipTrigger>
-                        <TooltipContent side="top">
-                          Start by giving this log a title.
-                        </TooltipContent>
-                      </Tooltip>
-
+                      <input
+                        className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline"
+                        {...field}
+                      />
                       {meta.touched && meta.error ? (
                         <Text className="text-destructive">{meta.error}</Text>
                       ) : null}

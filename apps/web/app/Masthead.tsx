@@ -2,7 +2,10 @@
 
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
+import {
+  // SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
 import { useMeContext } from "@repo/auth/context";
 import { Button, Logo } from "@repo/ui";
 import { Menu, X } from "lucide-react";
@@ -64,11 +67,9 @@ export function Masthead() {
               }}
             />
           ) : null}
-          {/*
-          <SignInButton mode="modal">
+          {/* <SignInButton mode="modal">
             <Button>Sign in</Button>
-          </SignInButton>
-        */}
+          </SignInButton> */}
         </div>
       </div>
       {pagesMenuIsOpen ? <PagesMenu /> : null}
