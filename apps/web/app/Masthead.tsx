@@ -35,7 +35,7 @@ export function Masthead() {
           {isAuthenticated ? (
             <>
               <MastheadLink href="/feed">Feed</MastheadLink>
-              <MastheadLink href="/feed/popular">Popular</MastheadLink>
+              {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}
               <MastheadLink href="/shop">Shop</MastheadLink>
             </>
           ) : null}
@@ -84,8 +84,9 @@ function PagesMenu() {
       {isAuthenticated ? (
         <>
           <MastheadLink href="/feed">Feed</MastheadLink>
-          <MastheadLink href="/feed/popular">Popular</MastheadLink>
+          {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}
           <MastheadLink href="/shop">Shop</MastheadLink>
+          <MastheadLink href="/about">Charter</MastheadLink>
           <hr />
           <MastheadLink href="/me/adventure-logs">My Logs</MastheadLink>
           <MastheadLink href="/adventure-logs/create">

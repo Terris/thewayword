@@ -35,7 +35,7 @@ export default function AdventureLogPage() {
       </div>
 
       <div className="relative z-50 w-full container bg-background -mt-28">
-        <div className="max-w-[900px] mx-auto p-10">
+        <div className="max-w-[900px] mx-auto p-10 pt-12">
           <Text className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline">
             {adventureLog.title}
           </Text>

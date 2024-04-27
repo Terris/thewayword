@@ -4,6 +4,7 @@ import "@repo/ui/globals.css";
 import "./app.css";
 import { Masthead } from "./Masthead";
 import { AppProviders } from "./AppProviders";
+import { Footer } from "./Footer";
 
 export const metadata = {
   title: "Bitty Brella",
@@ -28,6 +29,7 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
             <main className="w-full flex flex-col items-start justify-start">
               {children}
             </main>
+            <Footer />
             {modal}
             <Toaster />
           </div>

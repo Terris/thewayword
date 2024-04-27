@@ -13,9 +13,9 @@ export default function AboutPage() {
           <Text className="text-lg pb-16">
             BittyBrella is dedicated to building a vibrant community of outdoor
             enthusiasts who share a profound appreciation for nature and a
-            fervent passion for adventure. Our platform aims to provide a space
-            where members can express and explore their love for the outdoors in
-            a manner that is uniquely their own, fostering connections, and
+            passion for adventure. Our platform aims to provide a space where
+            members can express and explore their love for the outdoors in a
+            manner that is uniquely their own, fostering connections, and
             nurturing a deep-seated love for the natural world.
           </Text>
         </div>
