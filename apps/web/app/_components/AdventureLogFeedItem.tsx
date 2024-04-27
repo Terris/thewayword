@@ -31,7 +31,7 @@ export function AdventureLogFeedItem({
           <Text className="font-soleil font-bold uppercase text-xs tracking-wider truncate">
             {adventureLog.location?.name}
           </Text>
-          <Text className="text-xs pb-2">
+          <Text className="text-xs pb-2 truncate">
             {adventureLog.location?.latitude},{" "}
             {adventureLog.location?.longitude}
           </Text>
