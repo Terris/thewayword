@@ -18,7 +18,7 @@ export default function HomePage() {
   if (isLoading) return <LoadingScreen />;
 
   return (
-    <div className="w-full p-8 pt-16">
+    <div className="w-full p-8 pt-16 min-h-[75vh]">
       <div className="my-16 mx-auto md:w-[700px]">
         <Text as="h1" className="text-4xl pb-16 text-center">
           An adventure club for those whose favorite days are spent outdoors.
