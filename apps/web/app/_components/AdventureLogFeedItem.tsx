@@ -28,7 +28,7 @@ export function AdventureLogFeedItem({
       </div>
       <div className="py-2 flex flex-row justify-between items-start">
         <div className="w-2/3">
-          <Text className="font-soleil font-bold uppercase text-xs tracking-wider">
+          <Text className="font-soleil font-bold uppercase text-xs tracking-wider truncate">
             {adventureLog.location?.name}
           </Text>
           <Text className="text-xs pb-2">
