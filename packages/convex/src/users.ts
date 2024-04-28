@@ -78,7 +78,7 @@ export const systemSaveNewClerkUser = internalMutation({
   args: {
     clerkId: v.string(),
     email: v.string(),
-    name: v.string(),
+    name: v.optional(v.string()),
     avatarUrl: v.optional(v.string()),
     roles: v.optional(v.array(v.string())),
   },

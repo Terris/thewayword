@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSignUp } from "@clerk/nextjs";
 import { Field, Form, Formik, type FieldProps } from "formik";
 import * as Yup from "yup";
 import { useToast } from "@repo/ui/hooks";
 import { Button, Input, Label, Text } from "@repo/ui";
+import { useMeContext } from "@repo/auth/context";
 
 const signUpValidationSchema = Yup.object().shape({
   email: Yup.string().email().required("Email is required"),
@@ -32,14 +33,24 @@ interface VerifyFormValues {
   code: string;
 }
 
-export default function SignInPage() {
+export default function SignUpPage() {
+  const searchParams = useSearchParams();
+  const inviteToken = searchParams.get("inviteToken");
+
+  const { isAuthenticated, isLoading: authIsLoading } = useMeContext();
   const router = useRouter();
   const { toast } = useToast();
-  const { isLoaded, signUp, setActive } = useSignUp();
+  const { isLoaded: convexIsLoaded, signUp, setActive } = useSignUp();
   const [verifying, setVerifying] = useState(false);
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/onboard");
+    }
+  }, [isAuthenticated, router]);
+
   async function onSubmit(values: SignUpFormValues) {
-    if (!isLoaded) return;
+    if (!convexIsLoaded) return;
 
     try {
       await signUp.create({
@@ -66,7 +77,7 @@ export default function SignInPage() {
   }
 
   async function onVerify(values: VerifyFormValues) {
-    if (!isLoaded) return;
+    if (!convexIsLoaded) return;
 
     try {
       // Submit the code that the user provides to attempt verification
@@ -79,8 +90,6 @@ export default function SignInPage() {
       }
 
       await setActive({ session: completeSignUp.createdSessionId });
-      // Redirect the user to a post sign-up route
-      router.push("/feed");
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
@@ -90,6 +99,17 @@ export default function SignInPage() {
         variant: "destructive",
       });
     }
+  }
+
+  if (!inviteToken) {
+    return (
+      <div className="w-full p-8">
+        <Text className="text-2xl text-center">
+          Sorry, you can&rsquo;t do that yet.
+        </Text>
+        <Text className="text-center">You must have an invite to sign up.</Text>
+      </div>
+    );
   }
 
   if (verifying) {
@@ -120,7 +140,13 @@ export default function SignInPage() {
             </Field>
             <Button
               type="button"
-              disabled={!dirty || !isValid || isSubmitting}
+              disabled={
+                !convexIsLoaded ||
+                authIsLoading ||
+                !dirty ||
+                !isValid ||
+                isSubmitting
+              }
               onClick={() => {
                 void submitForm();
               }}

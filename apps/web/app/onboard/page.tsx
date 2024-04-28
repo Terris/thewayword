@@ -52,22 +52,13 @@ export default function SignInPage() {
     >
       {({ isSubmitting, submitForm, dirty, isValid }) => (
         <Form className="w-[600px] p-8 mx-auto flex flex-col gap-4">
-          <Text className="text-xl font-black">Sign in</Text>
-          <Field name="email">
+          <Text className="text-xl font-black">
+            Welcome! Please introduce yourself.
+          </Text>
+          <Field name="name">
             {({ field, meta }: FieldProps) => (
               <div>
-                <Label htmlFor={field.name}>Email</Label>
-                <Input className="w-full" {...field} />
-                {meta.touched && meta.error ? (
-                  <Text className="text-sm text-destructive">{meta.error}</Text>
-                ) : null}
-              </div>
-            )}
-          </Field>
-          <Field name="password">
-            {({ field, meta }: FieldProps) => (
-              <div>
-                <Label htmlFor={field.name}>Password</Label>
+                <Label htmlFor={field.name}>Your name</Label>
                 <Input className="w-full" {...field} />
                 {meta.touched && meta.error ? (
                   <Text className="text-sm text-destructive">{meta.error}</Text>
@@ -82,7 +73,7 @@ export default function SignInPage() {
               void submitForm();
             }}
           >
-            Sign in
+            Save
           </Button>
         </Form>
       )}

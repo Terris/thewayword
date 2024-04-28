@@ -1,11 +1,13 @@
 "use client";
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSignIn } from "@clerk/nextjs";
 import { Field, Form, Formik, type FieldProps } from "formik";
 import * as Yup from "yup";
 import { useToast } from "@repo/ui/hooks";
 import { Button, Input, Label, Text } from "@repo/ui";
+import { useMeContext } from "@repo/auth/context";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required("Email is required"),
@@ -18,12 +20,19 @@ interface SignInFormValues {
 }
 
 export default function SignInPage() {
-  const { isLoaded, signIn, setActive } = useSignIn();
-  const router = useRouter();
+  const { isAuthenticated, isLoading: authIsLoading } = useMeContext();
+  const { isLoaded: convexIsLoaded, signIn, setActive } = useSignIn();
   const { toast } = useToast();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/feed");
+    }
+  }, [isAuthenticated, router]);
 
   async function onSubmit(values: SignInFormValues) {
-    if (!isLoaded) return;
+    if (!convexIsLoaded) return;
     try {
       const result = await signIn.create({
         identifier: values.email,
@@ -32,9 +41,9 @@ export default function SignInPage() {
 
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
-        router.push("/feed");
+        // router.push("/feed");
       } else {
-        throw new Error(`${result.status}`);
+        throw new Error("Incorrect email or password");
       }
     } catch (error) {
       const errorMessage =
@@ -56,7 +65,7 @@ export default function SignInPage() {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting, submitForm, dirty, isValid }) => (
+      {({ isSubmitting, dirty, isValid }) => (
         <Form className="w-[600px] p-8 mx-auto flex flex-col gap-4">
           <Text className="text-xl font-black">Sign in</Text>
           <Field name="email">
@@ -82,11 +91,14 @@ export default function SignInPage() {
             )}
           </Field>
           <Button
-            type="button"
-            disabled={!dirty || !isValid || isSubmitting}
-            onClick={() => {
-              void submitForm();
-            }}
+            type="submit"
+            disabled={
+              !convexIsLoaded ||
+              authIsLoading ||
+              !dirty ||
+              !isValid ||
+              isSubmitting
+            }
           >
             Sign in
           </Button>

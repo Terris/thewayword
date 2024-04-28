@@ -55,7 +55,10 @@ export const internalHandleClerkWebhook = internalAction({
             if (!email) {
               throw new ConvexError("Error occured -- no email");
             }
-            const name = `${eventData.first_name} ${eventData.last_name}`;
+            const name =
+              eventData.first_name && eventData.last_name
+                ? `${eventData.first_name} ${eventData.last_name}`
+                : undefined;
             const avatarUrl = eventData.image_url;
 
             // Create db user

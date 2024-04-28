@@ -63,7 +63,7 @@ export default defineSchema({
     name: v.string(),
   }).index("by_name", ["name"]),
   users: defineTable({
-    name: v.string(),
+    name: v.optional(v.string()),
     email: v.string(),
     tokenIdentifier: v.string(),
     avatarUrl: v.optional(v.string()),

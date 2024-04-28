@@ -2,16 +2,13 @@
 
 import { useState, type ReactNode } from "react";
 import Link from "next/link";
-import {
-  // SignInButton,
-  UserButton,
-} from "@clerk/nextjs";
 import { useMeContext } from "@repo/auth/context";
 import { Button, Logo } from "@repo/ui";
 import { Menu, X } from "lucide-react";
 import { useLockBodyScroll } from "@repo/hooks";
 import { usePathname } from "next/navigation";
 import { cn } from "@repo/utils";
+import { UserMenu } from "./_components/UserMenu";
 
 export function Masthead() {
   const { isAuthenticated } = useMeContext();
@@ -58,18 +55,10 @@ export function Masthead() {
             </div>
           ) : null}
           {isAuthenticated ? (
-            <UserButton
-              afterSignOutUrl="/"
-              appearance={{
-                elements: {
-                  userButtonPopoverCard: "rounded shadow-md",
-                },
-              }}
-            />
-          ) : null}
-          {/* <SignInButton mode="modal">
-            <Button>Sign in</Button>
-          </SignInButton> */}
+            <UserMenu />
+          ) : (
+            <MastheadLink href="/signin">Sign in</MastheadLink>
+          )}
         </div>
       </div>
       {pagesMenuIsOpen ? <PagesMenu /> : null}
@@ -112,7 +101,7 @@ function MastheadLink({
     <Link
       href={href}
       className={cn(
-        "p-2 rounded font-soleil whitespace-nowrap hover:text-muted transition-all",
+        "p-2 rounded font-soleil whitespace-nowrap hover:text-muted transition-colors",
         isActive && "bg-muted text-muted-foreground hover:text-foreground"
       )}
     >

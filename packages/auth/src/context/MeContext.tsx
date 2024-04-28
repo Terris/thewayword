@@ -1,7 +1,8 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { useConvexAuth, useQuery } from "convex/react";
 import { api } from "@repo/convex";
 import { LoadingScreen } from "@repo/ui";
@@ -9,7 +10,7 @@ import type { UserId } from "../types";
 
 interface User {
   id: UserId;
-  name: string;
+  name?: string;
   email: string;
   roles?: string[];
   isAuthorizedUser: boolean;
@@ -38,6 +39,8 @@ interface MeProviderProps {
 }
 
 export function MeProvider({ children }: MeProviderProps) {
+  const router = useRouter();
+
   // Authentication
   const { isLoading: authIsLoading, isAuthenticated } = useConvexAuth();
 
@@ -47,6 +50,12 @@ export function MeProvider({ children }: MeProviderProps) {
   const isLoading = authIsLoading || meIsLoading;
 
   const hasRole = (role: string) => Boolean(me?.roles?.includes(role));
+
+  useEffect(() => {
+    if (!isLoading && isAuthenticated && !me?.name) {
+      router.push("/onboard");
+    }
+  }, [isAuthenticated, isLoading, me?.name, router]);
 
   return (
     <MeContext.Provider
