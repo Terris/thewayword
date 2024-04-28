@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useMeContext } from "@repo/auth/context";
 import { Button, Logo } from "@repo/ui";
@@ -11,8 +11,13 @@ import { cn } from "@repo/utils";
 import { UserMenu } from "./_components/UserMenu";
 
 export function Masthead() {
+  const pathname = usePathname();
   const { isAuthenticated } = useMeContext();
   const [pagesMenuIsOpen, setPagesMenuIsOpen] = useState(false);
+
+  useEffect(() => {
+    setPagesMenuIsOpen(false);
+  }, [pathname]);
 
   return (
     <>
@@ -70,13 +75,13 @@ function PagesMenu() {
   const { isAuthenticated } = useMeContext();
   useLockBodyScroll();
   return (
-    <div className="absolute z-10 top-[104px] flex flex-col gap-1 w-full p-4 border-b border-t bg-background md:hidden">
+    <div className="absolute z-10 top-[100px] flex flex-col gap-1 w-full p-4 border-b border-t bg-background md:hidden">
       {isAuthenticated ? (
         <>
           <MastheadLink href="/feed">Feed</MastheadLink>
           {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}
           <MastheadLink href="/shop">Shop</MastheadLink>
-          <MastheadLink href="/about">Charter</MastheadLink>
+          <MastheadLink href="/about">About</MastheadLink>
           <hr />
           <MastheadLink href="/me/adventure-logs">My Logs</MastheadLink>
           <MastheadLink href="/adventure-logs/create">

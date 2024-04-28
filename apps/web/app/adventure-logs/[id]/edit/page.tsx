@@ -78,7 +78,7 @@ export default function EditLogPage() {
         >
           <div className="pb-32 absolute top-0 left-0 right-0 bg-background">
             <div className="w-full p-8 flex flex-row items-center gap-8">
-              <div className="w-1/3">
+              <div className="w-full md:w-1/3">
                 <Button
                   variant="outline"
                   onClick={() => {
@@ -90,10 +90,10 @@ export default function EditLogPage() {
                   Cancel
                 </Button>
               </div>
-              <Text className="w-1/3 font-soleil font-bold text-xl pb-4 text-center">
+              <Text className="hidden md:block md:w-1/3 font-soleil font-bold text-xl pb-4 text-center">
                 Here&rsquo;s where you tell your adventure story.
               </Text>
-              <div className="w-1/3 flex flex-row items-center justify-end gap-2">
+              <div className="w-full md:w-1/3 flex flex-row items-center justify-end gap-2">
                 <Field name="published">
                   {({ form, field }: FieldProps) => (
                     <>
@@ -121,6 +121,9 @@ export default function EditLogPage() {
             </div>
 
             <div className="w-full container p-8 pt-0 mx-auto">
+              <Text className="block md:hidden font-soleil font-bold text-lg pb-4 text-center">
+                Here&rsquo;s where you tell your adventure story.
+              </Text>
               <Field name="title">
                 {({ field, meta }: FieldProps) => (
                   <>

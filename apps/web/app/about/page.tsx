@@ -2,8 +2,8 @@ import { Text } from "@repo/ui";
 
 export default function AboutPage() {
   return (
-    <div className="w-full pt-16 max-w-[650px] mx-auto text-lg">
-      <Text className="text-4xl leading-tight pb-8">
+    <div className="w-full p-8 pt-16 max-w-[740px] mx-auto text-lg">
+      <Text className="text-3xl md:text-4xl leading-tight pb-8">
         We&rsquo;re patrons of the outdoors and the organizations and
         institutions that help keep it pristine.
       </Text>

@@ -65,7 +65,7 @@ export default function SignInPage() {
       onSubmit={onSubmit}
     >
       {({ isSubmitting, dirty, isValid }) => (
-        <Form className="w-[600px] p-8 mx-auto flex flex-col gap-4">
+        <Form className="w-full max-w-[600px] p-8 mx-auto flex flex-col gap-4">
           <Text className="text-xl font-black">Sign in</Text>
           <Field name="email">
             {({ field, meta }: FieldProps) => (
