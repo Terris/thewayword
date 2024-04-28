@@ -31,8 +31,7 @@ export async function validateIdentity(
 
   if (
     options?.requiredRoles &&
-    user.roles &&
-    options.requiredRoles.every((role) => user.roles?.includes(role))
+    !options.requiredRoles.every((role) => user.roles?.includes(role))
   ) {
     throw new ConvexError("Unauthorized user role");
   }

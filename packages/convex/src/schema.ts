@@ -52,6 +52,9 @@ export default defineSchema({
     userId: v.id("users"),
     hash: v.optional(v.string()),
   }),
+  invites: defineTable({
+    email: v.string(),
+  }).index("by_email", ["email"]),
   likes: defineTable({
     userId: v.id("users"),
     adventureLogId: v.id("adventureLogs"),

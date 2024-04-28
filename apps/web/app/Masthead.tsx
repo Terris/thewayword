@@ -102,7 +102,7 @@ function MastheadLink({
       href={href}
       className={cn(
         "p-2 rounded font-soleil whitespace-nowrap hover:text-muted transition-colors",
-        isActive && "bg-muted text-muted-foreground hover:text-foreground"
+        isActive && "bg-muted hover:text-foreground"
       )}
     >
       {children}
