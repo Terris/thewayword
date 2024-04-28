@@ -21,7 +21,12 @@ export function UserMenu() {
           asChild
           className="w-full justify-start cursor-pointer"
         >
-          <SignOutButton redirectUrl="/signin">
+          <SignOutButton
+            redirectUrl="/signin"
+            signOutOptions={{
+              redirectUrl: "/signin",
+            }}
+          >
             <Button
               className="w-full justify-start cursor-pointer"
               variant="ghost"
