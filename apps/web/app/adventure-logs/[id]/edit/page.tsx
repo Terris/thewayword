@@ -78,17 +78,22 @@ export default function EditLogPage() {
         >
           <div className="pb-32 absolute top-0 left-0 right-0 bg-background">
             <div className="w-full p-8 flex flex-row items-center gap-8">
-              <Button
-                variant="outline"
-                onClick={() => {
-                  router.back();
-                }}
-                disabled={isSubmitting}
-                className="mr-auto"
-              >
-                Cancel
-              </Button>
-              <div className="ml-auto flex flex-row items-center gap-2">
+              <div className="w-1/3">
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    router.back();
+                  }}
+                  disabled={isSubmitting}
+                  className="mr-auto"
+                >
+                  Cancel
+                </Button>
+              </div>
+              <Text className="w-1/3 font-soleil font-bold text-xl pb-4 text-center">
+                Here&rsquo;s where you tell your adventure story.
+              </Text>
+              <div className="w-1/3 flex flex-row items-center justify-end gap-2">
                 <Field name="published">
                   {({ form, field }: FieldProps) => (
                     <>
