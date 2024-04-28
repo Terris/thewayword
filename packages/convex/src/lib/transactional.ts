@@ -37,7 +37,23 @@ export function buildOrganizationInviteEmailHTML({
             <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align:center;margin-top:32px;margin-bottom:32px">
               <tbody>
                 <tr>
-                  <td><a href="${inviteLink}" style="background-color:rgb(88,110,91);border-radius:0.25rem;color:rgb(255,255,255);font-size:16px;font-weight:600;text-decoration-line:none;text-align:center;padding-left:1.25rem;padding-right:1.25rem;padding-top:0.75rem;padding-bottom:0.75rem;line-height:100%;text-decoration:none;display:inline-block;max-width:100%;padding:12px 20px 12px 20px" target="_blank"><span><!--[if mso]><i style="letter-spacing: 20px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i><![endif]--></span><span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px">Join the team</span><span><!--[if mso]><i style="letter-spacing: 20px;mso-font-width:-100%" hidden>&nbsp;</i><![endif]--></span></a></td>
+                  <td>
+                    <a href="${inviteLink}" style="background-color:rgb(88,110,91);border-radius:0.25rem;color:rgb(255,255,255);font-size:16px;font-weight:600;text-decoration-line:none;text-align:center;padding-left:1.25rem;padding-right:1.25rem;padding-top:0.75rem;padding-bottom:0.75rem;line-height:100%;text-decoration:none;display:inline-block;max-width:100%;padding:12px 20px 12px 20px" target="_blank">
+                      <span>
+                        <!--[if mso]>
+                          <i style="letter-spacing: 20px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i>
+                        <![endif]-->
+                      </span>
+                      <span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px">
+                        Join BittyBrella
+                      </span>
+                      <span>
+                        <!--[if mso]>
+                          <i style="letter-spacing: 20px;mso-font-width:-100%" hidden>&nbsp;</i>
+                        <![endif]-->
+                      </span>
+                    </a>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -48,7 +64,17 @@ export function buildOrganizationInviteEmailHTML({
               </a>
             </p>
             <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-width:1px;border-style:solid;border-color:rgb(234,234,234);margin-top:26px;margin-bottom:26px;margin-left:0px;margin-right:0px" />
-            <p style="font-size:12px;line-height:24px;margin:16px 0;color:rgb(102,102,102)">This invitation was intended for<!-- --> <span style="color:rgb(0,0,0)">terris@bittybrella.com</span> and sent from<!-- --> <a href="https://bittybrella.com" style="color:#067df7;text-decoration:none" target="_blank"><span style="color:rgb(0,0,0)">bittybrella.com</span></a>. If you were not expecting this invitation, you can ignore this email. If you are concerned about your account’s safety, please reply to this email to get in touch with us.</p>
+            <p style="font-size:12px;line-height:24px;margin:16px 0;color:rgb(102,102,102)">
+              This invitation was intended for<!-- -->
+              <span style="color:rgb(0,0,0)">terris@bittybrella.com</span>
+              and sent from<!-- -->
+              <a href="https://bittybrella.com" style="color:#067df7;text-decoration:none" target="_blank">
+                <span style="color:rgb(0,0,0)">
+                  bittybrella.com
+                </span>
+              </a>.
+              If you were not expecting this invitation, you can ignore this email. If you are concerned about your account&rsquo;s safety, please reply to this email to get in touch with us.
+            </p>
           </td>
         </tr>
       </tbody>
