@@ -70,7 +70,7 @@ export default function EditLogPage() {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting, submitForm, dirty }) => (
+      {({ isSubmitting, submitForm }) => (
         <Form
           onSubmit={(e) => {
             e.preventDefault();
