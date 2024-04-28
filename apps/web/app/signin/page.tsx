@@ -71,7 +71,7 @@ export default function SignInPage() {
             {({ field, meta }: FieldProps) => (
               <div>
                 <Label htmlFor={field.name}>Email</Label>
-                <Input className="w-full" {...field} />
+                <Input className="w-full" type="email" {...field} />
                 {meta.touched && meta.error ? (
                   <Text className="text-sm text-destructive">{meta.error}</Text>
                 ) : null}

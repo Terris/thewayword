@@ -26,18 +26,16 @@ export function AdventureLogFeedItem({
           </Text>
         </div>
       </div>
-      <div className="py-2 flex flex-row justify-between items-start">
-        <div className="w-2/3">
-          <Text className="font-soleil font-bold uppercase text-xs tracking-wider truncate">
-            {adventureLog.location?.name}
-          </Text>
-          <Text className="text-xs pb-2 truncate">
-            {adventureLog.location?.latitude},{" "}
-            {adventureLog.location?.longitude}
-          </Text>
-        </div>
-        <Text className="text-sm text-right w-1/3">
-          By <span className="italic">{adventureLog.user.name}</span>
+      <div className="py-2 flex flex-col justify-start items-start">
+        <Text className="font-soleil font-bold uppercase text-xs tracking-wider truncate">
+          {adventureLog.location?.name}
+        </Text>
+        <Text className="text-xs pb-2 truncate">
+          {adventureLog.location?.latitude}, {adventureLog.location?.longitude}
+        </Text>
+
+        <Text className="text-sm leading-none">
+          <span className="italic">{adventureLog.user.name}</span>
         </Text>
       </div>
     </Link>
