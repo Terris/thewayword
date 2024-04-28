@@ -41,7 +41,6 @@ export default function SignInPage() {
 
       if (result.status === "complete") {
         await setActive({ session: result.createdSessionId });
-        // router.push("/feed");
       } else {
         throw new Error("Incorrect email or password");
       }
@@ -83,7 +82,7 @@ export default function SignInPage() {
             {({ field, meta }: FieldProps) => (
               <div>
                 <Label htmlFor={field.name}>Password</Label>
-                <Input className="w-full" {...field} />
+                <Input className="w-full" type="password" {...field} />
                 {meta.touched && meta.error ? (
                   <Text className="text-sm text-destructive">{meta.error}</Text>
                 ) : null}
