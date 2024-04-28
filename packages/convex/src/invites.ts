@@ -1,7 +1,14 @@
 import { ConvexError, v } from "convex/values";
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { internal } from "./_generated/api";
+
+export const findById = query({
+  args: { id: v.id("invites") },
+  handler: async (ctx, { id }) => {
+    return ctx.db.get(id);
+  },
+});
 
 export const create = mutation({
   args: { email: v.string() },
@@ -16,6 +23,8 @@ export const create = mutation({
     if (existingInvite) throw new ConvexError("Invite already exists");
 
     const inviteId = await ctx.db.insert("invites", { email });
+
+    await ctx.db.insert("userWhitelist", { email });
 
     // send invite email
     await ctx.scheduler.runAfter(

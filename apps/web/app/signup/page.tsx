@@ -3,14 +3,24 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSignUp } from "@clerk/nextjs";
-import { Field, Form, Formik, type FieldProps } from "formik";
+import {
+  Field,
+  Form,
+  Formik,
+  type FormikHelpers,
+  type FieldProps,
+} from "formik";
 import * as Yup from "yup";
 import { useToast } from "@repo/ui/hooks";
-import { Button, Input, Label, Text } from "@repo/ui";
+import { Button, Input, Label, LoadingScreen, Text } from "@repo/ui";
 import { useMeContext } from "@repo/auth/context";
+import { useQuery } from "convex/react";
+import { type Id, api } from "@repo/convex";
 
 const signUpValidationSchema = Yup.object().shape({
-  email: Yup.string().email().required("Email is required"),
+  email: Yup.string()
+    .email("Email must be a valid email address")
+    .required("Email is required"),
   password: Yup.string()
     .min(8, "Password must be at least eight characters")
     .required("Password is required"),
@@ -23,19 +33,24 @@ interface SignUpFormValues {
   email: string;
   password: string;
   passwordConfirmation: string;
+  code?: string;
 }
 
 const verifyValidationSchema = Yup.object().shape({
-  code: Yup.string().required("Verification code is required"),
+  verificationCode: Yup.string().required("Verification code is required"),
 });
 
 interface VerifyFormValues {
-  code: string;
+  verificationCode: string;
 }
 
 export default function SignUpPage() {
   const searchParams = useSearchParams();
   const inviteToken = searchParams.get("inviteToken");
+  const invite = useQuery(api.invites.findById, {
+    id: inviteToken as Id<"invites">,
+  });
+  const inviteIsLoading = invite === undefined;
 
   const { isAuthenticated, isLoading: authIsLoading } = useMeContext();
   const router = useRouter();
@@ -49,8 +64,20 @@ export default function SignUpPage() {
     }
   }, [isAuthenticated, router]);
 
-  async function onSubmit(values: SignUpFormValues) {
+  async function onSubmit(
+    values: SignUpFormValues,
+    helpers: FormikHelpers<SignUpFormValues>
+  ) {
     if (!convexIsLoaded) return;
+    if (invite?.email !== values.email) {
+      toast({
+        title: "Sign in failed",
+        description:
+          "You must sign up with the same email as one we sent your invite to.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     try {
       await signUp.create({
@@ -62,7 +89,7 @@ export default function SignUpPage() {
       await signUp.prepareEmailAddressVerification({
         strategy: "email_code",
       });
-
+      helpers.resetForm();
       // Set 'verifying' true to display second form and capture the OTP code
       setVerifying(true);
     } catch (error) {
@@ -82,7 +109,7 @@ export default function SignUpPage() {
     try {
       // Submit the code that the user provides to attempt verification
       const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code: values.code,
+        code: values.verificationCode,
       });
 
       if (completeSignUp.status !== "complete") {
@@ -101,6 +128,8 @@ export default function SignUpPage() {
     }
   }
 
+  if (inviteIsLoading) return <LoadingScreen />;
+
   if (!inviteToken) {
     return (
       <div className="w-full p-8">
@@ -112,59 +141,54 @@ export default function SignUpPage() {
     );
   }
 
-  if (verifying) {
-    return (
-      <Formik<VerifyFormValues>
-        initialValues={{
-          code: "",
-        }}
-        validationSchema={verifyValidationSchema}
-        onSubmit={onVerify}
-      >
-        {({ isSubmitting, submitForm, dirty, isValid }) => (
-          <Form className="w-[600px] p-8 mx-auto flex flex-col gap-4">
-            <Text className="text-xl font-black">Sign in</Text>
-            <Text>Nice! We sent you an email with a verfication code.</Text>
-            <Field name="code">
-              {({ field, meta }: FieldProps) => (
-                <div>
-                  <Label htmlFor={field.name}>Verification code</Label>
-                  <Input className="w-full" {...field} />
-                  {meta.touched && meta.error ? (
-                    <Text className="text-sm text-destructive">
-                      {meta.error}
-                    </Text>
-                  ) : null}
-                </div>
-              )}
-            </Field>
-            <Button
-              type="button"
-              disabled={
-                !convexIsLoaded ||
-                authIsLoading ||
-                !dirty ||
-                !isValid ||
-                isSubmitting
-              }
-              onClick={() => {
-                void submitForm();
-              }}
-            >
-              Verify
-            </Button>
-          </Form>
-        )}
-      </Formik>
-    );
-  }
-
-  return (
+  return verifying ? (
+    <Formik<VerifyFormValues>
+      initialValues={{
+        verificationCode: "",
+      }}
+      validationSchema={verifyValidationSchema}
+      onSubmit={onVerify}
+    >
+      {({ isSubmitting, submitForm, dirty, isValid }) => (
+        <Form className="w-[600px] p-8 mx-auto flex flex-col gap-4">
+          <Text className="text-xl font-black">Sign in</Text>
+          <Text>Nice! We sent you an email with a verfication code.</Text>
+          <Field name="verificationCode">
+            {({ field, meta }: FieldProps) => (
+              <div>
+                <Label htmlFor={field.name}>Verification code</Label>
+                <Input key="verificationCode" className="w-full" {...field} />
+                {meta.touched && meta.error ? (
+                  <Text className="text-sm text-destructive">{meta.error}</Text>
+                ) : null}
+              </div>
+            )}
+          </Field>
+          <Button
+            type="button"
+            disabled={
+              !convexIsLoaded ||
+              authIsLoading ||
+              !dirty ||
+              !isValid ||
+              isSubmitting
+            }
+            onClick={() => {
+              void submitForm();
+            }}
+          >
+            Verify
+          </Button>
+        </Form>
+      )}
+    </Formik>
+  ) : (
     <Formik<SignUpFormValues>
       initialValues={{
         email: "",
         password: "",
         passwordConfirmation: "",
+        code: "",
       }}
       validationSchema={signUpValidationSchema}
       onSubmit={onSubmit}
