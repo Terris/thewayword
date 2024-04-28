@@ -5,9 +5,35 @@ import type { UserJSON, WebhookEvent } from "@clerk/clerk-sdk-node";
 import { ConvexError, v } from "convex/values";
 import { internalAction } from "./_generated/server";
 import { internal } from "./_generated/api";
+import { emailFromAddress } from "./lib/email";
+import { Resend } from "resend";
 
 // INTERNAL FUNCTIONS
 // ==================================================
+
+/**
+ * Send a user email to the admin.
+ * @param waitlistEmail - The email to send.
+ */
+const resend = new Resend(process.env.RESEND_APPI_KEY);
+
+export const sendNewUserEmailToAdmin = internalAction({
+  args: { userEmail: v.string() },
+  handler: async (ctx, { userEmail }) => {
+    const sendEmailResponse = await resend.emails.send({
+      from: emailFromAddress!,
+      to: "terris@bittybrella.com",
+      subject: "New user sign up",
+      text: `A new user has signed up on BittyBrella: ${userEmail}`,
+    });
+
+    if (sendEmailResponse.error) {
+      throw new ConvexError(sendEmailResponse.error.message);
+    }
+
+    return true;
+  },
+});
 
 /**
  * Handle a Clerk webhook.

@@ -6,6 +6,7 @@ import {
   query,
 } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
+import { internal } from "./_generated/api";
 
 // SESSIONED USER FUNCTIONS
 // ==================================================
@@ -94,17 +95,26 @@ export const systemSaveNewClerkUser = internalMutation({
       if (user.name !== name) {
         await ctx.db.patch(user._id, { name });
       }
-      return user._id;
+    } else {
+      // If it's a new identity, create a new `User`.
+      const newUserId = await ctx.db.insert("users", {
+        name,
+        email,
+        avatarUrl,
+        tokenIdentifier,
+        roles,
+      });
     }
 
-    // If it's a new identity, create a new `User`.
-    const newUserId = await ctx.db.insert("users", {
-      name,
-      email,
-      avatarUrl,
-      tokenIdentifier,
-      roles,
-    });
-    return newUserId;
+    // send new user email to admin
+    await ctx.scheduler.runAfter(
+      0,
+      internal.userActions.sendNewUserEmailToAdmin,
+      {
+        userEmail: email,
+      }
+    );
+
+    return true;
   },
 });
