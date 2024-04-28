@@ -21,8 +21,11 @@ export function AdventureLogFeedItem({
           className="group-hover:opacity-10 transition-opacity"
         />
         <div className="opacity-0 max-w-full absolute p-16 group-hover:opacity-100 transition-opacity">
-          <Text className="w-full font-black text-xl text-center text-background overflow-hidden">
+          <Text className="w-full font-black text-xl text-center text-background overflow-hidden pb-2">
             {adventureLog.title}
+          </Text>
+          <Text className="text-sm text-center leading-none italic text-background">
+            By {adventureLog.user.name}
           </Text>
         </div>
       </div>
@@ -32,10 +35,6 @@ export function AdventureLogFeedItem({
         </Text>
         <Text className="text-xs pb-2 truncate">
           {adventureLog.location?.latitude}, {adventureLog.location?.longitude}
-        </Text>
-
-        <Text className="text-sm leading-none">
-          <span className="italic">{adventureLog.user.name}</span>
         </Text>
       </div>
     </Link>
