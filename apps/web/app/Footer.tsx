@@ -17,7 +17,7 @@ export function Footer() {
         </Text>
         {isAuthenticated ? (
           <div className="w-full flex flex-col items-start justify-start md:flex-row md:justify-end md:gap-8">
-            <FooterLink href="/about">Charter</FooterLink>
+            <FooterLink href="/about">About</FooterLink>
             <FooterLink href="/shop">Shop</FooterLink>
           </div>
         ) : null}
