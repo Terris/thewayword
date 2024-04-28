@@ -1,5 +1,6 @@
 import { v } from "convex/values";
 import { mutation } from "./_generated/server";
+import { internal } from "./_generated/api";
 
 export const addEmailToWaitlist = mutation({
   args: { email: v.string() },
@@ -10,12 +11,21 @@ export const addEmailToWaitlist = mutation({
       .first();
 
     if (existingWaitlistEntry) {
-      return ctx.db.patch(existingWaitlistEntry._id, {
+      await ctx.db.patch(existingWaitlistEntry._id, {
         email: existingWaitlistEntry.email,
         submitCount: (existingWaitlistEntry.submitCount ?? 0) + 1,
       });
     } else {
-      return ctx.db.insert("waitlist", { email, submitCount: 1 });
+      await ctx.db.insert("waitlist", { email, submitCount: 1 });
     }
+
+    // send new waitlist entry email to admin
+    await ctx.scheduler.runAfter(
+      0,
+      internal.waitlistActions.sendNewWatlistEntryEmailToAdmin,
+      {
+        waitlistEmail: email,
+      }
+    );
   },
 });
