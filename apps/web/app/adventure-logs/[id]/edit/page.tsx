@@ -30,7 +30,7 @@ export default function EditLogPage() {
   const { toast } = useToast();
   const router = useRouter();
   const queryArgs = id ? { id: id as Id<"adventureLogs"> } : "skip";
-  const adventureLog = useQuery(api.adventureLogs.findById, queryArgs);
+  const adventureLog = useQuery(api.adventureLogs.findByIdAsOwner, queryArgs);
   const isLoading = adventureLog === undefined;
   const updateAdventureLog = useMutation(api.adventureLogs.update);
 

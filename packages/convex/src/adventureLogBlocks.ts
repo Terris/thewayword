@@ -11,8 +11,6 @@ export const findAllByAdventureLogId = query({
     const { user } = await validateIdentity(ctx);
     const adventureLog = await ctx.db.get(adventureLogId);
     if (!adventureLog) throw new ConvexError("Adventure log not found");
-    if (adventureLog.userId !== user._id)
-      throw new ConvexError("Not the owner of this adventure log");
 
     const adventureLogBlocks = await ctx.db
       .query("adventureLogBlocks")

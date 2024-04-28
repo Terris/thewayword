@@ -3,8 +3,9 @@
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useMutation, useQuery } from "convex/react";
-import { Heart, MessageCircle, Pencil } from "lucide-react";
+import { Heart, Pencil } from "lucide-react";
 import { type Id, api } from "@repo/convex";
+import { useMeContext } from "@repo/auth/context";
 import { LoadingScreen, Text } from "@repo/ui";
 import { cn } from "@repo/utils";
 import { ImageBlock } from "../../_components/ImageBlock";
@@ -13,10 +14,12 @@ import { AdventureLogBlocks } from "./AdventureLogBlocks";
 
 export default function AdventureLogPage() {
   const { id } = useParams();
+  const { me } = useMeContext();
   const adventureLog = useQuery(api.adventureLogs.findById, {
     id: id as Id<"adventureLogs">,
   });
   const isLoading = adventureLog === undefined;
+  const meIsLogOwner = me?.id === adventureLog?.user?._id;
 
   if (isLoading) return <LoadingScreen />;
 
@@ -66,19 +69,22 @@ export default function AdventureLogPage() {
       </div>
       <div className="p-8 flex justify-center items-center w-full lg:z-50 lg:w-auto lg:flex-col lg:fixed lg:top-[50vh] lg:h-[1px] lg:right-0  ">
         <div className="flex flex-row lg:flex-col gap-4">
-          <Link
-            href={`/adventure-logs/${id as string}/edit`}
-            className="bg-background border rounded-full p-3 hover:bg-muted"
-          >
-            <Pencil className="w-4 h-4 " />
-          </Link>
+          {meIsLogOwner ? (
+            <Link
+              href={`/adventure-logs/${id as string}/edit`}
+              className="bg-background border rounded-full p-3 hover:bg-muted"
+            >
+              <Pencil className="w-4 h-4 " />
+            </Link>
+          ) : null}
           <AdventureLogLikeButton adventureLogId={id as Id<"adventureLogs">} />
+          {/* To Do: Allow comments
           <Link
             href={`/adventure-logs/${id as string}/edit`}
             className="bg-background border rounded-full p-3 hover:bg-muted"
           >
             <MessageCircle className="w-4 h-4 " />
-          </Link>
+          </Link> */}
         </div>
       </div>
     </>

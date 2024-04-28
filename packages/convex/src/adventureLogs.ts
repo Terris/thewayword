@@ -2,7 +2,6 @@ import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
-import { toTitleCase } from "./lib/utils";
 
 export const findById = query({
   args: { id: v.id("adventureLogs") },
@@ -10,6 +9,22 @@ export const findById = query({
     await validateIdentity(ctx);
     const adventureLog = await ctx.db.get(id);
     if (!adventureLog) throw new ConvexError("Adventure log not found");
+    const adventureLogWithUser = {
+      ...adventureLog,
+      user: await ctx.db.get(adventureLog.userId),
+    };
+    return adventureLogWithUser;
+  },
+});
+
+export const findByIdAsOwner = query({
+  args: { id: v.id("adventureLogs") },
+  handler: async (ctx, { id }) => {
+    const { user } = await validateIdentity(ctx);
+    const adventureLog = await ctx.db.get(id);
+    if (!adventureLog) throw new ConvexError("Adventure log not found");
+    if (adventureLog.userId !== user._id)
+      throw new ConvexError("Not the owner of this adventure log");
     const adventureLogWithUser = {
       ...adventureLog,
       user: await ctx.db.get(adventureLog.userId),
