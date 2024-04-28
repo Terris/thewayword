@@ -2,6 +2,7 @@
 
 import { CircleUserRound } from "lucide-react";
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -16,8 +17,19 @@ export function UserMenu() {
         <CircleUserRound className="w-6 h-6" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
-        <DropdownMenuItem>
-          <SignOutButton redirectUrl="/signin" />
+        <DropdownMenuItem
+          asChild
+          className="w-full justify-start cursor-pointer"
+        >
+          <SignOutButton redirectUrl="/signin">
+            <Button
+              className="w-full justify-start cursor-pointer"
+              variant="ghost"
+              size="sm"
+            >
+              Sign out
+            </Button>
+          </SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
