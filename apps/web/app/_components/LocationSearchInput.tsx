@@ -61,9 +61,9 @@ export function LocationSearchInput({
     async function handleSearch() {
       if (debouncedSearchValue && me) {
         setIsSearching(true);
-        const proximity = geo?.coords
-          ? `${geo.coords.longitude},${geo.coords.latitude}`
-          : "[]";
+        const proximityParam = geo?.coords
+          ? `&proximity=${geo.coords.longitude},${geo.coords.latitude}`
+          : null;
         const query = debouncedSearchValue.split(" ").join("+");
         const response = await fetch(
           `https://api.mapbox.com/search/searchbox/v1/suggest?` +
@@ -72,7 +72,7 @@ export function LocationSearchInput({
             "&types=country,region,district,postcode,locality,place,neighborhood,address,poi,street" +
             `&access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}` +
             `&session_token=${me.id}-${searchToken}` +
-            `&proximity=${proximity}`
+            `${proximityParam}`
         );
         const data = (await response.json()) as
           | SuggestionResult
