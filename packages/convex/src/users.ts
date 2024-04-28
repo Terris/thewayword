@@ -1,5 +1,11 @@
 import { v } from "convex/values";
-import { internalMutation, internalQuery, query } from "./_generated/server";
+import {
+  internalMutation,
+  internalQuery,
+  mutation,
+  query,
+} from "./_generated/server";
+import { validateIdentity } from "./lib/authorization";
 
 // SESSIONED USER FUNCTIONS
 // ==================================================
@@ -19,6 +25,14 @@ export const sessionedFindByContextIdentity = query({
         q.eq("tokenIdentifier", identity.tokenIdentifier)
       )
       .first();
+  },
+});
+
+export const updateUser = mutation({
+  args: { name: v.string() },
+  handler: async (ctx, { name }) => {
+    const { user } = await validateIdentity(ctx);
+    await ctx.db.patch(user._id, { name });
   },
 });
 

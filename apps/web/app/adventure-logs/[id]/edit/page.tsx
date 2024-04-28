@@ -34,7 +34,6 @@ export default function EditLogPage() {
   const isLoading = adventureLog === undefined;
   const updateAdventureLog = useMutation(api.adventureLogs.update);
 
-  // Submitting the form only updates the record as a draft
   async function onSubmit(values: EditAdventureLogFormValues) {
     if (values.title === "") return;
     try {
@@ -71,103 +70,102 @@ export default function EditLogPage() {
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      {({ isSubmitting, submitForm, dirty }) => {
-        return (
-          <Form
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <div className="pb-32 absolute top-0 left-0 right-0 bg-background">
-              <div className="w-full p-8 flex flex-row items-center gap-8">
-                <Button
-                  variant="outline"
-                  onClick={() => {
-                    router.back();
-                  }}
-                  disabled={isSubmitting}
-                  className="mr-auto"
-                >
-                  Cancel
-                </Button>
-                <div className="ml-auto flex flex-row items-center gap-2">
-                  <Field name="published">
-                    {({ form, field }: FieldProps) => (
-                      <>
-                        Published
-                        <Switch
-                          checked={field.value as boolean}
-                          onCheckedChange={(v) => {
-                            void form.setFieldValue("published", v);
-                          }}
-                          {...field}
-                        />
-                      </>
-                    )}
-                  </Field>
-                </div>
-                <Button
-                  type="button"
-                  disabled={!dirty || isSubmitting}
-                  onClick={() => {
-                    void submitForm();
-                  }}
-                >
-                  Save
-                </Button>
-              </div>
-
-              <div className="w-full container p-8 pt-0 mx-auto">
-                <Field name="title">
-                  {({ field, meta }: FieldProps) => (
+      {({ isSubmitting, submitForm, dirty }) => (
+        <Form
+          onSubmit={(e) => {
+            e.preventDefault();
+          }}
+        >
+          <div className="pb-32 absolute top-0 left-0 right-0 bg-background">
+            <div className="w-full p-8 flex flex-row items-center gap-8">
+              <Button
+                variant="outline"
+                onClick={() => {
+                  router.back();
+                }}
+                disabled={isSubmitting}
+                className="mr-auto"
+              >
+                Cancel
+              </Button>
+              <div className="ml-auto flex flex-row items-center gap-2">
+                <Field name="published">
+                  {({ form, field }: FieldProps) => (
                     <>
-                      <input
-                        className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline"
+                      Published
+                      <Switch
+                        checked={field.value as boolean}
+                        onCheckedChange={(v) => {
+                          void form.setFieldValue("published", v);
+                        }}
                         {...field}
                       />
-                      {meta.touched && meta.error ? (
-                        <Text className="text-destructive">{meta.error}</Text>
-                      ) : null}
                     </>
                   )}
                 </Field>
+              </div>
+              <Button
+                type="button"
+                disabled={!dirty || isSubmitting}
+                onClick={() => {
+                  void submitForm();
+                }}
+              >
+                Save
+              </Button>
+            </div>
 
-                <hr className="border-b-1 border-dashed mb-4" />
-                {adventureLog.location?.name ? (
-                  <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
-                    {adventureLog.location.name}
-                  </Text>
-                ) : null}
-                {adventureLog.location?.longitude &&
-                adventureLog.location.latitude ? (
-                  <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-8">
-                    {adventureLog.location.longitude},{" "}
-                    {adventureLog.location.latitude}
-                  </Text>
-                ) : null}
+            <div className="w-full container p-8 pt-0 mx-auto">
+              <Field name="title">
+                {({ field, meta }: FieldProps) => (
+                  <>
+                    <input
+                      className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline"
+                      {...field}
+                    />
+                    {meta.touched && meta.error ? (
+                      <Text className="text-destructive">{meta.error}</Text>
+                    ) : null}
+                  </>
+                )}
+              </Field>
 
-                {adventureLog.coverImageFileId ? (
-                  <ImageBlock
-                    fileId={adventureLog.coverImageFileId}
-                    className="mb-8"
-                  />
-                ) : null}
+              <hr className="border-b-1 border-dashed mb-4" />
+              {adventureLog.location?.name ? (
+                <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
+                  {adventureLog.location.name}
+                </Text>
+              ) : null}
+              {adventureLog.location?.longitude &&
+              adventureLog.location.latitude ? (
+                <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-8">
+                  {adventureLog.location.longitude},{" "}
+                  {adventureLog.location.latitude}
+                </Text>
+              ) : null}
 
-                <EditableAdventureLogBlocks
+              {adventureLog.coverImageFileId ? (
+                <ImageBlock
+                  fileId={adventureLog.coverImageFileId}
+                  className="mb-8"
+                />
+              ) : null}
+
+              <EditableAdventureLogBlocks
+                adventureLogId={id as Id<"adventureLogs">}
+              />
+
+              <div className="border border-dashed rounded p-2 flex flex-row items-center justify-center gap-2">
+                <AddImageBlockButton
                   adventureLogId={id as Id<"adventureLogs">}
                 />
-
-                <div className="border border-dashed rounded p-2 flex flex-row items-center justify-center gap-2">
-                  <AddImageBlockButton
-                    adventureLogId={id as Id<"adventureLogs">}
-                  />
-                  <AddTextBlockButton
-                    adventureLogId={id as Id<"adventureLogs">}
-                  />
-                </div>
+                <AddTextBlockButton
+                  adventureLogId={id as Id<"adventureLogs">}
+                />
               </div>
-              {/* TODO: This is a fixed right sidebar that is meant to help with editing and adding blocks */}
-              {/* <div className="fixed top-[50%] right-0 w-1/6 h-1 flex flex-col justify-center">
+            </div>
+            {/* TODO: This is a fixed right sidebar that is meant to help with editing and adding blocks */}
+            {/* <div className="fixed top-[50%] right-0 w-1/6 h-1 flex flex-col justify-center">
                 <div className="border border-dashed p-4 rounded-tl rounded-bl flex flex-col gap-2 min-h-[300px]">
                   <Text className="font-soleil font-bold text-sm tracking-wide pb-4">
                     ADD A BLOCK
@@ -188,10 +186,9 @@ export default function EditLogPage() {
                   </Button>
                 </div>
               </div> */}
-            </div>
-          </Form>
-        );
-      }}
+          </div>
+        </Form>
+      )}
     </Formik>
   );
 }

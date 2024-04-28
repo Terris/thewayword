@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
 import { ClerkProvider, useAuth } from "@clerk/nextjs";
@@ -19,8 +20,24 @@ export function AuthorizationProvider({
       publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
     >
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
+        <ClerkConvexAdapter />
         <MeProvider>{children}</MeProvider>
       </ConvexProviderWithClerk>
     </ClerkProvider>
   );
+}
+
+function ClerkConvexAdapter() {
+  const { getToken, isSignedIn } = useAuth();
+
+  useEffect(() => {
+    if (isSignedIn) {
+      convex.setAuth(async () =>
+        getToken({ template: "convex", skipCache: true })
+      );
+    } else {
+      convex.clearAuth();
+    }
+  }, [getToken, isSignedIn]);
+  return null;
 }
