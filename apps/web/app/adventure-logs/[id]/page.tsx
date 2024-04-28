@@ -38,28 +38,26 @@ export default function AdventureLogPage() {
       </div>
 
       <div className="relative z-50 w-full container bg-background -mt-28">
-        <div className="max-w-[900px] mx-auto p-10 pt-12">
-          <Text className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline">
+        <div className="max-w-[900px] mx-auto p-4 md:p-10 md:pt-12">
+          <Text className="w-full text-2xl md:text-4xl font-bold mb-4 bg-transparent outline-none focus:underline">
             {adventureLog.title}
           </Text>
           <hr className="border-b-1 border-dashed mb-4" />
-          <div className="flex flex-row items-start pb-4">
-            <div className="w-1/2">
-              <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
-                {adventureLog.location?.name}
-              </Text>
-              {adventureLog.location?.longitude &&
-              adventureLog.location.latitude ? (
-                <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
-                  {adventureLog.location.longitude},{" "}
-                  {adventureLog.location.latitude}
-                </Text>
-              ) : null}
-            </div>
-            <Text className="w-full text-sm text-right">
-              By <span className="italic">{adventureLog.user?.name}</span>
+
+          <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
+            {adventureLog.location?.name}
+          </Text>
+          {adventureLog.location?.longitude &&
+          adventureLog.location.latitude ? (
+            <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-2">
+              {adventureLog.location.longitude},{" "}
+              {adventureLog.location.latitude}
             </Text>
-          </div>
+          ) : null}
+
+          <Text className="w-full text-sm italic">
+            {adventureLog.user?.name}
+          </Text>
         </div>
         {adventureLog.coverImageFileId ? (
           <ImageBlock fileId={adventureLog.coverImageFileId} className="mb-8" />
