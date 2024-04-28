@@ -106,7 +106,7 @@ export default function EditLogPage() {
               </div>
               <Button
                 type="button"
-                disabled={!dirty || isSubmitting}
+                disabled={isSubmitting}
                 onClick={() => {
                   void submitForm();
                 }}
