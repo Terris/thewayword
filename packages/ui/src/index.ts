@@ -14,7 +14,6 @@ export * from "./Label";
 export * from "./Loader";
 export * from "./LoadingBox";
 export * from "./LoadingScreen";
-export * from "./Logo";
 export * from "./Popover";
 export * from "./Select";
 export * from "./SimpleDialogForm";
@@ -27,3 +26,5 @@ export * from "./Textarea";
 export * from "./Toast";
 export * from "./Toaster";
 export * from "./Tooltip";
+
+export * from "./TheWaywordLogo";

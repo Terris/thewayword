@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useMeContext } from "@repo/auth/context";
-import { Button, Logo } from "@repo/ui";
+import { Button, TheWaywordLogo } from "@repo/ui";
 import { Menu, X } from "lucide-react";
 import { useLockBodyScroll } from "@repo/hooks";
 import { usePathname } from "next/navigation";
@@ -36,23 +36,20 @@ export function Masthead() {
             <Menu className="w-6 h-6" />
           )}
         </Button>
-        <div className="hidden md:w-1/3 md:flex flex-row items-center justify-start gap-8">
+        <div className="md:w-1/3 flex flex-row items-center justify-center">
+          <Link href={isAuthenticated ? "/feed" : "/"}>
+            <TheWaywordLogo
+              width={160}
+              className="fill-foreground max-w-full -mt-[10px]"
+            />
+          </Link>
+        </div>
+        <div className="w-2/3 flex flex-row items-center justify-end gap-8">
           {isAuthenticated ? (
-            <>
+            <div className="hidden md:flex flex-row items-center justify-end gap-8">
               <MastheadLink href="/feed">Feed</MastheadLink>
               {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}
               <MastheadLink href="/shop">Shop</MastheadLink>
-            </>
-          ) : null}
-        </div>
-        <div className="md:w-1/3 flex flex-row items-center justify-center mr-auto md:mx-auto">
-          <Link href={isAuthenticated ? "/feed" : "/"}>
-            <Logo width={120} className="fill-foreground max-w-full" />
-          </Link>
-        </div>
-        <div className="w-1/3 flex flex-row items-center justify-end gap-8">
-          {isAuthenticated ? (
-            <div className="hidden md:flex flex-row items-center justify-end gap-8">
               <MastheadLink href="/me/adventure-logs">My Logs</MastheadLink>
               <MastheadLink href="/adventure-logs/create">
                 Log an Adventure
