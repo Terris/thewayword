@@ -1,7 +1,12 @@
 import { asyncMap } from "convex-helpers";
 import { mutation } from "./_generated/server";
 
-export const migrateLogPublishedValueToPublic = mutation({
+// TODO
+// remove published
+// remove public
+// make isPublic required
+
+export const migrateLogPublishedValueToIsPublic = mutation({
   args: {},
   handler: async (ctx, {}) => {
     const allLogs = await ctx.db.query("adventureLogs").collect();

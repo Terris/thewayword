@@ -16,13 +16,13 @@ import { EditableAdventureLogBlocks } from "./EditableAdventureLogBlocks";
 const validationSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
   coverImageFileId: Yup.string(),
-  published: Yup.boolean().required(),
+  isPublic: Yup.boolean().required(),
 });
 
 interface EditAdventureLogFormValues {
   title: string;
   coverImageFileId?: string;
-  published: boolean;
+  isPublic: boolean;
 }
 
 export default function EditLogPage() {
@@ -40,7 +40,7 @@ export default function EditLogPage() {
       await updateAdventureLog({
         id: id as Id<"adventureLogs">,
         title: values.title,
-        published: values.published,
+        isPublic: values.isPublic,
       });
       toast({
         title: "Success",
@@ -64,7 +64,7 @@ export default function EditLogPage() {
       initialValues={{
         title: adventureLog.title,
         coverImageFileId: adventureLog.coverImageFileId,
-        published: adventureLog.published,
+        isPublic: adventureLog.isPublic ?? false,
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
@@ -91,14 +91,14 @@ export default function EditLogPage() {
                   </Button>
                 </div>
                 <div className="w-full md:w-1/2 flex flex-row items-center justify-end gap-2">
-                  <Field name="published">
+                  <Field name="isPublic">
                     {({ form, field }: FieldProps) => (
                       <>
-                        Published
+                        Make public?
                         <Switch
                           checked={field.value as boolean}
                           onCheckedChange={(v) => {
-                            void form.setFieldValue("published", v);
+                            void form.setFieldValue("isPublic", v);
                             setTimeout(() => {
                               void submitForm();
                             });

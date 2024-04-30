@@ -33,13 +33,13 @@ export const findByIdAsOwner = query({
   },
 });
 
-export const findAllPublished = query({
+export const findAllPublic = query({
   args: {},
   handler: async (ctx) => {
     await validateIdentity(ctx);
     const adventureLogs = await ctx.db
       .query("adventureLogs")
-      .withIndex("by_published", (q) => q.eq("published", true))
+      .withIndex("by_is_public", (q) => q.eq("isPublic", true))
       .order("desc")
       .collect();
     if (!adventureLogs) throw new ConvexError("Adventure logs not found");
@@ -60,14 +60,14 @@ export const findAllPublished = query({
   },
 });
 
-export const findAllPublishedBySessionedUser = query({
+export const findAllPublicBySessionedUser = query({
   args: {},
   handler: async (ctx, {}) => {
     const { user } = await validateIdentity(ctx);
     const adventureLogs = ctx.db
       .query("adventureLogs")
-      .withIndex("by_user_id_published", (q) =>
-        q.eq("userId", user._id).eq("published", true)
+      .withIndex("by_user_id_is_public", (q) =>
+        q.eq("userId", user._id).eq("isPublic", true)
       )
       .order("desc")
       .collect();
@@ -87,14 +87,14 @@ export const findAllPublishedBySessionedUser = query({
   },
 });
 
-export const findAllDraftsBySessionedUser = query({
+export const findAllPrivateBySessionedUser = query({
   args: {},
   handler: async (ctx, {}) => {
     const { user } = await validateIdentity(ctx);
     const adventureLogs = ctx.db
       .query("adventureLogs")
-      .withIndex("by_user_id_published", (q) =>
-        q.eq("userId", user._id).eq("published", false)
+      .withIndex("by_user_id_is_public", (q) =>
+        q.eq("userId", user._id).eq("isPublic", false)
       )
       .order("desc")
       .collect();
@@ -144,6 +144,7 @@ export const create = mutation({
       title: "My adventure",
       location,
       published: false,
+      isPublic: false,
       coverImageFileId,
     });
 

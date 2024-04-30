@@ -6,7 +6,7 @@ import { LoadingScreen } from "@repo/ui";
 import { AdventureLogFeedItem } from "../_components/AdventureLogFeedItem";
 
 export default function FeedPage() {
-  const adventureLogs = useQuery(api.adventureLogs.findAllPublished);
+  const adventureLogs = useQuery(api.adventureLogs.findAllPublic);
   const isLoading = adventureLogs === undefined;
 
   if (isLoading) return <LoadingScreen />;

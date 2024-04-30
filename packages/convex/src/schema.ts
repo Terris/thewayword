@@ -18,13 +18,14 @@ export default defineSchema({
     ),
     coverImageFileId: v.optional(v.id("files")),
     published: v.boolean(),
+    public: v.optional(v.boolean()),
     isPublic: v.optional(v.boolean()),
     adventureStartDate: v.optional(v.string()),
     adventureEndDate: v.optional(v.string()),
   })
     .index("by_user_id", ["userId"])
-    .index("by_published", ["published"])
-    .index("by_user_id_published", ["userId", "published"]),
+    .index("by_is_public", ["isPublic"])
+    .index("by_user_id_is_public", ["userId", "isPublic"]),
   adventureLogBlocks: defineTable({
     adventureLogId: v.id("adventureLogs"),
     type: v.union(v.literal("text"), v.literal("image")),

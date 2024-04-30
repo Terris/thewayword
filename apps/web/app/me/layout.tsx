@@ -14,13 +14,13 @@ export default function MeLayout({ children }: { children: React.ReactNode }) {
           href="/me/adventure-logs"
           active={pathname === "/me/adventure-logs"}
         >
-          My Logs
+          My Public Logs
         </MeLink>
         <MeLink
-          href="/me/adventure-logs/drafts"
-          active={pathname === "/me/adventure-logs/drafts"}
+          href="/me/adventure-logs/private"
+          active={pathname === "/me/adventure-logs/private"}
         >
-          Drafts
+          My Private Logs
         </MeLink>
       </div>
       {children}

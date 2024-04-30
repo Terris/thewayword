@@ -3,11 +3,11 @@
 import { api } from "@repo/convex";
 import { useQuery } from "convex/react";
 import { LoadingScreen, Text } from "@repo/ui";
-import { AdventureLogFeedItem } from "../../_components/AdventureLogFeedItem";
+import { AdventureLogFeedItem } from "../../../_components/AdventureLogFeedItem";
 
 export default function MeAdventureLogsPage() {
   const adventureLogs = useQuery(
-    api.adventureLogs.findAllPublicBySessionedUser
+    api.adventureLogs.findAllPrivateBySessionedUser
   );
 
   const isLoading = adventureLogs === undefined;
