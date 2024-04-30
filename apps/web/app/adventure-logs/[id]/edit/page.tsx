@@ -120,7 +120,7 @@ export default function EditLogPage() {
             <div className="w-full container p-8 pt-0 mx-auto">
               <div className="flex flex-col md:flex-row md:gap-8">
                 <div className="md:w-1/12 md:text-right">
-                  <Text className="italic text-accent pt-1">Title</Text>
+                  <Text className="italic text-neutral-400 pt-1">Title</Text>
                 </div>
                 <div className="md:w-11/12">
                   <Field name="title">
@@ -140,7 +140,7 @@ export default function EditLogPage() {
               </div>
               <div className="flex flex-col pb-8 md:flex-row md:gap-8">
                 <div className="md:w-1/12 md:text-right">
-                  <Text className="italic text-accent">Location</Text>
+                  <Text className="italic text-neutral-400">Location</Text>
                 </div>
                 <div className="w-11/12">
                   {adventureLog.location?.name ? (
@@ -152,7 +152,7 @@ export default function EditLogPage() {
               </div>
               <div className="flex flex-col md:flex-row md:gap-8">
                 <div className="md:w-1/12 md:text-right">
-                  <Text className="italic text-accent">Cover image</Text>
+                  <Text className="italic text-neutral-400">Cover image</Text>
                 </div>
                 <div className="w-11/12">
                   {adventureLog.coverImageFileId ? (
@@ -165,7 +165,7 @@ export default function EditLogPage() {
               </div>
               <div className="flex flex-col md:flex-row md:gap-8 pb-8">
                 <div className="md:w-1/12 md:text-right">
-                  <Text className="italic text-accent">Story blocks</Text>
+                  <Text className="italic text-neutral-400">Story blocks</Text>
                 </div>
                 <div className="w-11/12">
                   <EditableAdventureLogBlocks
@@ -175,7 +175,7 @@ export default function EditLogPage() {
               </div>
               <div className="flex flex-col md:flex-row md:gap-8">
                 <div className="md:w-1/12 md:text-right">
-                  <Text className="italic text-accent">Add a block</Text>
+                  <Text className="italic text-neutral-400">Add a block</Text>
                 </div>
                 <div className="w-11/12">
                   <div className="border border-dashed rounded p-2 flex flex-row items-center justify-center gap-2">
