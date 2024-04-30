@@ -18,23 +18,15 @@ export function AdventureLogFeedItem({
       <div className="relative flex items-center justify-center bg-primary rounded">
         <AdventureLogCoverImage
           coverImageFileId={adventureLog.coverImageFileId}
-          className="group-hover:opacity-10 transition-opacity"
+          className="group-hover:opacity-50 transition-opacity"
         />
-        <div className="opacity-0 max-w-full absolute p-16 group-hover:opacity-100 transition-opacity">
-          <Text className="w-full font-black text-xl text-center text-background overflow-hidden pb-2">
-            {adventureLog.title}
-          </Text>
-          <Text className="text-sm text-center leading-none italic text-background">
-            By {adventureLog.user.name}
-          </Text>
-        </div>
       </div>
       <div className="py-2 flex flex-col justify-start items-start">
-        <Text className="font-soleil font-bold uppercase text-xs tracking-wider truncate">
-          {adventureLog.location?.name}
+        <Text className="font-soleil font-bold uppercase text-xs tracking-wider truncate pb-1">
+          {adventureLog.title}
         </Text>
-        <Text className="text-xs pb-2 truncate">
-          {adventureLog.location?.latitude}, {adventureLog.location?.longitude}
+        <Text className="text-sm text-center leading-none italic">
+          {adventureLog.user.name}
         </Text>
       </div>
     </Link>
