@@ -103,12 +103,6 @@ export const internalHandleClerkWebhook = internalAction({
         }
       }
 
-      await ctx.runMutation(internal.webhooks.systemLogWebhook, {
-        from: "clerk",
-        body: event,
-        handled,
-      });
-
       return { success: true };
     } catch (error: unknown) {
       const errorMessage = error instanceof Error ? error.message : "Unknown";
