@@ -66,7 +66,7 @@ export function buildOrganizationInviteEmailHTML({
             <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-width:1px;border-style:solid;border-color:rgb(234,234,234);margin-top:26px;margin-bottom:26px;margin-left:0px;margin-right:0px" />
             <p style="font-size:12px;line-height:24px;margin:16px 0;color:rgb(102,102,102)">
               This invitation was intended for<!-- -->
-              <span style="color:rgb(0,0,0)">terris@thewayword.com</span>
+              <span style="color:rgb(0,0,0)">${toEmail}</span>
               and sent from<!-- -->
               <a href="https://thewayword.com" style="color:#067df7;text-decoration:none" target="_blank">
                 <span style="color:rgb(0,0,0)">
