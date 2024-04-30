@@ -11,6 +11,7 @@ export * from "./DropdownMenu";
 export * from "./FieldError";
 export * from "./Input";
 export * from "./Label";
+export * from "./Logo";
 export * from "./Loader";
 export * from "./LoadingBox";
 export * from "./LoadingScreen";
@@ -26,5 +27,3 @@ export * from "./Textarea";
 export * from "./Toast";
 export * from "./Toaster";
 export * from "./Tooltip";
-
-export * from "./TheWayWordLogo";

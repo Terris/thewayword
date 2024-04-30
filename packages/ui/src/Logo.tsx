@@ -1,4 +1,4 @@
-export function TheWayWordLogo({
+export function Logo({
   width,
   height,
   className,
