@@ -47,13 +47,6 @@ export default function AdventureLogPage() {
           <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
             {adventureLog.location?.name}
           </Text>
-          {adventureLog.location?.longitude &&
-          adventureLog.location.latitude ? (
-            <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-2">
-              {adventureLog.location.longitude},{" "}
-              {adventureLog.location.latitude}
-            </Text>
-          ) : null}
 
           <Text className="w-full text-sm italic">
             {adventureLog.user?.name}

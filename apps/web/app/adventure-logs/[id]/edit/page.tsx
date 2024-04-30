@@ -78,7 +78,7 @@ export default function EditLogPage() {
         >
           <div className="pb-32 absolute top-0 left-0 right-0 bg-background">
             <div className="w-full p-8 flex flex-row items-center gap-8">
-              <div className="w-full md:w-1/3">
+              <div className="w-full md:w-1/2">
                 <Button
                   variant="outline"
                   onClick={() => {
@@ -90,10 +90,7 @@ export default function EditLogPage() {
                   Cancel
                 </Button>
               </div>
-              <Text className="hidden md:block md:w-1/3 font-soleil font-bold text-xl pb-4 text-center">
-                Here&rsquo;s where you tell your adventure story.
-              </Text>
-              <div className="w-full md:w-1/3 flex flex-row items-center justify-end gap-2">
+              <div className="w-full md:w-1/2 flex flex-row items-center justify-end gap-2">
                 <Field name="published">
                   {({ form, field }: FieldProps) => (
                     <>
@@ -121,55 +118,75 @@ export default function EditLogPage() {
             </div>
 
             <div className="w-full container p-8 pt-0 mx-auto">
-              <Text className="block md:hidden font-soleil font-bold text-lg pb-4 text-center">
-                Here&rsquo;s where you tell your adventure story.
-              </Text>
-              <Field name="title">
-                {({ field, meta }: FieldProps) => (
-                  <>
-                    <input
-                      className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline"
-                      {...field}
+              <div className="flex flex-col md:flex-row md:gap-8">
+                <div className="md:w-1/12 md:text-right">
+                  <Text className="italic text-accent pt-1">Title</Text>
+                </div>
+                <div className="md:w-11/12">
+                  <Field name="title">
+                    {({ field, meta }: FieldProps) => (
+                      <>
+                        <input
+                          className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline"
+                          {...field}
+                        />
+                        {meta.touched && meta.error ? (
+                          <Text className="text-destructive">{meta.error}</Text>
+                        ) : null}
+                      </>
+                    )}
+                  </Field>
+                </div>
+              </div>
+              <div className="flex flex-col pb-8 md:flex-row md:gap-8">
+                <div className="md:w-1/12 md:text-right">
+                  <Text className="italic text-accent">Location</Text>
+                </div>
+                <div className="w-11/12">
+                  {adventureLog.location?.name ? (
+                    <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pt-1">
+                      {adventureLog.location.name}
+                    </Text>
+                  ) : null}
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row md:gap-8">
+                <div className="md:w-1/12 md:text-right">
+                  <Text className="italic text-accent">Cover image</Text>
+                </div>
+                <div className="w-11/12">
+                  {adventureLog.coverImageFileId ? (
+                    <ImageBlock
+                      fileId={adventureLog.coverImageFileId}
+                      className="mb-8"
                     />
-                    {meta.touched && meta.error ? (
-                      <Text className="text-destructive">{meta.error}</Text>
-                    ) : null}
-                  </>
-                )}
-              </Field>
-
-              <hr className="border-b-1 border-dashed mb-4" />
-              {adventureLog.location?.name ? (
-                <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
-                  {adventureLog.location.name}
-                </Text>
-              ) : null}
-              {adventureLog.location?.longitude &&
-              adventureLog.location.latitude ? (
-                <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-8">
-                  {adventureLog.location.longitude},{" "}
-                  {adventureLog.location.latitude}
-                </Text>
-              ) : null}
-
-              {adventureLog.coverImageFileId ? (
-                <ImageBlock
-                  fileId={adventureLog.coverImageFileId}
-                  className="mb-8"
-                />
-              ) : null}
-
-              <EditableAdventureLogBlocks
-                adventureLogId={id as Id<"adventureLogs">}
-              />
-
-              <div className="border border-dashed rounded p-2 flex flex-row items-center justify-center gap-2">
-                <AddImageBlockButton
-                  adventureLogId={id as Id<"adventureLogs">}
-                />
-                <AddTextBlockButton
-                  adventureLogId={id as Id<"adventureLogs">}
-                />
+                  ) : null}
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row md:gap-8 pb-8">
+                <div className="md:w-1/12 md:text-right">
+                  <Text className="italic text-accent">Story blocks</Text>
+                </div>
+                <div className="w-11/12">
+                  <EditableAdventureLogBlocks
+                    adventureLogId={id as Id<"adventureLogs">}
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col md:flex-row md:gap-8">
+                <div className="md:w-1/12 md:text-right">
+                  <Text className="italic text-accent">Add a block</Text>
+                </div>
+                <div className="w-11/12">
+                  <div className="border border-dashed rounded p-2 flex flex-row items-center justify-center gap-2">
+                    <AddImageBlockButton
+                      adventureLogId={id as Id<"adventureLogs">}
+                    />
+                    <AddTextBlockButton
+                      adventureLogId={id as Id<"adventureLogs">}
+                    />
+                  </div>
+                </div>
               </div>
             </div>
             {/* TODO: This is a fixed right sidebar that is meant to help with editing and adding blocks */}
