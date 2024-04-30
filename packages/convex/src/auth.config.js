@@ -1,7 +1,7 @@
 const authConfig = {
   providers: [
     {
-      domain: "https://clerk.thewayword.com",
+      domain: process.env.CLERK_JWT_ISSUER_DOMAIN,
       applicationID: "convex",
     },
   ],
