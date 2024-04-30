@@ -44,6 +44,7 @@ export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
     block.fileId,
     canUpdateBlock,
     selected,
+    toast,
     updateAdventureLogBlock,
     updatedContent,
     updatedFileId,
