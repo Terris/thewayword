@@ -5,14 +5,14 @@ import { emailFromAddress } from "./lib/email";
 
 const resend = new Resend(process.env.RESEND_APPI_KEY);
 
-export const sendNewWatlistEntryEmailToAdmin = internalAction({
-  args: { waitlistEmail: v.string() },
-  handler: async (ctx, { waitlistEmail }) => {
+export const sendNewFeedbackEmailToAdmin = internalAction({
+  args: { userEmail: v.string(), message: v.string() },
+  handler: async (ctx, { userEmail, message }) => {
     const sendEmailResponse = await resend.emails.send({
       from: emailFromAddress!,
       to: "bittybrella@gmail.com",
-      subject: "New waitlist entry",
-      text: `A new email has been added to the waitlist on The WayWord: ${waitlistEmail}`,
+      subject: "New feedback entry",
+      text: `Feedback has been submitted to the waitlist on The WayWord by ${userEmail}: ${message}`,
     });
 
     if (sendEmailResponse.error) {

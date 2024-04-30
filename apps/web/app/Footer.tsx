@@ -19,6 +19,7 @@ export function Footer() {
           <div className="w-full flex flex-col items-start justify-start md:flex-row md:justify-end md:gap-8">
             <FooterLink href="/about">About</FooterLink>
             <FooterLink href="/shop">Shop</FooterLink>
+            <FooterLink href="/feedback">Feedback</FooterLink>
           </div>
         ) : null}
       </div>
