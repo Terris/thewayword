@@ -10,7 +10,7 @@ export const sendNewFeedbackEmailToAdmin = internalAction({
   handler: async (ctx, { userEmail, message }) => {
     const sendEmailResponse = await resend.emails.send({
       from: emailFromAddress!,
-      to: "bittybrella@gmail.com",
+      to: "terris@thewayword.com",
       subject: "New feedback entry",
       text: `Feedback has been submitted to the waitlist on The WayWord by ${userEmail}: ${message}`,
     });
