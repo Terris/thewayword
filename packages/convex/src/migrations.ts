@@ -8,7 +8,7 @@ export const migrateLogPublishedValueToPublic = mutation({
 
     await asyncMap(allLogs, async (log) => {
       await ctx.db.patch(log._id, {
-        public: log.published,
+        isPublic: log.published,
       });
     });
   },

@@ -127,6 +127,8 @@ export const create = mutation({
     }),
     coverImageFileId: v.id("files"),
     tagsAsString: v.optional(v.string()),
+    adventureStartDate: v.optional(v.string()),
+    adventureEndDate: v.optional(v.string()),
   },
   handler: async (ctx, { location, coverImageFileId, tagsAsString }) => {
     const { user } = await validateIdentity(ctx);
@@ -174,9 +176,9 @@ export const update = mutation({
   args: {
     id: v.id("adventureLogs"),
     title: v.optional(v.string()),
-    published: v.optional(v.boolean()),
+    isPublic: v.optional(v.boolean()),
   },
-  handler: async (ctx, { id, title, published }) => {
+  handler: async (ctx, { id, title, isPublic }) => {
     const { user } = await validateIdentity(ctx);
     const existingAdventureLog = await ctx.db.get(id);
     if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
@@ -185,7 +187,7 @@ export const update = mutation({
 
     return ctx.db.patch(id, {
       title: title ?? existingAdventureLog.title,
-      published: published ?? existingAdventureLog.published,
+      isPublic: isPublic ?? existingAdventureLog.isPublic,
     });
   },
 });
