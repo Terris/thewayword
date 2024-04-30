@@ -33,9 +33,9 @@ async function sendInviteEmail({
   return await resend.emails.send({
     from: emailFromAddress!,
     to: toEmail,
-    subject: "Invite from Terris at BittyBrella",
+    subject: "Invite from Terris at The Wayword",
     html: buildOrganizationInviteEmailHTML({
-      inviteLink: `https://bittybrella.com/signup?inviteToken=${inviteToken}`,
+      inviteLink: `https://thewayword.com/signup?inviteToken=${inviteToken}`,
       toEmail,
     }),
   });

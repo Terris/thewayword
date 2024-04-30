@@ -22,9 +22,9 @@ export const sendNewUserEmailToAdmin = internalAction({
   handler: async (ctx, { userEmail }) => {
     const sendEmailResponse = await resend.emails.send({
       from: emailFromAddress!,
-      to: "terris@bittybrella.com",
+      to: "terris@thewayword.com",
       subject: "New user sign up",
-      text: `A new user has signed up on BittyBrella: ${userEmail}`,
+      text: `A new user has signed up on The Wayword: ${userEmail}`,
     });
 
     if (sendEmailResponse.error) {

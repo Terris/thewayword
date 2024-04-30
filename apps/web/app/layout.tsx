@@ -7,7 +7,7 @@ import { AppProviders } from "./AppProviders";
 import { Footer } from "./Footer";
 
 export const metadata = {
-  title: "Bitty Brella",
+  title: "The Wayword",
   description: "An adventure app for those whose best days are spent outdoors.",
 };
 

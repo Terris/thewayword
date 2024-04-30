@@ -1,5 +1,5 @@
 {
-  "name": "bittybrella-mono",
+  "name": "thewayword",
   "private": true,
   "scripts": {
     "build": "turbo build",

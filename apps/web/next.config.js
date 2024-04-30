@@ -5,7 +5,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "bittybrella.s3.amazonaws.com",
+        hostname: "thewayword.s3.amazonaws.com",
       },
       {
         protocol: "https",

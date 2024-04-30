@@ -10,9 +10,9 @@ export const sendNewWatlistEntryEmailToAdmin = internalAction({
   handler: async (ctx, { waitlistEmail }) => {
     const sendEmailResponse = await resend.emails.send({
       from: emailFromAddress!,
-      to: "terris@bittybrella.com",
+      to: "terris@thewayword.com",
       subject: "New waitlist entry",
-      text: `A new email has been added to the waitlist on BittyBrella: ${waitlistEmail}`,
+      text: `A new email has been added to the waitlist on The Wayword: ${waitlistEmail}`,
     });
 
     if (sendEmailResponse.error) {
