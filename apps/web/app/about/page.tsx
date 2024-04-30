@@ -27,7 +27,7 @@ export default function AboutPage() {
         <li>
           <strong>Personalization:</strong> We value personal expression and
           strive to offer tools and features that empower members to personalize
-          their outdoor experiences and share them with others.
+          their adventure stories and share them with others.
         </li>
         <li>
           <strong>Education:</strong> We are committed to promoting outdoor
