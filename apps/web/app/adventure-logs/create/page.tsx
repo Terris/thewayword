@@ -279,7 +279,6 @@ export default function CreatePage() {
                   initialLatitude={geo?.coords.latitude}
                   featureLongitude={Number(values.location.longitude)}
                   featureLatitude={Number(values.location.latitude)}
-                  moveable
                 />
               </div>
             </div>
