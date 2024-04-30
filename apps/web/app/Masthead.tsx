@@ -36,6 +36,15 @@ export function Masthead() {
             <Menu className="w-6 h-6" />
           )}
         </Button>
+        <div className="md:w-1/3 flex flex-row items-center justify-start">
+          {isAuthenticated ? (
+            <div className="hidden md:flex flex-row items-center justify-end gap-8">
+              <MastheadLink href="/feed">Feed</MastheadLink>
+              {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}
+              <MastheadLink href="/shop">Shop</MastheadLink>
+            </div>
+          ) : null}
+        </div>
         <div className="md:w-1/3 flex flex-row items-center justify-center">
           <Link href={isAuthenticated ? "/feed" : "/"}>
             <TheWaywordLogo
@@ -44,13 +53,9 @@ export function Masthead() {
             />
           </Link>
         </div>
-        <div className="w-2/3 flex flex-row items-center justify-end gap-8">
+        <div className="w-1/3 flex flex-row items-center justify-end gap-8">
           {isAuthenticated ? (
             <div className="hidden md:flex flex-row items-center justify-end gap-8">
-              <MastheadLink href="/feed">Feed</MastheadLink>
-              {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}
-              <MastheadLink href="/shop">Shop</MastheadLink>
-              <MastheadLink href="/me/adventure-logs">My Logs</MastheadLink>
               <MastheadLink href="/adventure-logs/create">
                 Log an Adventure
               </MastheadLink>

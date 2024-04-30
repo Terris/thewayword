@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@repo/ui";
 import { SignOutButton } from "@clerk/nextjs";
+import Link from "next/link";
 
 export function UserMenu() {
   return (
@@ -17,6 +18,11 @@ export function UserMenu() {
         <CircleUserRound className="w-6 h-6" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
+        <DropdownMenuItem asChild>
+          <Link href="/me/adventure-logs" className="cursor-pointer">
+            My Logs
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem
           asChild
           className="w-full justify-start cursor-pointer"
