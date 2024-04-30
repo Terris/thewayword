@@ -33,7 +33,7 @@ async function sendInviteEmail({
   return await resend.emails.send({
     from: emailFromAddress!,
     to: toEmail,
-    subject: "Invite from Terris at The Wayword",
+    subject: "Invite from Terris at The WayWord",
     html: buildOrganizationInviteEmailHTML({
       inviteLink: `https://thewayword.com/signup?inviteToken=${inviteToken}`,
       toEmail,

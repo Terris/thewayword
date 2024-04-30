@@ -3,7 +3,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { useMeContext } from "@repo/auth/context";
-import { Button, TheWaywordLogo } from "@repo/ui";
+import { Button, TheWayWordLogo } from "@repo/ui";
 import { Menu, X } from "lucide-react";
 import { useLockBodyScroll } from "@repo/hooks";
 import { usePathname } from "next/navigation";
@@ -47,7 +47,7 @@ export function Masthead() {
         </div>
         <div className="md:w-1/3 mr-auto md:mr-0 flex flex-row items-center justify-start md:justify-center">
           <Link href={isAuthenticated ? "/feed" : "/"}>
-            <TheWaywordLogo
+            <TheWayWordLogo
               width={160}
               className="fill-foreground max-w-full -mt-[10px]"
             />

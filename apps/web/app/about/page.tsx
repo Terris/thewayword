@@ -8,7 +8,7 @@ export default function AboutPage() {
         institutions that help keep it pristine.
       </Text>
       <Text className="text-lg pb-16">
-        The Wayword is dedicated to building a vibrant community of outdoor
+        The WayWord is dedicated to building a vibrant community of outdoor
         enthusiasts who share a profound appreciation for nature and a passion
         for adventure. Our platform aims to provide a space where members can
         express and explore their love for the outdoors in a manner that is

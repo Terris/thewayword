@@ -12,7 +12,7 @@ export const sendNewWatlistEntryEmailToAdmin = internalAction({
       from: emailFromAddress!,
       to: "terris@thewayword.com",
       subject: "New waitlist entry",
-      text: `A new email has been added to the waitlist on The Wayword: ${waitlistEmail}`,
+      text: `A new email has been added to the waitlist on The WayWord: ${waitlistEmail}`,
     });
 
     if (sendEmailResponse.error) {

@@ -27,4 +27,4 @@ export * from "./Toast";
 export * from "./Toaster";
 export * from "./Tooltip";
 
-export * from "./TheWaywordLogo";
+export * from "./TheWayWordLogo";

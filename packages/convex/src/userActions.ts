@@ -24,7 +24,7 @@ export const sendNewUserEmailToAdmin = internalAction({
       from: emailFromAddress!,
       to: "terris@thewayword.com",
       subject: "New user sign up",
-      text: `A new user has signed up on The Wayword: ${userEmail}`,
+      text: `A new user has signed up on The WayWord: ${userEmail}`,
     });
 
     if (sendEmailResponse.error) {
