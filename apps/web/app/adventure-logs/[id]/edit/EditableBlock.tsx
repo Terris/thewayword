@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useMutation } from "convex/react";
 import { MoveDown, MoveUp, Trash2 } from "lucide-react";
 import { api, type Doc } from "@repo/convex";
+import { useToast } from "@repo/ui/hooks";
 import { cn } from "@repo/utils";
 import { EditableTextBlock } from "./EditableTextBlock";
 import { EditableImageBlock } from "./EditableImageBlock";
 
 export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
+  const { toast } = useToast();
   const [selected, setSelected] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(block.content);
   const [updatedFileId, setUpdatedFileId] = useState(block.fileId);
@@ -30,6 +32,10 @@ export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
         content:
           updatedContent !== block.content ? updatedContent : block.content,
         fileId: updatedFileId !== block.fileId ? updatedFileId : block.fileId,
+      });
+      toast({
+        title: "Success",
+        description: "Saved changes",
       });
     }
   }, [
