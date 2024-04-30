@@ -27,7 +27,7 @@ export function Masthead() {
           onClick={() => {
             setPagesMenuIsOpen((o) => !o);
           }}
-          className="-ml-4 mr-3 md:hidden"
+          className="-ml-3 mr-3 md:hidden"
           size="icon"
         >
           {pagesMenuIsOpen ? (
@@ -45,7 +45,7 @@ export function Masthead() {
             </div>
           ) : null}
         </div>
-        <div className="md:w-1/3 flex flex-row items-center justify-center">
+        <div className="md:w-1/3 mr-auto md:mr-0 flex flex-row items-center justify-start md:justify-center">
           <Link href={isAuthenticated ? "/feed" : "/"}>
             <TheWaywordLogo
               width={160}
