@@ -18,6 +18,9 @@ export default defineSchema({
     ),
     coverImageFileId: v.optional(v.id("files")),
     published: v.boolean(),
+    public: v.optional(v.boolean()),
+    adventureStartDate: v.optional(v.string()),
+    adventureEndDate: v.optional(v.string()),
   })
     .index("by_user_id", ["userId"])
     .index("by_published", ["published"])
