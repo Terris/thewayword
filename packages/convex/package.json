@@ -12,9 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "@clerk/clerk-sdk-node": "^4.13.9",
-    "convex": "^1.11.0",
-    "convex-helpers": "^0.1.7",
-    "openai": "^4.26.0",
+    "convex": "^1.11.2",
+    "convex-helpers": "^0.1.35",
     "resend": "^3.1.0",
     "stripe": "^14.16.0",
     "svix": "^1.17.0"

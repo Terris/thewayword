@@ -33,8 +33,8 @@ importers:
         specifier: ^3.523.0
         version: 3.523.0
       '@clerk/nextjs':
-        specifier: ^5.0.3
-        version: 5.0.3(eslint@8.56.0)(next@14.2.3)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
+        specifier: ^5.0.4
+        version: 5.0.4(eslint@8.56.0)(next@14.2.3)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
       '@mapbox/search-js-core':
         specifier: 1.0.0-beta.18
         version: 1.0.0-beta.18
@@ -175,8 +175,8 @@ importers:
   packages/auth:
     dependencies:
       '@clerk/nextjs':
-        specifier: ^4.29.7
-        version: 4.29.7(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^5.0.4
+        version: 5.0.4(eslint@8.56.0)(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
       '@repo/convex':
         specifier: workspace:*
         version: link:../convex
@@ -184,7 +184,7 @@ importers:
         specifier: workspace:*
         version: link:../ui
       convex:
-        specifier: ^1.11.0
+        specifier: ^1.11.2
         version: 1.11.2(react-dom@18.2.0)(react@18.2.0)
       next:
         specifier: ^14.1.0
@@ -230,7 +230,7 @@ importers:
         specifier: ^4.13.9
         version: 4.13.9(react@18.2.0)
       convex:
-        specifier: ^1.11.0
+        specifier: ^1.11.2
         version: 1.11.2(react-dom@18.2.0)(react@18.2.0)
       convex-helpers:
         specifier: ^0.1.7
@@ -1399,11 +1399,11 @@ packages:
       - react
     dev: false
 
-  /@clerk/backend@1.1.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-1qd0tKl0B0jJlmmg+o37pXSfzQHRMTk/HGPTvFGWhYCscMXjlKcXrSgDIjN3TATmOIDtA2vCT3AMxBWyVTcKmQ==}
+  /@clerk/backend@1.1.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-6r2SPtO5TB53OiGwexLP19LvVoUO+Nz7KlE4US1uposaT2X1+enRtA0LD9DwJnv1YJKxnPXVkwiuqYYlGysusw==}
     engines: {node: '>=18.17.0'}
     dependencies:
-      '@clerk/shared': 2.0.0(react-dom@18.2.0)(react@18.2.0)
+      '@clerk/shared': 2.0.1(react-dom@18.2.0)(react@18.2.0)
       cookie: 0.5.0
       snakecase-keys: 5.4.4
       tslib: 2.4.1
@@ -1412,27 +1412,15 @@ packages:
       - react-dom
     dev: false
 
-  /@clerk/clerk-react@4.30.5(react@18.2.0):
-    resolution: {integrity: sha512-jWSbgjWW3ny+ctQKpz/c8CwascliDtaa/8FyHX7tqKlV7vFeR9N/AjaZIUKHrbeGpRk+b/RM2xHLoZS4nZ4V6A==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      react: '>=16'
-    dependencies:
-      '@clerk/shared': 1.3.1(react@18.2.0)
-      '@clerk/types': 3.62.0
-      react: 18.2.0
-      tslib: 2.4.1
-    dev: false
-
-  /@clerk/clerk-react@5.0.1(eslint@8.56.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-JMwOtFFYGfEOI7Ux3Hg5QbuSYSUN1srf3rL6ORK6hgNuTbS1Cd24v6XZz3c7xfMo6yL70o870gXi20FecdeYYw==}
+  /@clerk/clerk-react@5.0.2(eslint@8.56.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-gSRFc5oCsBvusdmG5PT8JECySf5qhPW9pl0o9s15KAxy+HlbBJDzombJmGvj3E4nFd/UiYm9LF4S2I61eGBf2w==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       react: '>=18'
       react-dom: '>=18'
     dependencies:
-      '@clerk/shared': 2.0.0(react-dom@18.2.0)(react@18.2.0)
-      '@clerk/types': 4.1.0
+      '@clerk/shared': 2.0.1(react-dom@18.2.0)(react@18.2.0)
+      '@clerk/types': 4.2.0
       eslint-config-custom: 0.0.0(eslint@8.56.0)(typescript@5.3.3)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
@@ -1461,37 +1449,41 @@ packages:
       - react
     dev: false
 
-  /@clerk/nextjs@4.29.7(next@14.1.0)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-tPvIp4GXCsjcKankLRpPPQGDWmpmlB2tm+p656/OUUmzPMeDnk5Euc86HjSk+5C9BAHVatrveRth6fHa4yzNhQ==}
-    engines: {node: '>=14'}
-    peerDependencies:
-      next: '>=10'
-      react: ^17.0.2 || ^18.0.0-0
-      react-dom: ^17.0.2 || ^18.0.0-0
-    dependencies:
-      '@clerk/backend': 0.38.1(react@18.2.0)
-      '@clerk/clerk-react': 4.30.5(react@18.2.0)
-      '@clerk/clerk-sdk-node': 4.13.9(react@18.2.0)
-      '@clerk/shared': 1.3.1(react@18.2.0)
-      '@clerk/types': 3.62.0
-      next: 14.1.0(react-dom@18.2.0)(react@18.2.0)
-      path-to-regexp: 6.2.1
-      react: 18.2.0
-      react-dom: 18.2.0(react@18.2.0)
-      tslib: 2.4.1
-    dev: false
-
-  /@clerk/nextjs@5.0.3(eslint@8.56.0)(next@14.2.3)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-sTnAEHDkesmr/kwmjH3mth8I8ZBeFcYBtMIszK7Hnbx2XBs0obBDT/YGkFQOawcT2aDCsQpZ5SmPrIgCspE2yQ==}
+  /@clerk/nextjs@5.0.4(eslint@8.56.0)(next@14.1.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-NjDajw89058nPqREnm0eK/KV6JdveULJh/PjkvOczEJtvsgHkxIr1cVMDEZRwAlFZlKAOYYfjojH+er/PSUn/A==}
     engines: {node: '>=18.17.0'}
     peerDependencies:
       next: ^13.5.4 || ^14.0.3
       react: '>=18'
       react-dom: '>=18'
     dependencies:
-      '@clerk/backend': 1.1.0(react-dom@18.2.0)(react@18.2.0)
-      '@clerk/clerk-react': 5.0.1(eslint@8.56.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
-      '@clerk/shared': 2.0.0(react-dom@18.2.0)(react@18.2.0)
+      '@clerk/backend': 1.1.1(react-dom@18.2.0)(react@18.2.0)
+      '@clerk/clerk-react': 5.0.2(eslint@8.56.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
+      '@clerk/shared': 2.0.1(react-dom@18.2.0)(react@18.2.0)
+      crypto-js: 4.2.0
+      next: 14.1.0(react-dom@18.2.0)(react@18.2.0)
+      path-to-regexp: 6.2.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      tslib: 2.4.1
+    transitivePeerDependencies:
+      - eslint
+      - eslint-import-resolver-webpack
+      - supports-color
+      - typescript
+    dev: false
+
+  /@clerk/nextjs@5.0.4(eslint@8.56.0)(next@14.2.3)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-NjDajw89058nPqREnm0eK/KV6JdveULJh/PjkvOczEJtvsgHkxIr1cVMDEZRwAlFZlKAOYYfjojH+er/PSUn/A==}
+    engines: {node: '>=18.17.0'}
+    peerDependencies:
+      next: ^13.5.4 || ^14.0.3
+      react: '>=18'
+      react-dom: '>=18'
+    dependencies:
+      '@clerk/backend': 1.1.1(react-dom@18.2.0)(react@18.2.0)
+      '@clerk/clerk-react': 5.0.2(eslint@8.56.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
+      '@clerk/shared': 2.0.1(react-dom@18.2.0)(react@18.2.0)
       crypto-js: 4.2.0
       next: 14.2.3(react-dom@18.2.0)(react@18.2.0)
       path-to-regexp: 6.2.1
@@ -1519,8 +1511,8 @@ packages:
       swr: 2.2.0(react@18.2.0)
     dev: false
 
-  /@clerk/shared@2.0.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-HRbBGhAetOE6gSFd2jlLJTo+BFjuEr9lD1xigtBXdJUnmVngunciikQU2dZ4i/20X7B4VTrofhNpYi9MsCm7dw==}
+  /@clerk/shared@2.0.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-iRjvWCGVzcN5vi9O3+/bEbA22TegxlnHJJE1a6989OFeeXqSKFqmYwDrvM48umJrbvX5cMbKEgctSVXT2IOgCw==}
     engines: {node: '>=18.17.0'}
     requiresBuild: true
     peerDependencies:
@@ -1547,8 +1539,8 @@ packages:
       csstype: 3.1.1
     dev: false
 
-  /@clerk/types@4.1.0:
-    resolution: {integrity: sha512-e9vsD7EdQE0q9mPwPMq1kPtPC9BYGR8BucEoEu+pEyXXD5cdSkzM+WvhUonnTHNzYE/W/X5d1zFDNvCV5YfS5Q==}
+  /@clerk/types@4.2.0:
+    resolution: {integrity: sha512-JtQINgvRGkO9K8os8pSj3QvNrBDvdc0lFpbTwpF3J1CBLafiJmJiBUyUSzWcI/k/9FlClMZxauZufVp9jlSBjg==}
     engines: {node: '>=18.17.0'}
     dependencies:
       csstype: 3.1.1
@@ -5333,14 +5325,6 @@ packages:
       clone: 1.0.4
     dev: true
 
-  /define-data-property@1.1.1:
-    resolution: {integrity: sha512-E7uGkTzkk1d0ByLeSc6ZsFS79Axg+m1P/VsgYsxHgiuc3tFSj+MjMIwe90FC4lOAZzNBdY7kkO2P2wKdsQ1vgQ==}
-    engines: {node: '>= 0.4'}
-    dependencies:
-      get-intrinsic: 1.2.4
-      gopd: 1.0.1
-      has-property-descriptors: 1.0.1
-
   /define-data-property@1.1.4:
     resolution: {integrity: sha512-rBMvIzlpA8v6E+SJZoo++HAYqsLrkg7MSfIinMPFhmkorw7X+dOXVJQs+QT69zGkzMyfDnIMN2Wid1+NbL3T+A==}
     engines: {node: '>= 0.4'}
@@ -5353,8 +5337,8 @@ packages:
     resolution: {integrity: sha512-8QmQKqEASLd5nx0U1B1okLElbUuuttJ/AnYmRXbbbGDWh6uS208EjD4Xqq/I9wK7u0v6O08XhTWnt5XtEbR6Dg==}
     engines: {node: '>= 0.4'}
     dependencies:
-      define-data-property: 1.1.1
-      has-property-descriptors: 1.0.1
+      define-data-property: 1.1.4
+      has-property-descriptors: 1.0.2
       object-keys: 1.1.1
 
   /degenerator@5.0.1:
@@ -6688,11 +6672,6 @@ packages:
   /has-flag@4.0.0:
     resolution: {integrity: sha512-EykJT/Q1KjTWctppgIAgfSO0tKVuZUjhgMr17kqTumMl6Afv3EISleU7qZUzoXDFTAHTDC4NOoG/ZxU3EvlMPQ==}
     engines: {node: '>=8'}
-
-  /has-property-descriptors@1.0.1:
-    resolution: {integrity: sha512-VsX8eaIewvas0xnvinAe9bw4WfIeODpGYikiWYLH+dma0Jw6KHYqWiWfhQlgOVK8D6PvjubK5Uc4P0iIhIcNVg==}
-    dependencies:
-      get-intrinsic: 1.2.4
 
   /has-property-descriptors@1.0.2:
     resolution: {integrity: sha512-55JNKuIW+vq4Ke1BjOTjM2YctQIvCT7GFzHwmfZPGo5wnrgkid0YQtnAleFSqumZm4az3n2BS+erby5ipJdgrg==}
@@ -8657,9 +8636,9 @@ packages:
     resolution: {integrity: sha512-tMNCiqYVkXIZgc2Hnoy2IvC/f8ezc5koaRFkCjrpWzGpCd3qbZXPzVy9MAZzK1ch/X0jvSkojys3oqJN0qCmdA==}
     engines: {node: '>= 0.4'}
     dependencies:
-      define-data-property: 1.1.1
+      define-data-property: 1.1.4
       functions-have-names: 1.2.3
-      has-property-descriptors: 1.0.1
+      has-property-descriptors: 1.0.2
 
   /shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
