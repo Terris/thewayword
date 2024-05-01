@@ -64,7 +64,7 @@ export default function EditLogPage() {
       initialValues={{
         title: adventureLog.title,
         coverImageFileId: adventureLog.coverImageFileId,
-        isPublic: adventureLog.isPublic ?? false,
+        isPublic: adventureLog.isPublic,
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}

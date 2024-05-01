@@ -7,7 +7,7 @@ import { Field, Form, Formik, type FieldProps } from "formik";
 import { useMutation } from "convex/react";
 import { type Id, api } from "@repo/convex";
 import { useGeoLocation } from "@repo/hooks";
-import { Input, Text, Button } from "@repo/ui";
+import { Input, Text, Button, DatePicker } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
 import { cn } from "@repo/utils";
 import { UploadFileButton } from "../../_components/UploadFileButton";
@@ -33,12 +33,16 @@ const validationSchema = Yup.object().shape({
     .required("Location is required"),
   coverImageFileId: Yup.string().required("Showcase image is required"),
   tagsAsString: Yup.string().required("At least one tag is required"),
+  adventureStartDate: Yup.string().required("Date is required"),
+  adventureEndDate: Yup.string(),
 });
 
 interface CreateAdventureLogFormValues {
   location: LocationInputValue;
   coverImageFileId?: string;
   tagsAsString: string;
+  adventureStartDate: string;
+  adventureEndDate?: string;
 }
 
 export default function CreatePage() {
@@ -63,6 +67,8 @@ export default function CreatePage() {
         },
         coverImageFileId: values.coverImageFileId as Id<"files">,
         tagsAsString: values.tagsAsString,
+        adventureStartDate: values.adventureStartDate,
+        adventureEndDate: values.adventureEndDate,
       });
       toast({
         duration: 5000,
@@ -73,6 +79,7 @@ export default function CreatePage() {
     } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
+
       toast({
         title: "Error",
         description: errorMessage,
@@ -95,6 +102,8 @@ export default function CreatePage() {
         },
         coverImageFileId: "",
         tagsAsString: "",
+        adventureStartDate: "",
+        adventureEndDate: "",
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
@@ -119,7 +128,6 @@ export default function CreatePage() {
                   <Text className="text-4xl font-black italic pb-16 text-center">
                     Log an Adventure!
                   </Text>
-
                   {currentStep === 0 ? (
                     <>
                       <Text className="font-soleil pb-2">
@@ -209,6 +217,30 @@ export default function CreatePage() {
                       </Field>
                     </>
                   ) : null}
+                  {currentStep === 3 ? (
+                    <>
+                      <Text className="font-soleil pb-2">
+                        When did you go on your adventure?
+                      </Text>
+                      <Field name="adventureStartDate">
+                        {({ meta, field, form }: FieldProps) => (
+                          <>
+                            <DatePicker
+                              dateAsISOString={field.value as string}
+                              setDate={(v) =>
+                                form.setFieldValue("adventureStartDate", v)
+                              }
+                            />
+                            {meta.touched && meta.error ? (
+                              <Text className="text-destructive">
+                                {meta.error}
+                              </Text>
+                            ) : null}
+                          </>
+                        )}
+                      </Field>
+                    </>
+                  ) : null}
                   <div className="flex flex-row items-center gap-4">
                     <Button
                       type="button"
@@ -221,7 +253,7 @@ export default function CreatePage() {
                     >
                       Back
                     </Button>
-                    {currentStep === 2 ? (
+                    {currentStep === 3 ? (
                       <Button
                         type="button"
                         disabled={isSubmitting}
@@ -264,6 +296,14 @@ export default function CreatePage() {
                       className={cn(
                         "w-[12px] h-[12px] rounded-full border border-dashed",
                         currentStep === 2
+                          ? "border-foreground bg-foreground"
+                          : "bg-transparent"
+                      )}
+                    />
+                    <div
+                      className={cn(
+                        "w-[12px] h-[12px] rounded-full border border-dashed",
+                        currentStep === 3
                           ? "border-foreground bg-foreground"
                           : "bg-transparent"
                       )}

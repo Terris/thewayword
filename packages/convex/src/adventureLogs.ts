@@ -130,7 +130,16 @@ export const create = mutation({
     adventureStartDate: v.optional(v.string()),
     adventureEndDate: v.optional(v.string()),
   },
-  handler: async (ctx, { location, coverImageFileId, tagsAsString }) => {
+  handler: async (
+    ctx,
+    {
+      location,
+      coverImageFileId,
+      tagsAsString,
+      adventureStartDate,
+      adventureEndDate,
+    }
+  ) => {
     const { user } = await validateIdentity(ctx);
 
     // Split the tags by comma, remove any leading/trailing whitespace, and lowercase all tags
@@ -143,9 +152,10 @@ export const create = mutation({
       userId: user._id,
       title: "My adventure",
       location,
-      published: false,
       isPublic: false,
       coverImageFileId,
+      adventureStartDate,
+      adventureEndDate,
     });
 
     if (tags?.length) {
