@@ -15,6 +15,7 @@ import type {
   FunctionReference,
 } from "convex/server";
 import type * as adventureLogBlocks from "../adventureLogBlocks.js";
+import type * as adventureLogTags from "../adventureLogTags.js";
 import type * as adventureLogs from "../adventureLogs.js";
 import type * as feedback from "../feedback.js";
 import type * as feedbackActions from "../feedbackActions.js";
@@ -45,6 +46,7 @@ import type * as webhooks from "../webhooks.js";
  */
 declare const fullApi: ApiFromModules<{
   adventureLogBlocks: typeof adventureLogBlocks;
+  adventureLogTags: typeof adventureLogTags;
   adventureLogs: typeof adventureLogs;
   feedback: typeof feedback;
   feedbackActions: typeof feedbackActions;

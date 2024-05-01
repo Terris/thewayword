@@ -7,7 +7,7 @@ import { Heart, Pencil } from "lucide-react";
 import { type Id, api } from "@repo/convex";
 import { useMeContext } from "@repo/auth/context";
 import { LoadingScreen, Text } from "@repo/ui";
-import { cn } from "@repo/utils";
+import { cn, formatDate } from "@repo/utils";
 import { ImageBlock } from "../../_components/ImageBlock";
 import { AdventureLogMap } from "../../_components/AdventureLogMap";
 import { AdventureLogBlocks } from "./AdventureLogBlocks";
@@ -36,19 +36,22 @@ export default function AdventureLogPage() {
           moveable={false}
         />
       </div>
-
       <div className="relative z-50 w-full container bg-background -mt-28">
         <div className="max-w-[900px] mx-auto p-4 md:p-10 md:pt-12">
+          <AdventureLogTags adventureLogId={id as Id<"adventureLogs">} />
           <Text className="w-full text-2xl md:text-4xl font-bold mb-4 bg-transparent outline-none focus:underline">
             {adventureLog.title}
           </Text>
           <hr className="border-b-1 border-dashed mb-4" />
 
-          <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider">
-            {adventureLog.location?.name}
+          <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-1">
+            {adventureLog.location?.name}{" "}
+            {adventureLog.adventureStartDate
+              ? `- ${formatDate(adventureLog.adventureStartDate)}`
+              : null}
           </Text>
 
-          <Text className="w-full text-sm italic">
+          <Text className="w-full text-sm italic text-muted-foreground">
             {adventureLog.user?.name}
           </Text>
         </div>
@@ -115,5 +118,28 @@ function AdventureLogLikeButton({
         fill={userLikesAdventureLog ? "red" : "transparent"}
       />
     </button>
+  );
+}
+
+function AdventureLogTags({
+  adventureLogId,
+}: {
+  adventureLogId: Id<"adventureLogs">;
+}) {
+  const adventureLogTags = useQuery(
+    api.adventureLogTags.findAllByAdventureLogId,
+    {
+      adventureLogId,
+    }
+  );
+  const isLoading = adventureLogTags === undefined;
+  if (isLoading) return null;
+  return (
+    <Text className="font-soleil text-xs uppercase tracking-widest pb-2">
+      {adventureLogTags.map(
+        (tag, index) =>
+          `${tag?.name}${index + 1 < adventureLogTags.length ? ", " : ""}`
+      )}
+    </Text>
   );
 }
