@@ -15,7 +15,7 @@ import { Resend } from "resend";
  * Send a user email to the admin.
  * @param waitlistEmail - The email to send.
  */
-const resend = new Resend(process.env.RESEND_APPI_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendNewUserEmailToAdmin = internalAction({
   args: { userEmail: v.string() },

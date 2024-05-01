@@ -3,7 +3,7 @@ import { internalAction } from "./_generated/server";
 import { ConvexError, v } from "convex/values";
 import { emailFromAddress } from "./lib/email";
 
-const resend = new Resend(process.env.RESEND_APPI_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendNewWatlistEntryEmailToAdmin = internalAction({
   args: { waitlistEmail: v.string() },

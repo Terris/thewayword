@@ -4,7 +4,7 @@ import { ConvexError, v } from "convex/values";
 import { emailFromAddress } from "./lib/email";
 import { buildOrganizationInviteEmailHTML } from "./lib/transactional";
 
-const resend = new Resend(process.env.RESEND_APPI_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendInviteEmailToUser = internalAction({
   args: { toEmail: v.string(), inviteToken: v.id("invites") },
