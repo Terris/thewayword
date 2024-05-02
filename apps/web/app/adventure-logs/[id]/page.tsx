@@ -6,7 +6,7 @@ import { useMutation, useQuery } from "convex/react";
 import { Heart, Pencil } from "lucide-react";
 import { type Id, api } from "@repo/convex";
 import { useMeContext } from "@repo/auth/context";
-import { LoadingScreen, Text } from "@repo/ui";
+import { CountBadge, LoadingScreen, Text } from "@repo/ui";
 import { cn, formatDate } from "@repo/utils";
 import { ImageBlock } from "../../_components/ImageBlock";
 import { AdventureLogMap } from "../../_components/AdventureLogMap";
@@ -58,7 +58,6 @@ export default function AdventureLogPage() {
         {adventureLog.coverImageFileId ? (
           <ImageBlock fileId={adventureLog.coverImageFileId} className="mb-8" />
         ) : null}
-
         <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
       </div>
       <div className="p-8 flex justify-center items-center w-full lg:z-50 lg:w-auto lg:flex-col lg:fixed lg:top-[50vh] lg:h-[1px] lg:right-0  ">
@@ -91,7 +90,7 @@ function AdventureLogLikeButton({
   adventureLogId: Id<"adventureLogs">;
 }) {
   const userLikesAdventureLog = useQuery(
-    api.likes.findBySessionedUserAndAdventureLogId,
+    api.likes.findOneBySessionedUserAndAdventureLogId,
     {
       adventureLogId,
     }
@@ -99,12 +98,17 @@ function AdventureLogLikeButton({
   const toggleLikeAdventureLog = useMutation(
     api.likes.toggleLikeBySessionedUserAndAdventureLogId
   );
+  const likes = useQuery(api.likes.findAllByAdventureLogId, {
+    adventureLogId,
+  });
+
+  const likeCount = likes?.length;
 
   return (
     <button
       type="button"
       className={cn(
-        "bg-background border rounded-full p-3 hover:bg-muted",
+        "relative bg-background border rounded-full p-3 hover:bg-muted",
         userLikesAdventureLog && "text-red-500"
       )}
       onClick={() => {
@@ -117,6 +121,9 @@ function AdventureLogLikeButton({
         className="w-4 h-4"
         fill={userLikesAdventureLog ? "red" : "transparent"}
       />
+      {likeCount ? (
+        <CountBadge count={likeCount} className="absolute -top-2 -right-2" />
+      ) : null}
     </button>
   );
 }

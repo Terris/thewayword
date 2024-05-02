@@ -5,6 +5,7 @@ export * from "./Button";
 export * from "./Calendar";
 export * from "./Card";
 export * from "./CopyToClipboardButton";
+export * from "./CountBadge";
 export * from "./CurrencyInput";
 export * from "./DataTable";
 export * from "./DatePicker";

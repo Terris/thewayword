@@ -23,7 +23,7 @@ export const toggleLikeBySessionedUserAndAdventureLogId = mutation({
   },
 });
 
-export const findBySessionedUserAndAdventureLogId = query({
+export const findOneBySessionedUserAndAdventureLogId = query({
   args: {
     adventureLogId: v.id("adventureLogs"),
   },
@@ -35,5 +35,19 @@ export const findBySessionedUserAndAdventureLogId = query({
         q.eq("userId", user._id).eq("adventureLogId", adventureLogId)
       )
       .first();
+  },
+});
+
+export const findAllByAdventureLogId = query({
+  args: {
+    adventureLogId: v.id("adventureLogs"),
+  },
+  handler: async (ctx, { adventureLogId }) => {
+    return ctx.db
+      .query("likes")
+      .withIndex("by_adventure_log_id", (q) =>
+        q.eq("adventureLogId", adventureLogId)
+      )
+      .collect();
   },
 });

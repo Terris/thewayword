@@ -31,7 +31,7 @@ export default function AboutPage() {
         more time outdoors and that the ephemera of these journeys become a more
         valuable memory.&rdquo;
       </Text>
-      <Text className="pb-16 italic">Terris Kremer - The WayWord Founder</Text>
+      <Text className="pb-16 italic">Terris Kremer - Founder, The WayWord</Text>
 
       <Text className="font-soleil font-bold uppercase tracking-wide pb-4">
         Core Values
