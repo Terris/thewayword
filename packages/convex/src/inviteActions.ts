@@ -9,9 +9,14 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const sendInviteEmailToUser = internalAction({
   args: { toEmail: v.string(), inviteToken: v.id("invites") },
   handler: async (ctx, { toEmail, inviteToken }) => {
-    const inviteEmailResponse = await sendInviteEmail({
-      toEmail,
-      inviteToken,
+    const inviteEmailResponse = await resend.emails.send({
+      from: emailFromAddress!,
+      to: toEmail,
+      subject: "Invite from Terris at The WayWord",
+      html: buildOrganizationInviteEmailHTML({
+        inviteLink: `${process.env.CLIENT_APP_URL}/signup?inviteToken=${inviteToken}`,
+        toEmail,
+      }),
     });
 
     if (inviteEmailResponse.error) {
@@ -21,22 +26,3 @@ export const sendInviteEmailToUser = internalAction({
     return true;
   },
 });
-
-// Private function
-async function sendInviteEmail({
-  toEmail,
-  inviteToken,
-}: {
-  toEmail: string;
-  inviteToken: string;
-}) {
-  return await resend.emails.send({
-    from: emailFromAddress!,
-    to: toEmail,
-    subject: "Invite from Terris at The WayWord",
-    html: buildOrganizationInviteEmailHTML({
-      inviteLink: `https://thewayword.com/signup?inviteToken=${inviteToken}`,
-      toEmail,
-    }),
-  });
-}

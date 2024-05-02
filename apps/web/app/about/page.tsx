@@ -17,6 +17,23 @@ export default function AboutPage() {
       </Text>
 
       <Text className="font-soleil font-bold uppercase tracking-wide pb-4">
+        The Pitch
+      </Text>
+      <Text className="text-lg pb-4">
+        &ldquo;My favorite days are spent outdoors but when the adventure is
+        over and I&rsquo;m back to my busy life I find myself wishing I could do
+        more with the artifacts of my journey than just dropping them into an
+        endless feed of memes and advertisements. The WayWord is a social
+        adventure journal that makes it easy to develop and publish the stories
+        of my travels. On the platform, we create adventure logs with maps,
+        pictures, and text and can share these logs with friends. My hope is
+        that, as a WayWord user, I can both inspire and be inspired to spend
+        more time outdoors and that the ephemera of these journeys become a more
+        valuable memory.&rdquo;
+      </Text>
+      <Text className="pb-16 italic">Terris Kremer - The WayWord Founder</Text>
+
+      <Text className="font-soleil font-bold uppercase tracking-wide pb-4">
         Core Values
       </Text>
       <ol className="list-decimal pb-16 space-y-4 pl-4">
