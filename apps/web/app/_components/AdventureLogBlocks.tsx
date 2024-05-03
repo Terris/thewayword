@@ -1,7 +1,7 @@
 import { type Id, api } from "@repo/convex";
 import { useQuery } from "convex/react";
 import { LoadingBox } from "@repo/ui";
-import { Block } from "../../_components/Block";
+import { Block } from "./Block";
 
 export function AdventureLogBlocks({
   adventureLogId,
