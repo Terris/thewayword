@@ -38,6 +38,11 @@ export default defineSchema({
     adventureLogId: v.id("adventureLogs"),
     tagId: v.id("tags"),
   }).index("by_adventure_log_id", ["adventureLogId"]),
+  comments: defineTable({
+    adventureLogId: v.id("adventureLogs"),
+    userId: v.id("users"),
+    message: v.string(),
+  }).index("by_adventure_log_id", ["adventureLogId"]),
   feedback: defineTable({
     message: v.string(),
     userId: v.id("users"),
