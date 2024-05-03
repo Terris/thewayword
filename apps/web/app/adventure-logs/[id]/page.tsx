@@ -7,7 +7,7 @@ import { Heart, MessageCircle, Pencil } from "lucide-react";
 import { type Id, api } from "@repo/convex";
 import { useMeContext } from "@repo/auth/context";
 import { CountBadge, LoadingScreen, Text } from "@repo/ui";
-import { cn, formatDate } from "@repo/utils";
+import { cn, formatDate, formatDateTime } from "@repo/utils";
 import { ImageBlock } from "../../_components/ImageBlock";
 import { AdventureLogMap } from "../../_components/AdventureLogMap";
 import { AdventureLogCommentForm } from "../../_components/AdventureLogCommentForm";
@@ -178,11 +178,11 @@ function AdventureLogComments({
             <hr className="border-b-1 border-dashed" />
             <div
               key={comment._id}
-              className="py-6 flex flex-row items-start gap-8"
+              className="py-6 flex flex-row items-start gap-16"
             >
               <Text className="text-sm italic">
                 {comment.user.name} <br />
-                {formatDate(comment._creationTime)}
+                {formatDateTime(comment._creationTime)}
               </Text>
               <Text>{comment.message}</Text>
             </div>

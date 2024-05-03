@@ -13,6 +13,7 @@ export const findAllByAdventureLogId = query({
       .withIndex("by_adventure_log_id", (q) =>
         q.eq("adventureLogId", adventureLogId)
       )
+      .order("desc")
       .collect();
 
     const commentsWithUser = await asyncMap(
