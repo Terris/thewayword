@@ -91,18 +91,12 @@ export function EditableLocationForm({
     >
       <DialogTrigger>
         <Text className="w-full font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pt-1 cursor-pointer hover:underline ">
-          {adventureLog.location?.name ? (
-            <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pt-1">
-              {adventureLog.location.name}
-            </Text>
-          ) : null}
+          {adventureLog.location?.name ? adventureLog.location.name : null}
         </Text>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle className="pb-4">
-            When did you go on your adventure?
-          </DialogTitle>
+          <DialogTitle className="pb-4">Where did you go?</DialogTitle>
           <Formik<EditableLocationFormValues>
             initialValues={{
               location: {
@@ -134,7 +128,6 @@ export function EditableLocationForm({
                   </>
                 )}
               </Field>
-
               <Button type="submit" className="w-full mt-4">
                 Save
               </Button>

@@ -13,6 +13,7 @@ import { EditableAdventureLogBlocks } from "./EditableAdventureLogBlocks";
 import { EditableIsPublicForm } from "./EditableIsPublicForm";
 import { EditableTitleForm } from "./EditableTitleForm";
 import { EditableAdventureDateForm } from "./EditableAdventureDateForm";
+import { EditableLocationForm } from "./EditableLocationForm";
 
 export default function EditLogPage() {
   const { id } = useParams();
@@ -64,14 +65,10 @@ export default function EditLogPage() {
               <Text className="italic text-neutral-400">Location</Text>
             </div>
             <div className="w-11/12">
-              {adventureLog.location?.name ? (
-                <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pt-1">
-                  {adventureLog.location.name}
-                </Text>
-              ) : null}
+              <EditableLocationForm setIsSaving={setIsSaving} />
             </div>
           </div>
-          <div className="flex flex-col pb-8 md:flex-row md:gap-8">
+          <div className="flex flex-col pb-6 md:flex-row md:gap-8">
             <div className="md:w-1/12 md:text-right">
               <Text className="italic text-neutral-400">Date</Text>
             </div>
@@ -136,7 +133,7 @@ export default function EditLogPage() {
 
       <div
         className={cn(
-          "fixed top-0 left-0 block w-full h-[2px] bg-primary",
+          "fixed top-0 left-0 block w-full h-[4px] bg-primary",
           isSaving && "animate-pulse"
         )}
       />

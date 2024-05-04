@@ -12,7 +12,6 @@ export default defineSchema({
         latitude: v.optional(v.number()),
         longitude: v.optional(v.number()),
         name: v.string(),
-        full_address: v.optional(v.string()),
         fullAddress: v.optional(v.string()),
         poiCategories: v.optional(v.array(v.string())),
       })
