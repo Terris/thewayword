@@ -23,7 +23,7 @@ export function ImageBlock({
       width={file.dimensions?.width}
       height={file.dimensions?.height}
       alt="Adventure log image"
-      className={cn("mx-auto rounded object-contain max-h-[90vh]", className)}
+      className={cn("mx-auto rounded object-contain", className)}
     />
   );
 }

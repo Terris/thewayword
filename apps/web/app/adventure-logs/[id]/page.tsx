@@ -46,14 +46,12 @@ export default function AdventureLogPage() {
             {adventureLog.title}
           </Text>
           <hr className="border-b-1 border-dashed mb-4" />
-
           <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-1">
             {adventureLog.location?.name}{" "}
             {adventureLog.adventureStartDate
               ? `- ${formatDate(adventureLog.adventureStartDate)}`
               : null}
           </Text>
-
           <Text className="w-full text-sm italic text-muted-foreground">
             {adventureLog.user?.name}
           </Text>
