@@ -2,13 +2,17 @@ import { useEffect, useState } from "react";
 import { useMutation } from "convex/react";
 import { MoveDown, MoveUp, Trash2 } from "lucide-react";
 import { api, type Doc } from "@repo/convex";
-import { useToast } from "@repo/ui/hooks";
 import { cn } from "@repo/utils";
 import { EditableTextBlock } from "./EditableTextBlock";
 import { EditableImageBlock } from "./EditableImageBlock";
 
-export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
-  const { toast } = useToast();
+export function EditableBlock({
+  block,
+  setIsSaving,
+}: {
+  block: Doc<"adventureLogBlocks">;
+  setIsSaving: (value: boolean) => void;
+}) {
   const [selected, setSelected] = useState(false);
   const [updatedContent, setUpdatedContent] = useState(block.content);
   const [updatedFileId, setUpdatedFileId] = useState(block.fileId);
@@ -27,15 +31,12 @@ export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
   // Attempt to save updated block when block is deselected
   useEffect(() => {
     if (!selected && canUpdateBlock) {
+      setIsSaving(true);
       void updateAdventureLogBlock({
         id: block._id,
         content:
           updatedContent !== block.content ? updatedContent : block.content,
         fileId: updatedFileId !== block.fileId ? updatedFileId : block.fileId,
-      });
-      toast({
-        title: "Success",
-        description: "Saved changes",
       });
     }
   }, [
@@ -44,10 +45,10 @@ export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
     block.fileId,
     canUpdateBlock,
     selected,
-    toast,
     updateAdventureLogBlock,
     updatedContent,
     updatedFileId,
+    setIsSaving,
   ]);
 
   return (

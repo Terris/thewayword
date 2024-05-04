@@ -1,17 +1,19 @@
+import { useParams } from "next/navigation";
 import { type Id, api } from "@repo/convex";
 import { useQuery } from "convex/react";
 import { LoadingBox } from "@repo/ui";
 import { EditableBlock } from "./EditableBlock";
 
 export function EditableAdventureLogBlocks({
-  adventureLogId,
+  setIsSaving,
 }: {
-  adventureLogId: Id<"adventureLogs">;
+  setIsSaving: (value: boolean) => void;
 }) {
+  const { id } = useParams();
   const adventureLogBlocks = useQuery(
     api.adventureLogBlocks.findAllByAdventureLogId,
     {
-      adventureLogId,
+      adventureLogId: id as Id<"adventureLogs">,
     }
   );
 
@@ -21,7 +23,7 @@ export function EditableAdventureLogBlocks({
 
   return adventureLogBlocks.map((block) => (
     <div key={block._id} className="pb-8">
-      <EditableBlock block={block} />
+      <EditableBlock block={block} setIsSaving={setIsSaving} />
     </div>
   ));
 }
