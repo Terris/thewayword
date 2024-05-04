@@ -11,7 +11,6 @@ import { Input, Text, Button, DatePicker } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
 import { cn } from "@repo/utils";
 import { UploadFileButton } from "../../_components/UploadFileButton";
-import { ImageBlock } from "../../_components/ImageBlock";
 import {
   type LocationInputValue,
   LocationSearchInput,
@@ -50,6 +49,7 @@ export default function CreatePage() {
   const { geo } = useGeoLocation();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
+  const [previewImageUrl, setPreviewImageURL] = useState<string | null>(null);
 
   const createLog = useMutation(api.adventureLogs.create);
 
@@ -161,11 +161,15 @@ export default function CreatePage() {
                       <Field name="showcaseFileId">
                         {({ form, meta }: FieldProps) => (
                           <>
-                            {values.coverImageFileId ? (
-                              <ImageBlock
-                                fileId={values.coverImageFileId as Id<"files">}
-                                className="mb-4"
-                              />
+                            {previewImageUrl ? (
+                              <div className="w-full relative">
+                                {/* eslint-disable-next-line -- trash next/image warn */}
+                                <img
+                                  src={previewImageUrl}
+                                  alt="Adventure log image"
+                                  className="mx-auto rounded object-contain mb-4"
+                                />
+                              </div>
                             ) : null}
                             <UploadFileButton
                               onSuccess={(fileIds) => {
@@ -174,6 +178,7 @@ export default function CreatePage() {
                                   fileIds[0]
                                 );
                               }}
+                              setPreviewURL={setPreviewImageURL}
                               variant="outline"
                               className={cn(
                                 "w-full border border-dashed",

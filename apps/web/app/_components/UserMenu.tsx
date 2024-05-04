@@ -23,6 +23,11 @@ export function UserMenu() {
             My Logs
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/me/account" className="cursor-pointer">
+            Account
+          </Link>
+        </DropdownMenuItem>
         <DropdownMenuItem
           asChild
           className="w-full justify-start cursor-pointer"

@@ -14,6 +14,7 @@ interface UploadFileButtonProps extends VariantProps<typeof buttonVariants> {
   children: React.ReactNode;
   multiple?: boolean;
   onSuccess?: (fileIds: Id<"files">[]) => void;
+  setPreviewURL?: (url: string) => void;
 }
 
 export function UploadFileButton({
@@ -23,6 +24,7 @@ export function UploadFileButton({
   children,
   multiple,
   onSuccess,
+  setPreviewURL,
 }: UploadFileButtonProps) {
   const { toast } = useToast();
   const { me } = useMeContext();
@@ -56,11 +58,15 @@ export function UploadFileButton({
 
   async function onSelectFiles(event: ChangeEvent<HTMLInputElement>) {
     if (!me) throw new Error("User must be logged in to upload a file.");
-    if (event.target.files === null) return;
+    if (!event.target.files) return;
 
     setIsUploading(true);
     keyPrefixRef.current = new Date().toISOString();
     const files = Array.from(event.target.files);
+
+    if (event.target.files[0]) {
+      setPreviewURL?.(URL.createObjectURL(event.target.files[0]));
+    }
 
     try {
       await Promise.all(files.map((file) => uploadFile(file)));

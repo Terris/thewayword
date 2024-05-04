@@ -59,7 +59,10 @@ export default function AdventureLogPage() {
           </Text>
         </div>
         {adventureLog.coverImageFileId ? (
-          <ImageBlock fileId={adventureLog.coverImageFileId} className="mb-8" />
+          <ImageBlock
+            fileId={adventureLog.coverImageFileId}
+            className="mb-8 max-h-[90vh]"
+          />
         ) : null}
         <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
         <div id="comments" />
