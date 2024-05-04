@@ -17,6 +17,8 @@ export function EditableAdventureLogBlocks({
     }
   );
 
+  console.log(adventureLogBlocks);
+
   const isLoading = adventureLogBlocks === undefined;
 
   if (isLoading) return <LoadingBox />;

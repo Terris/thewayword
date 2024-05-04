@@ -69,7 +69,7 @@ export const create = mutation({
 
     return ctx.db.insert("adventureLogBlocks", {
       adventureLogId,
-      order: (existingAdventureLogBlocks?.length ?? 0) + 1,
+      order: existingAdventureLogBlocks?.length ?? 0,
       type,
       fileId,
       content: content ?? "",
@@ -111,7 +111,10 @@ export const moveBlockOrderUp = mutation({
     const adventureLogBlock = await ctx.db.get(id);
     if (!adventureLogBlock)
       throw new ConvexError("Adventure log block not found");
-    if (adventureLogBlock.order === 0) return true;
+    if (adventureLogBlock.order === 0) {
+      console.log("block is already at top");
+      return true;
+    }
     const adventureLog = await ctx.db.get(adventureLogBlock.adventureLogId);
     if (!adventureLog) throw new ConvexError("Adventure log not found");
     if (adventureLog.userId !== user._id)
@@ -125,6 +128,7 @@ export const moveBlockOrderUp = mutation({
           .eq("order", adventureLogBlock.order - 1)
       )
       .first();
+
     if (!blockToSwapDown) return true;
 
     await ctx.db.patch(blockToSwapDown._id, {
@@ -160,8 +164,9 @@ export const moveBlockOrderDown = mutation({
       )
       .collect();
 
-    if (adventureLogBlock.order === existingAdventureLogBlocks.length - 1)
+    if (adventureLogBlock.order === existingAdventureLogBlocks.length - 1) {
       return true;
+    }
     const blockToSwapUp = existingAdventureLogBlocks.find(
       (block) => block.order === adventureLogBlock.order + 1
     );
