@@ -5,13 +5,14 @@ import { useQuery } from "convex/react";
 import { useParams, useRouter } from "next/navigation";
 import { type Id, api } from "@repo/convex";
 import { Button, LoadingScreen, Text } from "@repo/ui";
-import { cn, formatDate } from "@repo/utils";
+import { cn } from "@repo/utils";
 import { ImageBlock } from "../../../_components/ImageBlock";
 import { AddImageBlockButton } from "./AddImageBlockButton";
 import { AddTextBlockButton } from "./AddTextBlockButton";
 import { EditableAdventureLogBlocks } from "./EditableAdventureLogBlocks";
 import { EditableIsPublicForm } from "./EditableIsPublicForm";
 import { EditableTitleForm } from "./EditableTitleForm";
+import { EditableAdventureDateForm } from "./EditableAdventureDateForm";
 
 export default function EditLogPage() {
   const { id } = useParams();
@@ -75,11 +76,7 @@ export default function EditLogPage() {
               <Text className="italic text-neutral-400">Date</Text>
             </div>
             <div className="w-11/12">
-              <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pt-1">
-                {adventureLog.adventureStartDate
-                  ? formatDate(adventureLog.adventureStartDate)
-                  : null}
-              </Text>
+              <EditableAdventureDateForm setIsSaving={setIsSaving} />
             </div>
           </div>
           <div className="flex flex-col md:flex-row md:gap-8">

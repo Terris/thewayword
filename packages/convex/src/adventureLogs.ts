@@ -188,8 +188,9 @@ export const update = mutation({
     id: v.id("adventureLogs"),
     title: v.optional(v.string()),
     isPublic: v.optional(v.boolean()),
+    adventureStartDate: v.optional(v.string()),
   },
-  handler: async (ctx, { id, title, isPublic }) => {
+  handler: async (ctx, { id, title, isPublic, adventureStartDate }) => {
     const { user } = await validateIdentity(ctx);
     const existingAdventureLog = await ctx.db.get(id);
     if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
@@ -199,6 +200,8 @@ export const update = mutation({
     return ctx.db.patch(id, {
       title: title ?? existingAdventureLog.title,
       isPublic: isPublic ?? existingAdventureLog.isPublic,
+      adventureStartDate:
+        adventureStartDate ?? existingAdventureLog.adventureStartDate,
     });
   },
 });
