@@ -6,19 +6,31 @@ import { useQuery } from "convex/react";
 import Image from "next/image";
 
 export function AdventureLogCoverImage({
-  coverImageFileId,
+  adventureLogId,
   className,
 }: {
-  coverImageFileId?: Id<"files">;
+  adventureLogId: Id<"adventureLogs">;
   className?: string;
 }) {
-  const queryArgs = coverImageFileId ? { id: coverImageFileId } : "skip";
+  const firstImageBlock = useQuery(
+    api.adventureLogBlocks.findFirstImageBlockByAdventureLogId,
+    {
+      adventureLogId,
+    }
+  );
+
+  const firstImageBlockFileId = firstImageBlock?.fileId;
+
+  const queryArgs = firstImageBlockFileId
+    ? { id: firstImageBlockFileId }
+    : "skip";
 
   const file = useQuery(api.files.findById, queryArgs);
   const isLoading = file === undefined;
 
-  if (!coverImageFileId || (!isLoading && file === null)) return null;
+  if (!firstImageBlockFileId || (!isLoading && file === null)) return null;
   if (isLoading) return <LoadingBox />;
+
   return (
     <AspectRatio ratio={1.25 / 1} className={cn(className)}>
       <Image

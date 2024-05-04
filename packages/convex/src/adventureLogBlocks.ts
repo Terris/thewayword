@@ -8,7 +8,7 @@ export const findAllByAdventureLogId = query({
     adventureLogId: v.id("adventureLogs"),
   },
   handler: async (ctx, { adventureLogId }) => {
-    const { user } = await validateIdentity(ctx);
+    await validateIdentity(ctx);
     const adventureLog = await ctx.db.get(adventureLogId);
     if (!adventureLog) throw new ConvexError("Adventure log not found");
 
@@ -20,6 +20,29 @@ export const findAllByAdventureLogId = query({
       .collect();
 
     return adventureLogBlocks.sort((a, b) => a.order - b.order);
+  },
+});
+
+export const findFirstImageBlockByAdventureLogId = query({
+  args: {
+    adventureLogId: v.id("adventureLogs"),
+  },
+  handler: async (ctx, { adventureLogId }) => {
+    await validateIdentity(ctx);
+    const adventureLogBlocks = await ctx.db
+      .query("adventureLogBlocks")
+      .withIndex("by_adventure_log_id", (q) =>
+        q.eq("adventureLogId", adventureLogId)
+      )
+      .collect();
+
+    const sortedAdventureLogBlocks = adventureLogBlocks.sort(
+      (a, b) => a.order - b.order
+    );
+
+    return sortedAdventureLogBlocks.find((block) => {
+      return block.type === "image";
+    });
   },
 });
 

@@ -17,7 +17,7 @@ export function AdventureLogFeedItem({
     >
       <div className="relative flex items-center justify-center bg-primary rounded">
         <AdventureLogCoverImage
-          coverImageFileId={adventureLog.coverImageFileId}
+          adventureLogId={adventureLog._id}
           className="group-hover:opacity-50 transition-opacity"
         />
       </div>
