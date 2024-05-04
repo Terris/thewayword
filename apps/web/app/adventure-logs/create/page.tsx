@@ -49,7 +49,9 @@ export default function CreatePage() {
   const { geo } = useGeoLocation();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
-  const [previewImageUrl, setPreviewImageURL] = useState<string | null>(null);
+  const [coverImagePreviewURL, setCoverImagePreviewURL] = useState<
+    string | null
+  >(null);
 
   const createLog = useMutation(api.adventureLogs.create);
 
@@ -125,7 +127,7 @@ export default function CreatePage() {
             <div className="w-full p-8 flex flex-col md:flex-row md:items-center gap-4">
               <div className="w-full md:w-1/2">
                 <div className="max-w-[600px] mx-auto">
-                  <Text className="text-4xl font-black italic pb-16 text-center">
+                  <Text className="text-4xl font-black pb-16 text-center">
                     Log an Adventure!
                   </Text>
                   {currentStep === 0 ? (
@@ -161,11 +163,11 @@ export default function CreatePage() {
                       <Field name="showcaseFileId">
                         {({ form, meta }: FieldProps) => (
                           <>
-                            {previewImageUrl ? (
+                            {coverImagePreviewURL ? (
                               <div className="w-full relative">
                                 {/* eslint-disable-next-line -- trash next/image warn */}
                                 <img
-                                  src={previewImageUrl}
+                                  src={coverImagePreviewURL}
                                   alt="Adventure log image"
                                   className="mx-auto rounded object-contain mb-4"
                                 />
@@ -178,7 +180,7 @@ export default function CreatePage() {
                                   fileIds[0]
                                 );
                               }}
-                              setPreviewURL={setPreviewImageURL}
+                              setPreviewURL={setCoverImagePreviewURL}
                               variant="outline"
                               className={cn(
                                 "w-full border border-dashed",

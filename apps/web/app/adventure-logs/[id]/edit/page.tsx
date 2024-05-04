@@ -9,7 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 import { type Id, api } from "@repo/convex";
 import { Button, LoadingScreen, Switch, Text } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
-import { cn } from "@repo/utils";
+import { cn, formatDate } from "@repo/utils";
 import { ImageBlock } from "../../../_components/ImageBlock";
 import { AddImageBlockButton } from "./AddImageBlockButton";
 import { AddTextBlockButton } from "./AddTextBlockButton";
@@ -115,7 +115,7 @@ export default function EditLogPage() {
                   </div>
                   <Button
                     type="button"
-                    disabled={isSubmitting}
+                    // disabled={isSubmitting}
                     onClick={() => {
                       router.push(`/adventure-logs/${id as string}`);
                     }}
@@ -155,7 +155,7 @@ export default function EditLogPage() {
                       </Field>
                     </div>
                   </div>
-                  <div className="flex flex-col pb-8 md:flex-row md:gap-8">
+                  <div className="flex flex-col pb-4 md:flex-row md:gap-8">
                     <div className="md:w-1/12 md:text-right">
                       <Text className="italic text-neutral-400">Location</Text>
                     </div>
@@ -167,13 +167,25 @@ export default function EditLogPage() {
                       ) : null}
                     </div>
                   </div>
+                  <div className="flex flex-col pb-8 md:flex-row md:gap-8">
+                    <div className="md:w-1/12 md:text-right">
+                      <Text className="italic text-neutral-400">Date</Text>
+                    </div>
+                    <div className="w-11/12">
+                      <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pt-1">
+                        {adventureLog.adventureStartDate
+                          ? formatDate(adventureLog.adventureStartDate)
+                          : null}
+                      </Text>
+                    </div>
+                  </div>
                   <div className="flex flex-col md:flex-row md:gap-8">
                     <div className="md:w-1/12 md:text-right">
                       <Text className="italic text-neutral-400">
                         Cover image
                       </Text>
                     </div>
-                    <div className="w-11/12">
+                    <div className="w-11/12 pt-1">
                       {adventureLog.coverImageFileId ? (
                         <ImageBlock
                           fileId={adventureLog.coverImageFileId}
@@ -230,8 +242,8 @@ export default function EditLogPage() {
             </Form>
             <div
               className={cn(
-                "fixed top-0 left-0 block w-full h-[4px] bg-primary",
-                (isSubmitting || isSaving) && "animate-growx"
+                "fixed top-0 left-0 block w-full h-[2px] bg-muted",
+                isSaving && "animate-growx"
               )}
             />
           </>
