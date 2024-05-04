@@ -8,45 +8,54 @@ import { useMutation, useQuery } from "convex/react";
 import { type Id, api } from "@repo/convex";
 import {
   Button,
-  DatePicker,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  Input,
   LoadingScreen,
   Text,
 } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
-import { formatDate } from "@repo/utils";
 
 const validationSchema = Yup.object().shape({
-  adventureStartDate: Yup.string().required("Date is required"),
+  tagsAsString: Yup.string().required("Tags are required"),
 });
 
-interface AdventureDateFormValues {
-  adventureStartDate: string;
+interface TagsFormValues {
+  tagsAsString: string;
 }
 
-export function EditableAdventureDateForm({
+export function EditableAdventureLogTags({
   setIsSaving,
 }: {
   setIsSaving: (value: boolean) => void;
 }) {
   const { id } = useParams();
   const { toast } = useToast();
-  const queryArgs = id ? { id: id as Id<"adventureLogs"> } : "skip";
-  const adventureLog = useQuery(api.adventureLogs.findByIdAsOwner, queryArgs);
-  const isLoading = adventureLog === undefined;
-  const updateAdventureLog = useMutation(api.adventureLogs.update);
+  const currentAdventureLogTags = useQuery(
+    api.adventureLogTags.findAllByAdventureLogId,
+    {
+      adventureLogId: id as Id<"adventureLogs">,
+    }
+  );
+  const isLoading = currentAdventureLogTags === undefined;
+  const currentAdventureLogTagsAsString = currentAdventureLogTags
+    ?.map((tag) => tag?.name)
+    .join(", ");
+
+  const updateAdventureLogTags = useMutation(
+    api.adventureLogTags.updateByAdventureLogId
+  );
   const [isOpen, setIsOpen] = useState(false);
 
-  async function onSubmit(values: AdventureDateFormValues) {
+  async function onSubmit(values: TagsFormValues) {
     setIsSaving(true);
     try {
-      await updateAdventureLog({
-        id: id as Id<"adventureLogs">,
-        adventureStartDate: values.adventureStartDate,
+      await updateAdventureLogTags({
+        adventureLogId: id as Id<"adventureLogs">,
+        tagsAsString: values.tagsAsString,
       });
       setIsOpen(false);
     } catch (error) {
@@ -71,34 +80,31 @@ export function EditableAdventureDateForm({
     >
       <DialogTrigger>
         <Text className="w-full font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pt-1 cursor-pointer hover:underline ">
-          {adventureLog.adventureStartDate
-            ? formatDate(adventureLog.adventureStartDate)
-            : null}
+          {currentAdventureLogTags.map(
+            (tag, index) =>
+              `${tag?.name}${
+                index + 1 < currentAdventureLogTags.length ? ", " : ""
+              }`
+          )}
         </Text>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="pb-4">
-            When did you go on your adventure?
+            Add some tags to help categorize your adventure.
           </DialogTitle>
-          <Formik<AdventureDateFormValues>
+          <Formik<TagsFormValues>
             initialValues={{
-              adventureStartDate:
-                adventureLog.adventureStartDate ?? new Date().toISOString(),
+              tagsAsString: currentAdventureLogTagsAsString ?? "",
             }}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
           >
             <Form>
-              <Field name="adventureStartDate" className="pb-4">
-                {({ meta, field, form }: FieldProps) => (
+              <Field name="tagsAsString" className="pb-4">
+                {({ meta, field }: FieldProps) => (
                   <>
-                    <DatePicker
-                      dateAsISOString={field.value as string}
-                      setDate={(v) =>
-                        form.setFieldValue("adventureStartDate", v)
-                      }
-                    />
+                    <Input {...field} />
                     {meta.touched && meta.error ? (
                       <Text className="text-destructive">{meta.error}</Text>
                     ) : null}

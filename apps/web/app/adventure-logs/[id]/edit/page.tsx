@@ -14,6 +14,7 @@ import { EditableIsPublicForm } from "./EditableIsPublicForm";
 import { EditableTitleForm } from "./EditableTitleForm";
 import { EditableAdventureDateForm } from "./EditableAdventureDateForm";
 import { EditableLocationForm } from "./EditableLocationForm";
+import { EditableAdventureLogTags } from "./EditableAdventureLogTags";
 
 export default function EditLogPage() {
   const { id } = useParams();
@@ -68,12 +69,20 @@ export default function EditLogPage() {
               <EditableLocationForm setIsSaving={setIsSaving} />
             </div>
           </div>
-          <div className="flex flex-col pb-6 md:flex-row md:gap-8">
+          <div className="flex flex-col pb-4 md:flex-row md:gap-8">
             <div className="md:w-1/12 md:text-right">
               <Text className="italic text-neutral-400">Date</Text>
             </div>
             <div className="w-11/12">
               <EditableAdventureDateForm setIsSaving={setIsSaving} />
+            </div>
+          </div>
+          <div className="flex flex-col pb-6 md:flex-row md:gap-8">
+            <div className="md:w-1/12 md:text-right">
+              <Text className="italic text-neutral-400">Tags</Text>
+            </div>
+            <div className="w-11/12">
+              <EditableAdventureLogTags setIsSaving={setIsSaving} />
             </div>
           </div>
           <div className="flex flex-col md:flex-row md:gap-8">
