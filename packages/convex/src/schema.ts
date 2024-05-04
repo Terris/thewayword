@@ -16,7 +16,6 @@ export default defineSchema({
         poiCategories: v.optional(v.array(v.string())),
       })
     ),
-    coverImageFileId: v.optional(v.id("files")),
     isPublic: v.boolean(),
     adventureStartDate: v.optional(v.string()),
     adventureEndDate: v.optional(v.string()),

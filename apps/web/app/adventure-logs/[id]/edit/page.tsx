@@ -6,7 +6,6 @@ import { useParams, useRouter } from "next/navigation";
 import { type Id, api } from "@repo/convex";
 import { Button, LoadingScreen, Text } from "@repo/ui";
 import { cn } from "@repo/utils";
-import { ImageBlock } from "../../../_components/ImageBlock";
 import { AddImageBlockButton } from "./AddImageBlockButton";
 import { AddTextBlockButton } from "./AddTextBlockButton";
 import { EditableAdventureLogBlocks } from "./EditableAdventureLogBlocks";
@@ -83,19 +82,6 @@ export default function EditLogPage() {
             </div>
             <div className="w-11/12">
               <EditableAdventureLogTags setIsSaving={setIsSaving} />
-            </div>
-          </div>
-          <div className="flex flex-col md:flex-row md:gap-8">
-            <div className="md:w-1/12 md:text-right">
-              <Text className="italic text-neutral-400">Cover image</Text>
-            </div>
-            <div className="w-11/12 pt-1">
-              {adventureLog.coverImageFileId ? (
-                <ImageBlock
-                  fileId={adventureLog.coverImageFileId}
-                  className="mb-8"
-                />
-              ) : null}
             </div>
           </div>
           <div className="flex flex-col md:flex-row md:gap-8 pb-8">
