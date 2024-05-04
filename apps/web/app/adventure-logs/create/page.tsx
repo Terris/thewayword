@@ -64,7 +64,7 @@ export default function CreatePage() {
           latitude: Number(values.location.latitude),
           longitude: Number(values.location.longitude),
           name: values.location.name,
-          full_address: values.location.fullAddress,
+          fullAddress: values.location.fullAddress,
           poiCategories: values.location.poiCategories,
         },
         coverImageFileId: values.coverImageFileId as Id<"files">,

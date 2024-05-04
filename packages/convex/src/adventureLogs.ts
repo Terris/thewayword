@@ -122,7 +122,7 @@ export const create = mutation({
       latitude: v.number(),
       longitude: v.number(),
       name: v.string(),
-      full_address: v.optional(v.string()),
+      fullAddress: v.optional(v.string()),
       poiCategories: v.optional(v.array(v.string())),
     }),
     coverImageFileId: v.id("files"),
@@ -189,8 +189,22 @@ export const update = mutation({
     title: v.optional(v.string()),
     isPublic: v.optional(v.boolean()),
     adventureStartDate: v.optional(v.string()),
+    location: v.optional(
+      v.object({
+        mapboxId: v.string(),
+        type: v.string(),
+        latitude: v.optional(v.number()),
+        longitude: v.optional(v.number()),
+        name: v.string(),
+        fullAddress: v.optional(v.string()),
+        poiCategories: v.optional(v.array(v.string())),
+      })
+    ),
   },
-  handler: async (ctx, { id, title, isPublic, adventureStartDate }) => {
+  handler: async (
+    ctx,
+    { id, title, isPublic, adventureStartDate, location }
+  ) => {
     const { user } = await validateIdentity(ctx);
     const existingAdventureLog = await ctx.db.get(id);
     if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
@@ -202,6 +216,7 @@ export const update = mutation({
       isPublic: isPublic ?? existingAdventureLog.isPublic,
       adventureStartDate:
         adventureStartDate ?? existingAdventureLog.adventureStartDate,
+      location: location ?? existingAdventureLog.location,
     });
   },
 });
