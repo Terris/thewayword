@@ -142,8 +142,8 @@ export default function EditLogPage() {
 
       <div
         className={cn(
-          "fixed top-0 left-0 block w-full h-[4px] bg-primary",
-          isSaving && "animate-pulse"
+          "hidden fixed top-0 left-0 w-full h-[4px] bg-primary",
+          isSaving && "block animate-pulse"
         )}
       />
     </>
