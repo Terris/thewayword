@@ -8,7 +8,6 @@ import { type Id, api } from "@repo/convex";
 import { useMeContext } from "@repo/auth/context";
 import { LoadingScreen, Text } from "@repo/ui";
 import { formatDate } from "@repo/utils";
-import { ImageBlock } from "../../_components/ImageBlock";
 import { AdventureLogMap } from "../../_components/AdventureLogMap";
 import { AdventureLogBlocks } from "../../_components/AdventureLogBlocks";
 import { AdventureLogComments } from "../../_components/AdventureLogComments";
@@ -56,9 +55,6 @@ export default function AdventureLogPage() {
             {adventureLog.user?.name}
           </Text>
         </div>
-        {adventureLog.coverImageFileId ? (
-          <ImageBlock fileId={adventureLog.coverImageFileId} className="mb-8" />
-        ) : null}
         <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
         <div id="comments" />
         <AdventureLogComments adventureLogId={id as Id<"adventureLogs">} />

@@ -5,12 +5,11 @@ import { useRouter } from "next/navigation";
 import * as Yup from "yup";
 import { Field, Form, Formik, type FieldProps } from "formik";
 import { useMutation } from "convex/react";
-import { type Id, api } from "@repo/convex";
+import { api } from "@repo/convex";
 import { useGeoLocation } from "@repo/hooks";
 import { Input, Text, Button, DatePicker } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
 import { cn } from "@repo/utils";
-import { UploadFileButton } from "../../_components/UploadFileButton";
 import {
   type LocationInputValue,
   LocationSearchInput,
@@ -30,7 +29,6 @@ const validationSchema = Yup.object().shape({
       poiCategories: Yup.array(Yup.string().required()),
     })
     .required("Location is required"),
-  coverImageFileId: Yup.string().required("Showcase image is required"),
   tagsAsString: Yup.string().required("At least one tag is required"),
   adventureStartDate: Yup.string().required("Date is required"),
   adventureEndDate: Yup.string(),
@@ -38,7 +36,6 @@ const validationSchema = Yup.object().shape({
 
 interface CreateAdventureLogFormValues {
   location: LocationInputValue;
-  coverImageFileId?: string;
   tagsAsString: string;
   adventureStartDate: string;
   adventureEndDate?: string;
@@ -49,9 +46,6 @@ export default function CreatePage() {
   const { geo } = useGeoLocation();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
-  const [coverImagePreviewURL, setCoverImagePreviewURL] = useState<
-    string | null
-  >(null);
 
   const createLog = useMutation(api.adventureLogs.create);
 
@@ -67,7 +61,6 @@ export default function CreatePage() {
           fullAddress: values.location.fullAddress,
           poiCategories: values.location.poiCategories,
         },
-        coverImageFileId: values.coverImageFileId as Id<"files">,
         tagsAsString: values.tagsAsString,
         adventureStartDate: values.adventureStartDate,
         adventureEndDate: values.adventureEndDate,
@@ -102,7 +95,6 @@ export default function CreatePage() {
           fullAddress: "",
           poiCategories: [""],
         },
-        coverImageFileId: "",
         tagsAsString: "",
         adventureStartDate: "",
         adventureEndDate: "",
@@ -157,54 +149,6 @@ export default function CreatePage() {
                   {currentStep === 1 ? (
                     <>
                       <Text className="font-soleil pb-2">
-                        Add a showcase photo or image.
-                      </Text>
-
-                      <Field name="showcaseFileId">
-                        {({ form, meta }: FieldProps) => (
-                          <>
-                            {coverImagePreviewURL ? (
-                              <div className="w-full relative">
-                                {/* eslint-disable-next-line -- trash next/image warn */}
-                                <img
-                                  src={coverImagePreviewURL}
-                                  alt="Adventure log image"
-                                  className="mx-auto rounded object-contain mb-4"
-                                />
-                              </div>
-                            ) : null}
-                            <UploadFileButton
-                              onSuccess={(fileIds) => {
-                                void form.setFieldValue(
-                                  "coverImageFileId",
-                                  fileIds[0]
-                                );
-                              }}
-                              setPreviewURL={setCoverImagePreviewURL}
-                              variant="outline"
-                              className={cn(
-                                "w-full border border-dashed",
-                                values.coverImageFileId ? "" : "p-16"
-                              )}
-                            >
-                              {values.coverImageFileId
-                                ? "Select a different image"
-                                : "Select showcase image"}
-                            </UploadFileButton>
-                            {meta.touched && meta.error ? (
-                              <Text className="text-destructive">
-                                {meta.error}
-                              </Text>
-                            ) : null}
-                          </>
-                        )}
-                      </Field>
-                    </>
-                  ) : null}
-
-                  {currentStep === 2 ? (
-                    <>
-                      <Text className="font-soleil pb-2">
                         Add some tags to help categorize your adventure.
                       </Text>
                       <Field name="tagsAsString">
@@ -224,7 +168,7 @@ export default function CreatePage() {
                       </Field>
                     </>
                   ) : null}
-                  {currentStep === 3 ? (
+                  {currentStep === 2 ? (
                     <>
                       <Text className="font-soleil pb-2">
                         When did you go on your adventure?
@@ -260,7 +204,7 @@ export default function CreatePage() {
                     >
                       Back
                     </Button>
-                    {currentStep === 3 ? (
+                    {currentStep === 2 ? (
                       <Button
                         type="button"
                         disabled={isSubmitting}
@@ -303,14 +247,6 @@ export default function CreatePage() {
                       className={cn(
                         "w-[12px] h-[12px] rounded-full border border-dashed",
                         currentStep === 2
-                          ? "border-foreground bg-foreground"
-                          : "bg-transparent"
-                      )}
-                    />
-                    <div
-                      className={cn(
-                        "w-[12px] h-[12px] rounded-full border border-dashed",
-                        currentStep === 3
                           ? "border-foreground bg-foreground"
                           : "bg-transparent"
                       )}

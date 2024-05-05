@@ -125,20 +125,13 @@ export const create = mutation({
       fullAddress: v.optional(v.string()),
       poiCategories: v.optional(v.array(v.string())),
     }),
-    coverImageFileId: v.id("files"),
     tagsAsString: v.optional(v.string()),
     adventureStartDate: v.optional(v.string()),
     adventureEndDate: v.optional(v.string()),
   },
   handler: async (
     ctx,
-    {
-      location,
-      coverImageFileId,
-      tagsAsString,
-      adventureStartDate,
-      adventureEndDate,
-    }
+    { location, tagsAsString, adventureStartDate, adventureEndDate }
   ) => {
     const { user } = await validateIdentity(ctx);
 
@@ -153,7 +146,6 @@ export const create = mutation({
       title: "My adventure",
       location,
       isPublic: false,
-      coverImageFileId,
       adventureStartDate,
       adventureEndDate,
     });
