@@ -79,6 +79,7 @@ export default defineSchema({
     name: v.optional(v.string()),
     email: v.string(),
     tokenIdentifier: v.string(),
+    clerkUserId: v.optional(v.string()),
     avatarUrl: v.optional(v.string()),
     roles: v.optional(v.array(v.string())),
   })

@@ -110,3 +110,10 @@ export const internalHandleClerkWebhook = internalAction({
     }
   },
 });
+
+export const updateClerkUserEmail = internalAction({
+  args: {
+    tokenIdentifier: v.string(),
+  },
+  handler: async (ctx, { tokenIdentifier }) => {},
+});

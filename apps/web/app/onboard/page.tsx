@@ -17,11 +17,11 @@ interface OnboardFormValues {
   name: string;
 }
 
-export default function SignInPage() {
+export default function OnboardPage() {
   const { isLoading, isAuthenticated } = useMeContext();
   const router = useRouter();
   const { toast } = useToast();
-  const updateUser = useMutation(api.users.updateUser);
+  const updateUser = useMutation(api.users.updateUserAsUserOwner);
 
   async function onSubmit(values: OnboardFormValues) {
     try {

@@ -29,11 +29,18 @@ export const sessionedFindByContextIdentity = query({
   },
 });
 
-export const updateUser = mutation({
-  args: { name: v.string() },
-  handler: async (ctx, { name }) => {
+export const updateUserAsUserOwner = mutation({
+  args: { name: v.optional(v.string()), email: v.optional(v.string()) },
+  handler: async (ctx, { name, email }) => {
     const { user } = await validateIdentity(ctx);
-    await ctx.db.patch(user._id, { name });
+    if (!user) return null;
+    await ctx.db.patch(user._id, {
+      name: name ?? user.name,
+      email: email ?? user.email,
+    });
+    if (email) {
+      // update clerk
+    }
   },
 });
 
