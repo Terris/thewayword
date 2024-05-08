@@ -17,7 +17,7 @@ export default function AccountPage() {
             cardBox: {
               boxShadow: "none",
             },
-            navbar: { background: "none" },
+            navbar: { background: "#ffffff" },
             scrollBox: {
               borderRadius: "0",
               boxShadow: "none",
