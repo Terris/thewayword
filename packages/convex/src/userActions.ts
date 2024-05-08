@@ -112,9 +112,10 @@ export const internalHandleClerkWebhook = internalAction({
           if (!user) {
             throw new ConvexError("Could not find user by clerk id");
           }
-          await ctx.runMutation(internal.users.systemUpdateUserEmail, {
+          await ctx.runMutation(internal.users.systemUpdateUserProfile, {
             userId: user._id,
             email: primaryEmail?.email_address,
+            name: `${eventData.first_name} ${eventData.last_name}`,
           });
         }
         default: {

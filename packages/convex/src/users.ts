@@ -1,4 +1,4 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import {
   internalMutation,
   internalQuery,
@@ -133,9 +133,20 @@ export const systemSaveNewClerkUser = internalMutation({
   },
 });
 
-export const systemUpdateUserEmail = internalMutation({
-  args: { userId: v.id("users"), email: v.optional(v.string()) },
-  handler: async (ctx, { userId, email }) => {
-    await ctx.db.patch(userId, { email });
+export const systemUpdateUserProfile = internalMutation({
+  args: {
+    userId: v.id("users"),
+    email: v.optional(v.string()),
+    name: v.optional(v.string()),
+  },
+  handler: async (ctx, { userId, email, name }) => {
+    const existingUser = await ctx.db.get(userId);
+    if (!existingUser) {
+      throw new ConvexError("User not found");
+    }
+    await ctx.db.patch(userId, {
+      email: email ?? existingUser.email,
+      name: name ?? existingUser.name,
+    });
   },
 });
