@@ -1,37 +1,27 @@
 "use client";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 import { Field, Form, Formik, type FieldProps } from "formik";
 import * as Yup from "yup";
 import { useToast } from "@repo/ui/hooks";
-import { Button, Input, Label, Text } from "@repo/ui";
+import { Button, Input, Label, LoadingScreen, Text } from "@repo/ui";
 import { useMeContext } from "@repo/auth/context";
 import { api } from "@repo/convex";
 import { useMutation } from "convex/react";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required("Email is required"),
-  password: Yup.string().required("Password is required"),
 });
 
-interface AccountFormValues {
+interface UpdateEmailFormValues {
   email: string;
 }
 
-export default function AccountPage() {
-  const { isAuthenticated, isLoading: authIsLoading } = useMeContext();
+export default function UpdateEmailForm() {
+  const { isLoading: authIsLoading, me } = useMeContext();
   const updateUser = useMutation(api.users.updateUserAsUserOwner);
   const { toast } = useToast();
-  const router = useRouter();
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push("/feed");
-    }
-  }, [isAuthenticated, router]);
-
-  async function onSubmit(values: AccountFormValues) {
+  async function onSubmit(values: UpdateEmailFormValues) {
     try {
       await updateUser({
         email: values.email,
@@ -51,17 +41,19 @@ export default function AccountPage() {
     }
   }
 
+  if (!me || authIsLoading) return <LoadingScreen />;
+
   return (
-    <Formik<AccountFormValues>
+    <Formik<UpdateEmailFormValues>
       initialValues={{
-        email: "",
+        email: me.email,
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
       {({ isSubmitting, dirty, isValid }) => (
         <Form className="w-full max-w-[600px] p-8 mx-auto flex flex-col gap-4">
-          <Text className="text-xl font-black">Sign in</Text>
+          <Text className="text-xl font-black">Account settings</Text>
           <Field name="email">
             {({ field, meta }: FieldProps) => (
               <div>
@@ -73,11 +65,8 @@ export default function AccountPage() {
               </div>
             )}
           </Field>
-          <Button
-            type="submit"
-            disabled={authIsLoading || !dirty || !isValid || isSubmitting}
-          >
-            Sign in
+          <Button type="submit" disabled={!dirty || !isValid || isSubmitting}>
+            Update email address
           </Button>
         </Form>
       )}

@@ -79,12 +79,13 @@ export default defineSchema({
     name: v.optional(v.string()),
     email: v.string(),
     tokenIdentifier: v.string(),
-    clerkUserId: v.optional(v.string()),
+    clerkUserId: v.string(),
     avatarUrl: v.optional(v.string()),
     roles: v.optional(v.array(v.string())),
   })
     .index("by_token", ["tokenIdentifier"])
-    .index("by_email", ["email"]),
+    .index("by_email", ["email"])
+    .index("by_clerk_user_id", ["clerkUserId"]),
   userWhitelist: defineTable({
     email: v.string(),
   }).index("by_email", ["email"]),

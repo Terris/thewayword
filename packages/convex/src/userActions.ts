@@ -1,7 +1,7 @@
 "use node";
 
 import { Webhook } from "svix";
-import type { UserJSON, WebhookEvent } from "@clerk/clerk-sdk-node";
+import { UserJSON, WebhookEvent, clerkClient } from "@clerk/clerk-sdk-node";
 import { ConvexError, v } from "convex/values";
 import { internalAction } from "./_generated/server";
 import { internal } from "./_generated/api";
@@ -74,30 +74,49 @@ export const internalHandleClerkWebhook = internalAction({
       let handled: boolean;
       // Handle the event
       switch (event.type) {
-        case "user.created":
-          {
-            const eventData = event.data as UserJSON;
-            const email = eventData?.email_addresses[0]?.email_address;
-            if (!email) {
-              throw new ConvexError("Error occured -- no email");
-            }
-            const name =
-              eventData.first_name && eventData.last_name
-                ? `${eventData.first_name} ${eventData.last_name}`
-                : undefined;
-            const avatarUrl = eventData.image_url;
-
-            // Create db user
-            await ctx.runMutation(internal.users.systemSaveNewClerkUser, {
-              clerkId: eventData.id,
-              email,
-              name,
-              avatarUrl,
-              roles: ["user"],
-            });
-            handled = true;
+        case "user.created": {
+          const eventData = event.data as UserJSON;
+          const email = eventData?.email_addresses[0]?.email_address;
+          if (!email) {
+            throw new ConvexError("Error occured -- no email");
           }
-          break;
+          const name =
+            eventData.first_name && eventData.last_name
+              ? `${eventData.first_name} ${eventData.last_name}`
+              : undefined;
+          const avatarUrl = eventData.image_url;
+
+          // Create db user
+          await ctx.runMutation(internal.users.systemSaveNewClerkUser, {
+            clerkId: eventData.id,
+            email,
+            name,
+            avatarUrl,
+            roles: ["user"],
+          });
+          handled = true;
+        }
+        case "user.updated": {
+          const eventData = event.data as UserJSON;
+          const clerkUserId = eventData.id;
+          const primaryEmailId = eventData.primary_email_address_id;
+          const primaryEmail = eventData.email_addresses.find(
+            (email) => email.id === primaryEmailId
+          );
+          const user = await ctx.runQuery(
+            internal.users.systemFindByClerkUserId,
+            {
+              clerkUserId,
+            }
+          );
+          if (!user) {
+            throw new ConvexError("Could not find user by clerk id");
+          }
+          await ctx.runMutation(internal.users.systemUpdateUserEmail, {
+            userId: user._id,
+            email: primaryEmail?.email_address,
+          });
+        }
         default: {
           handled = false;
         }
@@ -109,11 +128,4 @@ export const internalHandleClerkWebhook = internalAction({
       return { success: false, error: errorMessage };
     }
   },
-});
-
-export const updateClerkUserEmail = internalAction({
-  args: {
-    tokenIdentifier: v.string(),
-  },
-  handler: async (ctx, { tokenIdentifier }) => {},
 });

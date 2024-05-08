@@ -30,17 +30,13 @@ export const sessionedFindByContextIdentity = query({
 });
 
 export const updateUserAsUserOwner = mutation({
-  args: { name: v.optional(v.string()), email: v.optional(v.string()) },
-  handler: async (ctx, { name, email }) => {
+  args: { name: v.optional(v.string()) },
+  handler: async (ctx, { name }) => {
     const { user } = await validateIdentity(ctx);
     if (!user) return null;
     await ctx.db.patch(user._id, {
       name: name ?? user.name,
-      email: email ?? user.email,
     });
-    if (email) {
-      // update clerk
-    }
   },
 });
 
@@ -70,6 +66,16 @@ export const systemFindByTokenIdentifier = internalQuery({
     return ctx.db
       .query("users")
       .withIndex("by_token", (q) => q.eq("tokenIdentifier", tokenIdentifier))
+      .first();
+  },
+});
+
+export const systemFindByClerkUserId = internalQuery({
+  args: { clerkUserId: v.string() },
+  handler: async (ctx, { clerkUserId }) => {
+    return ctx.db
+      .query("users")
+      .withIndex("by_clerk_user_id", (q) => q.eq("clerkUserId", clerkUserId))
       .first();
   },
 });
@@ -109,6 +115,7 @@ export const systemSaveNewClerkUser = internalMutation({
         email,
         avatarUrl,
         tokenIdentifier,
+        clerkUserId: clerkId,
         roles,
       });
     }
@@ -123,5 +130,12 @@ export const systemSaveNewClerkUser = internalMutation({
     );
 
     return true;
+  },
+});
+
+export const systemUpdateUserEmail = internalMutation({
+  args: { userId: v.id("users"), email: v.optional(v.string()) },
+  handler: async (ctx, { userId, email }) => {
+    await ctx.db.patch(userId, { email });
   },
 });
