@@ -2,6 +2,7 @@ import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
+import { paginationOptsValidator } from "convex/server";
 
 export const findById = query({
   args: { id: v.id("adventureLogs") },
@@ -34,29 +35,34 @@ export const findByIdAsOwner = query({
 });
 
 export const findAllPublic = query({
-  args: {},
-  handler: async (ctx) => {
+  args: { paginationOpts: paginationOptsValidator },
+  handler: async (ctx, { paginationOpts }) => {
     await validateIdentity(ctx);
     const adventureLogs = await ctx.db
       .query("adventureLogs")
       .withIndex("by_is_public", (q) => q.eq("isPublic", true))
       .order("desc")
-      .collect();
+      .paginate(paginationOpts);
+
     if (!adventureLogs) throw new ConvexError("Adventure logs not found");
 
-    const adventureLogsWithUser = await asyncMap(adventureLogs, async (log) => {
-      const user = await ctx.db.get(log.userId);
-      if (!adventureLogs) throw new ConvexError("Adventure log user not found");
-      return {
-        ...log,
-        user: {
-          id: user?._id,
-          name: user?.name,
-          avatarUrl: user?.avatarUrl,
-        },
-      };
-    });
-    return adventureLogsWithUser;
+    const adventureLogsWithUser = await asyncMap(
+      adventureLogs.page,
+      async (log) => {
+        const user = await ctx.db.get(log.userId);
+        if (!adventureLogs)
+          throw new ConvexError("Adventure log user not found");
+        return {
+          ...log,
+          user: {
+            id: user?._id,
+            name: user?.name,
+            avatarUrl: user?.avatarUrl,
+          },
+        };
+      }
+    );
+    return { ...adventureLogs, page: adventureLogsWithUser };
   },
 });
 
