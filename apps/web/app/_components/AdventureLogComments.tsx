@@ -1,11 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import { useQuery } from "convex/react";
 import { type Id, api } from "@repo/convex";
 import { Text } from "@repo/ui";
 import { formatDateTime } from "@repo/utils";
 import { AdventureLogCommentForm } from "./AdventureLogCommentForm";
-import Image from "next/image";
 
 export function AdventureLogComments({
   adventureLogId,
@@ -43,11 +43,13 @@ export function AdventureLogComments({
                   className="w-5 h-5 rounded-full mt-1"
                 />
               ) : null}
-              <Text className="text-sm italic mr-8">
-                {comment.user.name} <br />
-                {formatDateTime(comment._creationTime)}
-              </Text>
-              <Text>{comment.message}</Text>
+              <div>
+                <Text className="text-sm italic mb-2">
+                  {comment.user.name} <br />
+                  {formatDateTime(comment._creationTime)}
+                </Text>
+                <Text>{comment.message}</Text>
+              </div>
             </div>
           </>
         ))}
