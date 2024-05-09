@@ -146,17 +146,20 @@ export default function CreatePage() {
                       </Field>
                     </>
                   ) : null}
+
                   {currentStep === 1 ? (
                     <>
                       <Text className="font-soleil pb-2">
-                        Add some tags to help categorize your adventure.
+                        When did you go on your adventure?
                       </Text>
-                      <Field name="tagsAsString">
-                        {({ meta, field }: FieldProps) => (
+                      <Field name="adventureStartDate">
+                        {({ meta, field, form }: FieldProps) => (
                           <>
-                            <Input
-                              placeholder="Backpacking, Hiking, Camping..."
-                              {...field}
+                            <DatePicker
+                              dateAsISOString={field.value as string}
+                              setDate={(v) =>
+                                form.setFieldValue("adventureStartDate", v)
+                              }
                             />
                             {meta.touched && meta.error ? (
                               <Text className="text-destructive">
@@ -171,16 +174,14 @@ export default function CreatePage() {
                   {currentStep === 2 ? (
                     <>
                       <Text className="font-soleil pb-2">
-                        When did you go on your adventure?
+                        Add some tags to help categorize your adventure.
                       </Text>
-                      <Field name="adventureStartDate">
-                        {({ meta, field, form }: FieldProps) => (
+                      <Field name="tagsAsString">
+                        {({ meta, field }: FieldProps) => (
                           <>
-                            <DatePicker
-                              dateAsISOString={field.value as string}
-                              setDate={(v) =>
-                                form.setFieldValue("adventureStartDate", v)
-                              }
+                            <Input
+                              placeholder="Backpacking, Hiking, Camping..."
+                              {...field}
                             />
                             {meta.touched && meta.error ? (
                               <Text className="text-destructive">
