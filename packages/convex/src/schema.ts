@@ -74,7 +74,11 @@ export default defineSchema({
     .index("by_user_id_adventure_log_id", ["userId", "adventureLogId"]),
   tags: defineTable({
     name: v.string(),
-  }).index("by_name", ["name"]),
+  })
+    .index("by_name", ["name"])
+    .searchIndex("search_name", {
+      searchField: "name",
+    }),
   users: defineTable({
     name: v.optional(v.string()),
     email: v.string(),
