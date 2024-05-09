@@ -31,10 +31,15 @@ export default function RoadmapPage() {
       </Text>
       <ul>
         <li>
+          Add an alert box in the header that show a list of events (e.g.
+          someone commented on my post)
+        </li>
+        <li>
           Improve usability of date selection - e.g. re-opening the cal after
           selecting a date should automatically show the previously selected
           date
         </li>
+        <li>Show the users that liked a post on the log detail page</li>
         <li>User can select a display size on image blocks</li>
         <li>User can click on a tag and see logs with a similar tag</li>
         <li>User can delete their own logs</li>
