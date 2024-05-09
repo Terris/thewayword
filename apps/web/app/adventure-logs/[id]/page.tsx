@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { useQuery } from "convex/react";
 import { MessageCircle, Pencil } from "lucide-react";
 import { type Id, api } from "@repo/convex";
@@ -54,14 +55,27 @@ export default function AdventureLogPage() {
               ? `-${formatDate(adventureLog.adventureEndDate)}`
               : null}
           </Text>
-          <Text className="w-full text-sm italic text-muted-foreground">
-            <Link
-              href={`/user/${adventureLog.user?._id}/adventure-logs/`}
-              className="hover:underline"
+
+          <Link
+            href={`/user/${adventureLog.user?._id}/adventure-logs/`}
+            className="flex items-center hover:opacity-80 transition-opacity"
+          >
+            {adventureLog.user?.avatarUrl ? (
+              <Image
+                src={adventureLog.user.avatarUrl}
+                width="20"
+                height="20"
+                alt="User"
+                className="w-5 h-5 rounded-full mr-2"
+              />
+            ) : null}
+            <Text
+              as="span"
+              className="inine-block text-sm text-center leading-none italic"
             >
               {adventureLog.user?.name}
-            </Link>
-          </Text>
+            </Text>
+          </Link>
         </div>
         <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
         <div id="comments" />
