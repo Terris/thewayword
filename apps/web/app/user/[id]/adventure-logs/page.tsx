@@ -34,9 +34,6 @@ export default function UserAdventureLogsPage() {
   } = usePaginatedQuery(
     api.adventureLogs.findAllPublicByUserId,
     {
-      paginationOpts: {
-        numItems: DEFAULT_ITEMS_PER_PAGE,
-      },
       userId: id as Id<"users">,
     },
     {
