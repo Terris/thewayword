@@ -114,6 +114,33 @@ export const findAllPrivateBySessionedUser = query({
   },
 });
 
+export const findAllPublicByUserId = query({
+  args: { userId: v.id("users") },
+  handler: async (ctx, { userId }) => {
+    await validateIdentity(ctx);
+    const adventureLogs = ctx.db
+      .query("adventureLogs")
+      .withIndex("by_user_id_is_public", (q) =>
+        q.eq("userId", userId).eq("isPublic", true)
+      )
+      .order("desc")
+      .collect();
+    const adventureLogsWithUser = await asyncMap(adventureLogs, async (log) => {
+      const user = await ctx.db.get(log.userId);
+      if (!adventureLogs) throw new ConvexError("Adventure log user not found");
+      return {
+        ...log,
+        user: {
+          id: user?._id,
+          name: user?.name,
+          avatarUrl: user?.avatarUrl,
+        },
+      };
+    });
+    return adventureLogsWithUser;
+  },
+});
+
 export const create = mutation({
   args: {
     location: v.object({

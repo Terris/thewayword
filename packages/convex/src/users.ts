@@ -11,6 +11,21 @@ import { internal } from "./_generated/api";
 // SESSIONED USER FUNCTIONS
 // ==================================================
 
+export const sessionedFindPublicUserById = query({
+  args: { id: v.id("users") },
+  handler: async (ctx, { id }) => {
+    await validateIdentity(ctx);
+    const fullUser = await ctx.db.get(id);
+    if (!fullUser) throw new ConvexError("User not found for given id");
+    // only return values visible to another user
+    return {
+      _id: fullUser._id,
+      name: fullUser.name,
+      avatarUrl: fullUser.avatarUrl,
+    };
+  },
+});
+
 /**
  * Get the user for the current session.
  * Auth Requirements: Sessioned

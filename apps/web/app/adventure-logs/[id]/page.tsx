@@ -55,7 +55,12 @@ export default function AdventureLogPage() {
               : null}
           </Text>
           <Text className="w-full text-sm italic text-muted-foreground">
-            {adventureLog.user?.name}
+            <Link
+              href={`/user/${adventureLog.user?._id}/adventure-logs/`}
+              className="hover:underline"
+            >
+              {adventureLog.user?.name}
+            </Link>
           </Text>
         </div>
         <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
