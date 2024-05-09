@@ -1,1 +1,1 @@
-# The WayWord
+# The Wayword

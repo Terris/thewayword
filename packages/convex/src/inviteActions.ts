@@ -12,7 +12,7 @@ export const sendInviteEmailToUser = internalAction({
     const inviteEmailResponse = await resend.emails.send({
       from: emailFromAddress!,
       to: toEmail,
-      subject: "Invite from Terris at The WayWord",
+      subject: "Invite from Terris at The Wayword",
       html: buildOrganizationInviteEmailHTML({
         inviteLink: `${process.env.CLIENT_APP_URL}/signup?inviteToken=${inviteToken}`,
         toEmail,

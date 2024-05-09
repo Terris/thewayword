@@ -85,7 +85,7 @@ export default function EditLogPage() {
             </div>
           </div>
           <div className="flex flex-col md:flex-row md:gap-8 pb-8">
-            <div className="md:w-1/12 md:text-right pt-1">
+            <div className="mb-4 md:mb-0 md:w-1/12 md:text-right pt-1">
               <Text className="italic text-neutral-400">Your story</Text>
             </div>
             <div className="w-11/12">

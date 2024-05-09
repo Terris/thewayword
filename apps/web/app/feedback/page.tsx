@@ -49,7 +49,7 @@ export default function FeedbackPage() {
         <Form className="w-full max-w-[600px] p-8 mx-auto flex flex-col gap-4">
           <Text className="text-3xl font-black">Provide feedback</Text>
           <Text>
-            At The WayWord, we want to make a product you love using. So, if you
+            At The Wayword, we want to make a product you love using. So, if you
             feel that there is something—anything—that you think we can do
             better, please let us know. We greatly appreciate your time and
             input.

@@ -8,7 +8,7 @@ export default function AboutPage() {
         institutions that help keep it pristine.
       </Text>
       <Text className="text-lg pb-16">
-        The WayWord is dedicated to building a vibrant community of outdoor
+        The Wayword is dedicated to building a vibrant community of outdoor
         enthusiasts who share a profound appreciation for nature and a passion
         for adventure. Our platform aims to provide a space where members can
         express and explore their love for the outdoors in a manner that is
@@ -23,15 +23,15 @@ export default function AboutPage() {
         &ldquo;My favorite days are spent outdoors but when the adventure is
         over and I&rsquo;m back to my busy life I find myself wishing I could do
         more with the artifacts of my journey than just dropping them into an
-        endless feed of memes and advertisements. The WayWord is a social
+        endless feed of memes and advertisements. The Wayword is a social
         adventure journal that makes it easy to develop and publish the stories
         of my travels. On the platform, we create adventure logs with maps,
         pictures, and text and can share these logs with friends. My hope is
-        that, as a WayWord user, I can both inspire and be inspired to spend
+        that, as a Wayword user, I can both inspire and be inspired to spend
         more time outdoors and that the ephemera of these journeys become a more
         valuable memory.&rdquo;
       </Text>
-      <Text className="pb-16 italic">Terris Kremer - Founder, The WayWord</Text>
+      <Text className="pb-16 italic">Terris Kremer - Founder, The Wayword</Text>
 
       <Text className="font-soleil font-bold uppercase tracking-wide pb-4">
         Core Values

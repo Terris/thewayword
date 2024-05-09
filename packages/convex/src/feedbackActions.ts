@@ -12,7 +12,7 @@ export const sendNewFeedbackEmailToAdmin = internalAction({
       from: emailFromAddress!,
       to: emailFromAddress!,
       subject: "New feedback entry",
-      text: `Feedback has been submitted to the waitlist on The WayWord by ${userEmail}: ${message}`,
+      text: `Feedback has been submitted to the waitlist on The Wayword by ${userEmail}: ${message}`,
     });
 
     if (sendEmailResponse.error) {
