@@ -37,13 +37,6 @@ export default function FeedPage() {
   const firstPageIsLoading = paginationStatus === "LoadingFirstPage";
   const newPageIsLoading = paginationStatus === "LoadingMore";
 
-  function handleShowMore() {
-    loadMore(DEFAULT_ITEMS_PER_PAGE);
-    router.push(
-      `${pathname}?${createQueryString("page", (pageInt + 1).toString())}`
-    );
-  }
-
   const createQueryString = useCallback(
     (name: string, value: string) => {
       const params = new URLSearchParams(searchParams.toString());
@@ -52,6 +45,13 @@ export default function FeedPage() {
     },
     [searchParams]
   );
+
+  function handleShowMore() {
+    loadMore(DEFAULT_ITEMS_PER_PAGE);
+    router.push(
+      `${pathname}?${createQueryString("page", (pageInt + 1).toString())}`
+    );
+  }
 
   if (firstPageIsLoading) return <LoadingScreen />;
 
@@ -65,22 +65,31 @@ export default function FeedPage() {
           />
         ))}
       </div>
-      <div className="w-full max-w-[300px] mx-auto">
-        {paginationStatus === "CanLoadMore" ? (
-          <Button
-            variant="outline"
-            onClick={() => {
-              handleShowMore();
-            }}
-            disabled={newPageIsLoading}
-            className="w-full"
-          >
-            Load more
-          </Button>
-        ) : (
-          <Text className="text-center">You&rsquo;ve reached the end.</Text>
-        )}
-      </div>
+
+      {adventureLogs.length ? (
+        <div className="w-full max-w-[300px] mx-auto">
+          {paginationStatus === "CanLoadMore" ? (
+            <Button
+              variant="outline"
+              onClick={() => {
+                handleShowMore();
+              }}
+              disabled={newPageIsLoading}
+              className="w-full"
+            >
+              Load more
+            </Button>
+          ) : (
+            <Text className="text-center py-8">
+              You&rsquo;ve reached the end.
+            </Text>
+          )}
+        </div>
+      ) : (
+        <Text className="text-center py-8">
+          Ohp, nothing here at the moment.
+        </Text>
+      )}
     </div>
   );
 }
