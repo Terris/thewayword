@@ -21,8 +21,8 @@ export function AdventureLogMap({
 }: {
   defaultLongitude: number;
   defaultLatitude: number;
-  initialLongitude?: number;
-  initialLatitude?: number;
+  initialLongitude?: number | null;
+  initialLatitude?: number | null;
   featureLongitude?: number;
   featureLatitude?: number;
   moveable?: boolean;

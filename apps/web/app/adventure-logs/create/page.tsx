@@ -43,7 +43,7 @@ interface CreateAdventureLogFormValues {
 
 export default function CreatePage() {
   const router = useRouter();
-  const { geo } = useGeoLocation();
+  const { coords } = useGeoLocation();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -96,7 +96,7 @@ export default function CreatePage() {
           poiCategories: [""],
         },
         tagsAsString: "",
-        adventureStartDate: "",
+        adventureStartDate: new Date().toISOString(),
         adventureEndDate: "",
       }}
       validationSchema={validationSchema}
@@ -258,8 +258,8 @@ export default function CreatePage() {
                 <AdventureLogMap
                   defaultLongitude={-105.628997}
                   defaultLatitude={40.342441}
-                  initialLongitude={geo?.coords.longitude}
-                  initialLatitude={geo?.coords.latitude}
+                  initialLongitude={coords.longitude}
+                  initialLatitude={coords.latitude}
                   featureLongitude={Number(values.location.longitude)}
                   featureLatitude={Number(values.location.latitude)}
                 />
