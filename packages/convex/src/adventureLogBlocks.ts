@@ -46,6 +46,35 @@ export const findFirstImageBlockByAdventureLogId = query({
   },
 });
 
+export const findCoverImageByAdventureLogId = query({
+  args: {
+    adventureLogId: v.id("adventureLogs"),
+  },
+  handler: async (ctx, { adventureLogId }) => {
+    await validateIdentity(ctx);
+    const adventureLogBlocks = await ctx.db
+      .query("adventureLogBlocks")
+      .withIndex("by_adventure_log_id", (q) =>
+        q.eq("adventureLogId", adventureLogId)
+      )
+      .collect();
+
+    const sortedAdventureLogBlocks = adventureLogBlocks.sort(
+      (a, b) => a.order - b.order
+    );
+
+    const firstImageBlock = sortedAdventureLogBlocks.find((block) => {
+      return block.type === "image";
+    });
+
+    if (!firstImageBlock || !firstImageBlock.fileId) {
+      return null;
+    }
+
+    return ctx.db.get(firstImageBlock.fileId);
+  },
+});
+
 export const create = mutation({
   args: {
     adventureLogId: v.id("adventureLogs"),

@@ -12,30 +12,27 @@ export function AdventureLogCoverImage({
   adventureLogId: Id<"adventureLogs">;
   className?: string;
 }) {
-  const firstImageBlock = useQuery(
-    api.adventureLogBlocks.findFirstImageBlockByAdventureLogId,
+  const coverImageFile = useQuery(
+    api.adventureLogBlocks.findCoverImageByAdventureLogId,
     {
       adventureLogId,
     }
   );
 
-  const firstImageBlockFileId = firstImageBlock?.fileId;
+  const isLoading = coverImageFile === undefined;
 
-  const queryArgs = firstImageBlockFileId
-    ? { id: firstImageBlockFileId }
-    : "skip";
+  const coverImageFileWithBackup = coverImageFile ?? {
+    url: "/img/default-log-cover.jpg",
+    fileName: "default-log-cover.jpg",
+  };
 
-  const file = useQuery(api.files.findById, queryArgs);
-  const isLoading = file === undefined;
-
-  if (!firstImageBlockFileId || (!isLoading && file === null)) return null;
   if (isLoading) return <LoadingBox />;
 
   return (
     <AspectRatio ratio={1.25 / 1} className={cn(className)}>
       <Image
-        src={file.url}
-        alt={file.fileName}
+        src={coverImageFileWithBackup.url}
+        alt={coverImageFileWithBackup.fileName}
         objectFit="cover"
         layout="fill"
         className="rounded object-cover"

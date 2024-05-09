@@ -2,10 +2,10 @@
 
 import { useParams } from "next/navigation";
 import { useQuery } from "convex/react";
+import { CircleUserRound } from "lucide-react";
 import { type Id, api } from "@repo/convex";
 import { LoadingScreen, Text } from "@repo/ui";
 import { AdventureLogFeedItem } from "../../../_components/AdventureLogFeedItem";
-import { CircleUserRound } from "lucide-react";
 
 export default function UserAdventureLogsPage() {
   const { id } = useParams();
