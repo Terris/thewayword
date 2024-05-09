@@ -125,7 +125,7 @@ export const systemSaveNewClerkUser = internalMutation({
       }
     } else {
       // If it's a new identity, create a new `User`.
-      const newUserId = await ctx.db.insert("users", {
+      await ctx.db.insert("users", {
         name,
         email,
         avatarUrl,
@@ -134,6 +134,15 @@ export const systemSaveNewClerkUser = internalMutation({
         roles,
       });
     }
+
+    // add email address to resend audience
+    await ctx.scheduler.runAfter(
+      0,
+      internal.userActions.addEmailToResendAudience,
+      {
+        email,
+      }
+    );
 
     // send new user email to admin
     await ctx.scheduler.runAfter(

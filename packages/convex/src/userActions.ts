@@ -131,3 +131,20 @@ export const internalHandleClerkWebhook = internalAction({
     }
   },
 });
+
+export const addEmailToResendAudience = internalAction({
+  args: { email: v.string() },
+  handler: async (ctx, { email }) => {
+    const addEmailResponse = await resend.contacts.create({
+      email,
+      unsubscribed: false,
+      audienceId: "a9e4688f-bfb8-4945-a519-1c80ccdb0fb1",
+    });
+
+    if (addEmailResponse.error) {
+      throw new ConvexError(addEmailResponse.error.message);
+    }
+
+    return true;
+  },
+});
