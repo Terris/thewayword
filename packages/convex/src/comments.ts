@@ -20,7 +20,10 @@ export const findAllByAdventureLogId = query({
       adventureLogComments,
       async (comment) => {
         const user = await ctx.db.get(comment.userId);
-        return { ...comment, user: { name: user?.name } };
+        return {
+          ...comment,
+          user: { name: user?.name, avatarUrl: user?.avatarUrl },
+        };
       }
     );
 

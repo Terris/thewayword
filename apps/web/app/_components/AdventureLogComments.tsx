@@ -5,6 +5,7 @@ import { type Id, api } from "@repo/convex";
 import { Text } from "@repo/ui";
 import { formatDateTime } from "@repo/utils";
 import { AdventureLogCommentForm } from "./AdventureLogCommentForm";
+import Image from "next/image";
 
 export function AdventureLogComments({
   adventureLogId,
@@ -31,9 +32,18 @@ export function AdventureLogComments({
             <hr className="border-b-1 border-dashed" />
             <div
               key={comment._id}
-              className="py-6 flex flex-row items-start gap-16"
+              className="py-6 flex flex-row items-start gap-4"
             >
-              <Text className="text-sm italic">
+              {comment.user.avatarUrl ? (
+                <Image
+                  src={comment.user.avatarUrl}
+                  width="20"
+                  height="20"
+                  alt="User"
+                  className="w-5 h-5 rounded-full mt-1"
+                />
+              ) : null}
+              <Text className="text-sm italic mr-8">
                 {comment.user.name} <br />
                 {formatDateTime(comment._creationTime)}
               </Text>
