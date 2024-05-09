@@ -30,6 +30,11 @@ export default function RoadmapPage() {
         Quality of life
       </Text>
       <ul>
+        <li>
+          Improve usability of date selection - e.g. re-opening the cal after
+          selecting a date should automatically show the previously selected
+          date
+        </li>
         <li>User can select a display size on image blocks</li>
         <li>User can click on a tag and see logs with a similar tag</li>
         <li>User can delete their own logs</li>
