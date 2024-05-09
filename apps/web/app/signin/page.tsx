@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { useToast } from "@repo/ui/hooks";
 import { Button, Input, Label, Text } from "@repo/ui";
 import { useMeContext } from "@repo/auth/context";
+import Link from "next/link";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required("Email is required"),
@@ -56,53 +57,63 @@ export default function SignInPage() {
   }
 
   return (
-    <Formik<SignInFormValues>
-      initialValues={{
-        email: "",
-        password: "",
-      }}
-      validationSchema={validationSchema}
-      onSubmit={onSubmit}
-    >
-      {({ isSubmitting, dirty, isValid }) => (
-        <Form className="w-full max-w-[600px] p-8 mx-auto flex flex-col gap-4">
-          <Text className="text-xl font-black">Sign in</Text>
-          <Field name="email">
-            {({ field, meta }: FieldProps) => (
-              <div>
-                <Label htmlFor={field.name}>Email</Label>
-                <Input className="w-full" type="email" {...field} />
-                {meta.touched && meta.error ? (
-                  <Text className="text-sm text-destructive">{meta.error}</Text>
-                ) : null}
-              </div>
-            )}
-          </Field>
-          <Field name="password">
-            {({ field, meta }: FieldProps) => (
-              <div>
-                <Label htmlFor={field.name}>Password</Label>
-                <Input className="w-full" type="password" {...field} />
-                {meta.touched && meta.error ? (
-                  <Text className="text-sm text-destructive">{meta.error}</Text>
-                ) : null}
-              </div>
-            )}
-          </Field>
-          <Button
-            type="submit"
-            disabled={
-              !convexIsLoaded ||
-              authIsLoading ||
-              !dirty ||
-              !isValid ||
-              isSubmitting
-            }
-          >
-            Sign in
-          </Button>
-        </Form>
-      )}
-    </Formik>
+    <div className="w-full p-8 max-w-[600px] mx-auto">
+      <Formik<SignInFormValues>
+        initialValues={{
+          email: "",
+          password: "",
+        }}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
+        {({ isSubmitting, dirty, isValid }) => (
+          <Form className=" flex flex-col gap-4">
+            <Text className="text-xl font-black">Sign in</Text>
+            <Field name="email">
+              {({ field, meta }: FieldProps) => (
+                <div>
+                  <Label htmlFor={field.name}>Email</Label>
+                  <Input className="w-full" type="email" {...field} />
+                  {meta.touched && meta.error ? (
+                    <Text className="text-sm text-destructive">
+                      {meta.error}
+                    </Text>
+                  ) : null}
+                </div>
+              )}
+            </Field>
+            <Field name="password">
+              {({ field, meta }: FieldProps) => (
+                <div>
+                  <Label htmlFor={field.name}>Password</Label>
+                  <Input className="w-full" type="password" {...field} />
+                  {meta.touched && meta.error ? (
+                    <Text className="text-sm text-destructive">
+                      {meta.error}
+                    </Text>
+                  ) : null}
+                </div>
+              )}
+            </Field>
+            <Button
+              type="submit"
+              disabled={
+                !convexIsLoaded ||
+                authIsLoading ||
+                !dirty ||
+                !isValid ||
+                isSubmitting
+              }
+              className="mb-4"
+            >
+              Sign in
+            </Button>
+          </Form>
+        )}
+      </Formik>
+      <Text>
+        <Link href="/forgot-password">Forgot password?</Link>
+      </Text>
+    </div>
   );
 }

@@ -55,7 +55,7 @@ export default function SignUpPage() {
   const { isAuthenticated, isLoading: authIsLoading } = useMeContext();
   const router = useRouter();
   const { toast } = useToast();
-  const { isLoaded: convexIsLoaded, signUp, setActive } = useSignUp();
+  const { isLoaded: clerkIsLoaded, signUp, setActive } = useSignUp();
   const [verifying, setVerifying] = useState(false);
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function SignUpPage() {
     values: SignUpFormValues,
     helpers: FormikHelpers<SignUpFormValues>
   ) {
-    if (!convexIsLoaded) return;
+    if (!clerkIsLoaded) return;
     if (invite?.email !== values.email) {
       toast({
         title: "Sign in failed",
@@ -104,7 +104,7 @@ export default function SignUpPage() {
   }
 
   async function onVerify(values: VerifyFormValues) {
-    if (!convexIsLoaded) return;
+    if (!clerkIsLoaded) return;
 
     try {
       // Submit the code that the user provides to attempt verification
@@ -167,7 +167,7 @@ export default function SignUpPage() {
           <Button
             type="button"
             disabled={
-              !convexIsLoaded ||
+              !clerkIsLoaded ||
               authIsLoading ||
               !dirty ||
               !isValid ||
@@ -188,7 +188,6 @@ export default function SignUpPage() {
         email: "",
         password: "",
         passwordConfirmation: "",
-        code: "",
       }}
       validationSchema={signUpValidationSchema}
       onSubmit={onSubmit}
