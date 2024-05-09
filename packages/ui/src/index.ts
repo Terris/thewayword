@@ -4,6 +4,7 @@ export * from "./Badge";
 export * from "./Button";
 export * from "./Calendar";
 export * from "./Card";
+export * from "./Checkbox";
 export * from "./CopyToClipboardButton";
 export * from "./CountBadge";
 export * from "./CurrencyInput";

@@ -181,6 +181,7 @@ export const update = mutation({
     title: v.optional(v.string()),
     isPublic: v.optional(v.boolean()),
     adventureStartDate: v.optional(v.string()),
+    adventureEndDate: v.optional(v.string()),
     location: v.optional(
       v.object({
         mapboxId: v.string(),
@@ -195,7 +196,7 @@ export const update = mutation({
   },
   handler: async (
     ctx,
-    { id, title, isPublic, adventureStartDate, location }
+    { id, title, isPublic, adventureStartDate, adventureEndDate, location }
   ) => {
     const { user } = await validateIdentity(ctx);
     const existingAdventureLog = await ctx.db.get(id);
@@ -208,6 +209,8 @@ export const update = mutation({
       isPublic: isPublic ?? existingAdventureLog.isPublic,
       adventureStartDate:
         adventureStartDate ?? existingAdventureLog.adventureStartDate,
+      adventureEndDate:
+        adventureEndDate ?? existingAdventureLog.adventureEndDate,
       location: location ?? existingAdventureLog.location,
     });
   },

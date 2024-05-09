@@ -47,7 +47,7 @@ export default function FeedbackPage() {
     >
       {({ isSubmitting, dirty, isValid }) => (
         <Form className="w-full max-w-[600px] p-8 mx-auto flex flex-col gap-4">
-          <Text className="text-xl font-black">Provide feedback</Text>
+          <Text className="text-3xl font-black">Provide feedback</Text>
           <Text>
             At The WayWord, we want to make a product you love using. So, if you
             feel that there is something—anything—that you think we can do

@@ -50,6 +50,9 @@ export default function AdventureLogPage() {
             {adventureLog.adventureStartDate
               ? `- ${formatDate(adventureLog.adventureStartDate)}`
               : null}
+            {adventureLog.adventureEndDate
+              ? `-${formatDate(adventureLog.adventureEndDate)}`
+              : null}
           </Text>
           <Text className="w-full text-sm italic text-muted-foreground">
             {adventureLog.user?.name}

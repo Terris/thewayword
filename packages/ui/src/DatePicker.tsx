@@ -1,19 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@repo/utils";
 import { Button } from "./Button";
 import { Calendar } from "./Calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./Popover";
-import { useState } from "react";
 
 export function DatePicker({
   dateAsISOString,
   setDate,
+  placeholder = "Pick a date",
 }: {
   dateAsISOString: string | undefined;
   setDate: (dateAsIsoString: string | undefined) => void;
+  placeholder?: string;
 }) {
   const [open, setOpen] = useState(false);
   const date = dateAsISOString ? new Date(dateAsISOString) : undefined;
@@ -33,7 +35,7 @@ export function DatePicker({
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {date ? format(date, "PPP") : <span>{placeholder}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

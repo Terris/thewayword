@@ -8,12 +8,14 @@ import { useMutation, useQuery } from "convex/react";
 import { type Id, api } from "@repo/convex";
 import {
   Button,
+  Checkbox,
   DatePicker,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  Label,
   LoadingScreen,
   Text,
 } from "@repo/ui";
@@ -22,10 +24,14 @@ import { formatDate } from "@repo/utils";
 
 const validationSchema = Yup.object().shape({
   adventureStartDate: Yup.string().required("Date is required"),
+  multiday: Yup.boolean(),
+  adventureEndDate: Yup.string(),
 });
 
 interface AdventureDateFormValues {
   adventureStartDate: string;
+  multiday?: boolean;
+  adventureEndDate?: string;
 }
 
 export function EditableAdventureDateForm({
@@ -47,6 +53,8 @@ export function EditableAdventureDateForm({
       await updateAdventureLog({
         id: id as Id<"adventureLogs">,
         adventureStartDate: values.adventureStartDate,
+        adventureEndDate:
+          values.multiday === true ? values.adventureEndDate : "",
       });
       setIsOpen(false);
     } catch (error) {
@@ -74,6 +82,9 @@ export function EditableAdventureDateForm({
           {adventureLog.adventureStartDate
             ? formatDate(adventureLog.adventureStartDate)
             : null}
+          {adventureLog.adventureEndDate
+            ? `-${formatDate(adventureLog.adventureEndDate)}`
+            : null}
         </Text>
       </DialogTrigger>
       <DialogContent>
@@ -85,31 +96,80 @@ export function EditableAdventureDateForm({
             initialValues={{
               adventureStartDate:
                 adventureLog.adventureStartDate ?? new Date().toISOString(),
+              multiday: Boolean(adventureLog.adventureEndDate),
             }}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
           >
-            <Form>
-              <Field name="adventureStartDate" className="pb-4">
-                {({ meta, field, form }: FieldProps) => (
-                  <>
-                    <DatePicker
-                      dateAsISOString={field.value as string}
-                      setDate={(v) =>
-                        form.setFieldValue("adventureStartDate", v)
-                      }
-                    />
-                    {meta.touched && meta.error ? (
-                      <Text className="text-destructive">{meta.error}</Text>
-                    ) : null}
-                  </>
-                )}
-              </Field>
+            {({ values }) => {
+              return (
+                <Form>
+                  <div className="pb-4">
+                    <Field name="adventureStartDate">
+                      {({ meta, field, form }: FieldProps) => (
+                        <>
+                          <DatePicker
+                            dateAsISOString={field.value as string}
+                            setDate={(v) =>
+                              form.setFieldValue("adventureStartDate", v)
+                            }
+                          />
+                          {meta.touched && meta.error ? (
+                            <Text className="text-destructive">
+                              {meta.error}
+                            </Text>
+                          ) : null}
+                        </>
+                      )}
+                    </Field>
+                  </div>
+                  <div className="pb-4">
+                    <Field name="multiday">
+                      {({ field, form }: FieldProps) => (
+                        <div className="flex flex-row items-center">
+                          <Checkbox
+                            value="multiday"
+                            id="multiday"
+                            checked={field.value as boolean}
+                            onCheckedChange={(v) =>
+                              form.setFieldValue("multiday", v)
+                            }
+                            className="mr-2"
+                          />
+                          <Label htmlFor="multiday">Multiday adventure?</Label>
+                        </div>
+                      )}
+                    </Field>
+                  </div>
+                  {values.multiday ? (
+                    <div className="pb-4">
+                      <Field name="adventureEndDate" className="pb-4">
+                        {({ meta, field, form }: FieldProps) => (
+                          <>
+                            <DatePicker
+                              placeholder="Pick an adventure end date"
+                              dateAsISOString={field.value as string}
+                              setDate={(v) =>
+                                form.setFieldValue("adventureEndDate", v)
+                              }
+                            />
+                            {meta.touched && meta.error ? (
+                              <Text className="text-destructive">
+                                {meta.error}
+                              </Text>
+                            ) : null}
+                          </>
+                        )}
+                      </Field>
+                    </div>
+                  ) : null}
 
-              <Button type="submit" className="w-full mt-4">
-                Save
-              </Button>
-            </Form>
+                  <Button type="submit" className="w-full">
+                    Save
+                  </Button>
+                </Form>
+              );
+            }}
           </Formik>
         </DialogHeader>
       </DialogContent>
