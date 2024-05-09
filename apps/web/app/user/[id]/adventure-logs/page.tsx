@@ -1,24 +1,74 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useCallback } from "react";
+import {
+  useParams,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import Image from "next/image";
-import { useQuery } from "convex/react";
+import { usePaginatedQuery, useQuery } from "convex/react";
 import { type Id, api } from "@repo/convex";
-import { LoadingScreen, Text } from "@repo/ui";
+import { Button, LoadingScreen, Text } from "@repo/ui";
 import { AdventureLogFeedItem } from "../../../_components/AdventureLogFeedItem";
 
+const DEFAULT_ITEMS_PER_PAGE = 3;
+
 export default function UserAdventureLogsPage() {
+  const router = useRouter();
   const { id } = useParams();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const page = searchParams.get("page");
+  const pageInt = page ? parseInt(page) : 1;
+
   const publicUser = useQuery(api.users.sessionedFindPublicUserById, {
     id: id as Id<"users">,
   });
-  const adventureLogs = useQuery(api.adventureLogs.findAllPublicByUserId, {
-    userId: id as Id<"users">,
-  });
 
-  const isLoading = adventureLogs === undefined;
+  const {
+    results: adventureLogs,
+    status: paginationStatus,
+    loadMore,
+  } = usePaginatedQuery(
+    api.adventureLogs.findAllPublicByUserId,
+    {
+      paginationOpts: {
+        numItems: DEFAULT_ITEMS_PER_PAGE,
+      },
+      userId: id as Id<"users">,
+    },
+    {
+      initialNumItems: page
+        ? pageInt * DEFAULT_ITEMS_PER_PAGE
+        : DEFAULT_ITEMS_PER_PAGE,
+    }
+  );
 
-  if (isLoading) return <LoadingScreen />;
+  const firstPageIsLoading = paginationStatus === "LoadingFirstPage";
+  const newPageIsLoading = paginationStatus === "LoadingMore";
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams.toString());
+      params.set(name, value);
+      return params.toString();
+    },
+    [searchParams]
+  );
+
+  function handleShowMore() {
+    loadMore(DEFAULT_ITEMS_PER_PAGE);
+    router.push(
+      `${pathname}?${createQueryString("page", (pageInt + 1).toString())}`,
+      {
+        scroll: false,
+      }
+    );
+  }
+
+  if (firstPageIsLoading) return <LoadingScreen />;
 
   return (
     <div className="w-full p-8">
@@ -44,8 +94,29 @@ export default function UserAdventureLogsPage() {
           />
         ))}
       </div>
-      {!adventureLogs.length && (
-        <Text className="text-center">Ohp, nothing here at the moment.</Text>
+      {adventureLogs.length ? (
+        <div className="w-full max-w-[300px] mx-auto">
+          {paginationStatus === "CanLoadMore" ? (
+            <Button
+              variant="outline"
+              onClick={() => {
+                handleShowMore();
+              }}
+              disabled={newPageIsLoading}
+              className="w-full"
+            >
+              Load more
+            </Button>
+          ) : (
+            <Text className="text-center py-8">
+              You&rsquo;ve reached the end.
+            </Text>
+          )}
+        </div>
+      ) : (
+        <Text className="text-center py-8">
+          Ohp, nothing here at the moment.
+        </Text>
       )}
     </div>
   );

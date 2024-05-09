@@ -66,11 +66,8 @@ importers:
         specifier: ^2.0.0
         version: 2.1.0
       convex:
-        specifier: ^1.11.2
-        version: 1.11.2(react-dom@18.2.0)(react@18.2.0)
-      convex-helpers:
-        specifier: ^0.1.35
-        version: 0.1.35(convex@1.11.2)(react@18.2.0)
+        specifier: ^1.11.3
+        version: 1.11.3(react-dom@18.2.0)(react@18.2.0)
       date-fns:
         specifier: ^3.6.0
         version: 3.6.0
@@ -187,8 +184,8 @@ importers:
         specifier: workspace:*
         version: link:../ui
       convex:
-        specifier: ^1.11.2
-        version: 1.11.2(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^1.11.3
+        version: 1.11.3(react-dom@18.2.0)(react@18.2.0)
       next:
         specifier: ^14.1.0
         version: 14.1.0(react-dom@18.2.0)(react@18.2.0)
@@ -233,11 +230,11 @@ importers:
         specifier: ^5.0.4
         version: 5.0.4(react@18.2.0)
       convex:
-        specifier: ^1.11.2
-        version: 1.11.2(react-dom@18.2.0)(react@18.2.0)
+        specifier: ^1.11.3
+        version: 1.11.3(react-dom@18.2.0)(react@18.2.0)
       convex-helpers:
-        specifier: ^0.1.35
-        version: 0.1.35(convex@1.11.2)(react@18.2.0)
+        specifier: ^0.1.36
+        version: 0.1.36(convex@1.11.3)(react@18.2.0)
       resend:
         specifier: ^3.1.0
         version: 3.2.0
@@ -5019,8 +5016,8 @@ packages:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
     dev: true
 
-  /convex-helpers@0.1.35(convex@1.11.2)(react@18.2.0):
-    resolution: {integrity: sha512-JruOIBGQGqOMsA50iEVpPrml5uXsBqcNRaWRsfYfBUJYEq+8RLVk5ad0LyMJd1gk2M/jk6XpB6XKy/QLs/sZLQ==}
+  /convex-helpers@0.1.36(convex@1.11.3)(react@18.2.0):
+    resolution: {integrity: sha512-G69bfCTvOQHWr8JahGFFyhxiOUAlNtAgFPchuwYqGqAs5g63SpHxg9BliyLtNW7BxU+V1v+CwfTkTMpuzx7dQw==}
     peerDependencies:
       convex: ^1.11.0
       hono: ^4.0.5
@@ -5034,12 +5031,12 @@ packages:
       zod:
         optional: true
     dependencies:
-      convex: 1.11.2(react-dom@18.2.0)(react@18.2.0)
+      convex: 1.11.3(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
     dev: false
 
-  /convex@1.11.2(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-AmIVdT6mAlqzQeRB6VadzHvvxHeAXSdpH6oOa9mto8CIgSiSkOH/E6+2icHTC0dKR/ueZGjSb/a/PlbmEHlSBQ==}
+  /convex@1.11.3(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-2aZ6WdXfT59TrWynPNE6jQ3DYhYMgy0vzoLPTJsY1CkNbOA+KFIb03l4vQsEQtRU5gpjFbPqnPFsIS23Zlv0bQ==}
     engines: {node: '>=16.15.1', npm: '>=7.0.0'}
     hasBin: true
     peerDependencies:

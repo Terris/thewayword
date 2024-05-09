@@ -129,29 +129,39 @@ export const findAllPrivateBySessionedUser = query({
 });
 
 export const findAllPublicByUserId = query({
-  args: { userId: v.id("users") },
-  handler: async (ctx, { userId }) => {
+  args: {
+    paginationOpts: paginationOptsValidator,
+    userId: v.id("users"),
+  },
+  handler: async (ctx, { userId, paginationOpts }) => {
     await validateIdentity(ctx);
-    const adventureLogs = ctx.db
+    const paginatedAdventureLogs = await ctx.db
       .query("adventureLogs")
       .withIndex("by_user_id_is_public", (q) =>
         q.eq("userId", userId).eq("isPublic", true)
       )
       .order("desc")
-      .collect();
-    const adventureLogsWithUser = await asyncMap(adventureLogs, async (log) => {
-      const user = await ctx.db.get(log.userId);
-      if (!adventureLogs) throw new ConvexError("Adventure log user not found");
-      return {
-        ...log,
-        user: {
-          id: user?._id,
-          name: user?.name,
-          avatarUrl: user?.avatarUrl,
-        },
-      };
-    });
-    return adventureLogsWithUser;
+      .paginate(paginationOpts);
+
+    const adventureLogsWithUser = await asyncMap(
+      paginatedAdventureLogs.page,
+      async (log) => {
+        const user = await ctx.db.get(log.userId);
+        if (!user) throw new ConvexError("Adventure log user not found");
+        return {
+          ...log,
+          user: {
+            id: user?._id,
+            name: user?.name,
+            avatarUrl: user?.avatarUrl,
+          },
+        };
+      }
+    );
+    return {
+      ...paginatedAdventureLogs,
+      page: adventureLogsWithUser,
+    };
   },
 });
 

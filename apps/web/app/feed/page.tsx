@@ -49,7 +49,10 @@ export default function FeedPage() {
   function handleShowMore() {
     loadMore(DEFAULT_ITEMS_PER_PAGE);
     router.push(
-      `${pathname}?${createQueryString("page", (pageInt + 1).toString())}`
+      `${pathname}?${createQueryString("page", (pageInt + 1).toString())}`,
+      {
+        scroll: false,
+      }
     );
   }
 
