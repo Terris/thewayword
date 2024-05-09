@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { cn } from "@repo/utils";
 import { Toaster } from "@repo/ui";
 import "@repo/ui/globals.css";
@@ -34,6 +35,7 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
             {modal}
             <Toaster />
           </div>
+          <Analytics />
         </AppProviders>
       </body>
     </html>

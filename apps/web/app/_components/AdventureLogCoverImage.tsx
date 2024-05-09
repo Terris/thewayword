@@ -33,8 +33,8 @@ export function AdventureLogCoverImage({
       <Image
         src={coverImageFileWithBackup.url}
         alt={coverImageFileWithBackup.fileName}
-        objectFit="cover"
-        layout="fill"
+        fill
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         className="rounded object-cover"
       />
     </AspectRatio>
