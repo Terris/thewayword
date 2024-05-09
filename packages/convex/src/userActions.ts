@@ -118,6 +118,11 @@ export const internalHandleClerkWebhook = internalAction({
             name: `${eventData.first_name} ${eventData.last_name}`,
             avatarUrl: eventData.image_url,
           });
+          if (primaryEmail) {
+            await ctx.runAction(internal.userActions.addEmailToResendAudience, {
+              email: primaryEmail?.email_address,
+            });
+          }
         }
         default: {
           handled = false;
