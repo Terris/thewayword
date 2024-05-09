@@ -153,8 +153,9 @@ export const systemUpdateUserProfile = internalMutation({
     userId: v.id("users"),
     email: v.optional(v.string()),
     name: v.optional(v.string()),
+    avatarUrl: v.optional(v.string()),
   },
-  handler: async (ctx, { userId, email, name }) => {
+  handler: async (ctx, { userId, email, name, avatarUrl }) => {
     const existingUser = await ctx.db.get(userId);
     if (!existingUser) {
       throw new ConvexError("User not found");
@@ -162,6 +163,7 @@ export const systemUpdateUserProfile = internalMutation({
     await ctx.db.patch(userId, {
       email: email ?? existingUser.email,
       name: name ?? existingUser.name,
+      avatarUrl: avatarUrl ?? existingUser.avatarUrl,
     });
   },
 });

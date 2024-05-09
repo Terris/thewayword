@@ -10,12 +10,25 @@ import {
 } from "@repo/ui";
 import { SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
+import { useMeContext } from "@repo/auth/context";
+import Image from "next/image";
 
 export function UserMenu() {
+  const { me } = useMeContext();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="hover:text-muted transition-colors">
-        <CircleUserRound className="w-6 h-6" />
+        {me?.avatarUrl ? (
+          <Image
+            src={me.avatarUrl}
+            width="32"
+            height="32"
+            alt="User"
+            className="w-8 h-8 rounded-full"
+          />
+        ) : (
+          <CircleUserRound className="w-6 h-6" />
+        )}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuItem asChild>

@@ -11,6 +11,7 @@ import type { UserId } from "../types";
 interface User {
   id: UserId;
   name?: string;
+  avatarUrl?: string;
   email: string;
   roles?: string[];
   isAuthorizedUser: boolean;

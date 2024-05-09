@@ -24,6 +24,7 @@ export const sessionedMe = query({
     const me = {
       id: meUser._id,
       name: meUser.name,
+      avatarUrl: meUser.avatarUrl,
       email: meUser.email,
       roles: meUser.roles,
       isAuthorizedUser: Boolean(meUser.roles?.includes("user")),

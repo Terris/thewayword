@@ -116,6 +116,7 @@ export const internalHandleClerkWebhook = internalAction({
             userId: user._id,
             email: primaryEmail?.email_address,
             name: `${eventData.first_name} ${eventData.last_name}`,
+            avatarUrl: eventData.image_url,
           });
         }
         default: {
