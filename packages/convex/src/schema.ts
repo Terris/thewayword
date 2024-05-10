@@ -29,6 +29,9 @@ export default defineSchema({
     order: v.number(),
     content: v.optional(v.string()),
     fileId: v.optional(v.id("files")),
+    size: v.optional(
+      v.union(v.literal("small"), v.literal("medium"), v.literal("large"))
+    ),
   })
     .index("by_adventure_log_id", ["adventureLogId"])
     .index("by_order", ["order"])

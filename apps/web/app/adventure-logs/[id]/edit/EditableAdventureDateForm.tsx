@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { Field, Form, Formik, type FieldProps } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQuery } from "convex/react";
+import { Pencil } from "lucide-react";
 import { type Id, api } from "@repo/convex";
 import {
   Button,
@@ -78,13 +79,14 @@ export function EditableAdventureDateForm({
       }}
     >
       <DialogTrigger>
-        <Text className="w-full font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pt-1 cursor-pointer hover:underline ">
+        <Text className="group w-full font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pt-1 cursor-pointer hover:underline ">
           {adventureLog.adventureStartDate
             ? formatDate(adventureLog.adventureStartDate)
             : null}
           {adventureLog.adventureEndDate
             ? `-${formatDate(adventureLog.adventureEndDate)}`
             : null}
+          <Pencil className="hidden w-3 h-3 group-hover:inline-block ml-1 -mt-1" />
         </Text>
       </DialogTrigger>
       <DialogContent>

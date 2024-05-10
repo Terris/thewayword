@@ -69,7 +69,7 @@ export function EditableTitleForm({
               {({ field, meta }: FieldProps) => (
                 <>
                   <input
-                    className="w-full text-4xl font-bold mb-4 bg-transparent outline-none focus:underline"
+                    className="w-full md:text-4xl font-bold mb-4 bg-transparent outline-none hover:underline focus:underline"
                     {...field}
                     onChange={(v) => {
                       field.onChange(v);

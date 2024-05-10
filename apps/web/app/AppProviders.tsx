@@ -22,7 +22,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
         <MeProvider>
           <NextThemesProvider
             attribute="class"
-            defaultTheme="light"
+            defaultTheme="system"
             enableSystem
           >
             <TooltipProvider>{children}</TooltipProvider>

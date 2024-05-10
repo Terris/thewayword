@@ -64,7 +64,7 @@ export default function EditLogPage() {
             <div className="md:w-1/12 md:text-right">
               <Text className="italic text-neutral-400">Location</Text>
             </div>
-            <div className="w-11/12">
+            <div className="md:w-11/12">
               <EditableLocationForm setIsSaving={setIsSaving} />
             </div>
           </div>
@@ -72,23 +72,23 @@ export default function EditLogPage() {
             <div className="md:w-1/12 md:text-right">
               <Text className="italic text-neutral-400">Date</Text>
             </div>
-            <div className="w-11/12">
+            <div className="md:w-11/12">
               <EditableAdventureDateForm setIsSaving={setIsSaving} />
             </div>
           </div>
-          <div className="flex flex-col pb-6 md:flex-row md:gap-8">
+          <div className="flex flex-col pb-4 md:flex-row md:gap-8">
             <div className="md:w-1/12 md:text-right">
               <Text className="italic text-neutral-400">Tags</Text>
             </div>
-            <div className="w-11/12">
+            <div className="md:w-11/12">
               <EditableAdventureLogTags setIsSaving={setIsSaving} />
             </div>
           </div>
           <div className="flex flex-col md:flex-row md:gap-8 pb-8">
-            <div className="mb-4 md:mb-0 md:w-1/12 md:text-right pt-1">
+            <div className="md:mb-0 md:w-1/12 md:text-right">
               <Text className="italic text-neutral-400">Your story</Text>
             </div>
-            <div className="w-11/12">
+            <div className="md:w-11/12">
               <EditableAdventureLogBlocks setIsSaving={setIsSaving} />
               <hr className="w-fill border-dashed mt-4" />
               <div className="w-[200px] mx-auto -mt-[29px] bg-background border border-dashed rounded-xl p-2 flex flex-row items-center justify-center gap-2">
@@ -102,28 +102,15 @@ export default function EditLogPage() {
             </div>
           </div>
         </div>
-        {/* TODO: This is a fixed right sidebar that is meant to help with editing and adding blocks */}
-        {/* <div className="fixed top-[50%] right-0 w-1/6 h-1 flex flex-col justify-center">
-                <div className="border border-dashed p-4 rounded-tl rounded-bl flex flex-col gap-2 min-h-[300px]">
-                  <Text className="font-soleil font-bold text-sm tracking-wide pb-4">
-                    ADD A BLOCK
-                  </Text>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="justify-start"
-                  >
-                    Text
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="justify-start"
-                  >
-                    Image
-                  </Button>
-                </div>
-              </div> */}
+
+        {/* <div className="z-50 fixed top-[20px] right-0 left-0 bg-background shadow-lg p-4 mx-4 rounded-lg">
+          <Button type="button" variant="outline">
+            Text
+          </Button>
+          <Button type="button" variant="outline">
+            Image
+          </Button>
+        </div> */}
       </div>
 
       <div
