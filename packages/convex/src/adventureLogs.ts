@@ -1,8 +1,9 @@
 import { ConvexError, v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { internalMutation, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
 import { paginationOptsValidator } from "convex/server";
+import { internal } from "./_generated/api";
 
 export const findById = query({
   args: { id: v.id("adventureLogs") },
@@ -267,7 +268,7 @@ export const update = mutation({
   },
 });
 
-export const destroy = mutation({
+export const scheduleDestroy = mutation({
   args: { id: v.id("adventureLogs") },
   handler: async (ctx, { id }) => {
     const { user } = await validateIdentity(ctx);
@@ -276,6 +277,16 @@ export const destroy = mutation({
     if (existingAdventureLog.userId !== user._id)
       throw new ConvexError("Not the owner of this adventure log");
 
-    return ctx.db.delete(id);
+    await ctx.scheduler.runAfter(1000, internal.adventureLogs.scheduledDelete, {
+      id,
+    });
+    return true;
+  },
+});
+
+export const scheduledDelete = internalMutation({
+  args: { id: v.id("adventureLogs") },
+  handler: async (ctx, { id }) => {
+    await ctx.db.delete(id);
   },
 });

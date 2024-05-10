@@ -14,6 +14,7 @@ import { EditableTitleForm } from "./EditableTitleForm";
 import { EditableAdventureDateForm } from "./EditableAdventureDateForm";
 import { EditableLocationForm } from "./EditableLocationForm";
 import { EditableAdventureLogTags } from "./EditableAdventureLogTags";
+import { DeleteAdventureLogButton } from "./DeleteAdventureLogButton";
 
 export default function EditLogPage() {
   const { id } = useParams();
@@ -84,7 +85,7 @@ export default function EditLogPage() {
               <EditableAdventureLogTags setIsSaving={setIsSaving} />
             </div>
           </div>
-          <div className="flex flex-col md:flex-row md:gap-8 pb-8">
+          <div className="flex flex-col md:flex-row md:gap-8 pb-32">
             <div className="md:mb-0 md:w-1/12 md:text-right">
               <Text className="italic text-neutral-400">Your story</Text>
             </div>
@@ -101,6 +102,9 @@ export default function EditLogPage() {
               </div>
             </div>
           </div>
+          <DeleteAdventureLogButton
+            adventureLogId={id as Id<"adventureLogs">}
+          />
         </div>
       </div>
 
