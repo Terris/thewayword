@@ -287,6 +287,43 @@ export const scheduleDestroy = mutation({
 export const scheduledDelete = internalMutation({
   args: { id: v.id("adventureLogs") },
   handler: async (ctx, { id }) => {
+    // Delete all related adventureLogBlocks
+    const allAdventureLogBlocks = await ctx.db
+      .query("adventureLogBlocks")
+      .withIndex("by_adventure_log_id", (q) => q.eq("adventureLogId", id))
+      .collect();
+    asyncMap(allAdventureLogBlocks, async (block) => {
+      await ctx.db.delete(block._id);
+    });
+
+    // Delete all related adventureLogTags
+    const allAdventureLogTags = await ctx.db
+      .query("adventureLogTags")
+      .withIndex("by_adventure_log_id", (q) => q.eq("adventureLogId", id))
+      .collect();
+    await asyncMap(allAdventureLogTags, async (tag) => {
+      await ctx.db.delete(tag._id);
+    });
+
+    // Delete all related comments
+    const allComments = await ctx.db
+      .query("comments")
+      .withIndex("by_adventure_log_id", (q) => q.eq("adventureLogId", id))
+      .collect();
+    await asyncMap(allComments, async (comment) => {
+      await ctx.db.delete(comment._id);
+    });
+
+    // Delete all related likes
+    const allLikes = await ctx.db
+      .query("likes")
+      .withIndex("by_adventure_log_id", (q) => q.eq("adventureLogId", id))
+      .collect();
+    await asyncMap(allLikes, async (like) => {
+      await ctx.db.delete(like._id);
+    });
+
+    // Delete the adventure log
     await ctx.db.delete(id);
   },
 });
