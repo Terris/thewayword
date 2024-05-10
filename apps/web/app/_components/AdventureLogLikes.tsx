@@ -19,7 +19,7 @@ export function AdventureLogLikes({
       </Text>
       <hr className="border-b-1 border-dashed mb-4" />
       {likes?.map((like) => (
-        <div className="flex flex-row items-center gap-2" key={like._id}>
+        <div className="flex flex-row items-center gap-2 pb-4" key={like._id}>
           {like.user.avatarUrl ? (
             <Image
               src={like.user.avatarUrl}
