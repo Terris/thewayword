@@ -30,6 +30,7 @@ export default function RoadmapPage() {
         Quality of life
       </Text>
       <ul>
+        <li>Add text formatting to story blocks</li>
         <li>
           Add an alert box in the header that shows a list of events (e.g.
           someone commented on my post)
