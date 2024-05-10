@@ -1,19 +1,22 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 import { useMeContext } from "@repo/auth/context";
-import { Button, Logo } from "@repo/ui";
+import { Button, Logo, LogoDark } from "@repo/ui";
 import { Menu, X } from "lucide-react";
 import { useLockBodyScroll } from "@repo/hooks";
 import { usePathname } from "next/navigation";
 import { cn } from "@repo/utils";
 import { UserMenu } from "./_components/UserMenu";
+import { ThemeModeToggle } from "@repo/ui/ThemeModeToggle";
 
 export function Masthead() {
   const pathname = usePathname();
   const { isAuthenticated } = useMeContext();
   const [pagesMenuIsOpen, setPagesMenuIsOpen] = useState(false);
+  const { resolvedTheme } = useTheme();
 
   useEffect(() => {
     setPagesMenuIsOpen(false);
@@ -49,10 +52,11 @@ export function Masthead() {
         </div>
         <div className="md:w-1/3 mr-auto md:mr-0 flex flex-row items-center justify-start md:justify-center">
           <Link href={isAuthenticated ? "/feed" : "/"}>
-            <Logo
-              width={160}
-              className="fill-foreground max-w-full -mt-[10px]"
-            />
+            {resolvedTheme === "dark" ? (
+              <LogoDark width={160} className="max-w-full -mt-[10px]" />
+            ) : (
+              <Logo width={160} className="max-w-full -mt-[10px]" />
+            )}
           </Link>
         </div>
         <div className="w-1/3 flex flex-row items-center justify-end gap-8">
@@ -63,6 +67,7 @@ export function Masthead() {
               </MastheadLink>
             </div>
           ) : null}
+          <ThemeModeToggle />
           {isAuthenticated ? (
             <UserMenu />
           ) : (

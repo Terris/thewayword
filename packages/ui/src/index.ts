@@ -16,6 +16,7 @@ export * from "./FieldError";
 export * from "./Input";
 export * from "./Label";
 export * from "./Logo";
+export * from "./LogoDark";
 export * from "./Loader";
 export * from "./LoadingBox";
 export * from "./LoadingScreen";
