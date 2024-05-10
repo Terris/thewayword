@@ -5,16 +5,49 @@ export default function AboutPage() {
   return (
     <div className="w-full p-8 pt-16">
       <div className="container grid grid-cols-3 gap-4">
-        <div className="">
+        <div className="group">
           <Image
-            src="/img/about-page-image.jpg"
+            src="/img/products/gold-murder-noodle-hat-front.png"
             alt="product image"
-            width={1200}
+            width={800}
             height={800}
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            className="rounded max-w-full"
+            // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="rounded max-w-full group-hover:hidden"
           />
-          <Text className="text-sm text-center pr-4 text-gray-200">01.</Text>
+          <Image
+            src="/img/products/gold-murder-noodle-hat-back.png"
+            alt="product image"
+            width={800}
+            height={800}
+            // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="hidden rounded max-w-full group-hover:block"
+          />
+          <Text className="text-lg font-bold text-center pr-4 pt-8">
+            Golden Murder Noodle Fitted Hat
+          </Text>
+          <Text className="text-center pr-4 italic text-gray-500">$34.99</Text>
+        </div>
+        <div className="group">
+          <Image
+            src="/img/products/red-murder-noodle-hat-front.png"
+            alt="product image"
+            width={800}
+            height={800}
+            // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="rounded max-w-full group-hover:hidden"
+          />
+          <Image
+            src="/img/products/red-murder-noodle-hat-back.png"
+            alt="product image"
+            width={800}
+            height={800}
+            // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="hidden rounded max-w-full group-hover:block"
+          />
+          <Text className="text-lg font-bold text-center pr-4 pt-8">
+            Red Murder Noodle Fitted Hat
+          </Text>
+          <Text className="text-center pr-4 italic text-gray-500">$34.99</Text>
         </div>
       </div>
     </div>
