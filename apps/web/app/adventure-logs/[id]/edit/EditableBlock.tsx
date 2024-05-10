@@ -5,6 +5,7 @@ import { api, type Doc } from "@repo/convex";
 import { cn } from "@repo/utils";
 import { EditableTextBlock } from "./EditableTextBlock";
 import { EditableImageBlock } from "./EditableImageBlock";
+import { useBlockEditorContext } from "./BlockEditorContext";
 
 export function EditableBlock({
   block,
@@ -13,7 +14,10 @@ export function EditableBlock({
   block: Doc<"adventureLogBlocks">;
   setIsSaving: (value: boolean) => void;
 }) {
-  const [selected, setSelected] = useState(false);
+  const thisBlockId = block._id;
+  const { editingBlockId, setEditingBlockId } = useBlockEditorContext();
+  const isSelected = editingBlockId === thisBlockId;
+
   const [updatedContent, setUpdatedContent] = useState(block.content);
   const [updatedFileId, setUpdatedFileId] = useState(block.fileId);
 
@@ -30,7 +34,7 @@ export function EditableBlock({
 
   // Attempt to save updated block when block is deselected
   useEffect(() => {
-    if (!selected && canUpdateBlock) {
+    if (!isSelected && canUpdateBlock) {
       setIsSaving(true);
       void updateAdventureLogBlock({
         id: block._id,
@@ -44,7 +48,7 @@ export function EditableBlock({
     block.content,
     block.fileId,
     canUpdateBlock,
-    selected,
+    isSelected,
     updateAdventureLogBlock,
     updatedContent,
     updatedFileId,
@@ -53,14 +57,14 @@ export function EditableBlock({
 
   return (
     <>
-      {selected ? (
+      {isSelected ? (
         <div
           className="fixed top-0 right-0 bottom-0 left-0 z-1"
           onClick={() => {
-            setSelected(false);
+            setEditingBlockId(null);
           }}
           onKeyUp={() => {
-            setSelected(false);
+            setEditingBlockId(null);
           }}
           role="button"
           tabIndex={0}
@@ -70,20 +74,20 @@ export function EditableBlock({
       <div
         className={cn(
           "relative z-10 w-full border-2 border-dashed border-transparent rounded flex items-center justify-center transition-all",
-          selected ? "border-primary p-4" : "hover:border-muted"
+          isSelected ? "border-primary p-4" : "hover:border-muted"
         )}
         onClick={() => {
-          setSelected(true);
+          setEditingBlockId(thisBlockId);
         }}
         onKeyUp={() => {
-          setSelected(true);
+          setEditingBlockId(null);
         }}
         role="button"
         tabIndex={0}
       >
         {block.type === "image" && block.fileId ? (
           <EditableImageBlock
-            selected={selected}
+            selected={isSelected}
             fileId={updatedFileId}
             setFileId={(fileId) => {
               setUpdatedFileId(fileId);
@@ -91,12 +95,12 @@ export function EditableBlock({
           />
         ) : (
           <EditableTextBlock
-            selected={selected}
+            selected={isSelected}
             content={updatedContent}
             setContent={setUpdatedContent}
           />
         )}
-        {selected ? (
+        {isSelected ? (
           <div className="absolute right-[-17px] bg-foreground text-background p-2 rounded-lg shadow-md flex flex-col gap-2">
             <button
               type="button"

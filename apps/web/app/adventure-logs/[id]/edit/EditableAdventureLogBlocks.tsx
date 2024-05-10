@@ -3,6 +3,7 @@ import { type Id, api } from "@repo/convex";
 import { useQuery } from "convex/react";
 import { LoadingBox } from "@repo/ui";
 import { EditableBlock } from "./EditableBlock";
+import { BlockEditorProvider } from "./BlockEditorContext";
 
 export function EditableAdventureLogBlocks({
   setIsSaving,
@@ -21,9 +22,13 @@ export function EditableAdventureLogBlocks({
 
   if (isLoading) return <LoadingBox />;
 
-  return adventureLogBlocks.map((block) => (
-    <div key={block._id} className="pb-8">
-      <EditableBlock block={block} setIsSaving={setIsSaving} />
-    </div>
-  ));
+  return (
+    <BlockEditorProvider adventureLogId={id as Id<"adventureLogBlocks">}>
+      {adventureLogBlocks.map((block) => (
+        <div key={block._id} className="pb-8">
+          <EditableBlock block={block} setIsSaving={setIsSaving} />
+        </div>
+      ))}
+    </BlockEditorProvider>
+  );
 }
