@@ -1,18 +1,21 @@
 import Image from "next/image";
 import { useQuery } from "convex/react";
+import { ImageIcon } from "lucide-react";
 import { api, type Id } from "@repo/convex";
-import { LoadingBox } from "@repo/ui";
+import { Button, LoadingBox } from "@repo/ui";
 import { UploadFileButton } from "../../../_components/UploadFileButton";
+import { useBlockEditorContext } from "./BlockEditorContext";
 
 export function EditableImageBlock({
-  selected,
+  isSelected,
   fileId,
   setFileId,
 }: {
-  selected: boolean;
+  isSelected: boolean;
   fileId?: Id<"files">;
   setFileId: (value: Id<"files">) => void;
 }) {
+  const { handleUpdateBlock } = useBlockEditorContext();
   const fileQueryArgs = fileId ? { id: fileId } : "skip";
   const file = useQuery(api.files.findById, fileQueryArgs);
   const isLoading = file === undefined;
@@ -31,8 +34,38 @@ export function EditableImageBlock({
           className="mx-auto rounded"
         />
       </div>
-      <div className="absolute">
-        {selected ? (
+      {isSelected ? (
+        <div className="absolute flex items-center justify-center gap-2 bg-background p-4 rounded-lg">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              handleUpdateBlock({ values: { displaySize: "small" } });
+            }}
+          >
+            <ImageIcon size={12} />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              handleUpdateBlock({ values: { displaySize: "medium" } });
+            }}
+          >
+            <ImageIcon size={18} />
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => {
+              handleUpdateBlock({ values: { displaySize: "large" } });
+            }}
+          >
+            <ImageIcon size={24} />
+          </Button>
           <UploadFileButton
             onSuccess={(fileIds) => {
               if (!fileIds[0]) return;
@@ -41,8 +74,8 @@ export function EditableImageBlock({
           >
             Upload new image
           </UploadFileButton>
-        ) : null}
-      </div>
+        </div>
+      ) : null}
     </div>
   );
 }

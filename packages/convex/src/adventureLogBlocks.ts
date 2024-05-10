@@ -23,6 +23,14 @@ export const findAllByAdventureLogId = query({
   },
 });
 
+export const findById = query({
+  args: { id: v.id("adventureLogBlocks") },
+  handler: async (ctx, { id }) => {
+    await validateIdentity(ctx);
+    return ctx.db.get(id);
+  },
+});
+
 export const findFirstImageBlockByAdventureLogId = query({
   args: {
     adventureLogId: v.id("adventureLogs"),
@@ -111,8 +119,11 @@ export const update = mutation({
     id: v.id("adventureLogBlocks"),
     fileId: v.optional(v.id("files")),
     content: v.optional(v.string()),
+    displaySize: v.optional(
+      v.union(v.literal("small"), v.literal("medium"), v.literal("large"))
+    ),
   },
-  handler: async (ctx, { id, content, fileId }) => {
+  handler: async (ctx, { id, content, fileId, displaySize }) => {
     const { user } = await validateIdentity(ctx);
     const existingAdventureLogBlock = await ctx.db.get(id);
     if (!existingAdventureLogBlock)
@@ -127,6 +138,7 @@ export const update = mutation({
     return ctx.db.patch(id, {
       fileId: fileId ?? existingAdventureLogBlock.fileId,
       content: content ?? existingAdventureLogBlock.content,
+      displaySize: displaySize ?? existingAdventureLogBlock.displaySize,
     });
   },
 });

@@ -29,7 +29,7 @@ export default defineSchema({
     order: v.number(),
     content: v.optional(v.string()),
     fileId: v.optional(v.id("files")),
-    size: v.optional(
+    displaySize: v.optional(
       v.union(v.literal("small"), v.literal("medium"), v.literal("large"))
     ),
   })

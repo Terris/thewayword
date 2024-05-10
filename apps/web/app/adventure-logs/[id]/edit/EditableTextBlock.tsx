@@ -2,21 +2,21 @@ import { useEffect, useRef } from "react";
 import { Text } from "@repo/ui";
 
 export function EditableTextBlock({
-  selected,
+  isSelected,
   content,
   setContent,
 }: {
-  selected: boolean;
+  isSelected: boolean;
   content?: string;
   setContent: (value: string) => void;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    if (selected && textareaRef.current) {
+    if (isSelected && textareaRef.current) {
       textareaRef.current.focus();
     }
-  }, [selected]);
+  }, [isSelected]);
 
   function handleChange(value: string) {
     setContent(value);
@@ -31,7 +31,7 @@ export function EditableTextBlock({
 
   return (
     <div className="w-full max-w-[600px] mx-auto">
-      {selected ? (
+      {isSelected ? (
         <textarea
           ref={textareaRef}
           placeholder="Start typing..."

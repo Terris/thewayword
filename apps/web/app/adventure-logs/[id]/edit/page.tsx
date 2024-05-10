@@ -38,7 +38,7 @@ export default function EditLogPage() {
   return (
     <>
       <div className="pb-32 absolute top-0 left-0 right-0 bg-background">
-        <div className="w-full p-8 flex flex-row items-center justify-end gap-8">
+        <div className="w-full container p-8 flex flex-row items-center justify-end gap-8">
           <EditableIsPublicForm setIsSaving={setIsSaving} />
           <Button
             type="button"
@@ -88,7 +88,7 @@ export default function EditLogPage() {
             <div className="md:mb-0 md:w-1/12 md:text-right">
               <Text className="italic text-neutral-400">Your story</Text>
             </div>
-            <div className="md:w-11/12">
+            <div className="md:w-11/12 md:pt-1">
               <EditableAdventureLogBlocks setIsSaving={setIsSaving} />
               <hr className="w-fill border-dashed mt-4" />
               <div className="w-[200px] mx-auto -mt-[29px] bg-background border border-dashed rounded-xl p-2 flex flex-row items-center justify-center gap-2">
@@ -102,15 +102,6 @@ export default function EditLogPage() {
             </div>
           </div>
         </div>
-
-        {/* <div className="z-50 fixed top-[20px] right-0 left-0 bg-background shadow-lg p-4 mx-4 rounded-lg">
-          <Button type="button" variant="outline">
-            Text
-          </Button>
-          <Button type="button" variant="outline">
-            Image
-          </Button>
-        </div> */}
       </div>
 
       <div

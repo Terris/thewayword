@@ -1,20 +1,24 @@
 "use client";
 
-import type { ReactNode } from "react";
-import { createContext, useContext, useState } from "react";
-import { type Id } from "@repo/convex";
-// import { useMutation } from "convex/react";
+import { createContext, useContext, useState, type ReactNode } from "react";
+import { useMutation } from "convex/react";
+import { api, type Id } from "@repo/convex";
 
+interface EditableBlockProps {
+  displaySize: "small" | "medium" | "large";
+}
 interface BlockEditorContextProps {
   adventureLogId?: Id<"adventureLogBlocks">;
   editingBlockId: Id<"adventureLogBlocks"> | null | undefined;
   setEditingBlockId: (value: Id<"adventureLogBlocks"> | null) => void;
+  handleUpdateBlock: (props: { values: EditableBlockProps }) => void;
 }
 
 const initialProps = {
   adventureLogId: undefined,
   editingBlockId: null,
   setEditingBlockId: () => null,
+  handleUpdateBlock: () => null,
 };
 
 export const BlockEditorContext =
@@ -33,7 +37,20 @@ export function BlockEditorProvider({
     Id<"adventureLogBlocks"> | null | undefined
   >(null);
 
-  // const updateAdventureLogBlock = useMutation(api.adventureLogBlocks.update);
+  const updateAdventureLogBlock = useMutation(api.adventureLogBlocks.update);
+
+  const handleUpdateBlock = async ({
+    values,
+  }: {
+    values: EditableBlockProps;
+  }) => {
+    if (!editingBlockId) return;
+
+    await updateAdventureLogBlock({
+      id: editingBlockId,
+      ...values,
+    });
+  };
 
   return (
     <BlockEditorContext.Provider
@@ -41,6 +58,7 @@ export function BlockEditorProvider({
         adventureLogId,
         editingBlockId,
         setEditingBlockId,
+        handleUpdateBlock,
       }}
     >
       {children}

@@ -1,7 +1,8 @@
 import { useParams } from "next/navigation";
-import { type Id, api } from "@repo/convex";
 import { useQuery } from "convex/react";
+import { type Id, api } from "@repo/convex";
 import { LoadingBox } from "@repo/ui";
+import { cn } from "@repo/utils";
 import { EditableBlock } from "./EditableBlock";
 import { BlockEditorProvider } from "./BlockEditorContext";
 
@@ -24,11 +25,13 @@ export function EditableAdventureLogBlocks({
 
   return (
     <BlockEditorProvider adventureLogId={id as Id<"adventureLogBlocks">}>
-      {adventureLogBlocks.map((block) => (
-        <div key={block._id} className="pb-8">
-          <EditableBlock block={block} setIsSaving={setIsSaving} />
-        </div>
-      ))}
+      <div className={cn(adventureLogBlocks.length && "mb-16")}>
+        {adventureLogBlocks.map((block) => (
+          <div key={block._id} className="pb-8">
+            <EditableBlock block={block} setIsSaving={setIsSaving} />
+          </div>
+        ))}
+      </div>
     </BlockEditorProvider>
   );
 }
