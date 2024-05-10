@@ -14,7 +14,7 @@ export default function RoadmapPage() {
       <Text className="font-soleil font-bold uppercase tracking-wide pb-4">
         Major Features
       </Text>
-      <ul className="pb-8">
+      <ul className="pb-8 list-disc pl-5">
         <li>Users can follow other users</li>
         <li>Users can bucket list a log</li>
         <li>Users can include other users in a log</li>
@@ -29,7 +29,7 @@ export default function RoadmapPage() {
       <Text className="font-soleil font-bold uppercase tracking-wide pb-4">
         Quality of life
       </Text>
-      <ul>
+      <ul className="list-disc pl-5">
         <li>Add text formatting to story blocks</li>
         <li>
           Add an alert box in the header that shows a list of events (e.g.
@@ -40,9 +40,7 @@ export default function RoadmapPage() {
           selecting a date should automatically show the previously selected
           date
         </li>
-        <li>User can select a display size on image blocks</li>
         <li>User can click on a tag and see logs with a similar tag</li>
-        <li>User can delete their own logs</li>
         <li>
           User can click a location and see all logs with the same location
         </li>
@@ -51,6 +49,10 @@ export default function RoadmapPage() {
           and resend
         </li>
         <li>User can turn off comments for their own logs</li>
+        <li className="line-through">
+          User can select a display size on image blocks
+        </li>
+        <li className="line-through">User can delete their own logs</li>
       </ul>
     </div>
   );
