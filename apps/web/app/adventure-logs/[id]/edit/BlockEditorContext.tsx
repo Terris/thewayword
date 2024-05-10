@@ -6,11 +6,13 @@ import { type Id } from "@repo/convex";
 // import { useMutation } from "convex/react";
 
 interface BlockEditorContextProps {
+  adventureLogId?: Id<"adventureLogBlocks">;
   editingBlockId: Id<"adventureLogBlocks"> | null | undefined;
   setEditingBlockId: (value: Id<"adventureLogBlocks"> | null) => void;
 }
 
 const initialProps = {
+  adventureLogId: undefined,
   editingBlockId: null,
   setEditingBlockId: () => null,
 };
@@ -36,6 +38,7 @@ export function BlockEditorProvider({
   return (
     <BlockEditorContext.Provider
       value={{
+        adventureLogId,
         editingBlockId,
         setEditingBlockId,
       }}
