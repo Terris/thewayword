@@ -43,7 +43,9 @@ export function Masthead() {
               {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}
               <MastheadLink href="/shop">Shop</MastheadLink>
             </div>
-          ) : null}
+          ) : (
+            <MastheadLink href="/about">About</MastheadLink>
+          )}
         </div>
         <div className="md:w-1/3 mr-auto md:mr-0 flex flex-row items-center justify-start md:justify-center">
           <Link href={isAuthenticated ? "/feed" : "/"}>
