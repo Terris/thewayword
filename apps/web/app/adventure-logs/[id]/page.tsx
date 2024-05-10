@@ -79,32 +79,34 @@ export default function AdventureLogPage() {
           </Link>
         </div>
         <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
-        <div className="flex flex-col md:flex-row items-start justify-start gap-8">
-          <div className="md:w-2/3">
-            <AdventureLogComments adventureLogId={id as Id<"adventureLogs">} />
-          </div>
-          <div className="md:w-1/3">
-            <AdventureLogLikes adventureLogId={id as Id<"adventureLogs">} />
-          </div>
-        </div>
-      </div>
-      <div className="p-8 flex justify-center items-center w-full lg:z-50 lg:w-auto lg:flex-col lg:fixed lg:top-[50vh] lg:h-[1px] lg:right-0  ">
-        <div className="flex flex-row lg:flex-col gap-4">
-          {meIsLogOwner ? (
+        <div className="p-8 flex justify-center items-center w-full lg:z-50 lg:w-auto lg:flex-col lg:fixed lg:top-[50vh] lg:h-[1px] lg:right-0  ">
+          <div className="flex flex-row lg:flex-col gap-4">
+            {meIsLogOwner ? (
+              <Link
+                href={`/adventure-logs/${id as string}/edit`}
+                className="bg-background border rounded-full p-3 hover:bg-muted"
+              >
+                <Pencil className="w-4 h-4 " />
+              </Link>
+            ) : null}
+            <AdventureLogLikeButton
+              adventureLogId={id as Id<"adventureLogs">}
+            />
             <Link
-              href={`/adventure-logs/${id as string}/edit`}
+              href="#comments"
               className="bg-background border rounded-full p-3 hover:bg-muted"
             >
-              <Pencil className="w-4 h-4 " />
+              <MessageCircle className="w-4 h-4 " />
             </Link>
-          ) : null}
-          <AdventureLogLikeButton adventureLogId={id as Id<"adventureLogs">} />
-          <Link
-            href="#comments"
-            className="bg-background border rounded-full p-3 hover:bg-muted"
-          >
-            <MessageCircle className="w-4 h-4 " />
-          </Link>
+          </div>
+        </div>
+        <div className="flex flex-col items-start justify-start md:flex-row gap-8">
+          <div className="w-full md:w-1/3">
+            <AdventureLogLikes adventureLogId={id as Id<"adventureLogs">} />
+          </div>
+          <div className="w-full md:w-2/3">
+            <AdventureLogComments adventureLogId={id as Id<"adventureLogs">} />
+          </div>
         </div>
       </div>
     </>
