@@ -13,7 +13,7 @@ export const findAllByAdventureLogId = query({
       .withIndex("by_adventure_log_id", (q) =>
         q.eq("adventureLogId", adventureLogId)
       )
-      .order("desc")
+      .order("asc")
       .collect();
 
     const commentsWithUser = await asyncMap(
@@ -46,5 +46,30 @@ export const create = mutation({
       userId: user._id,
       message,
     });
+  },
+});
+
+export const updateByIdAsOwner = mutation({
+  args: {
+    id: v.id("comments"),
+    message: v.string(),
+  },
+  handler: async (ctx, { id, message }) => {
+    const { user } = await validateIdentity(ctx);
+    const comment = await ctx.db.get(id);
+    if (!comment) throw new Error("Comment not found");
+    if (comment.userId !== user._id) throw new Error("Unauthorized");
+    return await ctx.db.patch(id, { message });
+  },
+});
+
+export const deleteByIdAsOwner = mutation({
+  args: { id: v.id("comments") },
+  handler: async (ctx, { id }) => {
+    const { user } = await validateIdentity(ctx);
+    const comment = await ctx.db.get(id);
+    if (!comment) throw new Error("Comment not found");
+    if (comment.userId !== user._id) throw new Error("Unauthorized");
+    return await ctx.db.delete(id);
   },
 });

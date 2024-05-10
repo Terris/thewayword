@@ -62,6 +62,8 @@ export function AdventureLogCommentForm({
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
+      validateOnBlur={false}
+      validateOnChange={false}
     >
       {({ isSubmitting, dirty, isValid }) => (
         <Form className="w-full flex flex-col gap-4">
