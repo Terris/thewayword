@@ -13,7 +13,7 @@ import { type Id, api } from "@repo/convex";
 import { Button, LoadingScreen, Text } from "@repo/ui";
 import { AdventureLogFeedItem } from "../../../_components/AdventureLogFeedItem";
 
-const DEFAULT_ITEMS_PER_PAGE = 3;
+const DEFAULT_ITEMS_PER_PAGE = 32;
 
 export default function UserAdventureLogsPage() {
   const router = useRouter();

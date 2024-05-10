@@ -78,7 +78,6 @@ export default function AboutPage() {
           </ol>
         </div>
       </div>
-      <div className="w-full p-8 pt-16 max-w-[740px] mx-auto text-lg"></div>
     </div>
   );
 }

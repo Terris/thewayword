@@ -1,16 +1,16 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { useMeContext } from "@repo/auth/context";
-import { Button, Logo, LogoDark } from "@repo/ui";
 import { Menu, X } from "lucide-react";
+import { useMeContext } from "@repo/auth/context";
 import { useLockBodyScroll } from "@repo/hooks";
-import { usePathname } from "next/navigation";
+import { Button, Logo, LogoDark } from "@repo/ui";
+import { ThemeModeToggle } from "@repo/ui/ThemeModeToggle";
 import { cn } from "@repo/utils";
 import { UserMenu } from "./_components/UserMenu";
-import { ThemeModeToggle } from "@repo/ui/ThemeModeToggle";
 
 export function Masthead() {
   const pathname = usePathname();
