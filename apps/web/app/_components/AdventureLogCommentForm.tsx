@@ -23,8 +23,10 @@ interface AdventureLogCommentFormValues {
 
 export function AdventureLogCommentForm({
   adventureLogId,
+  onSuccess,
 }: {
   adventureLogId: Id<"adventureLogs">;
+  onSuccess?: () => void;
 }) {
   const { toast } = useToast();
   const createComment = useMutation(api.comments.create);
@@ -44,6 +46,7 @@ export function AdventureLogCommentForm({
         title: "Success",
         description: "Comment created",
       });
+      onSuccess?.();
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
@@ -78,9 +81,26 @@ export function AdventureLogCommentForm({
               </div>
             )}
           </Field>
-          <Button type="submit" disabled={!dirty || !isValid || isSubmitting}>
-            Submit
-          </Button>
+          <div className="flex flex-row items-center gap-4">
+            <Button
+              type="button"
+              className="w-full"
+              onClick={() => {
+                onSuccess?.();
+              }}
+              size="sm"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={!dirty || !isValid || isSubmitting}
+              size="sm"
+              className="w-full"
+            >
+              Submit
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>

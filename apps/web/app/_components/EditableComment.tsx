@@ -60,15 +60,17 @@ export function EditableComment({ comment }: CommentProps) {
                 setIsEditing(true);
               }}
               size="sm"
+              className="text-muted hover:text-foreground"
             >
-              <Pencil className="w-4 h-4" />
+              <Pencil className="w-3 h-3" />
             </Button>
             <Button
               variant="ghost"
               onClick={() => deleteComment({ id: comment._id })}
               size="sm"
+              className="text-muted hover:text-foreground"
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className="w-3 h-3" />
             </Button>
           </>
         ) : null}

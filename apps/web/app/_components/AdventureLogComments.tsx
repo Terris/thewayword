@@ -1,8 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useQuery } from "convex/react";
 import { type Id, api } from "@repo/convex";
-import { Text } from "@repo/ui";
+import { Button, Text } from "@repo/ui";
 import { AdventureLogCommentForm } from "./AdventureLogCommentForm";
 import { EditableComment } from "./EditableComment";
 
@@ -11,6 +12,7 @@ export function AdventureLogComments({
 }: {
   adventureLogId: Id<"adventureLogs">;
 }) {
+  const [commentFormIsOpen, setCommentFormIsOpen] = useState(false);
   const comments = useQuery(api.comments.findAllByAdventureLogId, {
     adventureLogId,
   });
@@ -32,7 +34,25 @@ export function AdventureLogComments({
           </div>
         ))}
       </div>
-      <AdventureLogCommentForm adventureLogId={adventureLogId} />
+      {commentFormIsOpen ? (
+        <AdventureLogCommentForm
+          adventureLogId={adventureLogId}
+          onSuccess={() => {
+            setCommentFormIsOpen(false);
+          }}
+        />
+      ) : (
+        <Button
+          onClick={() => {
+            setCommentFormIsOpen(true);
+          }}
+          variant="outline"
+          size="sm"
+          className="w-full"
+        >
+          Add a comment
+        </Button>
+      )}
     </div>
   );
 }
