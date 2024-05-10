@@ -20,7 +20,7 @@ export function AdventureLogComments({
   if (isLoading) return null;
 
   return (
-    <div className="max-w-[900px] mx-auto p-4 md:p-10">
+    <div className="w-full" id="comments">
       <Text className="text-2xl md:text-2xl font-bold mb-4 bg-transparent outline-none focus:underline">
         Comments
       </Text>

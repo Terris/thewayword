@@ -14,6 +14,7 @@ import { AdventureLogBlocks } from "../../_components/AdventureLogBlocks";
 import { AdventureLogComments } from "../../_components/AdventureLogComments";
 import { AdventureLogLikeButton } from "../../_components/AdventureLogLikeButton";
 import { AdventureLogTags } from "../../_components/AdventureLogTags";
+import { AdventureLogLikes } from "../../_components/AdventureLogLikes";
 
 export default function AdventureLogPage() {
   const { id } = useParams();
@@ -78,8 +79,14 @@ export default function AdventureLogPage() {
           </Link>
         </div>
         <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
-        <div id="comments" />
-        <AdventureLogComments adventureLogId={id as Id<"adventureLogs">} />
+        <div className="flex flex-col md:flex-row items-start justify-start gap-8">
+          <div className="md:w-2/3">
+            <AdventureLogComments adventureLogId={id as Id<"adventureLogs">} />
+          </div>
+          <div className="md:w-1/3">
+            <AdventureLogLikes adventureLogId={id as Id<"adventureLogs">} />
+          </div>
+        </div>
       </div>
       <div className="p-8 flex justify-center items-center w-full lg:z-50 lg:w-auto lg:flex-col lg:fixed lg:top-[50vh] lg:h-[1px] lg:right-0  ">
         <div className="flex flex-row lg:flex-col gap-4">

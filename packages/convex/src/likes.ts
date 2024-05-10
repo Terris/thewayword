@@ -1,6 +1,7 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
+import { asyncMap } from "convex-helpers";
 
 export const toggleLikeBySessionedUserAndAdventureLogId = mutation({
   args: { adventureLogId: v.id("adventureLogs") },
@@ -43,11 +44,24 @@ export const findAllByAdventureLogId = query({
     adventureLogId: v.id("adventureLogs"),
   },
   handler: async (ctx, { adventureLogId }) => {
-    return ctx.db
+    const allLikes = await ctx.db
       .query("likes")
       .withIndex("by_adventure_log_id", (q) =>
         q.eq("adventureLogId", adventureLogId)
       )
       .collect();
+    const allLikesWithUser = await asyncMap(allLikes, async (like) => {
+      const user = await ctx.db.get(like.userId);
+      if (!user) throw new ConvexError("User not found");
+      return {
+        ...like,
+        user: {
+          _id: user._id,
+          name: user.name,
+          avatarUrl: user.avatarUrl,
+        },
+      };
+    });
+    return allLikesWithUser;
   },
 });
