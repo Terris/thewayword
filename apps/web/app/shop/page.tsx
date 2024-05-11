@@ -55,6 +55,28 @@ export default function ShopPage() {
           </Text>
           <Text className="text-center pr-4 italic text-gray-500">$34.99</Text>
         </div>
+        <div className="group">
+          <Image
+            src="/img/products/saguaro-bandana-full.png"
+            alt="product image"
+            width={800}
+            height={800}
+            // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="rounded max-w-full group-hover:hidden"
+          />
+          <Image
+            src="/img/products/saguaro-bandana-folded.png"
+            alt="product image"
+            width={800}
+            height={800}
+            // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            className="hidden rounded max-w-full group-hover:block"
+          />
+          <Text className="text-lg font-bold text-center pr-4 pt-8">
+            Saguaro Bandana
+          </Text>
+          <Text className="text-center pr-4 italic text-gray-500">$18.99</Text>
+        </div>
       </div>
     </div>
   );
