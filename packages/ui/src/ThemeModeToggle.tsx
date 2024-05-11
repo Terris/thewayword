@@ -30,21 +30,21 @@ export function ThemeModeToggle() {
             setTheme("light");
           }}
         >
-          Light
+          Light mode
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
             setTheme("dark");
           }}
         >
-          Dark
+          Dark mode
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
             setTheme("system");
           }}
         >
-          System
+          System mode
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
