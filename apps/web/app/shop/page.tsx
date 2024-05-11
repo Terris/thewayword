@@ -10,7 +10,7 @@ export default function ShopPage() {
       <Text className="text-center pb-16">
         ...but here&rsquo;s a preview of what&rsquo;s <i>in store</i>.
       </Text>
-      <div className="container grid grid-cols-3 gap-4">
+      <div className="container grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="group">
           <Image
             src="/img/products/gold-murder-noodle-hat-front.png"
