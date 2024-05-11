@@ -59,7 +59,7 @@ export function Masthead() {
             )}
           </Link>
         </div>
-        <div className="w-1/3 flex flex-row items-center justify-end gap-8">
+        <div className="w-1/3 flex flex-row items-center justify-end gap-4 md:gap-8">
           {isAuthenticated ? (
             <div className="hidden md:flex flex-row items-center justify-end gap-8">
               <MastheadLink href="/adventure-logs/create">
