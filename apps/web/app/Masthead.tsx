@@ -84,7 +84,7 @@ function PagesMenu() {
   const { isAuthenticated } = useMeContext();
   useLockBodyScroll();
   return (
-    <div className="absolute z-10 top-[100px] flex flex-col gap-1 w-full p-4 border-b border-t bg-background md:hidden">
+    <div className="absolute z-50 top-[100px] flex flex-col gap-1 w-full p-4 border-b border-t bg-background md:hidden">
       {isAuthenticated ? (
         <>
           <MastheadLink href="/feed">Feed</MastheadLink>
