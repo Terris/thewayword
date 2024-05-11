@@ -51,7 +51,7 @@ export function Masthead() {
             <MastheadLink href="/about">About</MastheadLink>
           )}
         </div>
-        <div className="md:w-1/3 mr-auto md:mr-0 flex flex-row items-center justify-start md:justify-center">
+        <div className="md:w-1/3 max-w-full mr-auto md:mr-0 flex flex-row items-center justify-start md:justify-center">
           <Link href={isAuthenticated ? "/feed" : "/"}>
             {resolvedTheme === "dark" ? (
               <LogoDark width={160} className="max-w-full -mt-[10px]" />
@@ -68,7 +68,9 @@ export function Masthead() {
               </MastheadLink>
             </div>
           ) : null}
-          <ThemeModeToggle />
+          <div className="hidden md:block">
+            <ThemeModeToggle />
+          </div>
           {isAuthenticated ? (
             <>
               <UserAlertsMenu />
