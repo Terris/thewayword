@@ -36,7 +36,7 @@ export function UserMenu() {
           )}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-36">
+      <DropdownMenuContent align="end" className="w-36 p-2">
         <DropdownMenuItem asChild>
           <Link href="/me/adventure-logs" className="cursor-pointer">
             My logs

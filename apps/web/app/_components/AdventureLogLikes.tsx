@@ -13,7 +13,7 @@ export function AdventureLogLikes({
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full" id="likes">
       <Text className="text-2xl md:text-2xl font-bold mb-4 bg-transparent outline-none focus:underline">
         Likes
       </Text>

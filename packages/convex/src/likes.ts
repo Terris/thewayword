@@ -7,6 +7,10 @@ export const toggleLikeBySessionedUserAndAdventureLogId = mutation({
   args: { adventureLogId: v.id("adventureLogs") },
   handler: async (ctx, { adventureLogId }) => {
     const { user } = await validateIdentity(ctx);
+
+    const adventureLog = await ctx.db.get(adventureLogId);
+    if (!adventureLog) throw new ConvexError("Adventure log not found");
+
     const existingLike = await ctx.db
       .query("likes")
       .withIndex("by_user_id_adventure_log_id", (q) =>
@@ -14,12 +18,32 @@ export const toggleLikeBySessionedUserAndAdventureLogId = mutation({
       )
       .first();
     if (existingLike) {
+      // look for arelated alert and delete it
+      const relatedUserAlert = await ctx.db
+        .query("userAlerts")
+        .withIndex("by_reference_id", (q) =>
+          q.eq("referenceId", existingLike._id)
+        )
+        .first();
+      if (relatedUserAlert) {
+        await ctx.db.delete(relatedUserAlert._id);
+      }
+      // delete the like
       await ctx.db.delete(existingLike._id);
     } else {
-      await ctx.db.insert("likes", {
+      const newLikeId = await ctx.db.insert("likes", {
         adventureLogId,
         userId: user._id,
       });
+      if (user._id !== adventureLog.userId) {
+        await ctx.db.insert("userAlerts", {
+          userId: adventureLog?.userId,
+          message: `${user.name} liked ${adventureLog?.title}.`,
+          link: `/adventure-logs/${adventureLogId}#likes`,
+          read: false,
+          referenceId: newLikeId,
+        });
+      }
     }
   },
 });

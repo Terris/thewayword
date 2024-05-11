@@ -1,4 +1,4 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
@@ -37,15 +37,28 @@ export const create = mutation({
     message: v.string(),
   },
   handler: async (ctx, { adventureLogId, message }) => {
-    await validateIdentity(ctx);
-
     const { user } = await validateIdentity(ctx);
 
-    return ctx.db.insert("comments", {
+    const adventureLog = await ctx.db.get(adventureLogId);
+    if (!adventureLog) throw new ConvexError("Adventure log not found");
+
+    const commentId = await ctx.db.insert("comments", {
       adventureLogId,
       userId: user._id,
       message,
     });
+
+    if (user._id !== adventureLog.userId) {
+      await ctx.db.insert("userAlerts", {
+        userId: adventureLog?.userId,
+        message: `${user.name} commented on ${adventureLog?.title}.`,
+        link: `/adventure-logs/${adventureLogId}#comments-${commentId}`,
+        read: false,
+        referenceId: commentId,
+      });
+    }
+
+    return commentId;
   },
 });
 

@@ -2,6 +2,7 @@ import { paginationOptsValidator } from "convex/server";
 import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
+import { ConvexError, v } from "convex/values";
 
 export const paginatedFindAllBySessionedUser = query({
   args: { paginationOpts: paginationOptsValidator },
@@ -10,7 +11,23 @@ export const paginatedFindAllBySessionedUser = query({
     return ctx.db
       .query("userAlerts")
       .withIndex("by_user_id", (q) => q.eq("userId", user._id))
+      .order("desc")
       .paginate(paginationOpts);
+  },
+});
+
+export const markOneReadById = mutation({
+  args: { id: v.id("userAlerts") },
+  handler: async (ctx, { id }) => {
+    const { user } = await validateIdentity(ctx);
+    const alert = await ctx.db.get(id);
+    if (!alert) {
+      return;
+    }
+    if (alert.userId !== user._id) {
+      throw new ConvexError("Alert does not belong to user");
+    }
+    await ctx.db.patch(id, { read: true });
   },
 });
 

@@ -98,9 +98,11 @@ export default defineSchema({
     message: v.string(),
     link: v.optional(v.string()),
     read: v.boolean(),
+    referenceId: v.optional(v.union(v.id("likes"), v.id("comments"))),
   })
     .index("by_user_id", ["userId"])
-    .index("by_user_id_read", ["userId", "read"]),
+    .index("by_user_id_read", ["userId", "read"])
+    .index("by_reference_id", ["referenceId"]),
   userWhitelist: defineTable({
     email: v.string(),
   }).index("by_email", ["email"]),

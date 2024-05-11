@@ -27,13 +27,10 @@ export function UserAlertsMenu() {
   const unreadAlertCount = userAlerts.filter((alert) => !alert.read).length;
 
   const markAllRead = useMutation(api.userAlerts.markAllReadBySessionedUser);
+  const markOneRead = useMutation(api.userAlerts.markOneReadById);
 
   return (
-    <DropdownMenu
-      onOpenChange={() => {
-        void markAllRead();
-      }}
-    >
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -46,24 +43,37 @@ export function UserAlertsMenu() {
           <Bell className="h-[1.2rem] w-[1.2rem]" />
           {unreadAlertCount ? (
             <CountBadge
-              count={alertCount}
+              count={unreadAlertCount}
               className="absolute -top-2 -right-2"
             />
           ) : null}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="center" className="w-56">
+      <DropdownMenuContent align="center" className="w-56 p-2">
         {userAlerts.map((alert) => (
           <DropdownMenuItem
             key={alert._id}
-            onClick={() => {
+            onClick={async () => {
+              if (!alert.read) {
+                await markOneRead({ id: alert._id });
+              }
               alert.link ? router.push(alert.link) : null;
             }}
-            className="cursor-pointer"
+            className={cn("cursor-pointer mb-1", !alert.read && "bg-accent")}
           >
             {alert.message}
           </DropdownMenuItem>
         ))}
+        {alertCount && unreadAlertCount ? (
+          <DropdownMenuItem
+            onClick={() => {
+              void markAllRead();
+            }}
+            className="cursor-pointer font-soleil font-bold text-xs py-2"
+          >
+            Mark all as read
+          </DropdownMenuItem>
+        ) : null}
         {!alertCount ? <Text className="text-sm p-2">No messages</Text> : null}
       </DropdownMenuContent>
     </DropdownMenu>

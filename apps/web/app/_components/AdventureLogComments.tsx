@@ -28,7 +28,7 @@ export function AdventureLogComments({
       <hr className="border-b-1 border-dashed" />
       <div className="pb-4">
         {comments.map((comment) => (
-          <div key={comment._id}>
+          <div key={comment._id} id={`comments-${comment._id}`}>
             <EditableComment comment={comment} />
             <hr className="border-b-1 border-dashed" />
           </div>
