@@ -82,6 +82,26 @@ export default function ShopPage() {
           <Text className="text-lg font-bold text-center pr-4 pt-8">
             Succulent Sticker
           </Text>
+          <Text className="text-center pr-4 italic text-gray-500">$5.00</Text>
+        </div>
+        <div className="group">
+          <Image
+            src="/img/products/hawkmoth-mug-1.png"
+            alt="product image"
+            width={800}
+            height={800}
+            className="rounded max-w-full group-hover:hidden"
+          />
+          <Image
+            src="/img/products/hawkmoth-mug-2.png"
+            alt="product image"
+            width={800}
+            height={800}
+            className="hidden rounded max-w-full group-hover:block"
+          />
+          <Text className="text-lg font-bold text-center pr-4 pt-8">
+            Hawkmoth Enamel Camp Mug
+          </Text>
           <Text className="text-center pr-4 italic text-gray-500">$18.99</Text>
         </div>
       </div>
