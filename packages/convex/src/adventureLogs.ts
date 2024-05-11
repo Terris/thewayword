@@ -276,15 +276,21 @@ export const scheduleDestroy = mutation({
     if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
     if (existingAdventureLog.userId !== user._id)
       throw new ConvexError("Not the owner of this adventure log");
-
-    await ctx.scheduler.runAfter(1000, internal.adventureLogs.scheduledDelete, {
-      id,
-    });
+    // We schedule the deletion to navigate the user away from the page
+    // while the delete action takes place
+    // This also avoids not found errors
+    await ctx.scheduler.runAfter(
+      1000,
+      internal.adventureLogs.systemDeleteLogsAndRelatedObjects,
+      {
+        id,
+      }
+    );
     return true;
   },
 });
 
-export const scheduledDelete = internalMutation({
+export const systemDeleteLogsAndRelatedObjects = internalMutation({
   args: { id: v.id("adventureLogs") },
   handler: async (ctx, { id }) => {
     // Delete all related adventureLogBlocks

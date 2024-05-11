@@ -100,9 +100,4 @@ export default defineSchema({
     email: v.string(),
     submitCount: v.optional(v.number()),
   }).index("by_email", ["email"]),
-  webhookLogs: defineTable({
-    body: v.any(),
-    from: v.string(),
-    handled: v.optional(v.boolean()),
-  }),
 });

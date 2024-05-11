@@ -225,21 +225,6 @@ export const moveBlockOrderDown = mutation({
   },
 });
 
-// export const updateOrder = mutation({
-//   args: {
-//     idsInOrder: v.array(v.id("adventureLogBlocks")),
-//   },
-//   handler: async (ctx, { idsInOrder }) => {
-//     await validateIdentity(ctx);
-//     await asyncMap(idsInOrder, async (adventureLogBlockId, index) =>
-//       ctx.db.patch(adventureLogBlockId, {
-//         order: index + 1,
-//       })
-//     );
-//     return true;
-//   },
-// });
-
 export const destroy = mutation({
   args: {
     id: v.id("adventureLogBlocks"),

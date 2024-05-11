@@ -21,43 +21,6 @@ export const findAllByAdventureLogId = query({
   },
 });
 
-export const createByADventureLogId = mutation({
-  args: {
-    adventureLogId: v.id("adventureLogs"),
-    tagsAsString: v.optional(v.string()),
-  },
-  handler: async (ctx, { adventureLogId, tagsAsString }) => {
-    // Split the tags by comma, remove any leading/trailing whitespace, and lowercase all tags
-    const tags = tagsAsString
-      ?.split(",")
-      .map((tag) => tag.trim())
-      .map((tag) => tag.toLowerCase());
-
-    if (tags?.length) {
-      // Find or create the tags
-      await asyncMap(tags, async (tagName) => {
-        const existingTag = await ctx.db
-          .query("tags")
-          .withIndex("by_name", (q) => q.eq("name", tagName))
-          .first();
-        if (existingTag) {
-          await ctx.db.insert("adventureLogTags", {
-            adventureLogId,
-            tagId: existingTag._id,
-          });
-        } else {
-          const newTagId = await ctx.db.insert("tags", { name: tagName });
-          await ctx.db.insert("adventureLogTags", {
-            adventureLogId,
-            tagId: newTagId,
-          });
-        }
-      });
-    }
-    return true;
-  },
-});
-
 export const updateByAdventureLogId = mutation({
   args: {
     adventureLogId: v.id("adventureLogs"),
