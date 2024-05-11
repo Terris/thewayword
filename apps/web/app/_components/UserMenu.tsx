@@ -17,23 +17,29 @@ export function UserMenu() {
   const { me } = useMeContext();
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="hover:text-muted transition-colors">
-        {me?.avatarUrl ? (
-          <Image
-            src={me.avatarUrl}
-            width="32"
-            height="32"
-            alt="User"
-            className="w-8 h-8 rounded-full"
-          />
-        ) : (
-          <CircleUserRound className="w-6 h-6" />
-        )}
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="rounded-full flex-shrink-0"
+        >
+          {me?.avatarUrl ? (
+            <Image
+              src={me.avatarUrl}
+              width="32"
+              height="32"
+              alt="User"
+              className="w-8 h-8 rounded-full"
+            />
+          ) : (
+            <CircleUserRound className="w-6 h-6" />
+          )}
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
+      <DropdownMenuContent align="end" className="w-36">
         <DropdownMenuItem asChild>
           <Link href="/me/adventure-logs" className="cursor-pointer">
-            My Logs
+            My logs
           </Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild>

@@ -33,6 +33,7 @@ import type * as likes from "../likes.js";
 import type * as me from "../me.js";
 import type * as tags from "../tags.js";
 import type * as userActions from "../userActions.js";
+import type * as userAlerts from "../userAlerts.js";
 import type * as users from "../users.js";
 import type * as waitlist from "../waitlist.js";
 import type * as waitlistActions from "../waitlistActions.js";
@@ -65,6 +66,7 @@ declare const fullApi: ApiFromModules<{
   me: typeof me;
   tags: typeof tags;
   userActions: typeof userActions;
+  userAlerts: typeof userAlerts;
   users: typeof users;
   waitlist: typeof waitlist;
   waitlistActions: typeof waitlistActions;

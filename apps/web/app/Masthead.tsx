@@ -11,6 +11,7 @@ import { Button, Logo, LogoDark } from "@repo/ui";
 import { ThemeModeToggle } from "@repo/ui/ThemeModeToggle";
 import { cn } from "@repo/utils";
 import { UserMenu } from "./_components/UserMenu";
+import { UserAlertsMenu } from "./_components/UserAlertsMenu";
 
 export function Masthead() {
   const pathname = usePathname();
@@ -24,7 +25,7 @@ export function Masthead() {
 
   return (
     <>
-      <div className="w-full container pt-8 pb-7 px-9 flex flex-row items-center justify-between leading-none font-bold">
+      <div className="w-full  pt-8 pb-7 px-9 flex flex-row items-center justify-between leading-none font-bold">
         <Button
           variant="ghost"
           onClick={() => {
@@ -59,17 +60,20 @@ export function Masthead() {
             )}
           </Link>
         </div>
-        <div className="w-1/3 flex flex-row items-center justify-end gap-4 md:gap-8">
+        <div className="w-1/3 flex flex-row items-center justify-end gap-4">
           {isAuthenticated ? (
-            <div className="hidden md:flex flex-row items-center justify-end gap-8">
+            <div className="hidden md:flex flex-row items-center justify-end gap-4">
               <MastheadLink href="/adventure-logs/create">
-                Log an Adventure
+                Log an adventure
               </MastheadLink>
             </div>
           ) : null}
           <ThemeModeToggle />
           {isAuthenticated ? (
-            <UserMenu />
+            <>
+              <UserAlertsMenu />
+              <UserMenu />
+            </>
           ) : (
             <MastheadLink href="/signin">Sign in</MastheadLink>
           )}
@@ -92,10 +96,10 @@ function PagesMenu() {
           <MastheadLink href="/shop">Shop</MastheadLink>
           <MastheadLink href="/about">About</MastheadLink>
           <hr />
-          <MastheadLink href="/me/adventure-logs">My Logs</MastheadLink>
           <MastheadLink href="/adventure-logs/create">
             Log an Adventure
           </MastheadLink>
+          <MastheadLink href="/me/adventure-logs">My Logs</MastheadLink>
         </>
       ) : null}
     </div>

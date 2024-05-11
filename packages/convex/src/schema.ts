@@ -93,6 +93,14 @@ export default defineSchema({
     .index("by_token", ["tokenIdentifier"])
     .index("by_email", ["email"])
     .index("by_clerk_user_id", ["clerkUserId"]),
+  userAlerts: defineTable({
+    userId: v.id("users"),
+    message: v.string(),
+    link: v.optional(v.string()),
+    read: v.boolean(),
+  })
+    .index("by_user_id", ["userId"])
+    .index("by_user_id_read", ["userId", "read"]),
   userWhitelist: defineTable({
     email: v.string(),
   }).index("by_email", ["email"]),
