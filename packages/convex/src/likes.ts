@@ -18,7 +18,7 @@ export const toggleLikeBySessionedUserAndAdventureLogId = mutation({
       )
       .first();
     if (existingLike) {
-      // look for arelated alert and delete it
+      // look for a related userAlert and delete it
       const relatedUserAlert = await ctx.db
         .query("userAlerts")
         .withIndex("by_reference_id", (q) =>
@@ -31,14 +31,16 @@ export const toggleLikeBySessionedUserAndAdventureLogId = mutation({
       // delete the like
       await ctx.db.delete(existingLike._id);
     } else {
+      // create a new like
       const newLikeId = await ctx.db.insert("likes", {
         adventureLogId,
         userId: user._id,
       });
+      // create a userAlert if the user is not the owner of the adventure log
       if (user._id !== adventureLog.userId) {
         await ctx.db.insert("userAlerts", {
           userId: adventureLog?.userId,
-          message: `${user.name} liked ${adventureLog?.title}.`,
+          message: `${user.name} liked "${adventureLog?.title}".`,
           link: `/adventure-logs/${adventureLogId}#likes`,
           read: false,
           referenceId: newLikeId,

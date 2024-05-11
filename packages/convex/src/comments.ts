@@ -51,7 +51,7 @@ export const create = mutation({
     if (user._id !== adventureLog.userId) {
       await ctx.db.insert("userAlerts", {
         userId: adventureLog?.userId,
-        message: `${user.name} commented on ${adventureLog?.title}.`,
+        message: `${user.name} commented on "${adventureLog?.title}".`,
         link: `/adventure-logs/${adventureLogId}#comments-${commentId}`,
         read: false,
         referenceId: commentId,
