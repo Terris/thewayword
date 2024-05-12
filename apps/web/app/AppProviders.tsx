@@ -1,6 +1,5 @@
 "use client";
 
-import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { ClerkProvider, useAuth } from "@clerk/nextjs";
 import { ConvexReactClient } from "convex/react";
 import { ConvexProviderWithClerk } from "convex/react-clerk";
@@ -20,13 +19,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     >
       <ConvexProviderWithClerk client={convex} useAuth={useAuth}>
         <MeProvider>
-          <NextThemesProvider
-            attribute="class"
-            defaultTheme="light"
-            // enableSystem
-          >
-            <TooltipProvider>{children}</TooltipProvider>
-          </NextThemesProvider>
+          <TooltipProvider>{children}</TooltipProvider>
         </MeProvider>
       </ConvexProviderWithClerk>
     </ClerkProvider>
