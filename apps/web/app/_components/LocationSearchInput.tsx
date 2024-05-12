@@ -6,7 +6,7 @@ import type {
   SearchBoxFeatureProperties,
   SearchBoxSuggestion,
 } from "@mapbox/search-js-core/dist/searchbox/types";
-import { useDebounce, useGeoLocation } from "@repo/hooks";
+import { useDebounce } from "@repo/hooks";
 import { Text, Input, Loader } from "@repo/ui";
 import { useMeContext } from "@repo/auth/context";
 
