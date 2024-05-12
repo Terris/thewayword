@@ -12,8 +12,8 @@ export function ImageBlockDisplaySizeWrapper({
     <div
       className={cn(
         "w-full mx-auto transition-all",
-        displaySize === "small" && "w-[600px]",
-        displaySize === "medium" && "w-[900px]",
+        displaySize === "small" && "max-w-[600px]",
+        displaySize === "medium" && "max-w-[900px]",
         displaySize === "large" && "w-full"
       )}
     >
