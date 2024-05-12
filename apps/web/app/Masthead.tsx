@@ -39,7 +39,7 @@ export function Masthead() {
             <Menu className="w-6 h-6" />
           )}
         </Button>
-        <div className="md:w-1/3 flex flex-row items-center justify-start">
+        <div className="hidden md:w-1/3 md:flex flex-row items-center justify-start">
           {me ? (
             <div className="hidden md:flex flex-row items-center justify-end gap-8">
               <MastheadLink href="/feed">Feed</MastheadLink>
@@ -50,7 +50,7 @@ export function Masthead() {
             <MastheadLink href="/about">About</MastheadLink>
           )}
         </div>
-        <div className="md:w-1/3 max-w-full mr-auto md:mr-0 flex flex-row items-center justify-start md:justify-center">
+        <div className="w-1/3 max-w-full mr-auto md:mr-0 flex flex-row items-center justify-start md:justify-center">
           <Link href={me ? "/feed" : "/"}>
             {resolvedTheme === "dark" ? (
               <LogoDark width={160} className="max-w-full -mt-[10px]" />
@@ -79,10 +79,10 @@ export function Masthead() {
               <UserMenu />
             </>
           ) : (
-            <>
+            <div className="hidden md:flex flex-row items-center justify-end gap-4">
               <MastheadLink href="/signin">Sign in</MastheadLink>
               <MastheadLink href="/signup">Sign up</MastheadLink>
-            </>
+            </div>
           )}
         </div>
       </div>
@@ -101,7 +101,16 @@ function PagesMenu() {
           <MastheadLink href="/feed">Feed</MastheadLink>
           {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}
           <MastheadLink href="/shop">Shop</MastheadLink>
-          <MastheadLink href="/about">About</MastheadLink>
+        </>
+      ) : (
+        <>
+          <MastheadLink href="/signin">Sign in</MastheadLink>
+          <MastheadLink href="/signup">Sign up</MastheadLink>
+        </>
+      )}
+      <MastheadLink href="/about">About</MastheadLink>
+      {me ? (
+        <>
           <hr />
           <MastheadLink href="/adventure-logs/create">
             Log an Adventure
