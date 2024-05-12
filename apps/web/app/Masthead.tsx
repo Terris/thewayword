@@ -8,7 +8,6 @@ import { Menu, X } from "lucide-react";
 import { useMeContext } from "@repo/auth/context";
 import { useLockBodyScroll } from "@repo/hooks";
 import { Button, Logo, LogoDark } from "@repo/ui";
-import { ThemeModeToggle } from "@repo/ui/ThemeModeToggle";
 import { cn } from "@repo/utils";
 import { UserMenu } from "./_components/UserMenu";
 import { UserAlertsMenu } from "./_components/UserAlertsMenu";
@@ -68,9 +67,7 @@ export function Masthead() {
               </MastheadLink>
             </div>
           ) : null}
-          <div className="hidden md:block">
-            <ThemeModeToggle />
-          </div>
+
           {isAuthenticated ? (
             <>
               <UserAlertsMenu />
