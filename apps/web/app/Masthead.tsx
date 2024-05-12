@@ -7,14 +7,14 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useMeContext } from "@repo/auth/context";
 import { useLockBodyScroll } from "@repo/hooks";
-import { Button, Logo, LogoDark } from "@repo/ui";
+import { Button, Logo, LogoDark, Text } from "@repo/ui";
 import { cn } from "@repo/utils";
 import { UserMenu } from "./_components/UserMenu";
 import { UserAlertsMenu } from "./_components/UserAlertsMenu";
 
 export function Masthead() {
   const pathname = usePathname();
-  const { isAuthenticated } = useMeContext();
+  const { me } = useMeContext();
   const [pagesMenuIsOpen, setPagesMenuIsOpen] = useState(false);
   const { resolvedTheme } = useTheme();
 
@@ -40,7 +40,7 @@ export function Masthead() {
           )}
         </Button>
         <div className="md:w-1/3 flex flex-row items-center justify-start">
-          {isAuthenticated ? (
+          {me ? (
             <div className="hidden md:flex flex-row items-center justify-end gap-8">
               <MastheadLink href="/feed">Feed</MastheadLink>
               {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}
@@ -51,30 +51,38 @@ export function Masthead() {
           )}
         </div>
         <div className="md:w-1/3 max-w-full mr-auto md:mr-0 flex flex-row items-center justify-start md:justify-center">
-          <Link href={isAuthenticated ? "/feed" : "/"}>
+          <Link href={me ? "/feed" : "/"}>
             {resolvedTheme === "dark" ? (
               <LogoDark width={160} className="max-w-full -mt-[10px]" />
             ) : (
               <Logo width={160} className="max-w-full -mt-[10px]" />
             )}
+            <Text
+              as="span"
+              className="block text-center text-xs italic text-yellow-500"
+            >
+              BETA
+            </Text>
           </Link>
         </div>
         <div className="w-1/3 flex flex-row items-center justify-end gap-4">
-          {isAuthenticated ? (
+          {me ? (
             <div className="hidden md:flex flex-row items-center justify-end gap-4">
               <MastheadLink href="/adventure-logs/create">
                 Log an adventure
               </MastheadLink>
             </div>
           ) : null}
-
-          {isAuthenticated ? (
+          {me ? (
             <>
               <UserAlertsMenu />
               <UserMenu />
             </>
           ) : (
-            <MastheadLink href="/signin">Sign in</MastheadLink>
+            <>
+              <MastheadLink href="/signin">Sign in</MastheadLink>
+              <MastheadLink href="/signup">Sign up</MastheadLink>
+            </>
           )}
         </div>
       </div>
@@ -84,11 +92,11 @@ export function Masthead() {
 }
 
 function PagesMenu() {
-  const { isAuthenticated } = useMeContext();
+  const { me } = useMeContext();
   useLockBodyScroll();
   return (
     <div className="absolute z-50 top-[100px] flex flex-col gap-1 w-full p-4 border-b border-t bg-background md:hidden">
-      {isAuthenticated ? (
+      {me ? (
         <>
           <MastheadLink href="/feed">Feed</MastheadLink>
           {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}

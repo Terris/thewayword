@@ -3,17 +3,17 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useMeContext } from "@repo/auth/context";
-import { LoadingScreen, Text } from "@repo/ui";
-import { JoinWaitlistForm } from "./JoinWaitlistForm";
+import { Button, LoadingScreen, Text } from "@repo/ui";
+import Link from "next/link";
 
 export default function HomePage() {
   const router = useRouter();
-  const { isAuthenticated, isLoading } = useMeContext();
+  const { me, isLoading } = useMeContext();
 
   useEffect(() => {
-    if (isLoading || !isAuthenticated) return;
+    if (isLoading || !me) return;
     router.push("/feed");
-  }, [isAuthenticated, isLoading, router]);
+  }, [me, isLoading, router]);
 
   if (isLoading) return <LoadingScreen />;
 
@@ -23,8 +23,12 @@ export default function HomePage() {
         <Text as="h1" className="text-4xl pb-16 text-center">
           An adventure club for those whose favorite days are spent outdoors.
         </Text>
-        <div className="max-w-[600px] mx-auto">
-          <JoinWaitlistForm />
+        <div className="mx-auto text-center">
+          <Link href="/signup">
+            <Button type="button" className="font-black text-primary" size="lg">
+              Try it out!
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

@@ -8,14 +8,14 @@ import { Text } from "@repo/ui";
 import { useMeContext } from "@repo/auth/context";
 
 export function Footer() {
-  const { isAuthenticated } = useMeContext();
+  const { me } = useMeContext();
   return (
     <div className="w-full border-t py-8 mt-8">
       <div className="container flex flex-col items-start justify-start md:flex-row">
         <Text className="w-full text-sm p-2">
           Copyright &copy; 2024 Terris Kremer
         </Text>
-        {isAuthenticated ? (
+        {me ? (
           <div className="w-full flex flex-col items-start justify-start md:flex-row md:justify-end md:gap-8">
             <FooterLink href="/about">About</FooterLink>
             <FooterLink href="/shop">Shop</FooterLink>

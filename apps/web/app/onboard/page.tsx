@@ -18,7 +18,7 @@ interface OnboardFormValues {
 }
 
 export default function OnboardPage() {
-  const { isLoading, isAuthenticated } = useMeContext();
+  const { isLoading, me } = useMeContext();
   const router = useRouter();
   const { toast } = useToast();
   const updateUser = useMutation(api.users.updateUserAsUserOwner);
@@ -40,7 +40,7 @@ export default function OnboardPage() {
     }
   }
 
-  if (isLoading || !isAuthenticated) return <LoadingScreen />;
+  if (isLoading || !me) return <LoadingScreen />;
 
   return (
     <Formik<OnboardFormValues>

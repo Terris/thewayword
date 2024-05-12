@@ -19,7 +19,6 @@ interface User {
 
 interface MeContextProps {
   isLoading: boolean;
-  isAuthenticated: boolean;
   me: User | null | undefined;
   hasRole: (role: string) => boolean;
 }
@@ -27,8 +26,6 @@ interface MeContextProps {
 const initialProps = {
   isLoading: true,
   error: null,
-  isAuthenticated: false,
-  isAuthorizedUser: false,
   me: null,
   hasRole: () => false,
 };
@@ -53,7 +50,11 @@ export function MeProvider({ children }: MeProviderProps) {
   const hasRole = (role: string) => Boolean(me?.roles?.includes(role));
 
   useEffect(() => {
-    if (!isLoading && isAuthenticated && !me?.name) {
+    if (
+      !isLoading &&
+      isAuthenticated &&
+      (!me?.name || me.name === "null null")
+    ) {
       router.push("/onboard");
     }
   }, [isAuthenticated, isLoading, me?.name, router]);
@@ -62,7 +63,6 @@ export function MeProvider({ children }: MeProviderProps) {
     <MeContext.Provider
       value={{
         isLoading,
-        isAuthenticated,
         me,
         hasRole,
       }}

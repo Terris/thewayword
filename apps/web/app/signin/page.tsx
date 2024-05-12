@@ -21,16 +21,16 @@ interface SignInFormValues {
 }
 
 export default function SignInPage() {
-  const { isAuthenticated, isLoading: authIsLoading } = useMeContext();
+  const { me, isLoading: authIsLoading } = useMeContext();
   const { isLoaded: convexIsLoaded, signIn, setActive } = useSignIn();
   const { toast } = useToast();
   const router = useRouter();
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (me) {
       router.push("/feed");
     }
-  }, [isAuthenticated, router]);
+  }, [me, router]);
 
   async function onSubmit(values: SignInFormValues) {
     if (!convexIsLoaded) return;

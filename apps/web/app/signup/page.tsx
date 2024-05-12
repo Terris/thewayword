@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useSignUp } from "@clerk/nextjs";
 import {
   Field,
@@ -12,10 +12,8 @@ import {
 } from "formik";
 import * as Yup from "yup";
 import { useToast } from "@repo/ui/hooks";
-import { Button, Input, Label, LoadingScreen, Text } from "@repo/ui";
+import { Button, Input, Label, Text } from "@repo/ui";
 import { useMeContext } from "@repo/auth/context";
-import { useQuery } from "convex/react";
-import { type Id, api } from "@repo/convex";
 
 const signUpValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -45,39 +43,23 @@ interface VerifyFormValues {
 }
 
 export default function SignUpPage() {
-  const searchParams = useSearchParams();
-  const inviteToken = searchParams.get("inviteToken");
-  const invite = useQuery(api.invites.findById, {
-    id: inviteToken as Id<"invites">,
-  });
-  const inviteIsLoading = invite === undefined;
-
-  const { isAuthenticated, isLoading: authIsLoading } = useMeContext();
+  const { me, isLoading: authIsLoading } = useMeContext();
   const router = useRouter();
   const { toast } = useToast();
   const { isLoaded: clerkIsLoaded, signUp, setActive } = useSignUp();
   const [verifying, setVerifying] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (me) {
       router.push("/onboard");
     }
-  }, [isAuthenticated, router]);
+  }, [me, router]);
 
   async function onSubmit(
     values: SignUpFormValues,
     helpers: FormikHelpers<SignUpFormValues>
   ) {
     if (!clerkIsLoaded) return;
-    if (invite?.email !== values.email) {
-      toast({
-        title: "Sign in failed",
-        description:
-          "You must sign up with the same email as one we sent your invite to.",
-        variant: "destructive",
-      });
-      return;
-    }
 
     try {
       await signUp.create({
@@ -126,19 +108,6 @@ export default function SignUpPage() {
         variant: "destructive",
       });
     }
-  }
-
-  if (inviteIsLoading) return <LoadingScreen />;
-
-  if (!inviteToken) {
-    return (
-      <div className="w-full p-8">
-        <Text className="text-2xl text-center">
-          Sorry, you can&rsquo;t do that yet.
-        </Text>
-        <Text className="text-center">You must have an invite to sign up.</Text>
-      </div>
-    );
   }
 
   return verifying ? (
@@ -194,7 +163,7 @@ export default function SignUpPage() {
     >
       {({ isSubmitting, submitForm, dirty, isValid }) => (
         <Form className="w-[600px] p-8 mx-auto flex flex-col gap-4">
-          <Text className="text-xl font-black">Sign in</Text>
+          <Text className="text-xl font-black">Sign up</Text>
           <Field name="email">
             {({ field, meta }: FieldProps) => (
               <div>
