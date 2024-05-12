@@ -48,7 +48,6 @@ export function LocationSearchInput({
   onChange: (location: LocationInputValue) => void;
 }) {
   const { me } = useMeContext();
-  const { coords } = useGeoLocation();
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
   const [isSearching, setIsSearching] = useState(false);
@@ -61,7 +60,6 @@ export function LocationSearchInput({
     async function handleSearch() {
       if (debouncedSearchValue && me) {
         setIsSearching(true);
-        const proximityParam = `&proximity=${coords.longitude},${coords.latitude}`;
 
         const query = debouncedSearchValue.split(" ").join("+");
         const response = await fetch(
@@ -70,7 +68,7 @@ export function LocationSearchInput({
             `&language=en` +
             `&types=country,region,district,postcode,locality,place,neighborhood,address,poi,street` +
             `&access_token=${process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}` +
-            `&session_token=${me.id}-${searchToken}${proximityParam}`
+            `&session_token=${me.id}-${searchToken}`
         );
         const data = (await response.json()) as
           | SuggestionResult
@@ -84,7 +82,7 @@ export function LocationSearchInput({
       }
     }
     void handleSearch();
-  }, [debouncedSearchValue, coords, me, searchToken]);
+  }, [debouncedSearchValue, me, searchToken]);
 
   async function handleSelectLocation(suggestion: SearchBoxSuggestion) {
     const response = await fetch(
