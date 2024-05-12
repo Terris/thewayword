@@ -79,6 +79,7 @@ export default function AdventureLogPage() {
           </Link>
         </div>
         <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
+
         <div className="p-8 flex justify-center items-center w-full lg:z-50 lg:w-auto lg:flex-col lg:fixed lg:top-[50vh] lg:h-[1px] lg:right-0  ">
           <div className="flex flex-row lg:flex-col gap-4">
             {meIsLogOwner ? (
@@ -100,7 +101,8 @@ export default function AdventureLogPage() {
             </Link>
           </div>
         </div>
-        <div className="flex flex-col items-start justify-start md:flex-row gap-8">
+
+        <div className="pt-20 flex flex-col items-start justify-start md:flex-row gap-8">
           <div className="w-full md:w-1/3">
             <AdventureLogLikes adventureLogId={id as Id<"adventureLogs">} />
           </div>
