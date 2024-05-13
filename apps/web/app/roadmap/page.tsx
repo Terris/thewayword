@@ -15,7 +15,6 @@ export default function RoadmapPage() {
         Major Features
       </Text>
       <ul className="pb-8 list-disc pl-5">
-        <li>Users can follow other users</li>
         <li>Users can bucket list a log</li>
         <li>Users can include other users in a log</li>
         <li>Users can create detailed maps</li>
@@ -25,6 +24,7 @@ export default function RoadmapPage() {
         <li>Users can shop</li>
         <li>Users can download a social media kit</li>
         <li>Users can view a map of all adventure logs</li>
+        <li className="line-through">Users can follow other users</li>
       </ul>
       <Text className="font-soleil font-bold uppercase tracking-wide pb-4">
         Quality of life
@@ -32,9 +32,12 @@ export default function RoadmapPage() {
       <ul className="list-disc pl-5">
         <li>Add text formatting to story blocks</li>
         <li>
-          Improve usability of date selection - e.g. re-opening the cal after
-          selecting a date should automatically show the previously selected
-          date
+          Improve date selection: re-opening the cal after selecting a date
+          should automatically show the previously selected date
+        </li>
+        <li>
+          Improve date selection: user should be able to go way back in time
+          faster
         </li>
         <li>User can click on a tag and see logs with a similar tag</li>
         <li>

@@ -1,5 +1,7 @@
-import { useEffect, useRef } from "react";
-import { Text } from "@repo/ui";
+"use client";
+
+import { RichTextEditor } from "../../../_components/RichTextEditor";
+import { RichTextReader } from "../../../_components/RichTextReader";
 
 export function EditableTextBlock({
   isSelected,
@@ -10,46 +12,32 @@ export function EditableTextBlock({
   content?: string;
   setContent: (value: string) => void;
 }) {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-  useEffect(() => {
-    if (isSelected && textareaRef.current) {
-      textareaRef.current.focus();
+  function handleSetContent(value: string) {
+    if (content === value) return;
+    if (value === '{"type":"doc","content":[{"type":"paragraph"}]}') {
+      setContent(
+        '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Start typing..."}]}]}'
+      );
+      return;
     }
-  }, [isSelected]);
-
-  function handleChange(value: string) {
     setContent(value);
-    resizeTextArea();
-  }
-
-  function resizeTextArea() {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-    }
   }
 
   return (
     <div className="w-full max-w-[600px] mx-auto">
       {isSelected ? (
-        <textarea
-          ref={textareaRef}
-          placeholder="Start typing..."
-          value={content}
-          onChange={(e) => {
-            handleChange(e.currentTarget.value);
+        <RichTextEditor
+          onChange={(value) => {
+            handleSetContent(value);
           }}
-          onKeyUp={(e) => {
-            e.key === "Enter" && e.preventDefault();
-          }}
-          onFocus={resizeTextArea}
-          className="w-full h-1 text-lg bg-transparent outline-none"
-          style={{ resize: "none" }}
+          initialContent={content}
+          className="w-full text-lg bg-transparent outline-none"
         />
       ) : (
-        <Text className="w-full min-h-4 text-lg whitespace-pre-wrap">
-          {content === "" ? "Start typing..." : content}
-        </Text>
+        <RichTextReader
+          content={content}
+          className="w-full min-h-4 text-lg whitespace-pre-wrap"
+        />
       )}
     </div>
   );

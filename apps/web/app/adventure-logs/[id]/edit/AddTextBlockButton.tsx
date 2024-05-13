@@ -16,6 +16,8 @@ export function AddTextBlockButton({ adventureLogId }: UploadButtonProps) {
         void addTextBlock({
           adventureLogId,
           type: "text",
+          content:
+            '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Start typing..."}]}]}',
         })
       }
     >
