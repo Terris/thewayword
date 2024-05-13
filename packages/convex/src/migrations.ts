@@ -40,3 +40,42 @@ export const migrateTextBlocksToRichText = internalMutation({
 function prepLines(block: string) {
   return block.replace('"', "[QUOTE]").trim().split(/\r?\n/);
 }
+
+const obj = {
+  type: "doc",
+  content: [
+    {
+      type: "paragraph",
+      content: [
+        {
+          type: "text",
+          text: "Remember when we got back to our minuscule box of an AirBnB and painted each other's nails? ",
+        },
+      ],
+    },
+    { type: "paragraph", content: [{ type: "text", text: "&nbsp;" }] },
+    {
+      type: "paragraph",
+      content: [
+        {
+          type: "text",
+          text: 'I don\'t remember what we talked about or even that we talked at all. I do remember thinking "yah :) This day, this moment, is what friendship is all about."',
+        },
+      ],
+    },
+    { type: "paragraph", content: [{ type: "text", text: "&nbsp;" }] },
+    {
+      type: "paragraph",
+      content: [
+        {
+          type: "text",
+          text: "I love you, Jess. Thank you for adventuring with me.",
+        },
+      ],
+    },
+    { type: "paragraph", content: [{ type: "text", text: "&nbsp;" }] },
+    { type: "paragraph", content: [{ type: "text", text: "Your friend," }] },
+    { type: "paragraph", content: [{ type: "text", text: "&nbsp;" }] },
+    { type: "paragraph", content: [{ type: "text", text: "Sadie" }] },
+  ],
+};
