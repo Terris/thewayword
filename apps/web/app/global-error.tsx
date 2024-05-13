@@ -10,7 +10,11 @@ export default function GlobalError() {
         <link rel="stylesheet" href="https://use.typekit.net/crw6lsz.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
-      <body className={cn("min-h-screen antialiased font-gelica")}>
+      <body
+        className={cn(
+          "min-h-screen antialiased font-gelica flex flex-col items-center justify-center"
+        )}
+      >
         <Text className="text-center text-2xl font-bold">
           Shoot, something went wrong!
         </Text>
