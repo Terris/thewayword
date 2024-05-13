@@ -30,7 +30,6 @@ export default function RoadmapPage() {
         Quality of life
       </Text>
       <ul className="list-disc pl-5">
-        <li>Add text formatting to story blocks</li>
         <li>
           Improve date selection: re-opening the cal after selecting a date
           should automatically show the previously selected date
@@ -48,6 +47,7 @@ export default function RoadmapPage() {
           and resend
         </li>
         <li>User can turn off comments for their own logs</li>
+        <li className="line-through">Add text formatting to story blocks</li>
         <li className="line-through">
           Add an alert box in the header that shows a list of events (e.g.
           someone commented on my post)
