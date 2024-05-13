@@ -41,7 +41,7 @@ function prepLines(block: string) {
   return block.replace('"', "[QUOTE]").trim().split(/\r?\n/);
 }
 
-const obj = {
+const json = {
   type: "doc",
   content: [
     {
@@ -49,33 +49,19 @@ const obj = {
       content: [
         {
           type: "text",
-          text: "Remember when we got back to our minuscule box of an AirBnB and painted each other's nails? ",
+          text: "Remember when we spent 12 hours at the aquarium? Remember when you sneakily found out that I like sea lions better than penguins and when you sneakily brought me over to the benches for a &lsquo;rest&rsquo; before surprising me with the best fucking animal experience ever?! You sneaky jerky. What an adventure!",
         },
       ],
     },
-    { type: "paragraph", content: [{ type: "text", text: "&nbsp;" }] },
+    { type: "paragraph", content: [{ type: "text" }] },
     {
       type: "paragraph",
       content: [
         {
           type: "text",
-          text: 'I don\'t remember what we talked about or even that we talked at all. I do remember thinking "yah :) This day, this moment, is what friendship is all about."',
+          text: "I will never forget the sea lion kiss slash tornado on my check. I will never forget how giddy we both were from start to finish, and how crazy the other two guests must have thought we were. I'm so happy that I can be my most exuberantly expressive self with you, and that you're always there being exuberant right back.",
         },
       ],
     },
-    { type: "paragraph", content: [{ type: "text", text: "&nbsp;" }] },
-    {
-      type: "paragraph",
-      content: [
-        {
-          type: "text",
-          text: "I love you, Jess. Thank you for adventuring with me.",
-        },
-      ],
-    },
-    { type: "paragraph", content: [{ type: "text", text: "&nbsp;" }] },
-    { type: "paragraph", content: [{ type: "text", text: "Your friend," }] },
-    { type: "paragraph", content: [{ type: "text", text: "&nbsp;" }] },
-    { type: "paragraph", content: [{ type: "text", text: "Sadie" }] },
   ],
 };
