@@ -90,12 +90,20 @@ export default function FeedPage() {
           )}
         </div>
       ) : (
-        <Text className="text-center py-8">
-          Ohp, there are currently no posts be people you follow.{" "}
-          <Link href="/feed/all">
-            Explore all posts to find more people to follow.
-          </Link>
-        </Text>
+        <>
+          <Text className="text-center pt-8">
+            Ohp, there are currently no posts by the people you follow.{" "}
+          </Text>
+          <Text className="text-center pb-8">
+            <Link
+              href="/feed/all"
+              className="underline hover:opacity-80 transition-opacity"
+            >
+              Explore all posts
+            </Link>{" "}
+            to find more people to follow.
+          </Text>
+        </>
       )}
     </>
   );

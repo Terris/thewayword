@@ -28,6 +28,7 @@ export default function FeedLayout({
           onValueChange={(v) => {
             handleValueChange(v);
           }}
+          value={pathname}
           defaultValue={pathname}
         >
           <SelectTrigger className="w-[120px]">

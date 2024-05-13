@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function AboutPage() {
   return (
-    <div className="w-full p-8 pt-16 text-lg">
+    <div className="w-full container p-8 pt-16 text-lg">
       <div className="flex flex-col items-start md:flex-row md:gap-16 md:px-16 pb-16">
         <div className="w-full md:w-1/2">
           <Text className="text-3xl md:text-4xl leading-tight pb-8">
