@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
+import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { usePaginatedQuery } from "convex/react";
 import { api } from "@repo/convex";
@@ -90,7 +91,10 @@ export default function FeedPage() {
         </div>
       ) : (
         <Text className="text-center py-8">
-          Ohp, nothing here at the moment.
+          Ohp, there are currently no posts be people you follow.{" "}
+          <Link href="/feed/all">
+            Explore all posts to find more people to follow.
+          </Link>
         </Text>
       )}
     </>
