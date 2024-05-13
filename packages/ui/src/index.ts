@@ -8,7 +8,6 @@ export * from "./Checkbox";
 export * from "./CopyToClipboardButton";
 export * from "./CountBadge";
 export * from "./CurrencyInput";
-export * from "./DataTable";
 export * from "./DatePicker";
 export * from "./Dialog";
 export * from "./DropdownMenu";
