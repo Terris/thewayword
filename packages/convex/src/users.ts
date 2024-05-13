@@ -22,6 +22,7 @@ export const sessionedFindPublicUserById = query({
       _id: fullUser._id,
       name: fullUser.name,
       avatarUrl: fullUser.avatarUrl,
+      createdAt: fullUser._creationTime,
     };
   },
 });

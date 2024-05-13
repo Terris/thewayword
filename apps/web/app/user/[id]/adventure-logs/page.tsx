@@ -11,12 +11,16 @@ import Image from "next/image";
 import { usePaginatedQuery, useQuery } from "convex/react";
 import { type Id, api } from "@repo/convex";
 import { Button, LoadingScreen, Text } from "@repo/ui";
+import { formatDate } from "@repo/utils";
+import { useMeContext } from "@repo/auth/context";
 import { AdventureLogFeedItem } from "../../../_components/AdventureLogFeedItem";
+import { ToggleFolowButton } from "./ToggleFollowButton";
 
 const DEFAULT_ITEMS_PER_PAGE = 32;
 
 export default function UserAdventureLogsPage() {
   const router = useRouter();
+  const { me } = useMeContext();
   const { id } = useParams();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -26,6 +30,8 @@ export default function UserAdventureLogsPage() {
   const publicUser = useQuery(api.users.sessionedFindPublicUserById, {
     id: id as Id<"users">,
   });
+
+  const publicUserIsLoading = publicUser === undefined;
 
   const {
     results: adventureLogs,
@@ -65,24 +71,38 @@ export default function UserAdventureLogsPage() {
     );
   }
 
-  if (firstPageIsLoading) return <LoadingScreen />;
+  if (firstPageIsLoading || publicUserIsLoading) return <LoadingScreen />;
 
   return (
     <div className="w-full p-8">
-      <div className="flex items-center max-w-[900px] mx-auto pb-4 md:pb-10">
-        {publicUser?.avatarUrl ? (
-          <Image
-            src={publicUser.avatarUrl}
-            width="40"
-            height="40"
-            alt="User"
-            className="w-6 h-6 md:w-10 md:h-10 rounded-full mr-4 md:mr-6"
-          />
-        ) : null}
-        <Text className="w-full text-2xl md:text-4xl font-bold bg-transparent outline-none focus:underline">
-          {publicUser?.name}&rsquo;s Adventure Logs
-        </Text>
+      <div className="flex flex-row items-start justify-start pb-4 md:pb-16">
+        <div>
+          {publicUser.avatarUrl ? (
+            <Image
+              src={publicUser.avatarUrl}
+              width="40"
+              height="40"
+              alt="User"
+              className="w-6 h-6 md:w-16 md:h-16 rounded-full mr-4 md:mr-6"
+            />
+          ) : null}
+        </div>
+        <div>
+          <Text className="w-full text-2xl md:text-4xl font-bold bg-transparent outline-none focus:underline">
+            {publicUser.name}
+          </Text>
+          <Text className="font-soleil text-sm pb-4">
+            Member since {formatDate(publicUser.createdAt)}
+          </Text>
+          {me?.id !== id ? (
+            <ToggleFolowButton followeeUserId={id as Id<"users">} />
+          ) : null}
+        </div>
       </div>
+      <Text className="font-soleil">
+        {publicUser.name}&rsquo;s Adventure Logs
+      </Text>
+      <hr className="border-b-1 border-dashed mb-4" />
       <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-8">
         {adventureLogs.map((adventureLog) => (
           <AdventureLogFeedItem

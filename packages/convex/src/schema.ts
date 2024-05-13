@@ -65,6 +65,13 @@ export default defineSchema({
     userId: v.id("users"),
     hash: v.optional(v.string()),
   }),
+  follows: defineTable({
+    ownerId: v.id("users"),
+    followeeUserId: v.id("users"),
+  })
+    .index("by_owner_id", ["ownerId"])
+    .index("by_followee_user_id", ["followeeUserId"])
+    .index("by_owner_id_followee_user_id", ["ownerId", "followeeUserId"]),
   invites: defineTable({
     email: v.string(),
   }).index("by_email", ["email"]),
@@ -98,7 +105,9 @@ export default defineSchema({
     message: v.string(),
     link: v.optional(v.string()),
     read: v.boolean(),
-    referenceId: v.optional(v.union(v.id("likes"), v.id("comments"))),
+    referenceId: v.optional(
+      v.union(v.id("likes"), v.id("comments"), v.id("follows"))
+    ),
   })
     .index("by_user_id", ["userId"])
     .index("by_user_id_read", ["userId", "read"])
