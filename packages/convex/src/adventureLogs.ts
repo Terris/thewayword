@@ -1,8 +1,9 @@
+import { paginationOptsValidator } from "convex/server";
 import { ConvexError, v } from "convex/values";
+import { asyncMap } from "convex-helpers";
+import { filter } from "convex-helpers/server/filter";
 import { internalMutation, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
-import { asyncMap } from "convex-helpers";
-import { paginationOptsValidator } from "convex/server";
 import { internal } from "./_generated/api";
 
 export const findById = query({
@@ -42,6 +43,46 @@ export const findAllPublic = query({
     const paginatedAdventureLogs = await ctx.db
       .query("adventureLogs")
       .withIndex("by_is_public", (q) => q.eq("isPublic", true))
+      .order("desc")
+      .paginate(paginationOpts);
+
+    const adventureLogsWithUser = await asyncMap(
+      paginatedAdventureLogs.page,
+      async (log) => {
+        const user = await ctx.db.get(log.userId);
+        if (!user) throw new ConvexError("Adventure log user not found");
+        return {
+          ...log,
+          user: {
+            id: user?._id,
+            name: user?.name,
+            avatarUrl: user?.avatarUrl,
+          },
+        };
+      }
+    );
+    return { ...paginatedAdventureLogs, page: adventureLogsWithUser };
+  },
+});
+
+export const findAllFollowingPublicBySessionedUserId = query({
+  args: { paginationOpts: paginationOptsValidator },
+  handler: async (ctx, { paginationOpts }) => {
+    const { user } = await validateIdentity(ctx);
+
+    const following = await ctx.db
+      .query("follows")
+      .withIndex("by_owner_id", (q) => q.eq("ownerId", user._id))
+      .collect();
+
+    const followingUserIds = following.map((follow) => follow.followeeUserId);
+
+    const paginatedAdventureLogs = await filter(
+      ctx.db
+        .query("adventureLogs")
+        .withIndex("by_is_public", (q) => q.eq("isPublic", true)),
+      (log) => followingUserIds.includes(log.userId)
+    )
       .order("desc")
       .paginate(paginationOpts);
 

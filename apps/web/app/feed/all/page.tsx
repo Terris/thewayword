@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { usePaginatedQuery } from "convex/react";
 import { api } from "@repo/convex";
 import { Button, LoadingScreen, Text } from "@repo/ui";
-import { AdventureLogFeedItem } from "../_components/AdventureLogFeedItem";
+import { AdventureLogFeedItem } from "../../_components/AdventureLogFeedItem";
 
 const DEFAULT_ITEMS_PER_PAGE = 32;
 
@@ -21,7 +21,7 @@ export default function FeedPage() {
     status: paginationStatus,
     loadMore,
   } = usePaginatedQuery(
-    api.adventureLogs.findAllFollowingPublicBySessionedUserId,
+    api.adventureLogs.findAllPublic,
     {
       paginationOpts: {
         numItems: DEFAULT_ITEMS_PER_PAGE,
