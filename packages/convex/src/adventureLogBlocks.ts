@@ -132,8 +132,8 @@ export const update = mutation({
       existingAdventureLogBlock.adventureLogId
     );
     if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
-    // if (existingAdventureLog.userId !== user._id)
-    //   throw new ConvexError("Not the owner of this adventure log");
+    if (existingAdventureLog.userId !== user._id)
+      throw new ConvexError("Not the owner of this adventure log");
 
     return ctx.db.patch(id, {
       fileId: fileId ?? existingAdventureLogBlock.fileId,
