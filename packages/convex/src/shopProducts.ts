@@ -3,6 +3,25 @@ import { internalMutation, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { internal } from "./_generated/api";
 
+export const findById = query({
+  args: { id: v.id("shopProducts") },
+  handler: async (ctx, { id }) => {
+    await validateIdentity(ctx);
+    return ctx.db.get(id);
+  },
+});
+
+export const findAllPublished = query({
+  args: {},
+  handler: async (ctx) => {
+    await validateIdentity(ctx);
+    return ctx.db
+      .query("shopProducts")
+      .withIndex("by_published", (q) => q.eq("published", true))
+      .collect();
+  },
+});
+
 export const findAllAsAdmin = query({
   args: {},
   handler: async (ctx) => {

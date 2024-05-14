@@ -11,6 +11,7 @@ import { Button, Logo, LogoDark, Text } from "@repo/ui";
 import { cn } from "@repo/utils";
 import { UserMenu } from "./_components/UserMenu";
 import { UserAlertsMenu } from "./_components/UserAlertsMenu";
+import { ShoppingCartButton } from "./_components/ShoppingCartButton";
 
 export function Masthead() {
   const pathname = usePathname();
@@ -76,6 +77,7 @@ export function Masthead() {
           {me ? (
             <>
               <UserAlertsMenu />
+              <ShoppingCartButton />
               <UserMenu />
             </>
           ) : (

@@ -32,7 +32,7 @@ export default function FeedLayout({
           defaultValue={pathname}
         >
           <SelectTrigger className="w-[120px]">
-            <SelectValue placeholder="Theme" />
+            <SelectValue />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="/feed">Following</SelectItem>
