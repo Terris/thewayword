@@ -15,7 +15,7 @@
     "convex": "^1.11.3",
     "convex-helpers": "^0.1.36",
     "resend": "^3.1.0",
-    "stripe": "^14.16.0",
+    "stripe": "^15.6.0",
     "svix": "^1.17.0"
   },
   "devDependencies": {

@@ -82,6 +82,13 @@ export default defineSchema({
     .index("by_user_id", ["userId"])
     .index("by_adventure_log_id", ["adventureLogId"])
     .index("by_user_id_adventure_log_id", ["userId", "adventureLogId"]),
+  shopProducts: defineTable({
+    name: v.string(),
+    priceInCents: v.number(),
+    stripeProductId: v.optional(v.string()),
+    stripePriceId: v.optional(v.string()),
+    published: v.boolean(),
+  }),
   tags: defineTable({
     name: v.string(),
   })
