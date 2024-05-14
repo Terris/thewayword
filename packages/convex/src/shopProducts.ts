@@ -12,13 +12,19 @@ export const findAllAsAdmin = query({
 });
 
 export const create = mutation({
-  args: { name: v.string(), priceInCents: v.number(), published: v.boolean() },
-  handler: async (ctx, { name, priceInCents, published }) => {
+  args: {
+    name: v.string(),
+    priceInCents: v.number(),
+    description: v.string(),
+    published: v.boolean(),
+  },
+  handler: async (ctx, { name, priceInCents, description, published }) => {
     await validateIdentity(ctx, { requiredRoles: ["admin"] });
 
     const newShopProductId = await ctx.db.insert("shopProducts", {
       name,
       priceInCents,
+      description,
       published,
     });
 

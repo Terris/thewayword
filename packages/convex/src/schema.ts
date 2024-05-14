@@ -85,6 +85,7 @@ export default defineSchema({
   shopProducts: defineTable({
     name: v.string(),
     priceInCents: v.number(),
+    description: v.optional(v.string()),
     stripeProductId: v.optional(v.string()),
     stripePriceId: v.optional(v.string()),
     published: v.boolean(),

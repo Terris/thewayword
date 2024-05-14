@@ -8,7 +8,7 @@ import {
   Formik,
 } from "formik";
 import * as Yup from "yup";
-import { Button, Input, Label, Text } from "@repo/ui";
+import { Button, Input, Label, Text, Textarea } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
 import { useMutation } from "convex/react";
 import { api } from "@repo/convex";
@@ -16,11 +16,13 @@ import { api } from "@repo/convex";
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   priceInCents: Yup.string().required("Price is required"),
+  description: Yup.string(),
 });
 
 interface CreateShopProductFormValues {
   name: string;
   priceInCents: string;
+  description: string;
 }
 
 export function CreateShopProductForm({
@@ -39,6 +41,7 @@ export function CreateShopProductForm({
       await createShopProduct({
         name: values.name,
         priceInCents: parseInt(values.priceInCents),
+        description: values.description,
         published: true,
       });
       toast({
@@ -63,6 +66,7 @@ export function CreateShopProductForm({
       initialValues={{
         name: "",
         priceInCents: "",
+        description: "",
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
@@ -86,6 +90,17 @@ export function CreateShopProductForm({
               <div>
                 <Label htmlFor={field.name}>Price in cents</Label>
                 <Input className="w-full" {...field} />
+                {meta.touched && meta.error ? (
+                  <Text className="text-sm text-destructive">{meta.error}</Text>
+                ) : null}
+              </div>
+            )}
+          </Field>
+          <Field name="description">
+            {({ field, meta }: FieldProps) => (
+              <div>
+                <Label htmlFor={field.name}>Description</Label>
+                <Textarea {...field} />
                 {meta.touched && meta.error ? (
                   <Text className="text-sm text-destructive">{meta.error}</Text>
                 ) : null}
