@@ -55,11 +55,7 @@ export default function ShopProductPage() {
         <div className="flex gap-4">
           <div>
             <Label>Size</Label>
-            <Select
-              onValueChange={(v) => console.log(v)}
-              // value={pathname}
-              // defaultValue={pathname}
-            >
+            <Select>
               <SelectTrigger className="w-[120px]">
                 <SelectValue />
               </SelectTrigger>
