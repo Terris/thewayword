@@ -40,6 +40,15 @@ export default defineSchema({
     adventureLogId: v.id("adventureLogs"),
     tagId: v.id("tags"),
   }).index("by_adventure_log_id", ["adventureLogId"]),
+  carts: defineTable({
+    userId: v.id("users"),
+    items: v.array(
+      v.object({
+        shopProductId: v.id("shopProducts"),
+        quantity: v.number(),
+      })
+    ),
+  }).index("by_user_id", ["userId"]),
   comments: defineTable({
     adventureLogId: v.id("adventureLogs"),
     userId: v.id("users"),
