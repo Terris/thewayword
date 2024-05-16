@@ -15,7 +15,7 @@ export const findById = query({
 export const findPublishedById = query({
   args: { id: v.id("shopProducts") },
   handler: async (ctx, { id }) => {
-    await validateIdentity(ctx, { requiredRoles: ["admin"] });
+    await validateIdentity(ctx);
     const shopProduct = await ctx.db.get(id);
     if (!shopProduct || !shopProduct.published)
       throw new ConvexError("Product not found");
