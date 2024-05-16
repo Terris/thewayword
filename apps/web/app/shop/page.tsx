@@ -1,6 +1,5 @@
 "use client";
 
-import { PrivatePageWrapper } from "@repo/auth";
 import { api } from "@repo/convex";
 import { Text } from "@repo/ui";
 import { useQuery } from "convex/react";
