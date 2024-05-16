@@ -1,20 +1,22 @@
-import { useRouter } from "next/navigation";
-import { useQuery } from "convex/react";
-import { ShoppingCart } from "lucide-react";
+import Link from "next/link";
+import { useMutation, useQuery } from "convex/react";
+import { ShoppingCart, Trash2 } from "lucide-react";
+import { type ColumnDef } from "@tanstack/react-table";
+import { type Doc, api, type Id } from "@repo/convex";
 import {
   Button,
   CountBadge,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
   Text,
 } from "@repo/ui";
 import { cn } from "@repo/utils";
-import { api } from "@repo/convex";
+import { DataTable } from "./DataTable";
 
 export function ShoppingCartButton() {
-  const router = useRouter();
   const cart = useQuery(api.carts.findBySessionedUser);
   const isLoading = cart === undefined;
   const cartItemCount = cart?.items.length;
@@ -22,8 +24,8 @@ export function ShoppingCartButton() {
   if (isLoading || !cartItemCount) return null;
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <Dialog>
+      <DialogTrigger asChild>
         <Button
           variant="ghost"
           size="icon"
@@ -40,24 +42,109 @@ export function ShoppingCartButton() {
             />
           ) : null}
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="center" className="w-56 p-2">
-        {cart.items.map((item) => (
-          <DropdownMenuItem
-            key={item.shopProductId}
-            onClick={() => {
-              router.push(`/shop/products/${item.shopProductId}`);
-            }}
-          >
-            <div className="flex flex-col flex-1">
-              <Text className="font-soleil">{item.product?.name}</Text>
-              <Text>
-                {item.quantity} x ${(item.product?.priceInCents ?? 0) / 100}
-              </Text>
-            </div>
-          </DropdownMenuItem>
-        ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </DialogTrigger>
+      <DialogContent className="p-4 w-full max-w-[900px]">
+        <DialogHeader>
+          <DialogTitle className="pb-4">Your cart</DialogTitle>
+          <CartItemsTable
+            cartItems={cart.items.map((item) => ({
+              ...item,
+              cartId: cart._id,
+            }))}
+          />
+          <hr />
+          <div className="flex justify-end gap-4 items-center p-4">
+            <Text>Cart total</Text>
+            <Text className="font-bold">
+              $
+              {cart.items.reduce(
+                (acc, current) => acc + (current.product?.priceInCents ?? 0),
+                0
+              ) / 100}
+            </Text>
+            <Link href="/checkout">
+              <Button>Checkout</Button>
+            </Link>
+          </div>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+interface CartItemRow {
+  _id: Id<"cartItems">;
+  cartId: Id<"carts">;
+  product: Doc<"shopProducts"> | null;
+  options?: { name: string; value: string }[];
+}
+
+const columns: ColumnDef<CartItemRow>[] = [
+  {
+    accessorKey: "product.name",
+    header: "Name",
+    cell: ({ row }) => {
+      return <Text>{row.original.product?.name}</Text>;
+    },
+  },
+  {
+    accessorKey: "options",
+    header: "Options",
+    cell: ({ row }) => {
+      return (
+        <Text>
+          <Link href={`/shop/products/${row.original.product?._id}`}>
+            {row.original.options?.map((option) => (
+              <>
+                {option.name}: {option.value}{" "}
+              </>
+            ))}
+          </Link>
+        </Text>
+      );
+    },
+  },
+  {
+    accessorKey: "product.priceInCents",
+    header: "Price",
+    cell: ({ row }) => (
+      <Text>${(row.original.product?.priceInCents ?? 0) / 100}</Text>
+    ),
+  },
+  {
+    accessorKey: "delete",
+    header: "Remove item",
+    cell: ({ row }) => (
+      <DeleteCartItemButton
+        cartId={row.original.cartId}
+        cartItemId={row.original._id}
+      />
+    ),
+  },
+];
+
+function CartItemsTable({ cartItems }: { cartItems: CartItemRow[] }) {
+  return <DataTable columns={columns} data={cartItems} />;
+}
+
+function DeleteCartItemButton({
+  cartId,
+  cartItemId,
+}: {
+  cartId: Id<"carts">;
+  cartItemId: Id<"cartItems">;
+}) {
+  const deleteCartItem = useMutation(api.carts.removeCartItemById);
+  return (
+    <Button
+      onClick={() => {
+        void deleteCartItem({
+          cartId,
+          cartItemId,
+        });
+      }}
+    >
+      <Trash2 className="w-3 h-3" />
+    </Button>
   );
 }

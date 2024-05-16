@@ -32,3 +32,40 @@ export const internalCreateStripeProduct = internalAction({
     return true;
   },
 });
+
+export const internalUpdateStripeProduct = internalAction({
+  args: {
+    shopProductId: v.id("shopProducts"),
+    stripeProductId: v.string(),
+    stripePriceId: v.string(),
+    name: v.optional(v.string()),
+    priceInCents: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    let stripePriceId = args.stripePriceId;
+    if (args.priceInCents) {
+      // update the stripe price
+      const newStripePrice = await stripe.prices.create({
+        currency: "usd",
+        unit_amount: args.priceInCents,
+        product: args.stripeProductId,
+      });
+      stripePriceId = newStripePrice.id;
+    }
+
+    // update the stripe product
+    const stripeProduct = await stripe.products.update(args.stripeProductId, {
+      name: args.name,
+      default_price: stripePriceId,
+    });
+
+    // update the related product with the stripe product id and price id
+    await ctx.runMutation(internal.shopProducts.internalSyncStripeProduct, {
+      id: args.shopProductId,
+      stripeProductId: args.stripeProductId,
+      stripePriceId: stripeProduct.default_price as string,
+    });
+
+    return true;
+  },
+});

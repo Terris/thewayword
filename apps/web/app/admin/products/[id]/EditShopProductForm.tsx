@@ -1,17 +1,20 @@
 "use client";
 
-import {
-  type FieldProps,
-  type FormikHelpers,
-  Field,
-  Form,
-  Formik,
-} from "formik";
+import { useParams, useRouter } from "next/navigation";
+import { useMutation, useQuery } from "convex/react";
+import { type FieldProps, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Button, Input, Label, Switch, Text, Textarea } from "@repo/ui";
+import {
+  Button,
+  Input,
+  Label,
+  LoadingScreen,
+  Switch,
+  Text,
+  Textarea,
+} from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
-import { useMutation } from "convex/react";
-import { api } from "@repo/convex";
+import { type Id, api } from "@repo/convex";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -20,27 +23,29 @@ const validationSchema = Yup.object().shape({
   published: Yup.boolean(),
 });
 
-interface CreateShopProductFormValues {
+interface EditShopProductFormValues {
   name: string;
   priceInCents: string;
   description: string;
   published: boolean;
 }
 
-export function CreateShopProductForm({
-  onSuccess,
-}: {
-  onSuccess?: () => void;
-}) {
+export function EditShopProductForm({ onSuccess }: { onSuccess?: () => void }) {
   const { toast } = useToast();
-  const createShopProduct = useMutation(api.shopProducts.create);
+  const { id } = useParams();
+  const router = useRouter();
 
-  async function onSubmit(
-    values: CreateShopProductFormValues,
-    helpers: FormikHelpers<CreateShopProductFormValues>
-  ) {
+  const product = useQuery(api.shopProducts.findById, {
+    id: id as Id<"shopProducts">,
+  });
+
+  const isLoading = product === undefined;
+  const editShopProduct = useMutation(api.shopProducts.editById);
+
+  async function onSubmit(values: EditShopProductFormValues) {
     try {
-      await createShopProduct({
+      await editShopProduct({
+        id: id as Id<"shopProducts">,
         name: values.name,
         priceInCents: parseInt(values.priceInCents),
         description: values.description,
@@ -48,10 +53,10 @@ export function CreateShopProductForm({
       });
       toast({
         title: "Success",
-        description: "Product was created",
+        description: "Product was updated",
       });
-      helpers.resetForm();
       onSuccess?.();
+      router.push("/admin/products");
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "Unknown error";
@@ -63,20 +68,22 @@ export function CreateShopProductForm({
     }
   }
 
+  if (isLoading) return <LoadingScreen />;
+
   return (
-    <Formik<CreateShopProductFormValues>
+    <Formik<EditShopProductFormValues>
       initialValues={{
-        name: "",
-        priceInCents: "",
-        description: "",
-        published: false,
+        name: product?.name ?? "",
+        priceInCents: product?.priceInCents.toString() ?? "",
+        description: product?.description ?? "",
+        published: product?.published ?? false,
       }}
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
       {({ isSubmitting, dirty, isValid }) => (
         <Form className=" flex flex-col gap-4">
-          <Text className="text-xl font-black">Create Shop Product</Text>
+          <Text className="text-xl font-black">Edit Shop Product</Text>
           <Field name="name">
             {({ field, meta }: FieldProps) => (
               <div>
@@ -129,7 +136,7 @@ export function CreateShopProductForm({
             disabled={!dirty || !isValid || isSubmitting}
             className="mb-4"
           >
-            Create product
+            Update product details
           </Button>
         </Form>
       )}

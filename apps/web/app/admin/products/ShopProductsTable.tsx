@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useQuery } from "convex/react";
+import { Edit } from "lucide-react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { api } from "@repo/convex";
 import {
@@ -10,6 +11,7 @@ import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
+  Button,
 } from "@repo/ui";
 import { AdminTable, AdminTableBooleanCell } from "../AdminTable";
 
@@ -26,7 +28,7 @@ const columns: ColumnDef<ShopProductRow>[] = [
     header: "Name",
     cell: ({ row }) => {
       return (
-        <Link href={`/admin/shopProducts/${row.original._id}`}>
+        <Link href={`/admin/products/${row.original._id}`}>
           {row.original.name}
         </Link>
       );
@@ -71,6 +73,19 @@ const columns: ColumnDef<ShopProductRow>[] = [
         </Tooltip>
       </div>
     ),
+  },
+  {
+    // accessorKey: "edit",
+    header: "Edit",
+    cell: ({ row }) => {
+      return (
+        <Link href={`/admin/products/${row.original._id}`}>
+          <Button size="sm">
+            <Edit className="w-3 h-3" />
+          </Button>
+        </Link>
+      );
+    },
   },
 ];
 

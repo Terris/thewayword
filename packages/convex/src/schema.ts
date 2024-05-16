@@ -42,13 +42,14 @@ export default defineSchema({
   }).index("by_adventure_log_id", ["adventureLogId"]),
   carts: defineTable({
     userId: v.id("users"),
-    items: v.array(
-      v.object({
-        shopProductId: v.id("shopProducts"),
-        quantity: v.number(),
-      })
-    ),
   }).index("by_user_id", ["userId"]),
+  cartItems: defineTable({
+    cartId: v.id("carts"),
+    shopProductId: v.id("shopProducts"),
+    options: v.optional(
+      v.array(v.object({ name: v.string(), value: v.string() }))
+    ),
+  }).index("by_cart_id", ["cartId"]),
   comments: defineTable({
     adventureLogId: v.id("adventureLogs"),
     userId: v.id("users"),

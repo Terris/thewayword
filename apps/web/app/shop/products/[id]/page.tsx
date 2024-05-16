@@ -1,8 +1,9 @@
 "use client";
 
-import { useMutation, useQuery } from "convex/react";
+import { useState } from "react";
 import Image from "next/image";
 import { useParams } from "next/navigation";
+import { useMutation, useQuery } from "convex/react";
 import { type Id, api } from "@repo/convex";
 import {
   Button,
@@ -16,18 +17,40 @@ import {
   Text,
 } from "@repo/ui";
 
+interface ProductOptionSelection {
+  name: string;
+  value: string;
+}
+
 export default function ShopProductPage() {
   const { id } = useParams();
+  const [selectedOptions, setSelectedOptions] = useState<
+    ProductOptionSelection[]
+  >([]);
 
-  const product = useQuery(api.shopProducts.findById, {
+  const product = useQuery(api.shopProducts.findPublishedById, {
     id: id as Id<"shopProducts">,
   });
   const isLoading = product === undefined;
 
   const addToCart = useMutation(api.carts.addShopProductToCartBySessionedUser);
 
+  const canAddToCart = selectedOptions.length === product?.options.length;
+
+  function handleSelectProductOption(
+    optionName: string,
+    selectedValue: string
+  ) {
+    const newSelectedOptions = selectedOptions.filter(
+      (option) => option.name !== optionName
+    );
+    setSelectedOptions([
+      ...newSelectedOptions,
+      { name: optionName, value: selectedValue },
+    ]);
+  }
+
   if (isLoading) return <LoadingScreen />;
-  if (product === null) throw new Error("Could not find product with that ID");
 
   return (
     <div className="w-full container p-8 flex flex-col md:flex-row">
@@ -48,37 +71,53 @@ export default function ShopProductPage() {
         />
       </div>
       <div className="md:w-1/3">
-        <Text className="text-2xl font-bold pr-4 pt-8">{product.name}</Text>
-        <Text className="text-2xl italic text-gray-500 pb-4">
-          ${product.priceInCents / 100}
-        </Text>
-        <div className="flex gap-4">
-          <div>
-            <Label>Size</Label>
-            <Select>
-              <SelectTrigger className="w-[120px]">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="small">Small</SelectItem>
-                <SelectItem value="large">Large</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <Button
-            className="mb-8 mt-6"
-            onClick={() =>
-              addToCart({
-                shopProductId: product._id,
-                quantity: 1,
-              })
-            }
-          >
-            Add to cart
-          </Button>
-        </div>
+        <div className="sticky top-1">
+          <Text className="text-2xl font-bold pr-4 pt-8">{product.name}</Text>
+          <Text className="text-2xl italic text-gray-500 pb-4">
+            ${product.priceInCents / 100}
+          </Text>
+          <div className="flex gap-4">
+            {product.options.map((option) => (
+              <div key={option._id}>
+                <Label>{option.name}</Label>
+                <Select
+                  onValueChange={(val) => {
+                    handleSelectProductOption(option.name, val);
+                  }}
+                >
+                  <SelectTrigger className="w-[120px] capitalize">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {option.values.map((value) => (
+                      <SelectItem
+                        key={value}
+                        value={value}
+                        className="capitalize"
+                      >
+                        {value}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            ))}
 
-        <Text>{product.description}</Text>
+            <Button
+              className="mb-8 mt-6"
+              onClick={() =>
+                addToCart({
+                  shopProductId: product._id,
+                  options: selectedOptions,
+                })
+              }
+              disabled={!canAddToCart}
+            >
+              Add to cart
+            </Button>
+          </div>
+          <Text className="whitespace-pre-wrap">{product.description}</Text>
+        </div>
       </div>
     </div>
   );
