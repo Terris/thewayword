@@ -71,12 +71,7 @@ export function EditShopProductOptionForm({
         onSubmit={onSubmit}
       >
         {({ isSubmitting, dirty, isValid }) => (
-          <Form
-            className=" flex flex-col gap-4"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
+          <Form className=" flex flex-col gap-4">
             <Text className="text-xl font-black">Edit Shop Product</Text>
             <Field name="name">
               {({ field, meta }: FieldProps) => (
