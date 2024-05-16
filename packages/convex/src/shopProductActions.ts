@@ -1,7 +1,6 @@
 import { v } from "convex/values";
 import { internalAction } from "./_generated/server";
 import { stripe } from "./lib/stripe";
-import Stripe from "stripe";
 import { internal } from "./_generated/api";
 
 export const internalCreateStripeProduct = internalAction({
@@ -11,7 +10,7 @@ export const internalCreateStripeProduct = internalAction({
     shopProductId: v.id("shopProducts"),
   },
   handler: async (ctx, args) => {
-    // create the stripe plan
+    // create the stripe product
     const stripeProduct = await stripe.products.create({
       name: args.name,
       default_price_data: {

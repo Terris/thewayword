@@ -99,6 +99,11 @@ export default defineSchema({
     stripePriceId: v.optional(v.string()),
     published: v.boolean(),
   }).index("by_published", ["published"]),
+  shopProductOptions: defineTable({
+    shopProductId: v.id("shopProducts"),
+    name: v.string(),
+    values: v.array(v.string()),
+  }).index("by_shop_product_id", ["shopProductId"]),
   tags: defineTable({
     name: v.string(),
   })
