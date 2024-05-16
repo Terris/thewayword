@@ -34,6 +34,7 @@ import type * as lib_utils from "../lib/utils.js";
 import type * as likes from "../likes.js";
 import type * as me from "../me.js";
 import type * as shopProductActions from "../shopProductActions.js";
+import type * as shopProductImages from "../shopProductImages.js";
 import type * as shopProductOptions from "../shopProductOptions.js";
 import type * as shopProducts from "../shopProducts.js";
 import type * as tags from "../tags.js";
@@ -72,6 +73,7 @@ declare const fullApi: ApiFromModules<{
   likes: typeof likes;
   me: typeof me;
   shopProductActions: typeof shopProductActions;
+  shopProductImages: typeof shopProductImages;
   shopProductOptions: typeof shopProductOptions;
   shopProducts: typeof shopProducts;
   tags: typeof tags;

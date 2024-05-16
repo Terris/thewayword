@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useMutation, useQuery } from "convex/react";
+import { useState } from "react";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import { type ColumnDef } from "@tanstack/react-table";
 import { type Doc, api, type Id } from "@repo/convex";
@@ -20,11 +21,17 @@ export function ShoppingCartButton() {
   const cart = useQuery(api.carts.findBySessionedUser);
   const isLoading = cart === undefined;
   const cartItemCount = cart?.items.length;
+  const [cartIsOpen, setCartIsOpen] = useState(false);
 
   if (isLoading || !cartItemCount) return null;
 
   return (
-    <Dialog>
+    <Dialog
+      open={cartIsOpen}
+      onOpenChange={(o) => {
+        setCartIsOpen(o);
+      }}
+    >
       <DialogTrigger asChild>
         <Button
           variant="ghost"
@@ -62,8 +69,14 @@ export function ShoppingCartButton() {
                 0
               ) / 100}
             </Text>
-            <Link href="/checkout">
-              <Button>Checkout</Button>
+            <Link href="/shop/checkout">
+              <Button
+                onClick={() => {
+                  setCartIsOpen(false);
+                }}
+              >
+                Checkout
+              </Button>
             </Link>
           </div>
         </DialogHeader>

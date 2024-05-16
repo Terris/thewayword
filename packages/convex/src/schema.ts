@@ -105,6 +105,11 @@ export default defineSchema({
     name: v.string(),
     values: v.array(v.string()),
   }).index("by_shop_product_id", ["shopProductId"]),
+  shopProductImages: defineTable({
+    shopProductId: v.id("shopProducts"),
+    order: v.number(),
+    fileId: v.id("files"),
+  }).index("by_shop_product_id", ["shopProductId"]),
   tags: defineTable({
     name: v.string(),
   })

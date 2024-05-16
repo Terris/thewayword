@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useMutation, useQuery } from "convex/react";
 import { type Id, api } from "@repo/convex";
@@ -16,6 +15,7 @@ import {
   SelectValue,
   Text,
 } from "@repo/ui";
+import { ShopProductImages } from "./ShopProductImages";
 
 interface ProductOptionSelection {
   name: string;
@@ -55,20 +55,7 @@ export default function ShopProductPage() {
   return (
     <div className="w-full container p-8 flex flex-col md:flex-row">
       <div className="md:w-2/3">
-        <Image
-          src="/img/products/gold-murder-noodle-hat-front.png"
-          alt="product image"
-          width={800}
-          height={800}
-          className="rounded max-w-full"
-        />
-        <Image
-          src="/img/products/gold-murder-noodle-hat-back.png"
-          alt="product image"
-          width={800}
-          height={800}
-          className="hidden rounded max-w-full"
-        />
+        <ShopProductImages shopProductId={id as Id<"shopProducts">} />
       </div>
       <div className="md:w-1/3">
         <div className="sticky top-1">
