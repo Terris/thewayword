@@ -13,7 +13,6 @@ export default function ShopPage() {
   // const isLoading = allProducts === undefined;
 
   return (
-    <PrivatePageWrapper authorizedRoles={["admin"]}>
       <div className="w-full p-8 ">
         <Text className="text-2xl font-bold text-center">
           The Wayword Shop is coming soon!
@@ -37,6 +36,5 @@ export default function ShopPage() {
           ))}
         </div>
       </div>
-    </PrivatePageWrapper>
   );
 }
