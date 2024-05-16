@@ -81,7 +81,7 @@ export function EditShopProductOptionForm({
             <Field name="name">
               {({ field, meta }: FieldProps) => (
                 <div>
-                  <Label htmlFor={field.name}>Product name</Label>
+                  <Label htmlFor={field.name}>Option name</Label>
                   <Input className="w-full" {...field} />
                   {meta.touched && meta.error ? (
                     <Text className="text-sm text-destructive">
@@ -109,7 +109,7 @@ export function EditShopProductOptionForm({
               disabled={!dirty || !isValid || isSubmitting}
               className="mb-4"
             >
-              Update product details
+              Update product option
             </Button>
           </Form>
         )}
