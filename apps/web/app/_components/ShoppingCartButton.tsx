@@ -95,7 +95,7 @@ interface CartItemRow {
 const columns: ColumnDef<CartItemRow>[] = [
   {
     accessorKey: "product.name",
-    header: "Name",
+    header: "Product",
     cell: ({ row }) => {
       return <Text>{row.original.product?.name}</Text>;
     },
@@ -156,6 +156,7 @@ function DeleteCartItemButton({
           cartItemId,
         });
       }}
+      variant="ghost"
     >
       <Trash2 className="w-3 h-3" />
     </Button>
