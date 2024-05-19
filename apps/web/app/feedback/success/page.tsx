@@ -12,8 +12,8 @@ export default function FeedbackSuccessPage() {
       <Text>
         <Link href="/feed" className="underline hover:text-muted">
           Go back to the home page
-        </Link>
-        of
+        </Link>{" "}
+        or{" "}
         <Link href="/feedback" className="underline hover:text-muted">
           submit more feedback
         </Link>
