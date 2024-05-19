@@ -2,6 +2,7 @@ import { ConvexError, v } from "convex/values";
 import { internal } from "./_generated/api";
 import { stripe } from "./lib/stripe";
 import { internalAction } from "./_generated/server";
+import { Id } from "./_generated/dataModel";
 
 // WEBHOOKS
 export const handleWebhook = internalAction({
@@ -9,8 +10,7 @@ export const handleWebhook = internalAction({
   handler: async (ctx, { signature, requestString }) => {
     const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
     try {
-      // Check that the event signature is correct and return the event
-      const event = stripe.webhooks.constructEvent(
+      const event = await stripe.webhooks.constructEventAsync(
         requestString,
         signature,
         endpointSecret
@@ -40,6 +40,7 @@ export const handleWebhook = internalAction({
             stripeCustomerId: paymentIntent.customer as string,
             amountInCents: paymentIntent.amount,
             status: paymentIntent.status,
+            orderId: paymentIntent.metadata.orderId as Id<"orders">,
           });
         }
         case "payment_intent.succeeded": {
@@ -63,6 +64,7 @@ export const handleWebhook = internalAction({
 
       return { success: true };
     } catch (error: any) {
+      console.log("Error", error.message);
       return { success: false, error: error.message };
     }
   },

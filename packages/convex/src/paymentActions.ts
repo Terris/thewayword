@@ -58,10 +58,21 @@ export const createPaymentIntent = action({
       customer: user.stripeCustomerId,
       currency: "usd",
       metadata: {
+        orderId: order._id,
         tax_calculation: taxCalculation.id,
       },
     });
 
-    return { clientSecret: paymentIntent.client_secret };
+    // update the order with the payment intent id
+    await ctx.runMutation(internal.orders.systemUpdateStripePaymentIntent, {
+      id: order._id,
+      stripePaymentIntentId: paymentIntent.id,
+    });
+
+    return {
+      clientSecret: paymentIntent.client_secret,
+      taxAmount: taxCalculation.tax_amount_inclusive,
+      totalAmount: taxCalculation.amount_total,
+    };
   },
 });

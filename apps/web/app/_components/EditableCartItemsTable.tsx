@@ -66,7 +66,11 @@ const columns: ColumnDef<CartItemRow>[] = [
   },
 ];
 
-export function CartItemsTable({ cartItems }: { cartItems: CartItemRow[] }) {
+export function EditableCartItemsTable({
+  cartItems,
+}: {
+  cartItems: CartItemRow[];
+}) {
   return <DataTable columns={columns} data={cartItems} />;
 }
 

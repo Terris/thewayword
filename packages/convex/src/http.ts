@@ -4,6 +4,7 @@ import { internal } from "./_generated/api";
 
 const http = httpRouter();
 
+// CLERK
 http.route({
   path: "/webhooks/clerk",
   method: "POST",
@@ -30,6 +31,30 @@ http.route({
     return new Response("Webhook Error", {
       status: 400,
     });
+  }),
+});
+
+// STRIPE
+http.route({
+  path: "/webhooks/stripe",
+  method: "POST",
+  handler: httpAction(async (ctx, request) => {
+    const signature = request.headers.get("stripe-signature") as string;
+
+    const result = await ctx.runAction(internal.stripeActions.handleWebhook, {
+      signature,
+      requestString: await request.text(),
+    });
+
+    if (result.success) {
+      return new Response(null, {
+        status: 200,
+      });
+    } else {
+      return new Response("Webhook Error", {
+        status: 400,
+      });
+    }
   }),
 });
 

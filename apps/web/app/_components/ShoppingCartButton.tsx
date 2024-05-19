@@ -14,7 +14,7 @@ import {
   Text,
 } from "@repo/ui";
 import { cn } from "@repo/utils";
-import { CartItemsTable } from "./CartItemsTable";
+import { EditableCartItemsTable } from "./EditableCartItemsTable";
 
 export function ShoppingCartButton() {
   const cart = useQuery(api.carts.findBySessionedUser);
@@ -52,7 +52,7 @@ export function ShoppingCartButton() {
       <DialogContent className="p-4 w-full max-w-[900px]">
         <DialogHeader>
           <DialogTitle className="pb-4">Your cart</DialogTitle>
-          <CartItemsTable
+          <EditableCartItemsTable
             cartItems={cart.items.map((item) => ({
               ...item,
               cartId: cart._id,
@@ -68,7 +68,7 @@ export function ShoppingCartButton() {
                 0
               ) / 100}
             </Text>
-            <Link href="/shop/checkout">
+            <Link href="/checkout">
               <Button
                 onClick={() => {
                   setCartIsOpen(false);

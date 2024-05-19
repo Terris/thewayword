@@ -129,6 +129,7 @@ export default defineSchema({
     stripeCustomerId: v.string(),
     stripePaymentIntentId: v.string(),
     userId: v.id("users"),
+    orderId: v.id("orders"),
   }).index("by_stripe_payment_intent_id", ["stripePaymentIntentId"]),
   shopProducts: defineTable({
     name: v.string(),

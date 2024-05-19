@@ -1,5 +1,6 @@
 import { ConvexError, v } from "convex/values";
 import { internalMutation } from "./_generated/server";
+import { internal } from "./_generated/api";
 
 // INTERNAL
 export const systemCreatePayment = internalMutation({
@@ -10,6 +11,7 @@ export const systemCreatePayment = internalMutation({
     stripeCustomerId: v.string(),
     amountInCents: v.number(),
     status: v.string(),
+    orderId: v.id("orders"),
   },
   handler: async (ctx, args) => {
     // check that the payment doesn't already exist
@@ -35,8 +37,8 @@ export const systemUpdatePaymentStatus = internalMutation({
   handler: async (ctx, { stripePaymentIntentId, status, failReason }) => {
     const existingPayment = await ctx.db
       .query("payments")
-      .filter((q) =>
-        q.eq(q.field("stripePaymentIntentId"), stripePaymentIntentId)
+      .withIndex("by_stripe_payment_intent_id", (q) =>
+        q.eq("stripePaymentIntentId", stripePaymentIntentId)
       )
       .first();
 
@@ -46,9 +48,19 @@ export const systemUpdatePaymentStatus = internalMutation({
       );
     }
 
-    return await ctx.db.patch(existingPayment._id, {
+    await ctx.db.patch(existingPayment._id, {
       status,
       failReason,
     });
+
+    if (status === "succeeded") {
+      await ctx.scheduler.runAfter(
+        0,
+        internal.orders.systemHandleSuccessfulPayment,
+        {
+          orderId: existingPayment.orderId,
+        }
+      );
+    }
   },
 });
