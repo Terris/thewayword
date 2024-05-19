@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { cn } from "@repo/utils";
 import { Toaster } from "@repo/ui";
 import "@repo/ui/globals.css";
@@ -6,7 +7,6 @@ import "./app.css";
 import { Masthead } from "./Masthead";
 import { AppProviders } from "./AppProviders";
 import { Footer } from "./Footer";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
   title: "The Wayword",
