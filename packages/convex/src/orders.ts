@@ -184,5 +184,15 @@ export const systemHandleSuccessfulPayment = internalMutation({
         orderId: order._id,
       }
     );
+
+    // send a new order email to admin
+    await ctx.scheduler.runAfter(
+      0,
+      internal.orderActions.sendOrderConfirmationEmailToUser,
+      {
+        userEmail: orderUser.email,
+        orderId: order._id,
+      }
+    );
   },
 });

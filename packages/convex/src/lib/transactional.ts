@@ -1,84 +1,103 @@
 /* eslint no-irregular-whitespace: off  -- email templates are cray cray */
-interface OrganizationEmailHTMLProps {
+
+interface BuildOrderConfirmationEmailProps {
+  toEmail: string;
+  orderId: string;
+}
+
+export function buildOrderConfirmationEmailHTML({
+  toEmail,
+  orderId,
+}: BuildOrderConfirmationEmailProps) {
+  const emaiContent = `
+  <h1 class="" style="color:rgb(0,0,0);font-size:24px;font-weight:400;text-align:center;padding:0px;margin-top:30px;margin-bottom:30px;margin-left:0px;margin-right:0px">
+    Thanks for your order!
+  </h1>
+  <p style="font-size:16px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
+    Hello <!-- -->${toEmail}<!-- -->,
+  </p>
+  <p style="font-size:16px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
+    We wanted to let you know that we've received your order and are working to fulfill it now.
+    We'll send you another email with tracking information once your order has shipped.
+  </p>
+  <p style="font-size:16px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
+    You can view the status of your order at any time:
+    <a href="https://thewayword.com/me/orders/${orderId}" style="color:rgb(37,99,235);text-decoration:none;text-decoration-line:none" target="_blank">
+      View My Order
+    </a>
+  </p>
+  <p style="font-size:16px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
+    If you have any questions about your order, you can contact the founder Terris directly at
+    <a href="mailto:terris@thewayword.com" style="color:rgb(37,99,235);text-decoration:none;text-decoration-line:none" target="_blank">
+      terris@thewayword.com
+    </a>
+  </p>
+`;
+  return wrapEmailContentWithTemplate(emaiContent);
+}
+
+interface BuildInviteEmailProps {
   toEmail: string;
   inviteLink: string;
 }
-export function buildOrganizationInviteEmailHTML({
+export function buildInviteEmailHTML({
   toEmail,
   inviteLink,
-}: OrganizationEmailHTMLProps) {
+}: BuildInviteEmailProps) {
+  const emaiContent = `
+    <h1 class="" style="color:rgb(0,0,0);font-size:24px;font-weight:400;text-align:center;padding:0px;margin-top:30px;margin-bottom:30px;margin-left:0px;margin-right:0px">
+      Join us on The Wayword!
+    </h1>
+    <p style="font-size:16px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
+      Hello <!-- -->${toEmail}<!-- -->,
+    </p>
+    <p style="font-size:16px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
+      Terris Kremer has invited you to the join us on The Wayword, the adventure logging app.
+    </p>
+    <p style="font-size:16px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
+      Click the link below to create your account or copy and paste this URL into your browser:<!-- -->
+      <a href="${inviteLink}" style="color:rgb(37,99,235);text-decoration:none;text-decoration-line:none" target="_blank">
+        ${inviteLink}
+      </a>
+    </p>
+`;
+  return wrapEmailContentWithTemplate(emaiContent);
+}
+
+const wrapEmailContentWithTemplate = (content: string) => {
   return `
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" lang="en">
-  <head>
+
+<head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  </head>
-  <div style="display:none;overflow:hidden;line-height:1px;opacity:0;max-height:0;max-width:0">
-    Join The Wayword
-    <div>‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿ ‌​‍‎‏﻿</div>
-  </div>
-  <body style="background-color:rgb(255,255,255);margin-top:auto;margin-bottom:auto;margin-left:auto;margin-right:auto;font-family:ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;;padding-left:0.5rem;padding-right:0.5rem">
-    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="max-width:465px;margin-top:40px;margin-bottom:40px;margin-left:auto;margin-right:auto;padding:20px">
-      <tbody>
-        <tr style="width:100%">
-          <td>
-            <h1 class="" style="color:rgb(0,0,0);font-size:24px;font-weight:400;text-align:center;padding:0px;margin-top:30px;margin-bottom:30px;margin-left:0px;margin-right:0px">
-              Join us on The Wayword!
-            </h1>
-            <p style="font-size:16px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
-              Hello <!-- -->${toEmail}<!-- -->,
-            </p>
-            <p style="font-size:16px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
-              Terris Kremer has invited you to the join us on The Wayword, the adventure logging app.
-            </p>
-            <p style="font-size:16px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
-              Click the link below to create your account.
-            </p>
-            <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align:center;margin-top:32px;margin-bottom:32px">
-              <tbody>
-                <tr>
-                  <td>
-                    <a href="${inviteLink}" style="background-color:rgb(88,110,91);border-radius:0.25rem;color:rgb(255,255,255);font-size:16px;font-weight:600;text-decoration-line:none;text-align:center;padding-left:1.25rem;padding-right:1.25rem;padding-top:0.75rem;padding-bottom:0.75rem;line-height:100%;text-decoration:none;display:inline-block;max-width:100%;padding:12px 20px 12px 20px" target="_blank">
-                      <span>
-                        <!--[if mso]>
-                          <i style="letter-spacing: 20px;mso-font-width:-100%;mso-text-raise:18" hidden>&nbsp;</i>
-                        <![endif]-->
-                      </span>
-                      <span style="max-width:100%;display:inline-block;line-height:120%;mso-padding-alt:0px;mso-text-raise:9px">
-                        Join The Wayword
-                      </span>
-                      <span>
-                        <!--[if mso]>
-                          <i style="letter-spacing: 20px;mso-font-width:-100%" hidden>&nbsp;</i>
-                        <![endif]-->
-                      </span>
-                    </a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <p style="font-size:14px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
-              or copy and paste this URL into your browser:<!-- -->
-              <a href="${inviteLink}" style="color:rgb(37,99,235);text-decoration:none;text-decoration-line:none" target="_blank">
-                ${inviteLink}
-              </a>
-            </p>
-            <hr style="width:100%;border:none;border-top:1px solid #eaeaea;border-width:1px;border-style:solid;border-color:rgb(234,234,234);margin-top:26px;margin-bottom:26px;margin-left:0px;margin-right:0px" />
-            <p style="font-size:12px;line-height:24px;margin:16px 0;color:rgb(102,102,102)">
-              This invitation was intended for<!-- -->
-              <span style="color:rgb(0,0,0)">${toEmail}</span>
-              and sent from<!-- -->
-              <a href="https://thewayword.com" style="color:#067df7;text-decoration:none" target="_blank">
-                <span style="color:rgb(0,0,0)">
-                  thewayword.com
-                </span>
-              </a>.
-              If you were not expecting this invitation, you can ignore this email. If you are concerned about your account&rsquo;s safety, please reply to this email to get in touch with us.
-            </p>
-          </td>
-        </tr>
-      </tbody>
+    <meta content="width=device-width" name="viewport" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta name="x-apple-disable-message-reformatting" />
+    <meta content="telephone=no,address=no,email=no,date=no,url=no" name="format-detection" />
+    <meta content="light" name="color-scheme" />
+    <meta content="light dark" name="supported-color-schemes" />
+</head>
+
+<body style="font-family:-apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, &#x27;Roboto&#x27;, &#x27;Oxygen&#x27;, &#x27;Ubuntu&#x27;, &#x27;Cantarell&#x27;, &#x27;Fira Sans&#x27;, &#x27;Droid Sans&#x27;, &#x27;Helvetica Neue&#x27;, sans-serif;font-size:1.0769230769230769em;min-height:100%;line-height:155%">
+    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="align:center;padding-left:0px;padding-right:0px;h-padding:0px;width:auto;max-width:600px;font-family:-apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, &#x27;Roboto&#x27;, &#x27;Oxygen&#x27;, &#x27;Ubuntu&#x27;, &#x27;Cantarell&#x27;, &#x27;Fira Sans&#x27;, &#x27;Droid Sans&#x27;, &#x27;Helvetica Neue&#x27;, sans-serif">
+        <tbody>
+            <tr>
+                <td>
+                    <table align="center" width="100%" border="0" cellPadding="0" cellSpacing="0" role="presentation">
+                        <tbody style="width:100%">
+                            <tr style="width:100%">
+                                <td align="center" data-id="__react-email-column"><img class="" height="215" src="https://resend-attachments.s3.amazonaws.com//hL8VayvdD4szul8" style="display:block;outline:none;border:none;text-decoration:none;max-width:100%;border-radius:8px" width="314" /></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    ${content}
+                    <p class="" style="margin:0;padding:0;font-size:1em;padding-top:0.5em;padding-bottom:0.5em;text-align:left"></p>
+                </td>
+            </tr>
+        </tbody>
     </table>
-  </body>
-</html>`;
-}
+</body>
+</html>
+  `;
+};
