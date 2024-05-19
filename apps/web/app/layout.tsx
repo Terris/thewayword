@@ -6,6 +6,7 @@ import "./app.css";
 import { Masthead } from "./Masthead";
 import { AppProviders } from "./AppProviders";
 import { Footer } from "./Footer";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata = {
   title: "The Wayword",
@@ -36,6 +37,7 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
             <Toaster />
           </div>
           <Analytics />
+          <SpeedInsights />
         </AppProviders>
       </body>
     </html>
