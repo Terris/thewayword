@@ -7,6 +7,7 @@ import { internalAction } from "./_generated/server";
 import { internal } from "./_generated/api";
 import { emailFromAddress } from "./lib/email";
 import { Resend } from "resend";
+import { stripe } from "./lib/stripe";
 
 // INTERNAL FUNCTIONS
 // ==================================================
@@ -149,6 +150,25 @@ export const addEmailToResendAudience = internalAction({
     if (addEmailResponse.error) {
       throw new ConvexError(addEmailResponse.error.message);
     }
+
+    return true;
+  },
+});
+
+export const systemCreateAndSyncStripeCustomerToUser = internalAction({
+  args: { userId: v.id("users"), email: v.string() },
+  handler: async (ctx, { userId, email }) => {
+    const stripeCustomer = await stripe.customers.create({
+      email: email,
+      metadata: {
+        userId,
+      },
+    });
+
+    await ctx.runMutation(internal.users.systemSetStripeCustomerId, {
+      id: userId,
+      stripeCustomerId: stripeCustomer.id,
+    });
 
     return true;
   },

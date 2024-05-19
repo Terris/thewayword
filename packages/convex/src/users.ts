@@ -6,7 +6,7 @@ import {
   query,
 } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
-import { internal } from "./_generated/api";
+import { api, internal } from "./_generated/api";
 
 // SESSIONED USER FUNCTIONS
 // ==================================================
@@ -114,6 +114,7 @@ export const systemSaveNewClerkUser = internalMutation({
   },
   handler: async (ctx, { clerkId, email, name, avatarUrl, roles }) => {
     const tokenIdentifier = `${process.env.CLERK_JWT_ISSUER_DOMAIN}|${clerkId}`;
+
     const user = await ctx.db
       .query("users")
       .withIndex("by_token", (q) => q.eq("tokenIdentifier", tokenIdentifier))
@@ -121,12 +122,13 @@ export const systemSaveNewClerkUser = internalMutation({
 
     // If we've seen this identity before but the name has changed, patch the value.
     if (user !== null) {
+      user._id;
       if (user.name !== name) {
         await ctx.db.patch(user._id, { name });
       }
     } else {
       // If it's a new identity, create a new `User`.
-      await ctx.db.insert("users", {
+      const newUserId = await ctx.db.insert("users", {
         name,
         email,
         avatarUrl,
@@ -134,25 +136,35 @@ export const systemSaveNewClerkUser = internalMutation({
         clerkUserId: clerkId,
         roles,
       });
+
+      // add email address to resend audience
+      await ctx.scheduler.runAfter(
+        0,
+        internal.userActions.addEmailToResendAudience,
+        {
+          email,
+        }
+      );
+
+      // send new user email to admin
+      await ctx.scheduler.runAfter(
+        0,
+        internal.userActions.sendNewUserEmailToAdmin,
+        {
+          userEmail: email,
+        }
+      );
+
+      // Schedule action to create and sync a stripe customer id
+      await ctx.scheduler.runAfter(
+        0,
+        internal.userActions.systemCreateAndSyncStripeCustomerToUser,
+        {
+          userId: newUserId,
+          email,
+        }
+      );
     }
-
-    // add email address to resend audience
-    await ctx.scheduler.runAfter(
-      0,
-      internal.userActions.addEmailToResendAudience,
-      {
-        email,
-      }
-    );
-
-    // send new user email to admin
-    await ctx.scheduler.runAfter(
-      0,
-      internal.userActions.sendNewUserEmailToAdmin,
-      {
-        userEmail: email,
-      }
-    );
 
     return true;
   },
@@ -183,7 +195,16 @@ export const systemFindByStripeCustomerId = internalQuery({
   handler: async (ctx, { stripeCustomerId }) => {
     return await ctx.db
       .query("users")
-      .filter((q) => q.eq(q.field("stripeCustomerId"), stripeCustomerId))
+      .withIndex("by_stripe_customer_id", (q) =>
+        q.eq("stripeCustomerId", stripeCustomerId)
+      )
       .first();
+  },
+});
+
+export const systemSetStripeCustomerId = internalMutation({
+  args: { id: v.id("users"), stripeCustomerId: v.string() },
+  handler: async (ctx, { id, stripeCustomerId }) => {
+    await ctx.db.patch(id, { stripeCustomerId });
   },
 });
