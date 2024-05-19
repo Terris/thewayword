@@ -124,10 +124,12 @@ export default defineSchema({
     clerkUserId: v.string(),
     avatarUrl: v.optional(v.string()),
     roles: v.optional(v.array(v.string())),
+    stripeCustomerId: v.optional(v.string()),
   })
     .index("by_token", ["tokenIdentifier"])
     .index("by_email", ["email"])
-    .index("by_clerk_user_id", ["clerkUserId"]),
+    .index("by_clerk_user_id", ["clerkUserId"])
+    .index("by_stripe_customer_id", ["stripeCustomerId"]),
   userAlerts: defineTable({
     userId: v.id("users"),
     message: v.string(),
