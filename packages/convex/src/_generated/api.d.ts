@@ -18,6 +18,7 @@ import type * as adventureLogBlocks from "../adventureLogBlocks.js";
 import type * as adventureLogTags from "../adventureLogTags.js";
 import type * as adventureLogs from "../adventureLogs.js";
 import type * as carts from "../carts.js";
+import type * as checkoutActions from "../checkoutActions.js";
 import type * as comments from "../comments.js";
 import type * as feedback from "../feedback.js";
 import type * as feedbackActions from "../feedbackActions.js";
@@ -57,6 +58,7 @@ declare const fullApi: ApiFromModules<{
   adventureLogTags: typeof adventureLogTags;
   adventureLogs: typeof adventureLogs;
   carts: typeof carts;
+  checkoutActions: typeof checkoutActions;
   comments: typeof comments;
   feedback: typeof feedback;
   feedbackActions: typeof feedbackActions;

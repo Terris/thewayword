@@ -124,6 +124,7 @@ export default defineSchema({
     clerkUserId: v.string(),
     avatarUrl: v.optional(v.string()),
     roles: v.optional(v.array(v.string())),
+    stripeCustomerId: v.optional(v.string()),
   })
     .index("by_token", ["tokenIdentifier"])
     .index("by_email", ["email"])
