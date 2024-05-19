@@ -17,14 +17,16 @@ export default function RoadmapPage() {
       <ul className="pb-8 list-disc pl-5">
         <li>Users can bucket list a log</li>
         <li>Users can include other users in a log</li>
+        <li>Users can add gallery image blocks</li>
+        <li>Users can caption an image block</li>
         <li>Users can create detailed maps</li>
         <li>Users can embed videos</li>
         <li>Users can print / download adventure logs</li>
         <li>Users can purchase printed physical adventure logs</li>
-        <li>Users can shop</li>
         <li>Users can download a social media kit</li>
         <li>Users can view a map of all adventure logs</li>
         <li className="line-through">Users can follow other users</li>
+        <li className="line-through">Users can shop</li>
       </ul>
       <Text className="font-soleil font-bold uppercase tracking-wide pb-4">
         Quality of life
@@ -41,10 +43,6 @@ export default function RoadmapPage() {
         <li>User can click on a tag and see logs with a similar tag</li>
         <li>
           User can click a location and see all logs with the same location
-        </li>
-        <li>
-          Change user name to firstName and lastName for easier sync with clerk
-          and resend
         </li>
         <li>User can turn off comments for their own logs</li>
         <li className="line-through">Add text formatting to story blocks</li>
