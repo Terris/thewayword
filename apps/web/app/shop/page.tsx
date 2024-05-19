@@ -13,12 +13,6 @@ export default function ShopPage() {
 
   return (
     <div className="w-full p-8 ">
-      <Text className="text-2xl font-bold text-center">
-        The Wayword Shop is coming soon!
-      </Text>
-      <Text className="text-center pb-16">
-        ...but here&rsquo;s a preview of what&rsquo;s <i>in store</i>.
-      </Text>
       <div className="container grid grid-cols-1 md:grid-cols-3 gap-4">
         {allProducts?.map((product) => (
           <div className="group" key={product._id}>
