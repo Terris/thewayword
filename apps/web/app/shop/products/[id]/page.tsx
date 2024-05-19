@@ -15,6 +15,7 @@ import {
   SelectValue,
   Text,
 } from "@repo/ui";
+import { useToast } from "@repo/ui/hooks";
 import { ShopProductImages } from "./ShopProductImages";
 
 interface ProductOptionSelection {
@@ -23,6 +24,7 @@ interface ProductOptionSelection {
 }
 
 export default function ShopProductPage() {
+  const { toast } = useToast();
   const { id } = useParams();
   const [selectedOptions, setSelectedOptions] = useState<
     ProductOptionSelection[]
@@ -48,6 +50,28 @@ export default function ShopProductPage() {
       ...newSelectedOptions,
       { name: optionName, value: selectedValue },
     ]);
+  }
+
+  async function handleAddToCart() {
+    if (!canAddToCart) return;
+    try {
+      await addToCart({
+        shopProductId: product._id,
+        options: selectedOptions,
+      });
+      toast({
+        title: "Success",
+        description: `${product.name} added to cart`,
+      });
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Unknown error";
+      toast({
+        title: "Error trying to add item to cart",
+        description: errorMessage,
+        variant: "destructive",
+      });
+    }
   }
 
   if (isLoading) return <LoadingScreen />;
@@ -92,12 +116,7 @@ export default function ShopProductPage() {
 
             <Button
               className="mb-8 mt-6"
-              onClick={() =>
-                addToCart({
-                  shopProductId: product._id,
-                  options: selectedOptions,
-                })
-              }
+              onClick={() => handleAddToCart()}
               disabled={!canAddToCart}
             >
               Add to cart

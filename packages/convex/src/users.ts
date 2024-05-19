@@ -177,3 +177,13 @@ export const systemUpdateUserProfile = internalMutation({
     });
   },
 });
+
+export const systemFindByStripeCustomerId = internalQuery({
+  args: { stripeCustomerId: v.string() },
+  handler: async (ctx, { stripeCustomerId }) => {
+    return await ctx.db
+      .query("users")
+      .filter((q) => q.eq(q.field("stripeCustomerId"), stripeCustomerId))
+      .first();
+  },
+});

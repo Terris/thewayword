@@ -1,5 +1,5 @@
 import { asyncMap } from "convex-helpers";
-import { mutation, query } from "./_generated/server";
+import { internalQuery, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { v } from "convex/values";
 import { Id } from "./_generated/dataModel";
@@ -11,7 +11,9 @@ export const findBySessionedUser = query({
 
     const cart = await ctx.db
       .query("carts")
-      .withIndex("by_user_id", (q) => q.eq("userId", user._id))
+      .withIndex("by_user_id_has_purchased", (q) =>
+        q.eq("userId", user._id).eq("hasPurchased", false)
+      )
       .first();
 
     if (!cart) return null;
@@ -51,13 +53,16 @@ export const addShopProductToCartBySessionedUser = mutation({
     const { user } = await validateIdentity(ctx);
     const existingCart = await ctx.db
       .query("carts")
-      .withIndex("by_user_id", (q) => q.eq("userId", user._id))
+      .withIndex("by_user_id_has_purchased", (q) =>
+        q.eq("userId", user._id).eq("hasPurchased", false)
+      )
       .first();
 
     let cartId = existingCart?._id;
     if (!existingCart) {
       cartId = await ctx.db.insert("carts", {
         userId: user._id,
+        hasPurchased: false,
       });
     }
     if (!cartId) throw new Error("Failed to get or create cart");
@@ -80,5 +85,14 @@ export const removeCartItemById = mutation({
     if (!existingCart) throw new Error("Cart not found");
     if (existingCart.userId !== user._id) throw new Error("Unauthorized");
     await ctx.db.delete(cartItemId);
+  },
+});
+
+// INTERNAL ACTIONS
+
+export const systemFindById = internalQuery({
+  args: { id: v.id("carts") },
+  handler: async (ctx, { id }) => {
+    return await ctx.db.get(id);
   },
 });

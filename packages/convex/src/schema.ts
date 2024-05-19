@@ -42,7 +42,8 @@ export default defineSchema({
   }).index("by_adventure_log_id", ["adventureLogId"]),
   carts: defineTable({
     userId: v.id("users"),
-  }).index("by_user_id", ["userId"]),
+    hasPurchased: v.boolean(),
+  }).index("by_user_id_has_purchased", ["userId", "hasPurchased"]),
   cartItems: defineTable({
     cartId: v.id("carts"),
     shopProductId: v.id("shopProducts"),
@@ -92,6 +93,43 @@ export default defineSchema({
     .index("by_user_id", ["userId"])
     .index("by_adventure_log_id", ["adventureLogId"])
     .index("by_user_id_adventure_log_id", ["userId", "adventureLogId"]),
+  orders: defineTable({
+    userId: v.id("users"),
+    cartId: v.optional(v.id("carts")),
+    stripePaymentIntentId: v.optional(v.string()),
+    shippingAddress: v.object({
+      addressLine1: v.string(),
+      addressLine2: v.optional(v.string()),
+      city: v.string(),
+      state: v.string(),
+      zip: v.string(),
+    }),
+    status: v.union(
+      v.literal("created"),
+      v.literal("processing"),
+      v.literal("succeeded"),
+      v.literal("failed")
+    ),
+  })
+    .index("by_user_id", ["userId"])
+    .index("by_stripe_payment_intent_id", ["stripePaymentIntentId"]),
+  orderItems: defineTable({
+    orderId: v.id("orders"),
+    shopProductId: v.id("shopProducts"),
+    options: v.optional(
+      v.array(v.object({ name: v.string(), value: v.string() }))
+    ),
+  }).index("by_order_id", ["orderId"]),
+  payments: defineTable({
+    amountInCents: v.number(),
+    description: v.optional(v.string()),
+    eventId: v.optional(v.string()),
+    failReason: v.optional(v.string()),
+    status: v.string(),
+    stripeCustomerId: v.string(),
+    stripePaymentIntentId: v.string(),
+    userId: v.id("users"),
+  }).index("by_stripe_payment_intent_id", ["stripePaymentIntentId"]),
   shopProducts: defineTable({
     name: v.string(),
     priceInCents: v.number(),
@@ -128,7 +166,8 @@ export default defineSchema({
   })
     .index("by_token", ["tokenIdentifier"])
     .index("by_email", ["email"])
-    .index("by_clerk_user_id", ["clerkUserId"]),
+    .index("by_clerk_user_id", ["clerkUserId"])
+    .index("by_stripe_customer_id", ["stripeCustomerId"]),
   userAlerts: defineTable({
     userId: v.id("users"),
     message: v.string(),
