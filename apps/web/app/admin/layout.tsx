@@ -13,6 +13,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
         <AdminLink href="/admin">Admin</AdminLink>
         <AdminLink href="/admin/shop">Shop</AdminLink>
         <AdminLink href="/admin/products">Products</AdminLink>
+        <AdminLink href="/admin/orders">Orders</AdminLink>
       </div>
       {children}
     </PrivatePageWrapper>

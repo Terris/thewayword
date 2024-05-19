@@ -7,6 +7,7 @@ import {
 } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
+import { internal } from "./_generated/api";
 
 export const findByIdAsOwner = query({
   args: { id: v.id("orders") },
@@ -31,6 +32,54 @@ export const findByIdAsOwner = query({
 
     return {
       ...order,
+      items: orderItemsWithProducts,
+    };
+  },
+});
+
+export const findAllAsAdmin = query({
+  args: {},
+  handler: async (ctx) => {
+    await validateIdentity(ctx, { requiredRoles: ["admin"] });
+    const orders = await ctx.db.query("orders").collect();
+
+    const ordersWithUsers = await asyncMap(orders, async (order) => {
+      const user = await ctx.db.get(order.userId);
+      if (!user) throw new ConvexError("User not found");
+      return { ...order, user };
+    });
+
+    return ordersWithUsers;
+  },
+});
+
+export const findByIdAsAdmin = query({
+  args: { id: v.id("orders") },
+  handler: async (ctx, { id }) => {
+    await validateIdentity(ctx, { requiredRoles: ["admin"] });
+    const order = await ctx.db.get(id);
+    if (!order) throw new ConvexError("Order not found");
+
+    const orderPayments = await ctx.db
+      .query("payments")
+      .withIndex("by_order_id", (q) => q.eq("orderId", id))
+      .collect();
+
+    const orderItems = await ctx.db
+      .query("orderItems")
+      .withIndex("by_order_id", (q) => q.eq("orderId", order._id))
+      .collect();
+
+    if (!orderItems) return null;
+
+    const orderItemsWithProducts = await asyncMap(orderItems, async (item) => {
+      const product = await ctx.db.get(item.shopProductId);
+      return { ...item, product };
+    });
+
+    return {
+      ...order,
+      payments: orderPayments,
       items: orderItemsWithProducts,
     };
   },
@@ -66,7 +115,8 @@ export const createOrderWithCartIdAndShippingAddress = mutation({
     if (!cartItems.length) throw new ConvexError("Cart is empty");
 
     const newOrderId = await ctx.db.insert("orders", {
-      status: "created",
+      status: "processing payment",
+      paymentStatus: "created",
       userId: user._id,
       cartId: cart._id,
       shippingAddress,
@@ -106,7 +156,10 @@ export const systemHandleSuccessfulPayment = internalMutation({
   handler: async (ctx, { orderId }) => {
     const order = await ctx.db.get(orderId);
     if (!order) throw new ConvexError("Order not found");
-    await ctx.db.patch(orderId, { status: "succeeded" });
+    await ctx.db.patch(orderId, {
+      paymentStatus: "succeeded",
+      status: "fulfilling",
+    });
 
     // Reset the cart
     const cart = await ctx.db
@@ -118,5 +171,18 @@ export const systemHandleSuccessfulPayment = internalMutation({
 
     if (!cart) throw new ConvexError("No cart found");
     await ctx.db.patch(cart._id, { hasPurchased: true });
+
+    const orderUser = await ctx.db.get(order.userId);
+    if (!orderUser) throw new ConvexError("Order user not found");
+
+    // send a new order email to admin
+    await ctx.scheduler.runAfter(
+      0,
+      internal.orderActions.sendCompletedOrderEmailToAdmin,
+      {
+        userEmail: orderUser.email,
+        orderId: order._id,
+      }
+    );
   },
 });

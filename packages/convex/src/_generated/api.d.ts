@@ -34,6 +34,7 @@ import type * as lib_transactional from "../lib/transactional.js";
 import type * as lib_utils from "../lib/utils.js";
 import type * as likes from "../likes.js";
 import type * as me from "../me.js";
+import type * as orderActions from "../orderActions.js";
 import type * as orders from "../orders.js";
 import type * as paymentActions from "../paymentActions.js";
 import type * as payments from "../payments.js";
@@ -78,6 +79,7 @@ declare const fullApi: ApiFromModules<{
   "lib/utils": typeof lib_utils;
   likes: typeof likes;
   me: typeof me;
+  orderActions: typeof orderActions;
   orders: typeof orders;
   paymentActions: typeof paymentActions;
   payments: typeof payments;

@@ -104,11 +104,17 @@ export default defineSchema({
       state: v.string(),
       zip: v.string(),
     }),
-    status: v.union(
+    paymentStatus: v.union(
       v.literal("created"),
       v.literal("processing"),
       v.literal("succeeded"),
       v.literal("failed")
+    ),
+    status: v.union(
+      v.literal("processing payment"),
+      v.literal("fulfilling"),
+      v.literal("shipped"),
+      v.literal("delivered")
     ),
   })
     .index("by_user_id", ["userId"])
@@ -130,7 +136,9 @@ export default defineSchema({
     stripePaymentIntentId: v.string(),
     userId: v.id("users"),
     orderId: v.id("orders"),
-  }).index("by_stripe_payment_intent_id", ["stripePaymentIntentId"]),
+  })
+    .index("by_stripe_payment_intent_id", ["stripePaymentIntentId"])
+    .index("by_order_id", ["orderId"]),
   shopProducts: defineTable({
     name: v.string(),
     priceInCents: v.number(),
