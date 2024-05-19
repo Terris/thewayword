@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { useMeContext } from "@repo/auth/context";
 import { useLockBodyScroll } from "@repo/hooks";
-import { Button, Logo, LogoDark, Text } from "@repo/ui";
+import { Button, Logo, LogoDark } from "@repo/ui";
 import { cn } from "@repo/utils";
 import { UserMenu } from "./_components/UserMenu";
 import { UserAlertsMenu } from "./_components/UserAlertsMenu";
@@ -58,12 +58,6 @@ export function Masthead() {
             ) : (
               <Logo width={160} className="max-w-full -mt-[10px]" />
             )}
-            <Text
-              as="span"
-              className="block text-center text-xs italic text-yellow-500"
-            >
-              BETA
-            </Text>
           </Link>
         </div>
         <div className="w-1/3 flex flex-row items-center justify-end gap-4">
