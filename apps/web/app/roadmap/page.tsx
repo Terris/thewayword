@@ -33,17 +33,17 @@ export default function RoadmapPage() {
       </Text>
       <ul className="list-disc pl-5">
         <li>
-          Improve date selection: re-opening the cal after selecting a date
-          should automatically show the previously selected date
-        </li>
-        <li>
-          Improve date selection: user should be able to go way back in time
-          faster
-        </li>
-        <li>
           User can click a location and see all logs with the same location
         </li>
         <li>User can turn off comments for their own logs</li>
+        <li className="line-through">
+          Improve date selection: user should be able to go way back in time
+          faster
+        </li>
+        <li className="line-through">
+          Improve date selection: re-opening the cal after selecting a date
+          should automatically show the previously selected date
+        </li>
         <li className="line-through">
           User can click on a tag and see logs with a similar tag
         </li>
