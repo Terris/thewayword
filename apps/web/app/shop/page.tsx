@@ -15,7 +15,7 @@ export default function ShopPage() {
 
   return (
     <div className="w-full p-8 ">
-      {allProducts?.length ? (
+      {allProducts.length ? (
         <div className="container grid grid-cols-1 md:grid-cols-3 gap-4">
           {allProducts.map((product) => (
             <div className="group" key={product._id}>
