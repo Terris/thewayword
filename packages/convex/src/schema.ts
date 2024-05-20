@@ -7,13 +7,10 @@ export default defineSchema({
     title: v.string(),
     location: v.optional(
       v.object({
-        mapboxId: v.optional(v.string()),
-        type: v.optional(v.string()),
         latitude: v.optional(v.number()),
         longitude: v.optional(v.number()),
         name: v.string(),
         fullAddress: v.optional(v.string()),
-        poiCategories: v.optional(v.array(v.string())),
       })
     ),
     isPublic: v.boolean(),
