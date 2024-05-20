@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { isValid, parse } from "date-fns";
+import { format, isValid, parse } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "./Button";
 import { Calendar } from "./Calendar";
@@ -18,24 +18,31 @@ export function DatePicker({
   placeholder?: string;
 }) {
   const [open, setOpen] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState(
+    format(
+      dateAsISOString ? new Date(dateAsISOString) : new Date(),
+      "MM/dd/yyyy"
+    )
+  );
 
   const date = dateAsISOString ? new Date(dateAsISOString) : undefined;
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const parsedDate = parse(e.target.value, "MM/dd/yyyy", new Date());
+  const handleInputChange = (val: string) => {
+    const parsedDate = parse(val, "MM/dd/yyyy", new Date());
     if (isValid(parsedDate)) {
       setDate(parsedDate.toISOString());
     }
-    setInputValue(e.target.value);
+    setInputValue(val);
   };
 
   return (
     <div className="flex flex-row gap-2">
       <Input
-        placeholder={placeholder}
+        placeholder={`${placeholder} (${format(new Date(), "MM/dd/yyyy")})`}
         value={inputValue}
-        onChange={handleInputChange}
+        onChange={(e) => {
+          handleInputChange(e.currentTarget.value);
+        }}
       />
       <Popover
         open={open}
@@ -54,7 +61,10 @@ export function DatePicker({
             selected={date}
             defaultMonth={date}
             onSelect={(d) => {
-              setDate(d?.toISOString());
+              if (d) {
+                setDate(d.toISOString());
+                handleInputChange(format(d, "MM/dd/yyyy"));
+              }
               setOpen(false);
             }}
             initialFocus
