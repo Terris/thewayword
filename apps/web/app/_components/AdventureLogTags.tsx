@@ -1,6 +1,7 @@
 import { useQuery } from "convex/react";
 import { api, type Id } from "@repo/convex";
 import { Text } from "@repo/ui";
+import Link from "next/link";
 
 export function AdventureLogTags({
   adventureLogId,
@@ -17,10 +18,15 @@ export function AdventureLogTags({
   if (isLoading) return null;
   return (
     <Text className="font-soleil text-xs uppercase tracking-widest pb-2">
-      {adventureLogTags.map(
-        (tag, index) =>
-          `${tag?.name}${index + 1 < adventureLogTags.length ? ", " : ""}`
-      )}
+      {adventureLogTags.map((tag, index) => (
+        <Link
+          href={`/tags/${tag?.slug}`}
+          key={tag?.slug}
+          className="hover:underline"
+        >
+          {`${tag?.name}${index + 1 < adventureLogTags.length ? ", " : ""}`}
+        </Link>
+      ))}
     </Text>
   );
 }

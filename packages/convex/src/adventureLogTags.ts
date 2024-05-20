@@ -2,6 +2,7 @@ import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
+import { stringToSlug } from "./lib/utils";
 
 export const findAllByAdventureLogId = query({
   args: { adventureLogId: v.id("adventureLogs") },
@@ -57,7 +58,10 @@ export const updateByAdventureLogId = mutation({
           tagId: existingTag._id,
         });
       } else {
-        const newTagId = await ctx.db.insert("tags", { name: tagName });
+        const newTagId = await ctx.db.insert("tags", {
+          name: tagName,
+          slug: stringToSlug(tagName),
+        });
         await ctx.db.insert("adventureLogTags", {
           adventureLogId,
           tagId: newTagId,

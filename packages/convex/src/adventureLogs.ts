@@ -5,6 +5,7 @@ import { filter } from "convex-helpers/server/filter";
 import { internalMutation, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { internal } from "./_generated/api";
+import { stringToSlug } from "./lib/utils";
 
 export const findById = query({
   args: { id: v.id("adventureLogs") },
@@ -207,6 +208,59 @@ export const findAllPublicByUserId = query({
   },
 });
 
+export const findAllPublicByTagSlug = query({
+  args: { tagSlug: v.string(), paginationOpts: paginationOptsValidator },
+  handler: async (ctx, { tagSlug, paginationOpts }) => {
+    await validateIdentity(ctx);
+
+    const tag = await ctx.db
+      .query("tags")
+      .withIndex("by_slug", (q) => q.eq("slug", tagSlug))
+      .first();
+
+    if (!tag) throw new ConvexError("Tag not found");
+
+    const allAdventureLogTagsByTagId = await ctx.db
+      .query("adventureLogTags")
+      .withIndex("by_tag_id", (q) => q.eq("tagId", tag._id))
+      .collect();
+
+    const adventureLogIds = allAdventureLogTagsByTagId.map(
+      (tag) => tag.adventureLogId
+    );
+
+    const paginatedAdventureLogs = await filter(
+      ctx.db
+        .query("adventureLogs")
+        .withIndex("by_is_public", (q) => q.eq("isPublic", true)),
+      (log) => adventureLogIds.includes(log._id)
+    )
+      .order("desc")
+      .paginate(paginationOpts);
+
+    const adventureLogsWithUser = await asyncMap(
+      paginatedAdventureLogs.page,
+      async (log) => {
+        const user = await ctx.db.get(log.userId);
+        if (!user) throw new ConvexError("Adventure log user not found");
+        return {
+          ...log,
+          user: {
+            id: user?._id,
+            name: user?.name,
+            avatarUrl: user?.avatarUrl,
+          },
+        };
+      }
+    );
+
+    return {
+      ...paginatedAdventureLogs,
+      page: adventureLogsWithUser,
+    };
+  },
+});
+
 export const create = mutation({
   args: {
     location: v.object({
@@ -256,7 +310,10 @@ export const create = mutation({
             tagId: existingTag._id,
           });
         } else {
-          const newTagId = await ctx.db.insert("tags", { name: tagName });
+          const newTagId = await ctx.db.insert("tags", {
+            name: tagName,
+            slug: stringToSlug(tagName),
+          });
           await ctx.db.insert("adventureLogTags", {
             adventureLogId: newAdventureLogId,
             tagId: newTagId,

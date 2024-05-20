@@ -39,7 +39,9 @@ export default defineSchema({
   adventureLogTags: defineTable({
     adventureLogId: v.id("adventureLogs"),
     tagId: v.id("tags"),
-  }).index("by_adventure_log_id", ["adventureLogId"]),
+  })
+    .index("by_adventure_log_id", ["adventureLogId"])
+    .index("by_tag_id", ["tagId"]),
   carts: defineTable({
     userId: v.id("users"),
     hasPurchased: v.boolean(),
@@ -159,7 +161,7 @@ export default defineSchema({
   }).index("by_shop_product_id", ["shopProductId"]),
   tags: defineTable({
     name: v.string(),
-    slug: v.optional(v.string()),
+    slug: v.string(),
   })
     .index("by_name", ["name"])
     .index("by_slug", ["slug"])

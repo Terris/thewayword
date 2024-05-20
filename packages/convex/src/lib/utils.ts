@@ -6,3 +6,7 @@ export function toTitleCase(str?: string) {
     (txt) => txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase()
   );
 }
+
+export function stringToSlug(string: string) {
+  return string.toLowerCase().replace(/\s/g, "-");
+}
