@@ -19,13 +19,16 @@ export function AdventureLogTags({
   return (
     <Text className="font-soleil text-xs uppercase tracking-widest pb-2">
       {adventureLogTags.map((tag, index) => (
-        <Link
-          href={`/tags/${tag?.slug}`}
-          key={tag?.slug}
-          className="hover:underline"
-        >
-          {`${tag?.name}${index + 1 < adventureLogTags.length ? ", " : ""}`}
-        </Link>
+        <>
+          <Link
+            href={`/tags/${tag?.slug}`}
+            key={tag?.slug}
+            className="hover:underline"
+          >
+            {tag?.name}
+          </Link>
+          {index + 1 < adventureLogTags.length ? ", " : ""}
+        </>
       ))}
     </Text>
   );

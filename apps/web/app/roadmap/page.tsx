@@ -40,11 +40,13 @@ export default function RoadmapPage() {
           Improve date selection: user should be able to go way back in time
           faster
         </li>
-        <li>User can click on a tag and see logs with a similar tag</li>
         <li>
           User can click a location and see all logs with the same location
         </li>
         <li>User can turn off comments for their own logs</li>
+        <li className="line-through">
+          User can click on a tag and see logs with a similar tag
+        </li>
         <li className="line-through">Add text formatting to story blocks</li>
         <li className="line-through">
           Add an alert box in the header that shows a list of events (e.g.
