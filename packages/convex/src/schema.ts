@@ -32,6 +32,7 @@ export default defineSchema({
     displaySize: v.optional(
       v.union(v.literal("small"), v.literal("medium"), v.literal("large"))
     ),
+    caption: v.optional(v.string()),
   })
     .index("by_adventure_log_id", ["adventureLogId"])
     .index("by_order", ["order"])

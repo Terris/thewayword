@@ -5,7 +5,8 @@ import { useMutation } from "convex/react";
 import { api, type Id } from "@repo/convex";
 
 interface EditableBlockProps {
-  displaySize: "small" | "medium" | "large";
+  displaySize?: "small" | "medium" | "large";
+  caption?: string;
 }
 interface BlockEditorContextProps {
   adventureLogId?: Id<"adventureLogBlocks">;

@@ -90,6 +90,7 @@ export function EditableBlock({
               setFileId={(fileId) => {
                 setUpdatedFileId(fileId);
               }}
+              caption={block.caption}
             />
           </ImageBlockDisplaySizeWrapper>
         ) : (

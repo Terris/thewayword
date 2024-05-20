@@ -122,8 +122,9 @@ export const update = mutation({
     displaySize: v.optional(
       v.union(v.literal("small"), v.literal("medium"), v.literal("large"))
     ),
+    caption: v.optional(v.string()),
   },
-  handler: async (ctx, { id, content, fileId, displaySize }) => {
+  handler: async (ctx, { id, content, fileId, displaySize, caption }) => {
     const { user } = await validateIdentity(ctx);
     const existingAdventureLogBlock = await ctx.db.get(id);
     if (!existingAdventureLogBlock)
@@ -139,6 +140,7 @@ export const update = mutation({
       fileId: fileId ?? existingAdventureLogBlock.fileId,
       content: content ?? existingAdventureLogBlock.content,
       displaySize: displaySize ?? existingAdventureLogBlock.displaySize,
+      caption: caption ?? existingAdventureLogBlock.caption,
     });
   },
 });
