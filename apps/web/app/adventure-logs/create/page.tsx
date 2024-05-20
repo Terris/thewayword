@@ -258,6 +258,7 @@ export default function CreatePage() {
                       ? 15
                       : undefined
                   }
+                  markerTitle={values.location.name}
                 />
               </div>
             </div>

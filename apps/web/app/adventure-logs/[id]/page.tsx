@@ -36,6 +36,7 @@ export default function AdventureLogPage() {
             longitude={adventureLog.location.longitude}
             latitude={adventureLog.location.latitude}
             zoom={13}
+            markerTitle={adventureLog.location.name}
           />
         ) : null}
       </div>
