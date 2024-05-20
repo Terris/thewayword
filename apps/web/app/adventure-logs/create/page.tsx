@@ -6,27 +6,20 @@ import * as Yup from "yup";
 import { Field, Form, Formik, type FieldProps } from "formik";
 import { useMutation } from "convex/react";
 import { api } from "@repo/convex";
-import { useGeoLocation } from "@repo/hooks";
 import { Input, Text, Button, DatePicker } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
 import { cn } from "@repo/utils";
-import {
-  type LocationInputValue,
-  LocationSearchInput,
-} from "../../_components/LocationSearchInput";
-import "mapbox-gl/dist/mapbox-gl.css";
+import { type LocationInputValue } from "../../_components/LocationSearchInput";
 import { AdventureLogMap } from "../../_components/AdventureLogMap";
+import { LocationSearchInput } from "../../_components/LocationSearchInput";
 
 const validationSchema = Yup.object().shape({
   location: Yup.object()
     .shape({
-      mapboxId: Yup.string().required(),
-      type: Yup.string().required(),
       latitude: Yup.string().required(),
       longitude: Yup.string().required(),
       name: Yup.string().required(),
       fullAddress: Yup.string(),
-      poiCategories: Yup.array(Yup.string().required()),
     })
     .required("Location is required"),
   tagsAsString: Yup.string().required("At least one tag is required"),
@@ -43,7 +36,6 @@ interface CreateAdventureLogFormValues {
 
 export default function CreatePage() {
   const router = useRouter();
-  const { coords } = useGeoLocation();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
 
@@ -53,13 +45,10 @@ export default function CreatePage() {
     try {
       const newAdventureLogId = await createLog({
         location: {
-          mapboxId: values.location.mapboxId,
-          type: values.location.type,
           latitude: Number(values.location.latitude),
           longitude: Number(values.location.longitude),
           name: values.location.name,
           fullAddress: values.location.fullAddress,
-          poiCategories: values.location.poiCategories,
         },
         tagsAsString: values.tagsAsString,
         adventureStartDate: values.adventureStartDate,
@@ -87,13 +76,10 @@ export default function CreatePage() {
     <Formik<CreateAdventureLogFormValues>
       initialValues={{
         location: {
-          mapboxId: "",
-          type: "",
           latitude: "",
           longitude: "",
           name: "",
           fullAddress: "",
-          poiCategories: [""],
         },
         tagsAsString: "",
         adventureStartDate: new Date().toISOString(),
@@ -131,7 +117,6 @@ export default function CreatePage() {
                         {({ form, meta }: FieldProps) => (
                           <>
                             <LocationSearchInput
-                              searchToken="add-adventure-log-location-search"
                               onChange={(location) => {
                                 void form.setFieldValue("location", location);
                               }}
@@ -257,12 +242,22 @@ export default function CreatePage() {
               </div>
               <div className="w-full md:w-1/2 h-[75vh] rounded border border-dashed p-2">
                 <AdventureLogMap
-                  defaultLongitude={-105.628997}
-                  defaultLatitude={40.342441}
-                  initialLongitude={coords.longitude}
-                  initialLatitude={coords.latitude}
-                  featureLongitude={Number(values.location.longitude)}
-                  featureLatitude={Number(values.location.latitude)}
+                  adventureLogId="123456"
+                  longitude={
+                    values.location.longitude
+                      ? Number(values.location.longitude)
+                      : undefined
+                  }
+                  latitude={
+                    values.location.latitude
+                      ? Number(values.location.latitude)
+                      : undefined
+                  }
+                  zoom={
+                    values.location.longitude && values.location.latitude
+                      ? 15
+                      : undefined
+                  }
                 />
               </div>
             </div>

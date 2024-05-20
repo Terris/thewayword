@@ -7,8 +7,8 @@ export default defineSchema({
     title: v.string(),
     location: v.optional(
       v.object({
-        mapboxId: v.string(),
-        type: v.string(),
+        mapboxId: v.optional(v.string()),
+        type: v.optional(v.string()),
         latitude: v.optional(v.number()),
         longitude: v.optional(v.number()),
         name: v.string(),

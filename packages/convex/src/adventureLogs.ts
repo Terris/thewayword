@@ -264,13 +264,10 @@ export const findAllPublicByTagSlug = query({
 export const create = mutation({
   args: {
     location: v.object({
-      mapboxId: v.string(),
-      type: v.string(),
       latitude: v.number(),
       longitude: v.number(),
       name: v.string(),
       fullAddress: v.optional(v.string()),
-      poiCategories: v.optional(v.array(v.string())),
     }),
     tagsAsString: v.optional(v.string()),
     adventureStartDate: v.optional(v.string()),
@@ -334,13 +331,10 @@ export const update = mutation({
     adventureEndDate: v.optional(v.string()),
     location: v.optional(
       v.object({
-        mapboxId: v.string(),
-        type: v.string(),
         latitude: v.optional(v.number()),
         longitude: v.optional(v.number()),
         name: v.string(),
         fullAddress: v.optional(v.string()),
-        poiCategories: v.optional(v.array(v.string())),
       })
     ),
   },

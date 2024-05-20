@@ -26,13 +26,10 @@ import {
 const validationSchema = Yup.object().shape({
   location: Yup.object()
     .shape({
-      mapboxId: Yup.string().required(),
-      type: Yup.string().required(),
       latitude: Yup.string().required(),
       longitude: Yup.string().required(),
       name: Yup.string().required(),
       fullAddress: Yup.string(),
-      poiCategories: Yup.array(Yup.string().required()),
     })
     .required("Location is required"),
 });
@@ -60,13 +57,10 @@ export function EditableLocationForm({
       await updateAdventureLog({
         id: id as Id<"adventureLogs">,
         location: {
-          mapboxId: values.location.mapboxId,
-          type: values.location.type,
           latitude: Number(values.location.latitude),
           longitude: Number(values.location.longitude),
           name: values.location.name,
           fullAddress: values.location.fullAddress,
-          poiCategories: values.location.poiCategories,
         },
       });
       setIsOpen(false);
@@ -102,13 +96,10 @@ export function EditableLocationForm({
           <Formik<EditableLocationFormValues>
             initialValues={{
               location: {
-                mapboxId: adventureLog.location?.mapboxId ?? "",
-                type: adventureLog.location?.type ?? "",
                 latitude: adventureLog.location?.latitude?.toString() ?? "",
                 longitude: adventureLog.location?.longitude?.toString() ?? "",
                 name: adventureLog.location?.name ?? "",
                 fullAddress: adventureLog.location?.fullAddress ?? "",
-                poiCategories: adventureLog.location?.poiCategories ?? [],
               },
             }}
             validationSchema={validationSchema}
@@ -119,7 +110,6 @@ export function EditableLocationForm({
                 {({ form, meta }: FieldProps) => (
                   <>
                     <LocationSearchInput
-                      searchToken="add-adventure-log-location-search"
                       onChange={(location) => {
                         void form.setFieldValue("location", location);
                       }}

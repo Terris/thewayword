@@ -30,15 +30,14 @@ export default function AdventureLogPage() {
   return (
     <>
       <div className="w-full h-[45vh]">
-        <AdventureLogMap
-          defaultLongitude={-105.628997}
-          defaultLatitude={40.342441}
-          initialLongitude={adventureLog.location?.longitude}
-          initialLatitude={adventureLog.location?.longitude}
-          featureLongitude={adventureLog.location?.longitude}
-          featureLatitude={adventureLog.location?.latitude}
-          moveable={false}
-        />
+        {adventureLog.location?.longitude && adventureLog.location.latitude ? (
+          <AdventureLogMap
+            adventureLogId={adventureLog._id}
+            longitude={adventureLog.location.longitude}
+            latitude={adventureLog.location.latitude}
+            zoom={13}
+          />
+        ) : null}
       </div>
       <div className="relative z-50 w-full container bg-background -mt-28">
         <div className="max-w-[900px] mx-auto p-4 md:p-10 md:pt-12">
