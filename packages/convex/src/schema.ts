@@ -159,8 +159,10 @@ export default defineSchema({
   }).index("by_shop_product_id", ["shopProductId"]),
   tags: defineTable({
     name: v.string(),
+    slug: v.optional(v.string()),
   })
     .index("by_name", ["name"])
+    .index("by_slug", ["slug"])
     .searchIndex("search_name", {
       searchField: "name",
     }),
