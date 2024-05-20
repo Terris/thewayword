@@ -15,8 +15,8 @@ export default function AdminPage() {
       <div className="max-w-[600px]">
         <Text className="font-bold text-lg pb-4">Feedback entries</Text>
         {allFeedback.map((feedback) => (
-          <div key={feedback._id} className="border-b">
-            <Text className="font-soleil">
+          <div key={feedback._id} className="border-b mb-4">
+            <Text className="font-soleil font-bold pb-2">
               {feedback.user?.name} — {feedback.user?.email}
             </Text>
             <Text className="italic pb-4">

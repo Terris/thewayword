@@ -8,7 +8,7 @@ export const findAllAsAdmin = query({
   args: {},
   handler: async (ctx) => {
     await validateIdentity(ctx, { requiredRoles: ["admin"] });
-    const allFeedback = await ctx.db.query("feedback").collect();
+    const allFeedback = await ctx.db.query("feedback").order("desc").collect();
 
     return asyncMap(allFeedback, async (feedback) => {
       const user = await ctx.db.get(feedback.userId);
