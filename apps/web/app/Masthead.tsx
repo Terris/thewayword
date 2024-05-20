@@ -46,6 +46,9 @@ export function Masthead() {
               <MastheadLink href="/feed">Feed</MastheadLink>
               {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}
               <MastheadLink href="/shop">Shop</MastheadLink>
+              {me.roles?.includes("admin") ? (
+                <MastheadLink href="/admin">Admin</MastheadLink>
+              ) : null}
             </div>
           ) : (
             <MastheadLink href="/about">About</MastheadLink>

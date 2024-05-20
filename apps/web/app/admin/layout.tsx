@@ -11,7 +11,6 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
     <PrivatePageWrapper authorizedRoles={["admin"]}>
       <div className="w-full mx-8 pb-2 flex flex-row items-center gap-8 border-b">
         <AdminLink href="/admin">Admin</AdminLink>
-        <AdminLink href="/admin/shop">Shop</AdminLink>
         <AdminLink href="/admin/products">Products</AdminLink>
         <AdminLink href="/admin/orders">Orders</AdminLink>
       </div>
