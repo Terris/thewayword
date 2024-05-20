@@ -2,7 +2,10 @@
   "extends": "@config/typescript-config/base.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "dist"
+    "lib": ["ES2015"],
+    "outDir": "./dist",
+    "types": ["node"],
+    "allowJs": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

@@ -38,6 +38,7 @@ import type * as orderActions from "../orderActions.js";
 import type * as orders from "../orders.js";
 import type * as paymentActions from "../paymentActions.js";
 import type * as payments from "../payments.js";
+import type * as printables from "../printables.js";
 import type * as shopProductActions from "../shopProductActions.js";
 import type * as shopProductImages from "../shopProductImages.js";
 import type * as shopProductOptions from "../shopProductOptions.js";
@@ -83,6 +84,7 @@ declare const fullApi: ApiFromModules<{
   orders: typeof orders;
   paymentActions: typeof paymentActions;
   payments: typeof payments;
+  printables: typeof printables;
   shopProductActions: typeof shopProductActions;
   shopProductImages: typeof shopProductImages;
   shopProductOptions: typeof shopProductOptions;
