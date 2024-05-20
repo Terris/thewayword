@@ -90,7 +90,7 @@ export function CheckoutPaymentForm() {
       <Button
         disabled={isLoading || !stripe || !elements}
         id="submit"
-        className="mt-4"
+        className="mt-4 w-full"
       >
         {isLoading ? <Loader /> : "Pay now"}
       </Button>

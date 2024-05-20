@@ -4,10 +4,22 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Field, Form, Formik, type FieldProps } from "formik";
 import * as Yup from "yup";
-import { useToast } from "@repo/ui/hooks";
-import { Button, Input, Label, LoadingScreen, Text } from "@repo/ui";
-import { api } from "@repo/convex";
 import { useMutation, useQuery } from "convex/react";
+import { api } from "@repo/convex";
+import {
+  Button,
+  Input,
+  Label,
+  LoadingScreen,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Text,
+} from "@repo/ui";
+import { useToast } from "@repo/ui/hooks";
+import { STATES } from "@repo/utils";
 import { EditableCartItemsTable } from "../_components/EditableCartItemsTable";
 
 export default function CheckoutPage() {
@@ -158,10 +170,25 @@ function CheckoutShippingForm() {
             </div>
             <div className="w-1/3">
               <Field name="state">
-                {({ field, meta }: FieldProps) => (
+                {({ field, meta, form }: FieldProps) => (
                   <div>
                     <Label htmlFor={field.name}>State</Label>
-                    <Input className="w-full" {...field} />
+                    <Select
+                      onValueChange={(val) => {
+                        void form.setFieldValue(field.name, val);
+                      }}
+                    >
+                      <SelectTrigger className="capitalize w-full">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {STATES.map((state) => (
+                          <SelectItem key={state.name} value={state.name}>
+                            {state.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     {meta.touched && meta.error ? (
                       <Text className="text-sm text-destructive">
                         {meta.error}
