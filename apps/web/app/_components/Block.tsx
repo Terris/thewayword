@@ -8,7 +8,7 @@ export function Block({ block }: { block: Doc<"adventureLogBlocks"> }) {
     <div className="rounded">
       {block.type === "image" && block.fileId ? (
         <ImageBlockDisplaySizeWrapper displaySize={block.displaySize}>
-          <ImageBlock fileId={block.fileId} />
+          <ImageBlock fileId={block.fileId} caption={block.caption} />
         </ImageBlockDisplaySizeWrapper>
       ) : (
         <TextBlock content={block.content} />
