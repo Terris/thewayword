@@ -1,7 +1,7 @@
 "use client";
 
 import { api } from "@repo/convex";
-import { Text } from "@repo/ui";
+import { LoadingScreen, Text } from "@repo/ui";
 import { useQuery } from "convex/react";
 import Link from "next/link";
 import { ShopProductCoverImage } from "./ShopProductCoverImage";
@@ -9,7 +9,9 @@ import { ShopProductCoverImage } from "./ShopProductCoverImage";
 export default function ShopPage() {
   const allProducts = useQuery(api.shopProducts.findAllPublished);
 
-  // const isLoading = allProducts === undefined;
+  const isLoading = allProducts === undefined;
+
+  if (isLoading) return <LoadingScreen />;
 
   return (
     <div className="w-full p-8 ">
