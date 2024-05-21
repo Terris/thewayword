@@ -86,7 +86,7 @@ export default function UserAdventureLogsPage() {
               width="40"
               height="40"
               alt="User"
-              className="w-6 h-6 md:w-16 md:h-16 rounded-full mr-4 md:mr-6"
+              className="w-6 h-6 mt-2 md:mt-0 md:w-16 md:h-16 rounded-full mr-4 md:mr-6"
             />
           ) : null}
         </div>
