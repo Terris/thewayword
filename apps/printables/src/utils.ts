@@ -33,3 +33,11 @@ export function extractTextRecursively(content: any): string {
   });
   return text;
 }
+
+export const resolvePromisesSequentially = async (tasks: Promise<void>[]) => {
+  const results = [];
+  for (const task of tasks) {
+    results.push(await task);
+  }
+  return results;
+};
