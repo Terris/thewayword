@@ -9,14 +9,14 @@ import {
 } from "next/navigation";
 import Image from "next/image";
 import { usePaginatedQuery, useQuery } from "convex/react";
+import { LayoutGrid, MapPinned } from "lucide-react";
 import { type Id, api } from "@repo/convex";
 import { Button, LoadingScreen, Text } from "@repo/ui";
 import { cn, formatDate } from "@repo/utils";
 import { useMeContext } from "@repo/auth/context";
 import { AdventureLogFeedItem } from "../../../_components/AdventureLogFeedItem";
-import { ToggleFolowButton } from "./ToggleFollowButton";
-import { LayoutGrid, MapPinned } from "lucide-react";
 import { AdventureLogFeedMap } from "../../../_components/AdventureLogFeedMap";
+import { ToggleFolowButton } from "./ToggleFollowButton";
 
 const DEFAULT_ITEMS_PER_PAGE = 32;
 

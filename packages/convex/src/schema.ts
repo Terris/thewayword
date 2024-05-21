@@ -183,6 +183,7 @@ export default defineSchema({
     userId: v.id("users"),
     message: v.string(),
     link: v.optional(v.string()),
+    seen: v.optional(v.boolean()),
     read: v.boolean(),
     referenceId: v.optional(
       v.union(v.id("likes"), v.id("comments"), v.id("follows"))

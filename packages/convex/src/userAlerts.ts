@@ -46,3 +46,19 @@ export const markAllReadBySessionedUser = mutation({
     });
   },
 });
+
+export const markAllSeenBySessionedUser = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const { user } = await validateIdentity(ctx);
+    const allUnreadAlerts = ctx.db
+      .query("userAlerts")
+      .withIndex("by_user_id_read", (q) =>
+        q.eq("userId", user._id).eq("read", false)
+      )
+      .collect();
+    await asyncMap(allUnreadAlerts, async (alert) => {
+      await ctx.db.patch(alert._id, { seen: true });
+    });
+  },
+});
