@@ -59,7 +59,8 @@ export default defineSchema({
   feedback: defineTable({
     message: v.string(),
     userId: v.id("users"),
-  }),
+    isDone: v.optional(v.boolean()),
+  }).index("by_is_done", ["isDone"]),
   files: defineTable({
     url: v.string(),
     fileName: v.string(),
