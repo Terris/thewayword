@@ -77,7 +77,7 @@ export function UserAlertsMenu() {
             onClick={() => {
               void markAllRead();
             }}
-            className="cursor-pointer font-soleil font-bold text-xs py-2"
+            className="cursor-pointer font-soleil font-semibold text-xs py-2"
           >
             Mark all as read
           </DropdownMenuItem>

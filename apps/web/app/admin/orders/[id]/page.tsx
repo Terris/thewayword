@@ -19,7 +19,10 @@ export default function AdminProductsPage() {
   return (
     <div className="w-full p-8">
       <Text className="font-bold text-xl">Admin Order </Text>
-      <Text className="text-gray-400 font-soleil pb-4"> #{order?._id}</Text>
+      <Text className="text-gray-400 font-soleil font-semibold pb-4">
+        {" "}
+        #{order?._id}
+      </Text>
       <hr className="border-dashed mb-4" />
       <div className="flex flex-col md:flex-row gap-16">
         <div>

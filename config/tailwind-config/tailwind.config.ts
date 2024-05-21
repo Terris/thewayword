@@ -15,7 +15,7 @@ const config = {
     },
     extend: {
       fontFamily: {
-        gelica: ["gelica", "serif"],
+        foustina: ["foustina", "serif"],
         soleil: ["soleil", "sans-serif"],
       },
       colors: {

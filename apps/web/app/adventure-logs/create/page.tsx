@@ -110,7 +110,7 @@ export default function CreatePage() {
                   </Text>
                   {currentStep === 0 ? (
                     <>
-                      <Text className="font-soleil pb-2">
+                      <Text className="font-soleil font-semibold pb-2">
                         Start by searching for your adventure location.
                       </Text>
                       <Field name="location">
@@ -134,7 +134,7 @@ export default function CreatePage() {
 
                   {currentStep === 1 ? (
                     <>
-                      <Text className="font-soleil pb-2">
+                      <Text className="font-soleil font-semibold pb-2">
                         When did you go on your adventure?
                       </Text>
                       <Field name="adventureStartDate">
@@ -158,7 +158,7 @@ export default function CreatePage() {
                   ) : null}
                   {currentStep === 2 ? (
                     <>
-                      <Text className="font-soleil pb-2">
+                      <Text className="font-soleil font-semibold pb-2">
                         Add some tags to help categorize your adventure.
                       </Text>
                       <Field name="tagsAsString">

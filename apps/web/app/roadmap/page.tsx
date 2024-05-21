@@ -11,7 +11,7 @@ export default function RoadmapPage() {
         to use. Here&rsquo;s an evolving list of features and improvements that
         I&rsquo;m working on.
       </Text>
-      <Text className="font-soleil font-bold uppercase tracking-wide pb-4">
+      <Text className="font-soleil font-black uppercase tracking-wide pb-4">
         Planned Features
       </Text>
       <ul className="pb-8 list-disc pl-5">

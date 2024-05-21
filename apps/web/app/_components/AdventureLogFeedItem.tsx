@@ -23,7 +23,7 @@ export function AdventureLogFeedItem({
             className="group-hover:opacity-50 transition-opacity"
           />
         </div>
-        <Text className="w-full font-soleil font-bold uppercase text-xs tracking-wider truncate pb-1">
+        <Text className="w-full font-soleil font-black uppercase text-xs tracking-wider truncate pb-1">
           {adventureLog.title}
         </Text>
       </Link>

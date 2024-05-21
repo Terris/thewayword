@@ -35,7 +35,7 @@ function FooterLink({ href, children }: { href: string; children: ReactNode }) {
     <Link
       href={href}
       className={cn(
-        "p-2 rounded font-soleil whitespace-nowrap hover:text-muted transition-all",
+        "p-2 rounded font-soleil font-semibold whitespace-nowrap hover:text-muted transition-all",
         isActive && "bg-muted text-muted-foreground hover:text-foreground"
       )}
     >

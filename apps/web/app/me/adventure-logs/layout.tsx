@@ -41,7 +41,7 @@ function MeLink({
     <Link
       href={href}
       className={cn(
-        "font-soleil block pt-2 pb-2.5 px-4 rounded-lg text-sm font-bold transition-opacity hover:opacity-80",
+        "font-soleil font-semibold block pt-2 pb-2.5 px-4 rounded-lg text-sm transition-opacity hover:opacity-80",
         active && "bg-border"
       )}
     >
