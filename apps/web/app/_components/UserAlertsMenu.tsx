@@ -25,12 +25,20 @@ export function UserAlertsMenu() {
   );
   const alertCount = userAlerts.length;
   const unreadAlertCount = userAlerts.filter((alert) => !alert.read).length;
+  const unseenAlertCount = userAlerts.filter((alert) => !alert.seen).length;
 
+  const markAllSeen = useMutation(api.userAlerts.markAllSeenBySessionedUser);
   const markAllRead = useMutation(api.userAlerts.markAllReadBySessionedUser);
   const markOneRead = useMutation(api.userAlerts.markOneReadById);
 
   return (
-    <DropdownMenu>
+    <DropdownMenu
+      onOpenChange={(o) => {
+        if (o && unseenAlertCount > 0) {
+          void markAllSeen();
+        }
+      }}
+    >
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -41,7 +49,7 @@ export function UserAlertsMenu() {
           )}
         >
           <Bell className="h-[1.2rem] w-[1.2rem]" />
-          {unreadAlertCount ? (
+          {unseenAlertCount ? (
             <CountBadge
               count={unreadAlertCount}
               className="absolute -top-2 -right-2"
