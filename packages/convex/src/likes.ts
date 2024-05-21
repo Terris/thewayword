@@ -43,6 +43,7 @@ export const toggleLikeBySessionedUserAndAdventureLogId = mutation({
           message: `${user.name} liked "${adventureLog?.title}".`,
           link: `/adventure-logs/${adventureLogId}#likes`,
           read: false,
+          seen: false,
           referenceId: newLikeId,
         });
       }

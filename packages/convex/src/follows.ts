@@ -50,6 +50,7 @@ export const toggleFollowBySessionedUserAndFolloweeUserId = mutation({
         message: `${user.name} is now following you`,
         link: `/user/${user._id}/adventure-logs`,
         read: false,
+        seen: false,
         referenceId: newFollowId,
       });
     }

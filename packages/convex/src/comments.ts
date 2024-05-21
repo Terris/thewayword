@@ -54,6 +54,7 @@ export const create = mutation({
         message: `${user.name} commented on "${adventureLog?.title}".`,
         link: `/adventure-logs/${adventureLogId}#comments-${commentId}`,
         read: false,
+        seen: false,
         referenceId: commentId,
       });
     }
