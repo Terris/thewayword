@@ -1,11 +1,10 @@
 import express, { Express, Request, Response } from "express";
 import dotenv from "dotenv";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
-import { Upload } from "@aws-sdk/lib-storage";
-import { S3Client } from "@aws-sdk/client-s3";
 import { ConvexHttpClient } from "convex/browser";
 import { Id, api } from "@repo/convex";
+import { extractTextRecursively } from "./utils";
+import * as util from "util";
 
 dotenv.config();
 
@@ -17,7 +16,7 @@ app.get("/", async (req: Request, res: Response) => {
   const adventureLog = await convexClient
     // @ts-ignore
     .query(api.printables.findAdventureLogByIdAsMachine, {
-      id: "mh75143hb3rm7btv1x5ak7h76d6rvbf8" as Id<"adventureLogs">,
+      id: "mh7b0cz1ybwcwmaz0yw7y8x6zx6sg2fp" as Id<"adventureLogs">,
     });
 
   if (!adventureLog) {
@@ -32,10 +31,11 @@ app.get("/", async (req: Request, res: Response) => {
   const pdfDoc = await PDFDocument.create();
   const baseFont = await pdfDoc.embedFont(StandardFonts.Courier);
   const bolfFont = await pdfDoc.embedFont(StandardFonts.CourierBold);
+  const baseFontSize = 10;
 
+  // cover page
   const cover = pdfDoc.addPage([324, 513]);
-  const contentFontSize = 12;
-  const { width, height } = cover.getSize();
+  const { width: pageWidth, height: pageHeight } = cover.getSize();
   const titleFontSize = 18;
   cover.drawText(adventureLog.title, {
     x: 50,
@@ -43,7 +43,7 @@ app.get("/", async (req: Request, res: Response) => {
     size: titleFontSize,
     font: bolfFont,
     color: rgb(0, 0, 0),
-    maxWidth: width - 100,
+    maxWidth: pageWidth - 100,
   });
 
   if (adventureLogCoverImage && adventureLogCoverImage.file?.url) {
@@ -61,17 +61,45 @@ app.get("/", async (req: Request, res: Response) => {
     });
   }
 
-  const page1 = pdfDoc.addPage([324, 513]);
-  if (adventureLog.user?.name) {
-    page1.drawText(adventureLog.user.name, {
-      x: 50,
-      y: 100,
-      size: contentFontSize,
-      font: baseFont,
-      color: rgb(0, 0, 0),
-      maxWidth: width - 100,
-    });
-  }
+  const interiorBlocks = adventureLog.blocks.filter(
+    (block) => block._id !== adventureLogCoverImage?._id
+  );
+
+  await Promise.all(
+    interiorBlocks.map(async (block, index) => {
+      if (block.type === "image" && block.file?.url) {
+        const newPage = pdfDoc.addPage([324, 513]);
+        const fileUrl = block.file.url;
+        const fileImageBytesRes = await fetch(fileUrl);
+        const fileImageBytes = await fileImageBytesRes.arrayBuffer();
+        const image = await pdfDoc.embedJpg(fileImageBytes);
+        const imageDims = image.scaleToFit(324 - 100, 300);
+        newPage.drawImage(image, {
+          x: 50,
+          y: 300,
+          width: imageDims.width,
+          height: imageDims.height,
+        });
+      } else if (block.type === "text" && block.content) {
+        const textAsJson = JSON.parse(block.content);
+        const text = extractTextRecursively(textAsJson.content).slice(0, 500);
+        console.log(text, text.length);
+
+        // new page per x chars
+
+        const newPage = pdfDoc.addPage([324, 513]);
+        newPage.drawText(text, {
+          x: 50,
+          y: pageHeight - 50,
+          size: baseFontSize,
+          font: baseFont,
+          lineHeight: 16,
+          color: rgb(0, 0, 0),
+          maxWidth: 224,
+        });
+      }
+    })
+  );
 
   const pdfBytes = await pdfDoc.save();
   const buffer = Buffer.from(pdfBytes);

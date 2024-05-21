@@ -38,6 +38,9 @@ importers:
       '@repo/convex':
         specifier: workspace:*
         version: link:../../packages/convex
+      '@tiptap/html':
+        specifier: ^2.4.0
+        version: 2.4.0(@tiptap/core@2.3.2(@tiptap/pm@2.3.2))(@tiptap/pm@2.3.2)
       convex:
         specifier: ^1.11.3
         version: 1.11.3(@clerk/clerk-react@5.0.2(eslint@8.56.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.3.3))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -2384,6 +2387,12 @@ packages:
     peerDependencies:
       '@tiptap/core': ^2.0.0
 
+  '@tiptap/html@2.4.0':
+    resolution: {integrity: sha512-iM0sa6t0Hb5GTXnjdKvMDtD3KZgA4Mwx3QADeqfR10EjfPNlkh/BHU83oIhss/2JVRBXiUUDnNxW9cfpHX37/g==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+      '@tiptap/pm': ^2.0.0
+
   '@tiptap/pm@2.3.2':
     resolution: {integrity: sha512-39Bmg7XqWWJg/G5YvWc3QVEPmFNpuMa05gw0Ap7KAKHnHiwl87hosOIDD8dtdcMrtgJL9NwBfUjEJ3ne53U9Ag==}
 
@@ -3103,6 +3112,10 @@ packages:
 
   crypto-js@4.2.0:
     resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
+
+  css-what@6.1.0:
+    resolution: {integrity: sha512-HTUrgRJ7r4dsZKU6GjmpfRK1O76h97Z8MfS1G0FozR+oF2kG6Vfe8JE6zwrkbxigziPHinCJ+gCPjA9EaBDtRw==}
+    engines: {node: '>= 6'}
 
   cssesc@3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -5681,6 +5694,10 @@ packages:
   yup@1.3.3:
     resolution: {integrity: sha512-v8QwZSsHH2K3/G9WSkp6mZKO+hugKT1EmnMqLNUcfu51HU9MDyhlETT/JgtzprnrnQHPWsjc6MUDMBp/l9fNnw==}
 
+  zeed-dom@0.10.11:
+    resolution: {integrity: sha512-7ukbu6aQKx34OQ7PfUIxOuAhk2MvyZY/t4/IJsVzy76zuMzfhE74+Dbyp8SHiUJPTPkF0FflP1KVrGJ7gk9IHw==}
+    engines: {node: '>=14.13.1'}
+
 snapshots:
 
   '@aashutoshrathi/word-wrap@1.2.6': {}
@@ -8122,6 +8139,12 @@ snapshots:
     dependencies:
       '@tiptap/core': 2.3.2(@tiptap/pm@2.3.2)
 
+  '@tiptap/html@2.4.0(@tiptap/core@2.3.2(@tiptap/pm@2.3.2))(@tiptap/pm@2.3.2)':
+    dependencies:
+      '@tiptap/core': 2.3.2(@tiptap/pm@2.3.2)
+      '@tiptap/pm': 2.3.2
+      zeed-dom: 0.10.11
+
   '@tiptap/pm@2.3.2':
     dependencies:
       prosemirror-changeset: 2.2.1
@@ -9000,6 +9023,8 @@ snapshots:
       which: 2.0.2
 
   crypto-js@4.2.0: {}
+
+  css-what@6.1.0: {}
 
   cssesc@3.0.0: {}
 
@@ -12076,3 +12101,7 @@ snapshots:
       tiny-case: 1.0.3
       toposort: 2.0.2
       type-fest: 2.19.0
+
+  zeed-dom@0.10.11:
+    dependencies:
+      css-what: 6.1.0
