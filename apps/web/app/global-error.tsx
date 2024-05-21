@@ -12,7 +12,7 @@ export default function GlobalError() {
       </head>
       <body
         className={cn(
-          "min-h-screen antialiased font-gelica flex flex-col items-center justify-center"
+          "min-h-screen antialiased font-faustina flex flex-col items-center justify-center"
         )}
       >
         <Text className="text-center text-2xl font-bold">
