@@ -7,7 +7,7 @@ import { usePaginatedQuery } from "convex/react";
 import { api } from "@repo/convex";
 import { Button, LoadingScreen, Text } from "@repo/ui";
 import { AdventureLogFeedItem } from "../_components/AdventureLogFeedItem";
-import { FeedMap } from "./FeedMap";
+import { AdventureLogFeedMap } from "../_components/AdventureLogFeedMap";
 
 const DEFAULT_ITEMS_PER_PAGE = 32;
 
@@ -76,7 +76,7 @@ export default function FeedPage() {
 
       {layout === "map" ? (
         <div className="w-full h-[70vh] rounded">
-          <FeedMap adventureLogs={adventureLogs} />
+          <AdventureLogFeedMap adventureLogs={adventureLogs} />
         </div>
       ) : null}
 

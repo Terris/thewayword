@@ -21,11 +21,13 @@ interface AdventureLog extends Doc<"adventureLogs"> {
   user: Pick<Doc<"users">, "avatarUrl" | "name">;
 }
 
-interface FeedMapProps {
+interface AdventureLogFeedMapProps {
   adventureLogs: AdventureLog[];
 }
 
-export function FeedMap({ adventureLogs }: FeedMapProps) {
+export function AdventureLogFeedMap({
+  adventureLogs,
+}: AdventureLogFeedMapProps) {
   return (
     <APIProvider apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}>
       <Map
