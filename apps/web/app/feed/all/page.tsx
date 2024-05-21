@@ -6,6 +6,7 @@ import { usePaginatedQuery } from "convex/react";
 import { api } from "@repo/convex";
 import { Button, LoadingScreen, Text } from "@repo/ui";
 import { AdventureLogFeedItem } from "../../_components/AdventureLogFeedItem";
+import { FeedMap } from "../FeedMap";
 
 const DEFAULT_ITEMS_PER_PAGE = 32;
 
@@ -14,6 +15,7 @@ export default function FeedPage() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const page = searchParams.get("page");
+  const layout = searchParams.get("layout");
   const pageInt = page ? parseInt(page) : 1;
 
   const {
@@ -60,14 +62,22 @@ export default function FeedPage() {
 
   return (
     <>
-      <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-8 pb-8">
-        {adventureLogs.map((adventureLog) => (
-          <AdventureLogFeedItem
-            key={adventureLog._id}
-            adventureLog={adventureLog}
-          />
-        ))}
-      </div>
+      {!layout || layout === "grid" ? (
+        <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-8 pb-8">
+          {adventureLogs.map((adventureLog) => (
+            <AdventureLogFeedItem
+              key={adventureLog._id}
+              adventureLog={adventureLog}
+            />
+          ))}
+        </div>
+      ) : null}
+
+      {layout === "map" ? (
+        <div className="w-full h-[70vh] rounded">
+          <FeedMap adventureLogs={adventureLogs} />
+        </div>
+      ) : null}
 
       {adventureLogs.length ? (
         <div className="w-full max-w-[300px] mx-auto">
@@ -82,11 +92,7 @@ export default function FeedPage() {
             >
               Load more
             </Button>
-          ) : (
-            <Text className="text-center py-8">
-              You&rsquo;ve reached the end.
-            </Text>
-          )}
+          ) : null}
         </div>
       ) : (
         <Text className="text-center py-8">
