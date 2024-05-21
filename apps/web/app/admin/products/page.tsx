@@ -10,8 +10,10 @@ export default function AdminProductsPage() {
 
   return (
     <div className="w-full p-8">
-      <div className="w-full flex items-center justify-between">
-        <Text className="font-bold text-xl pb-4">Admin Products</Text>
+      <div className="w-full flex items-center justify-between pb-4 -mt-[6px]">
+        <Text className="font-bold text-xl">
+          Admin <span className="font-normal">Products</span>
+        </Text>
         <Dialog
           open={formIsOpen}
           onOpenChange={(o) => {

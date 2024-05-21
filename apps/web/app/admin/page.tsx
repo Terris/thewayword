@@ -19,7 +19,9 @@ export default function AdminPage() {
   return (
     <div className="w-full p-8">
       <div className="max-w-[600px]">
-        <Text className="font-bold text-lg pb-4">Feedback entries</Text>
+        <Text className="font-bold text-xl pb-8">
+          Admin <span className="font-normal">Feedback entries</span>
+        </Text>
         <Text className="font-soleil font-bold text-sm">TO DO</Text>
         <hr className="mb-4" />
         {allUndoneFeedback.map((feedback) => (
