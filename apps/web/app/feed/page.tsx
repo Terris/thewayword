@@ -107,7 +107,7 @@ export default function FeedPage() {
             >
               Explore all posts
             </Link>{" "}
-            to find more people to follow.
+            to find people to follow.
           </Text>
         </>
       )}
