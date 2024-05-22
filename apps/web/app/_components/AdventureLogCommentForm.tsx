@@ -84,7 +84,6 @@ export function AdventureLogCommentForm({
           <div className="flex flex-row items-center gap-4">
             <Button
               type="button"
-              className="w-full"
               onClick={() => {
                 onSuccess?.();
               }}
@@ -96,7 +95,6 @@ export function AdventureLogCommentForm({
               type="submit"
               disabled={!dirty || !isValid || isSubmitting}
               size="sm"
-              className="w-full"
             >
               Submit
             </Button>

@@ -15,7 +15,6 @@ const config = {
     },
     extend: {
       fontFamily: {
-        "practical-serif": ["practical-serif", "serif"],
         gelica: ["gelica", "serif"],
         soleil: ["soleil", "sans-serif"],
       },

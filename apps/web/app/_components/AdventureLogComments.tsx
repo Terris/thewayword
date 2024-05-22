@@ -48,7 +48,6 @@ export function AdventureLogComments({
           }}
           variant="outline"
           size="sm"
-          className="w-full"
         >
           Add a comment
         </Button>
