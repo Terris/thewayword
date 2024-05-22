@@ -105,12 +105,12 @@ export default function CreatePage() {
             <div className="w-full p-8 flex flex-col md:flex-row md:items-center gap-4">
               <div className="w-full md:w-1/2">
                 <div className="max-w-[600px] mx-auto">
-                  <Text className="text-4xl font-black pb-16 text-center">
+                  <Text className="text-4xl font-bold pb-16 text-center">
                     Log an Adventure!
                   </Text>
                   {currentStep === 0 ? (
                     <>
-                      <Text className="font-soleil font-semibold pb-2">
+                      <Text className="font-bold pb-2">
                         Start by searching for your adventure location.
                       </Text>
                       <Field name="location">
@@ -134,7 +134,7 @@ export default function CreatePage() {
 
                   {currentStep === 1 ? (
                     <>
-                      <Text className="font-soleil font-semibold pb-2">
+                      <Text className="font-bold pb-2">
                         When did you go on your adventure?
                       </Text>
                       <Field name="adventureStartDate">
@@ -158,7 +158,7 @@ export default function CreatePage() {
                   ) : null}
                   {currentStep === 2 ? (
                     <>
-                      <Text className="font-soleil font-semibold pb-2">
+                      <Text className="font-bold pb-2">
                         Add some tags to help categorize your adventure.
                       </Text>
                       <Field name="tagsAsString">

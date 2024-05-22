@@ -43,11 +43,11 @@ export default function AdventureLogPage() {
       <div className="relative z-50 w-full container bg-background -mt-28">
         <div className="max-w-[900px] mx-auto p-8 md:p-10 md:pt-12">
           <AdventureLogTags adventureLogId={id as Id<"adventureLogs">} />
-          <Text className="w-full text-2xl font-black md:text-4xl mb-4 bg-transparent outline-none focus:underline">
+          <Text className="w-full text-2xl font-bold md:text-4xl mb-4 bg-transparent outline-none focus:underline">
             {adventureLog.title}
           </Text>
           <hr className="border-b-1 border-dashed mb-4" />
-          <Text className="font-soleil uppercase text-xs text-muted-foreground font-semibold tracking-wider pb-1">
+          <Text className="font-bold uppercase text-xs  tracking-wider pb-1">
             {adventureLog.location?.name}{" "}
             {adventureLog.adventureStartDate
               ? `- ${formatDate(adventureLog.adventureStartDate)}`
@@ -59,7 +59,7 @@ export default function AdventureLogPage() {
 
           <Link
             href={`/user/${adventureLog.user?._id}/adventure-logs/`}
-            className="flex items-center hover:opacity-80 transition-opacity"
+            className="inline-flex items-center hover:opacity-80 transition-opacity"
           >
             {adventureLog.user?.avatarUrl ? (
               <Image
@@ -72,7 +72,7 @@ export default function AdventureLogPage() {
             ) : null}
             <Text
               as="span"
-              className="inine-block text-sm text-center leading-none italic"
+              className="inine-block text-sm text-center leading-none"
             >
               {adventureLog.user?.name}
             </Text>

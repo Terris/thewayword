@@ -94,7 +94,7 @@ export default function UserAdventureLogsPage() {
           <Text className="w-full text-2xl md:text-4xl font-bold bg-transparent outline-none focus:underline">
             {publicUser.name}
           </Text>
-          <Text className="font-soleil fonst-semibold text-sm pb-4">
+          <Text className="text-sm pb-4">
             Member since {formatDate(publicUser.createdAt)}
           </Text>
           {me?.id !== id ? (
@@ -102,7 +102,7 @@ export default function UserAdventureLogsPage() {
           ) : null}
         </div>
       </div>
-      <Text className="font-soleil font-semibold">
+      <Text className="font-bold">
         {publicUser.name}&rsquo;s Adventure Logs
       </Text>
       <hr className="border-b-1 border-dashed mb-4" />

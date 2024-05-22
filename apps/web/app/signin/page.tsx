@@ -68,7 +68,7 @@ export default function SignInPage() {
       >
         {({ isSubmitting, dirty, isValid }) => (
           <Form className=" flex flex-col gap-4">
-            <Text className="text-xl font-black">Sign in</Text>
+            <Text className="text-xl font-bold">Sign in</Text>
             <Field name="email">
               {({ field, meta }: FieldProps) => (
                 <div>

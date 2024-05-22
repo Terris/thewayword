@@ -22,7 +22,7 @@ export default function AdminPage() {
         <Text className="font-bold text-xl pb-8">
           Admin <span className="font-normal">Feedback entries</span>
         </Text>
-        <Text className="font-soleil font-black text-sm">TO DO</Text>
+        <Text className="font-bold text-sm">TO DO</Text>
         <hr className="mb-4" />
         {allUndoneFeedback.map((feedback) => (
           <div
@@ -30,12 +30,10 @@ export default function AdminPage() {
             className="border-b border-dashed mb-4 pb-4 flex gap-4"
           >
             <div className="w-full">
-              <Text className="font-soleil font-black pb-2">
+              <Text className="font-bold pb-2">
                 {feedback.user?.name} — {feedback.user?.email}
               </Text>
-              <Text className="italic pb-4">
-                &ldquo;{feedback.message}&rdquo;
-              </Text>
+              <Text className="pb-4">&ldquo;{feedback.message}&rdquo;</Text>
             </div>
             <Button
               variant="ghost"
@@ -48,7 +46,7 @@ export default function AdminPage() {
             </Button>
           </div>
         ))}
-        <Text className="font-soleil font-black text-sm pt-4">DONE</Text>
+        <Text className="font-bold text-sm pt-4">DONE</Text>
         <hr className="mb-4" />
         {allDoneFeedback?.map((feedback) => (
           <div
@@ -56,12 +54,10 @@ export default function AdminPage() {
             className="border-b border-dashed mb-4 pb-4 flex gap-4"
           >
             <div className="w-full">
-              <Text className="font-soleil font-black pb-2">
+              <Text className="font-bold pb-2">
                 {feedback.user?.name} — {feedback.user?.email}
               </Text>
-              <Text className="italic pb-4">
-                &ldquo;{feedback.message}&rdquo;
-              </Text>
+              <Text className="pb-4">&ldquo;{feedback.message}&rdquo;</Text>
             </div>
             <Button
               variant="ghost"

@@ -120,7 +120,7 @@ export default function SignUpPage() {
     >
       {({ isSubmitting, submitForm, dirty, isValid }) => (
         <Form className="w-[600px] p-8 mx-auto flex flex-col gap-4">
-          <Text className="text-xl font-black">Sign in</Text>
+          <Text className="text-xl font-bold">Sign in</Text>
           <Text>Nice! We sent you an email with a verfication code.</Text>
           <Field name="verificationCode">
             {({ field, meta }: FieldProps) => (
@@ -163,7 +163,7 @@ export default function SignUpPage() {
     >
       {({ isSubmitting, submitForm, dirty, isValid }) => (
         <Form className="w-[600px] p-8 mx-auto flex flex-col gap-4">
-          <Text className="text-xl font-black">Sign up</Text>
+          <Text className="text-xl font-bold">Sign up</Text>
           <Field name="email">
             {({ field, meta }: FieldProps) => (
               <div>

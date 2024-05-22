@@ -47,7 +47,7 @@ export function DeleteAdventureLogButton({
 
   return (
     <div className="border border-dashed border-red-600 bg-red-100 text-black p-4 rounded flex flex-col items-center justify-center gap-4">
-      <Text className="text-sm font-bold font-soleil text-red-500 tracking-widest">
+      <Text className="text-sm font-bold text-red-500 tracking-widest">
         DANGER ZONE!
       </Text>
       <Dialog
@@ -61,7 +61,7 @@ export function DeleteAdventureLogButton({
             onClick={() => {
               setIsOpen(true);
             }}
-            className="font-soleil font-black"
+            className="font-bold"
             variant="destructive"
             size="sm"
           >

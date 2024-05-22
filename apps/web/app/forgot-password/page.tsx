@@ -107,7 +107,7 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="w-full max-w-[600px] p-8 mx-auto flex flex-col gap-4">
-      <Text className="text-xl font-black">Forgot Password?</Text>
+      <Text className="text-xl font-bold">Forgot Password?</Text>
       {resetCodeSent ? (
         <Formik<VerifyAndResetPasswordFormValues>
           initialValues={{

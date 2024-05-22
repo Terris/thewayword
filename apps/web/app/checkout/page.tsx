@@ -33,7 +33,7 @@ export default function CheckoutPage() {
       <hr className="border-dashed my-4" />
       <div className="flex flex-col md:flex-row md:gap-16">
         <div className="w-full md:w-1/2">
-          <Text className="font-soleil font-black pb-4">YOUR CART</Text>
+          <Text className="font-bold pb-4">YOUR CART</Text>
           {cart?.items.length ? (
             <>
               <EditableCartItemsTable cartItems={cart.items} />
@@ -129,7 +129,7 @@ function CheckoutShippingForm() {
     >
       {({ isSubmitting, dirty, isValid }) => (
         <Form className=" flex flex-col gap-4">
-          <Text className="font-soleil font-black pb-4">SHIPPING</Text>
+          <Text className="font-bold pb-4">SHIPPING</Text>
           <Field name="addressLine1">
             {({ field, meta }: FieldProps) => (
               <div>

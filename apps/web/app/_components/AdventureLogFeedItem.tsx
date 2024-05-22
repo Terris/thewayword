@@ -23,7 +23,7 @@ export function AdventureLogFeedItem({
             className="group-hover:opacity-50 transition-opacity"
           />
         </div>
-        <Text className="w-full font-soleil font-black uppercase text-xs tracking-wider truncate pb-1">
+        <Text className="w-full font-bold uppercase text-xs tracking-wider truncate pb-1">
           {adventureLog.title}
         </Text>
       </Link>
@@ -40,7 +40,7 @@ export function AdventureLogFeedItem({
             className="w-5 h-5 rounded-full mr-2"
           />
         ) : null}
-        <Text className="text-sm text-center leading-none italic group-hover:underline">
+        <Text className="text-sm text-center group-hover:underline">
           {adventureLog.user.name}
         </Text>
       </Link>

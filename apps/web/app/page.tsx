@@ -25,7 +25,7 @@ export default function HomePage() {
         </Text>
         <div className="mx-auto text-center">
           <Link href="/signup">
-            <Button type="button" className="font-black text-primary" size="lg">
+            <Button type="button" className="text-primary" size="lg">
               Try it out!
             </Button>
           </Link>

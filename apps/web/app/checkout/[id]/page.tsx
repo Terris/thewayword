@@ -49,7 +49,7 @@ export default function CheckoutPaymentPage() {
       <hr className="border-dashed my-4" />
       <div className="flex flex-col md:flex-row md:gap-16">
         <div className="w-full md:w-1/2">
-          <Text className="font-soleil font-black pb-4">YOUR CART</Text>
+          <Text className="font-bold pb-4">YOUR CART</Text>
           {order?.items.length ? (
             <>
               <OrderItemsTable orderItems={order.items} />
@@ -93,7 +93,7 @@ export default function CheckoutPaymentPage() {
           )}
         </div>
         <div className="w-full md:w-1/2">
-          <Text className="font-soleil font-black pb-4">PAYMENT</Text>
+          <Text className="font-bold pb-4">PAYMENT</Text>
           {clientSecret ? (
             <PayStep clientSecret={clientSecret} />
           ) : (

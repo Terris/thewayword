@@ -4,7 +4,7 @@ import { Text } from "@repo/ui";
 export default function NotFound() {
   return (
     <div className="w-full p-8">
-      <Text className="text-center font-tuna font-black text-xl">
+      <Text className="text-center font-bold text-xl">
         Dang, there&rsquo;s nothing here.
       </Text>
       <Text className="text-center">

@@ -29,7 +29,7 @@ export function AdventureLogLikes({
               className="w-5 h-5 rounded-full"
             />
           ) : null}
-          <Text className="text-sm italic">{like.user.name}</Text>
+          <Text className="text-sm">{like.user.name}</Text>
         </div>
       ))}
     </div>

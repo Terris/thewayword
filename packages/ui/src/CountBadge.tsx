@@ -10,7 +10,7 @@ export function CountBadge({
   return (
     <div
       className={cn(
-        "rounded-full border text-xs font-black text-foreground bg-background w-6 h-6 flex items-center justify-center",
+        "rounded-full border text-xs font-bold text-foreground bg-background w-6 h-6 flex items-center justify-center",
         className
       )}
     >

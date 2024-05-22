@@ -17,7 +17,7 @@ export function AdventureLogTags({
   const isLoading = adventureLogTags === undefined;
   if (isLoading) return null;
   return (
-    <Text className="font-soleil text-xs uppercase tracking-widest pb-2">
+    <Text className="font-bold text-xs uppercase tracking-widest text-neutral-400 pb-2">
       {adventureLogTags.map((tag, index) => (
         <>
           <Link

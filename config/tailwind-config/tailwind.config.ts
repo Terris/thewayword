@@ -16,7 +16,7 @@ const config = {
     extend: {
       fontFamily: {
         gelica: ["gelica", "serif"],
-        soleil: ["soleil", "sans-serif"],
+        futura: ["futura-pt", "sans-serif"],
       },
       colors: {
         border: "var(--border)",
@@ -43,6 +43,10 @@ const config = {
         success: {
           DEFAULT: "var(--success)",
           foreground: "var(--destructive-success)",
+        },
+        neutral: {
+          DEFAULT: "var(--neutral)",
+          foreground: "var(--neutral-foreground)",
         },
         muted: {
           DEFAULT: "var(--muted)",

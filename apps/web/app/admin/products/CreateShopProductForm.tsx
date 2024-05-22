@@ -76,7 +76,7 @@ export function CreateShopProductForm({
     >
       {({ isSubmitting, dirty, isValid }) => (
         <Form className=" flex flex-col gap-4">
-          <Text className="text-xl font-black">Create Shop Product</Text>
+          <Text className="text-xl font-bold">Create Shop Product</Text>
           <Field name="name">
             {({ field, meta }: FieldProps) => (
               <div>

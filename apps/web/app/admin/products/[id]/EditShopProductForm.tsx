@@ -83,7 +83,7 @@ export function EditShopProductForm({ onSuccess }: { onSuccess?: () => void }) {
     >
       {({ isSubmitting, dirty, isValid }) => (
         <Form className=" flex flex-col gap-4">
-          <Text className="text-xl font-black">Edit Shop Product</Text>
+          <Text className="text-xl font-bold">Edit Shop Product</Text>
           <Field name="name">
             {({ field, meta }: FieldProps) => (
               <div>

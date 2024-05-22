@@ -35,7 +35,7 @@ export function EditableComment({ comment }: CommentProps) {
         ) : null}
       </div>
       <div className="w-full">
-        <Text className="text-sm italic mb-2">
+        <Text className="text-sm mb-2">
           {comment.user.name} <br />
           {formatDateTime(comment._creationTime)}
         </Text>

@@ -18,7 +18,7 @@ export default function AboutPage() {
             manner that is uniquely their own, fostering connections and
             nurturing a deep-seated love for the natural world.
           </Text>
-          <Text className="font-soleil font-black uppercase tracking-wide pb-4">
+          <Text className="font-bold uppercase tracking-wide pb-4">
             The Pitch
           </Text>
           <Text className="text-lg pb-4">
@@ -45,7 +45,7 @@ export default function AboutPage() {
             alt="Looking out over an expanse of mountains from inside a tent"
             className="rounded mb-8"
           />
-          <Text className="font-soleil font-black uppercase tracking-wide pb-4">
+          <Text className="font-bold uppercase tracking-wide pb-4">
             Core Values
           </Text>
           <ol className="list-decimal pb-16 space-y-4 pl-4">

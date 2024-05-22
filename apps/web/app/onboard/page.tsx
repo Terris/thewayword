@@ -52,7 +52,7 @@ export default function OnboardPage() {
     >
       {({ isSubmitting, submitForm, dirty, isValid }) => (
         <Form className="w-[600px] p-8 mx-auto flex flex-col gap-4">
-          <Text className="text-xl font-black">
+          <Text className="text-xl font-bold">
             Welcome! Please introduce yourself.
           </Text>
           <Field name="name">

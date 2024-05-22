@@ -46,9 +46,7 @@ export function EditableImageBlock({
           alt="Adventure log image"
           className="mx-auto rounded"
         />
-        {caption ? (
-          <Text className="text-sm font-soleil py-1">{caption}</Text>
-        ) : null}
+        {caption ? <Text className="text-sm py-1">{caption}</Text> : null}
       </div>
       {isSelected ? (
         <div className="absolute  bg-background p-4 rounded-lg">
