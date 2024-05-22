@@ -29,9 +29,7 @@ export function RichTextEditor({
 }: RichTextEditorProps) {
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({
-        history: false,
-      }),
+      StarterKit,
       Placeholder.configure({
         placeholder: "Start typing…",
       }),
