@@ -46,7 +46,7 @@ export default function AdventureLogPage() {
           <Text className="w-full text-2xl font-bold tracking-tight md:text-4xl mb-4 bg-transparent outline-none focus:underline">
             {adventureLog.title}
           </Text>
-          <hr className="border-b-1 border-dashed mb-4" />
+
           <Text className="font-bold uppercase text-xs  tracking-wider pb-1">
             {adventureLog.location?.name}{" "}
             {adventureLog.adventureStartDate

@@ -25,7 +25,6 @@ interface RichTextEditorProps {
 export function RichTextEditor({
   initialContent = emptyJSON,
   onChange,
-  editable = true,
   className,
 }: RichTextEditorProps) {
   const editor = useEditor({
@@ -37,7 +36,6 @@ export function RichTextEditor({
         placeholder: "Start typing…",
       }),
     ],
-    autofocus: "end",
     // eslint-disable-next-line -- @typescript-eslint/no-unsafe-assignment
     content: JSON.parse(initialContent === "" ? emptyJSON : initialContent),
   });
@@ -47,9 +45,9 @@ export function RichTextEditor({
 
   // Fire onChange when the content changes
   useEffect(() => {
-    if (!hasChanges || !editable) return;
+    if (!hasChanges) return;
     onChange?.(contentString);
-  }, [contentString, editable, hasChanges, onChange]);
+  }, [contentString, hasChanges, onChange]);
 
   if (!editor) return null;
   return (
