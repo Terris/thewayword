@@ -73,7 +73,7 @@ export function EditableBlock({
       <div
         className={cn(
           "relative z-10 w-full border-2 border-dashed border-transparent rounded flex items-center justify-center transition-all",
-          isSelected ? "border-primary p-4" : "hover:border-muted"
+          isSelected ? "border-primary p-4" : "hover:border-neutral-400"
         )}
         onClick={() => {
           setEditingBlockId(thisBlockId);

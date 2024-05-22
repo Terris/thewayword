@@ -24,7 +24,7 @@ export function EditableTextBlock({
   }
 
   return (
-    <div className="w-full max-w-[600px] mx-auto">
+    <div className="w-full max-w-[740px] mx-auto">
       {isSelected ? (
         <RichTextEditor
           onChange={(value) => {
