@@ -13,7 +13,7 @@ export function Footer() {
     <div className="w-full border-t py-8 mt-8">
       <div className="container flex flex-col items-start justify-start md:flex-row">
         <Text className="w-full text-sm p-2">
-          Copyright &copy; 2024 Terris Kremer
+          Copyright &copy; 2024 thewayword.com
         </Text>
         {me ? (
           <div className="w-full flex flex-col items-start justify-start md:flex-row md:justify-end md:gap-8">

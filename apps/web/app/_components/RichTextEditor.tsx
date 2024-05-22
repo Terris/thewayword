@@ -11,6 +11,7 @@ import { Placeholder } from "@tiptap/extension-placeholder";
 import { StarterKit } from "@tiptap/starter-kit";
 import { Bold, Italic, Strikethrough } from "lucide-react";
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@repo/ui";
+import { cn } from "@repo/utils";
 
 const emptyJSON = '""';
 
@@ -266,8 +267,9 @@ function ToolbarButton({
           <Button
             onClick={onClick}
             size="sm"
-            variant={isActive ? "selected" : "ghost"}
+            variant="ghost"
             disabled={disabled}
+            className={cn(isActive ? "bg-neutral-300" : null)}
             style={{ pointerEvents: disabled ? "none" : "auto" }}
           >
             {children}
