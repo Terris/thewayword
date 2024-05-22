@@ -134,7 +134,7 @@ function MastheadLink({
     <Link
       href={href}
       className={cn(
-        "p-2 pb-1.5 rounded font-bold whitespace-nowrap hover:text-muted transition-colors",
+        "p-2 pb-1.5 rounded font-bold whitespace-nowrap hover:text-amber-400 transition-colors",
         isActive && "bg-neutral-200 hover:text-foreground"
       )}
     >

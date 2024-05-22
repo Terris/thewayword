@@ -45,7 +45,7 @@ export function UserAlertsMenu() {
           size="icon"
           className={cn(
             "relative rounded-full flex-shrink-0 ",
-            unreadAlertCount && "bg-muted"
+            unseenAlertCount && "bg-muted"
           )}
         >
           <Bell className="h-[1.2rem] w-[1.2rem]" />
@@ -67,7 +67,7 @@ export function UserAlertsMenu() {
               }
               alert.link ? router.push(alert.link) : null;
             }}
-            className={cn("cursor-pointer mb-1", !alert.read && "bg-accent")}
+            className={cn("cursor-pointer mb-1", !alert.read && "bg-amber-100")}
           >
             {alert.message}
           </DropdownMenuItem>
