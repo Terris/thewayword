@@ -88,6 +88,7 @@ export function AdventureLogCommentForm({
                 onSuccess?.();
               }}
               size="sm"
+              variant="outline"
             >
               Cancel
             </Button>
@@ -95,6 +96,7 @@ export function AdventureLogCommentForm({
               type="submit"
               disabled={!dirty || !isValid || isSubmitting}
               size="sm"
+              variant="outline"
             >
               Submit
             </Button>

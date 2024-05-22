@@ -91,10 +91,10 @@ export default function UserAdventureLogsPage() {
           ) : null}
         </div>
         <div>
-          <Text className="w-full text-2xl md:text-4xl font-bold bg-transparent outline-none focus:underline">
+          <Text className="w-full text-2xl md:text-4xl font-bold tracking-tight outline-none focus:underline">
             {publicUser.name}
           </Text>
-          <Text className="text-sm pb-4">
+          <Text className="text-sm text-neutral-400 pb-4">
             Member since {formatDate(publicUser.createdAt)}
           </Text>
           {me?.id !== id ? (

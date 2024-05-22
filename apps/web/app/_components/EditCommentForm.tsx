@@ -73,6 +73,7 @@ export function EditCommentForm({ comment, onSuccess }: CommentProps) {
                 onSuccess?.();
               }}
               size="sm"
+              variant="outline"
             >
               Cancel
             </Button>
@@ -81,6 +82,7 @@ export function EditCommentForm({ comment, onSuccess }: CommentProps) {
               disabled={!dirty || !isValid || isSubmitting}
               className="w-full"
               size="sm"
+              variant="outline"
             >
               Save
             </Button>

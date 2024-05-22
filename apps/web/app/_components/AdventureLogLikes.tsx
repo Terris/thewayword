@@ -2,6 +2,7 @@ import { useQuery } from "convex/react";
 import { api, type Id } from "@repo/convex";
 import { Text } from "@repo/ui";
 import Image from "next/image";
+import Link from "next/link";
 
 export function AdventureLogLikes({
   adventureLogId,
@@ -14,12 +15,14 @@ export function AdventureLogLikes({
 
   return (
     <div className="w-full" id="likes">
-      <Text className="text-2xl md:text-2xl font-bold mb-4 bg-transparent outline-none focus:underline">
-        Likes
-      </Text>
+      <Text className="text-xl font-bold pb-2">Likes</Text>
       <hr className="border-b-1 border-dashed mb-4" />
       {likes?.map((like) => (
-        <div className="flex flex-row items-center gap-2 pb-4" key={like._id}>
+        <Link
+          href={`/user/${like.userId}/adventure-logs`}
+          className="inline-flex flex-row items-center gap-2 pb-4 text-sm text-neutral-400 hover:text-amber-400"
+          key={like._id}
+        >
           {like.user.avatarUrl ? (
             <Image
               src={like.user.avatarUrl}
@@ -29,8 +32,8 @@ export function AdventureLogLikes({
               className="w-5 h-5 rounded-full"
             />
           ) : null}
-          <Text className="text-sm">{like.user.name}</Text>
-        </div>
+          <Text>{like.user.name}</Text>
+        </Link>
       ))}
     </div>
   );

@@ -57,7 +57,7 @@ export function AdventureLogFeedMap({
                         {adventureLog.title}
                       </Link>
                     </Text>
-                    <Text className="font-futura text-xs font-bold tracking-wide uppercase text-neutral">
+                    <Text className="font-futura text-xs font-bold tracking-wide uppercase text-neutral-400">
                       {adventureLog.location.name}
                     </Text>
                     <Link
@@ -73,7 +73,7 @@ export function AdventureLogFeedMap({
                           className="w-5 h-5 rounded-full mr-2"
                         />
                       ) : null}
-                      <Text className="font-futura text-sm text-neutral group-hover:underline">
+                      <Text className="font-futura text-sm text-neutral-400 group-hover:underline">
                         {adventureLog.user.name}
                       </Text>
                     </Link>

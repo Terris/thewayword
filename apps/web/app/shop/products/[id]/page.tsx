@@ -86,7 +86,7 @@ export default function ShopProductPage() {
           <Text className="text-2xl font-bold tracking-tight pr-4 pt-8">
             {product.name}
           </Text>
-          <Text className="text-2xl text-neutral pb-4">
+          <Text className="text-2xl text-neutral-400 pb-4">
             ${product.priceInCents / 100}
           </Text>
           <div className="flex gap-4">

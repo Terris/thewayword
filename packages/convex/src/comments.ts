@@ -20,9 +20,14 @@ export const findAllByAdventureLogId = query({
       adventureLogComments,
       async (comment) => {
         const user = await ctx.db.get(comment.userId);
+        if (!user) throw new ConvexError("User not found");
         return {
           ...comment,
-          user: { name: user?.name, avatarUrl: user?.avatarUrl },
+          user: {
+            _id: user._id,
+            name: user.name,
+            avatarUrl: user.avatarUrl,
+          },
         };
       }
     );

@@ -22,9 +22,7 @@ export function AdventureLogComments({
 
   return (
     <div className="w-full" id="comments">
-      <Text className="text-2xl md:text-2xl font-bold mb-4 bg-transparent outline-none focus:underline">
-        Comments
-      </Text>
+      <Text className="text-xl font-bold pb-2">Comments</Text>
       <hr className="border-b-1 border-dashed" />
       <div className="pb-4">
         {comments.map((comment) => (

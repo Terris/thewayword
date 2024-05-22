@@ -29,7 +29,7 @@ export function ImageBlock({
         className={cn("mx-auto rounded object-contain", className)}
       />
       {caption ? (
-        <Text className="text-sm text-neutral-500 py-1">{caption}</Text>
+        <Text className="text-sm text-neutral-400 py-1">{caption}</Text>
       ) : null}
     </>
   );

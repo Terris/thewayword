@@ -19,7 +19,7 @@ export default function AdminProductsPage() {
   return (
     <div className="w-full p-8">
       <Text className="font-bold text-xl">Admin Order </Text>
-      <Text className="text-neutral font-bold pb-4"> #{order?._id}</Text>
+      <Text className="text-neutral-400 font-bold pb-4"> #{order?._id}</Text>
       <hr className="border-dashed mb-4" />
       <div className="flex flex-col md:flex-row gap-16">
         <div>
@@ -32,21 +32,21 @@ export default function AdminProductsPage() {
             ? order.payments.map((payment) => (
                 <div key={payment._id} className="border-b pb-4 mb-4">
                   <Text className="pb-2 truncate">
-                    <span className="text-neutral pb-2">ID: </span>{" "}
+                    <span className="text-neutral-400 pb-2">ID: </span>{" "}
                     {payment._id}
                   </Text>
                   <Text>
-                    <span className="text-neutral pb-2">
+                    <span className="text-neutral-400 pb-2">
                       Stripe Payment Intent ID:{" "}
                     </span>
                     {payment.stripePaymentIntentId}
                   </Text>
                   <Text>
-                    <span className="text-neutral pb-2">Amount: </span> $
+                    <span className="text-neutral-400 pb-2">Amount: </span> $
                     {payment.amountInCents / 100}
                   </Text>
                   <Text>
-                    <span className="text-neutral pb-2">Status: </span>
+                    <span className="text-neutral-400 pb-2">Status: </span>
                     {payment.status}
                   </Text>
                 </div>

@@ -33,7 +33,7 @@ export default function AboutPage() {
             inspire and be inspired to spend more time outdoors and that the
             ephemera of these journeys become a more valuable memory.&rdquo;
           </Text>
-          <Text className="pb-16 text-neutral">
+          <Text className="pb-16 text-neutral-400">
             Terris Kremer - Founder, The Wayword
           </Text>
         </div>
