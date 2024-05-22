@@ -20,13 +20,21 @@ export default function HomePage() {
   return (
     <div className="w-full p-8 pt-16">
       <div className="my-16 mx-auto md:w-[700px]">
-        <Text as="h1" className="text-2xl md:text-4xl pb-16 text-center">
+        <Text
+          as="h1"
+          className="text-2xl pb-16 text-center font-clarendon font-light md:text-4xl"
+        >
           An adventure club for those whose favorite days are spent outdoors.
         </Text>
         <div className="mx-auto text-center">
           <Link href="/signup">
-            <Button type="button" className="text-primary" size="lg">
-              Try it out!
+            <Button
+              type="button"
+              variant="outline"
+              className="text-foreground"
+              size="lg"
+            >
+              Try It Out
             </Button>
           </Link>
         </div>
