@@ -41,9 +41,9 @@ export default function AdventureLogPage() {
         ) : null}
       </div>
       <div className="relative z-50 w-full container bg-background -mt-28">
-        <div className="max-w-[900px] mx-auto p-4 md:p-10 md:pt-12">
+        <div className="max-w-[900px] mx-auto p-8 md:p-10 md:pt-12">
           <AdventureLogTags adventureLogId={id as Id<"adventureLogs">} />
-          <Text className="w-full text-2xl md:text-4xl font-bold mb-4 bg-transparent outline-none focus:underline">
+          <Text className="w-full text-2xl font-black md:text-4xl mb-4 bg-transparent outline-none focus:underline">
             {adventureLog.title}
           </Text>
           <hr className="border-b-1 border-dashed mb-4" />
@@ -78,7 +78,9 @@ export default function AdventureLogPage() {
             </Text>
           </Link>
         </div>
-        <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
+        <div className="container">
+          <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
+        </div>
 
         <div className="p-8 flex justify-center items-center w-full lg:z-50 lg:w-auto lg:flex-col lg:fixed lg:top-[50vh] lg:h-[1px] lg:right-0  ">
           <div className="flex flex-row lg:flex-col gap-4">

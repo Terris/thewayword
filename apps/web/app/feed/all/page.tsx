@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { usePaginatedQuery } from "convex/react";
 import { api } from "@repo/convex";
-import { Button, LoadingScreen, Text } from "@repo/ui";
+import { Button, LoadingBox, Text } from "@repo/ui";
 import { AdventureLogFeedItem } from "../../_components/AdventureLogFeedItem";
 import { AdventureLogFeedMap } from "../../_components/AdventureLogFeedMap";
 
@@ -58,7 +58,7 @@ export default function FeedPage() {
     );
   }
 
-  if (firstPageIsLoading) return <LoadingScreen />;
+  if (firstPageIsLoading) return <LoadingBox />;
 
   return (
     <>

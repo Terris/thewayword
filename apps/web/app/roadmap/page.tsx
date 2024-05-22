@@ -2,10 +2,8 @@ import { Text } from "@repo/ui";
 
 export default function RoadmapPage() {
   return (
-    <div className="w-full p-8 pt-16 max-w-[740px] mx-auto text-lg">
-      <Text className="text-3xl md:text-4xl leading-tight pb-8 font-bold">
-        Roadmap
-      </Text>
+    <div className="w-full p-8 max-w-[740px] mx-auto">
+      <Text className="text-3xl md:text-4xl pb-8 font-bold">Roadmap</Text>
       <Text className="text-lg pb-8">
         I&rsquo;m working hard to get this thing ship-shape and a real pleasure
         to use. Here&rsquo;s an evolving list of features and improvements that

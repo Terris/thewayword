@@ -6,7 +6,7 @@ export default function AboutPage() {
     <div className="w-full container p-8 pt-16 text-lg">
       <div className="flex flex-col items-start md:flex-row md:gap-16 md:px-16 pb-16">
         <div className="w-full md:w-1/2">
-          <Text className="text-3xl md:text-4xl leading-tight pb-8">
+          <Text className="text-3xl font-bold md:text-4xl leading-tight pb-8">
             We&rsquo;re patrons of the outdoors and the organizations and
             institutions that help keep it pristine.
           </Text>

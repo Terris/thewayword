@@ -46,9 +46,11 @@ export default function FeedbackPage() {
       onSubmit={onSubmit}
     >
       {({ isSubmitting, dirty, isValid }) => (
-        <Form className="w-full max-w-[600px] p-8 mx-auto flex flex-col gap-4">
-          <Text className="text-3xl font-black">Provide feedback</Text>
-          <Text>
+        <Form className="w-full p-8 max-w-[740px] mx-auto">
+          <Text className="text-3xl md:text-4xl pb-8 font-bold">
+            Provide feedback
+          </Text>
+          <Text className="text-lg pb-4 ">
             At The Wayword, we want to make a product you love using. So, if you
             feel that there is something—anything—that you think we can do
             better, please let us know. We greatly appreciate your time and
@@ -58,7 +60,7 @@ export default function FeedbackPage() {
             {({ field, meta }: FieldProps) => (
               <div>
                 <Label htmlFor={field.name}>Your feedback</Label>
-                <Textarea className="w-full" {...field} />
+                <Textarea className="w-full min-h-[160px]" {...field} />
                 {meta.touched && meta.error ? (
                   <Text className="text-sm text-destructive">{meta.error}</Text>
                 ) : null}
