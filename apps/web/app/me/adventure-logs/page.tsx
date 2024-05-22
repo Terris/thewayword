@@ -81,11 +81,7 @@ export default function MeAdventureLogsPage() {
             >
               Load more
             </Button>
-          ) : (
-            <Text className="text-center py-8">
-              You&rsquo;ve reached the end.
-            </Text>
-          )}
+          ) : null}
         </div>
       ) : (
         <Text className="text-center py-8">

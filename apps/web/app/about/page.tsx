@@ -6,11 +6,11 @@ export default function AboutPage() {
     <div className="w-full container p-8 pt-16 text-lg">
       <div className="flex flex-col items-start md:flex-row md:gap-16 md:px-16 pb-16">
         <div className="w-full md:w-3/5">
-          <Text className="text-3xl font-bold md:text-4xl leading-tight pb-8">
+          <Text className="text-3xl font-bold tracking-tight md:text-4xl pb-8">
             We&rsquo;re patrons of the outdoors and the organizations and
             institutions that help keep it pristine.
           </Text>
-          <Text className="text-lg font-clarendon font-light leading-relaxed pb-10">
+          <Text className="text-lg pb-10">
             The Wayword is dedicated to building a vibrant community of outdoor
             enthusiasts who share a profound appreciation for nature and a
             passion for adventure. Our platform aims to provide a space where
@@ -21,7 +21,7 @@ export default function AboutPage() {
           <Text className="font-bold uppercase tracking-wide pb-4">
             The Pitch
           </Text>
-          <Text className="text-lg font-clarendon font-light leading-relaxed pb-4">
+          <Text className="text-lg pb-4">
             &ldquo;My favorite days are spent outdoors but when the adventure is
             over and I&rsquo;m back to my busy life I find myself wishing I
             could do more with the artifacts of my journey than just dropping

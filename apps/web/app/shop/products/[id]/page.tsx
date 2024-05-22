@@ -84,7 +84,7 @@ export default function ShopProductPage() {
       <div className="md:w-1/3">
         <div className="sticky top-1">
           <Text className="text-2xl font-bold pr-4 pt-8">{product.name}</Text>
-          <Text className="text-2xl italic text-gray-500 pb-4">
+          <Text className="text-2xl text-neutral pb-4">
             ${product.priceInCents / 100}
           </Text>
           <div className="flex gap-4">
@@ -97,7 +97,7 @@ export default function ShopProductPage() {
                   }}
                 >
                   <SelectTrigger className="w-[120px] capitalize">
-                    <SelectValue />
+                    <SelectValue placeholder={option.name} />
                   </SelectTrigger>
                   <SelectContent>
                     {option.values.map((value) => (

@@ -35,7 +35,7 @@ export function EditableComment({ comment }: CommentProps) {
         ) : null}
       </div>
       <div className="w-full">
-        <Text className="text-sm text-neutral mb-2">
+        <Text className="text-sm text-neutral-400 mb-2 leading-tight">
           {comment.user.name} <br />
           {formatDateTime(comment._creationTime)}
         </Text>
@@ -48,7 +48,7 @@ export function EditableComment({ comment }: CommentProps) {
             }}
           />
         ) : (
-          <Text className="w-full font-clarendon text-base font-light leading-relaxed">
+          <Text className="w-full font-mono leading-relaxed text-sm">
             {comment.message}
           </Text>
         )}

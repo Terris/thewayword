@@ -58,10 +58,7 @@ export function EditCommentForm({ comment, onSuccess }: CommentProps) {
           <Field name="message">
             {({ field, meta }: FieldProps) => (
               <div>
-                <Textarea
-                  className="w-full font-clarendon font-light leading-relaxed min-h-40"
-                  {...field}
-                />
+                <Textarea className="w-full min-h-40" {...field} />
                 {meta.touched && meta.error ? (
                   <Text className="text-sm text-destructive">{meta.error}</Text>
                 ) : null}

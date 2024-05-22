@@ -16,7 +16,6 @@ const config = {
     extend: {
       fontFamily: {
         futura: ["futura-pt", "sans-serif"],
-        clarendon: ["clarendon-urw", "serif"],
       },
       colors: {
         border: "var(--border)",
