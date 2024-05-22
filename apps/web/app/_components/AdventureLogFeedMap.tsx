@@ -49,7 +49,7 @@ export function AdventureLogFeedMap({
                 markerTitle={adventureLog.title}
                 markerContent={
                   <>
-                    <Text className="font-bold pb-4 leading-4">
+                    <Text className="font-futura font-bold pb-4 leading-4">
                       <Link
                         href={`/adventure-logs/${adventureLog._id}`}
                         className="hover:underline"
@@ -57,7 +57,7 @@ export function AdventureLogFeedMap({
                         {adventureLog.title}
                       </Link>
                     </Text>
-                    <Text className="text-xs uppercase">
+                    <Text className="font-futura text-xs font-bold tracking-wide uppercase text-neutral">
                       {adventureLog.location.name}
                     </Text>
                     <Link
@@ -73,7 +73,7 @@ export function AdventureLogFeedMap({
                           className="w-5 h-5 rounded-full mr-2"
                         />
                       ) : null}
-                      <Text className="text-sm text-center leading-none group-hover:underline">
+                      <Text className="font-futura text-sm text-neutral group-hover:underline">
                         {adventureLog.user.name}
                       </Text>
                     </Link>
