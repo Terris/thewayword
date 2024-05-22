@@ -50,11 +50,10 @@ export default function FeedbackPage() {
           <Text className="text-3xl md:text-4xl pb-8 font-bold">
             Provide feedback
           </Text>
-          <Text className="text-lg pb-4 ">
+          <Text className="text-lg font-clarendon font-light leading-relaxed pb-8">
             At The Wayword, we want to make a product you love using. So, if you
-            feel that there is something—anything—that you think we can do
-            better, please let us know. We greatly appreciate your time and
-            input.
+            feel that there is anything you think we can do better, please let
+            us know. We greatly appreciate your time and input.
           </Text>
           <Field name="message">
             {({ field, meta }: FieldProps) => (

@@ -41,8 +41,8 @@ function MeLink({
     <Link
       href={href}
       className={cn(
-        "text-sm font-bold block pt-2 pb-2.5 px-4 rounded-lg transition-opacity hover:opacity-80",
-        active && "bg-border"
+        "text-sm block pt-2 pb-2.5 px-4 rounded-lg transition-opacity hover:opacity-80",
+        active && "bg-neutral-200 hover:text-foreground"
       )}
     >
       {children}

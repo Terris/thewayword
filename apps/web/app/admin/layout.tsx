@@ -26,8 +26,8 @@ function AdminLink({ children, href }: { children: ReactNode; href: string }) {
     <Link
       href={href}
       className={cn(
-        "p-2 rounded text-sm whitespace-nowrap hover:text-muted transition-colors",
-        isActive && "bg-muted hover:text-foreground"
+        "p-2 pb-1.5 rounded text-sm whitespace-nowrap hover:text-muted transition-colors",
+        isActive && "bg-neutral-200 hover:text-foreground"
       )}
     >
       {children}

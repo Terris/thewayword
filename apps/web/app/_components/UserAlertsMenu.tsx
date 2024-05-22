@@ -57,7 +57,7 @@ export function UserAlertsMenu() {
           ) : null}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="center" className="w-56 p-2">
+      <DropdownMenuContent align="end" className="w-56 p-2">
         {userAlerts.map((alert) => (
           <DropdownMenuItem
             key={alert._id}

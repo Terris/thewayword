@@ -46,7 +46,7 @@ export default function FeedLayout({
           value={pathname}
           defaultValue={pathname}
         >
-          <SelectTrigger className="w-[120px]">
+          <SelectTrigger className="w-[140px]">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
@@ -56,7 +56,7 @@ export default function FeedLayout({
         </Select>
         <Button
           variant="outline"
-          className={cn((!layout || layout === "grid") && "bg-accent")}
+          className={cn((!layout || layout === "grid") && "bg-neutral-200")}
           onClick={() => {
             router.push(`${pathname}?${createQueryString("layout", "grid")}`);
           }}
@@ -65,7 +65,7 @@ export default function FeedLayout({
         </Button>
         <Button
           variant="outline"
-          className={cn(layout === "map" && "bg-accent")}
+          className={cn(layout === "map" && "bg-neutral-200")}
           onClick={() => {
             router.push(`${pathname}?${createQueryString("layout", "map")}`);
           }}

@@ -5,12 +5,12 @@ export default function AboutPage() {
   return (
     <div className="w-full container p-8 pt-16 text-lg">
       <div className="flex flex-col items-start md:flex-row md:gap-16 md:px-16 pb-16">
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-3/5">
           <Text className="text-3xl font-bold md:text-4xl leading-tight pb-8">
             We&rsquo;re patrons of the outdoors and the organizations and
             institutions that help keep it pristine.
           </Text>
-          <Text className="text-lg pb-8">
+          <Text className="text-lg font-clarendon font-light leading-relaxed pb-10">
             The Wayword is dedicated to building a vibrant community of outdoor
             enthusiasts who share a profound appreciation for nature and a
             passion for adventure. Our platform aims to provide a space where
@@ -21,7 +21,7 @@ export default function AboutPage() {
           <Text className="font-bold uppercase tracking-wide pb-4">
             The Pitch
           </Text>
-          <Text className="text-lg pb-4">
+          <Text className="text-lg font-clarendon font-light leading-relaxed pb-4">
             &ldquo;My favorite days are spent outdoors but when the adventure is
             over and I&rsquo;m back to my busy life I find myself wishing I
             could do more with the artifacts of my journey than just dropping
@@ -33,11 +33,11 @@ export default function AboutPage() {
             inspire and be inspired to spend more time outdoors and that the
             ephemera of these journeys become a more valuable memory.&rdquo;
           </Text>
-          <Text className="pb-16 italic">
+          <Text className="pb-16 text-neutral">
             Terris Kremer - Founder, The Wayword
           </Text>
         </div>
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-2/5">
           <Image
             src="/img/about-page-image.jpg"
             width="640"
@@ -48,7 +48,7 @@ export default function AboutPage() {
           <Text className="font-bold uppercase tracking-wide pb-4">
             Core Values
           </Text>
-          <ol className="list-decimal pb-16 space-y-4 pl-4">
+          <ol className="list-decimal pb-16 space-y-4 pl-4 text-base">
             <li>
               <strong>Community:</strong> We believe in the power of community
               to enrich lives and create enduring bonds among outdoor

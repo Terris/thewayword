@@ -57,13 +57,7 @@ export function UserMenu() {
               redirectUrl: "/signin",
             }}
           >
-            <Button
-              className="w-full justify-start cursor-pointer"
-              variant="ghost"
-              size="sm"
-            >
-              Sign out
-            </Button>
+            Sign out
           </SignOutButton>
         </DropdownMenuItem>
       </DropdownMenuContent>
