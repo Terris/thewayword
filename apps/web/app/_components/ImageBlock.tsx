@@ -28,7 +28,9 @@ export function ImageBlock({
         alt="Adventure log image"
         className={cn("mx-auto rounded object-contain", className)}
       />
-      {caption ? <Text className="text-sm py-1">{caption}</Text> : null}
+      {caption ? (
+        <Text className="text-sm text-neutral-500 py-1">{caption}</Text>
+      ) : null}
     </>
   );
 }

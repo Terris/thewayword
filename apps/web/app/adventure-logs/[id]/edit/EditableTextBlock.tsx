@@ -31,12 +31,12 @@ export function EditableTextBlock({
             handleSetContent(value);
           }}
           initialContent={content}
-          className="w-full text-lg bg-transparent outline-none"
+          className="w-full text-lg bg-transparent outline-none font-clarendon font-light leading-relaxed"
         />
       ) : (
         <RichTextReader
           content={content}
-          className="w-full min-h-4 text-lg whitespace-pre-wrap"
+          className="w-full min-h-4 text-lg whitespace-pre-wrap font-clarendon font-light leading-relaxed"
         />
       )}
     </div>

@@ -22,8 +22,8 @@ export function EditableComment({ comment }: CommentProps) {
   const deleteComment = useMutation(api.comments.deleteByIdAsOwner);
 
   return (
-    <div className="py-4 flex flex-row items-start gap-4">
-      <div>
+    <div className="py-4 flex flex-row items-start gap-2">
+      <div className="w-[30px]">
         {comment.user.avatarUrl ? (
           <Image
             src={comment.user.avatarUrl}
@@ -35,7 +35,7 @@ export function EditableComment({ comment }: CommentProps) {
         ) : null}
       </div>
       <div className="w-full">
-        <Text className="text-sm mb-2">
+        <Text className="text-sm text-neutral mb-2">
           {comment.user.name} <br />
           {formatDateTime(comment._creationTime)}
         </Text>
@@ -48,7 +48,9 @@ export function EditableComment({ comment }: CommentProps) {
             }}
           />
         ) : (
-          <Text className="w-full">{comment.message}</Text>
+          <Text className="w-full font-clarendon text-base font-light leading-relaxed">
+            {comment.message}
+          </Text>
         )}
       </div>
       <div>
@@ -60,7 +62,7 @@ export function EditableComment({ comment }: CommentProps) {
                 setIsEditing(true);
               }}
               size="sm"
-              className="text-muted hover:text-foreground"
+              className="text-neutral hover:text-foreground"
             >
               <Pencil className="w-3 h-3" />
             </Button>
@@ -68,7 +70,7 @@ export function EditableComment({ comment }: CommentProps) {
               variant="ghost"
               onClick={() => deleteComment({ id: comment._id })}
               size="sm"
-              className="text-muted hover:text-foreground"
+              className="text-neutral hover:text-foreground"
             >
               <Trash2 className="w-3 h-3" />
             </Button>
