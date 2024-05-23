@@ -43,10 +43,10 @@ export default function AdventureLogPage() {
       <div className="relative z-50 w-full container bg-background -mt-28">
         <div className="max-w-[1024px] mx-auto p-8 md:pt-12 md:pb-20">
           <AdventureLogTags adventureLogId={id as Id<"adventureLogs">} />
-          <Text className="w-full text-2xl font-bold tracking-tight md:text-4xl pb-6 bg-transparent outline-none focus:underline">
+          <Text className="w-full text-2xl font-bold tracking-tight md:text-4xl pb-4 bg-transparent outline-none focus:underline">
             {adventureLog.title}
           </Text>
-          <div className="flex items-center border-t border-dashed">
+          <div className="flex flex-col-reverse md:flex-row md:items-center border-t border-dashed">
             <div className="border-r border-dashed pr-4 pt-1">
               <Link
                 href={`/user/${adventureLog.user?._id}/adventure-logs/`}
@@ -69,18 +69,7 @@ export default function AdventureLogPage() {
                 </Text>
               </Link>
             </div>
-            <div className="border-r border-dashed px-4 pt-1">
-              <Text className="font-bold uppercase text-xs text-neutral-400 tracking-wider">
-                {adventureLog.location?.name}{" "}
-              </Text>
-            </div>
-            <div className="border-r border-dashed px-4 pt-1">
-              <Text className="font-bold uppercase text-xs text-neutral-400 tracking-wider">
-                {adventureLog.location?.latitude},{" "}
-                {adventureLog.location?.longitude}
-              </Text>
-            </div>
-            <div className="px-4 pt-1">
+            <div className="hidden md:block md:border-r border-dashed md:px-4 pt-1">
               <Text className="font-bold uppercase text-xs text-neutral-400 tracking-wider">
                 {adventureLog.adventureStartDate
                   ? formatDate(adventureLog.adventureStartDate)
@@ -88,6 +77,20 @@ export default function AdventureLogPage() {
                 {adventureLog.adventureEndDate
                   ? `-${formatDate(adventureLog.adventureEndDate)}`
                   : null}
+              </Text>
+            </div>
+            <div className="px-0 md:px-4 pt-1">
+              <Text className="font-bold uppercase text-xs text-neutral-400 tracking-wider">
+                <span className="md:hidden">
+                  {adventureLog.adventureStartDate
+                    ? formatDate(adventureLog.adventureStartDate)
+                    : null}
+                  {adventureLog.adventureEndDate
+                    ? `-${formatDate(adventureLog.adventureEndDate)}`
+                    : null}{" "}
+                  &bull;{" "}
+                </span>
+                {adventureLog.location?.name}
               </Text>
             </div>
           </div>
