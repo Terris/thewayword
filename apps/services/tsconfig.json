@@ -1,10 +1,14 @@
 {
   "extends": "@config/typescript-config/base.json",
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
     "rootDir": "src",
-    "lib": ["ES2015"],
     "outDir": "./dist",
-    "types": ["node"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "strict": true,
     "allowJs": true
   },
   "include": ["src"],
