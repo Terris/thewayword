@@ -24,7 +24,7 @@ export default function ShopPage() {
                 <Text className="text-lg font-bold text-center pr-4 pt-8">
                   {product.name}
                 </Text>
-                <Text className="text-center pr-4 italic text-gray-500">
+                <Text className="text-center pr-4 text-neutral-500">
                   ${product.priceInCents / 100}
                 </Text>
               </Link>
