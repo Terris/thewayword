@@ -1,5 +1,10 @@
 import { ConvexError, v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import {
+  internalMutation,
+  internalQuery,
+  mutation,
+  query,
+} from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
 import { internal } from "./_generated/api";
@@ -40,6 +45,7 @@ export const create = mutation({
         if (!url) throw new Error("Storage file url not found");
         const newFileId = await ctx.db.insert("files", {
           url,
+          originalUrl: url,
           fileName,
           mimeType,
           type,
@@ -64,12 +70,33 @@ export const create = mutation({
   },
 });
 
-export const update = mutation({
-  args: { id: v.id("files"), url: v.optional(v.string()) },
-  handler: async (ctx, { id, url }) => {
-    await validateIdentity(ctx);
+export const systemUpdate = internalMutation({
+  args: {
+    id: v.id("files"),
+    url: v.optional(v.string()),
+    size: v.optional(v.number()),
+    dimensions: v.optional(
+      v.object({
+        width: v.optional(v.number()),
+        height: v.optional(v.number()),
+      })
+    ),
+  },
+  handler: async (ctx, { id, url, size, dimensions }) => {
     const existingFile = await ctx.db.get(id);
     if (!existingFile) throw new ConvexError("File not found");
-    return await ctx.db.patch(id, { url: url ?? existingFile.url });
+    return await ctx.db.patch(id, {
+      url: url ?? existingFile.url,
+      size: size ?? existingFile.size,
+      dimensions: dimensions ?? existingFile.dimensions,
+    });
+  },
+});
+
+// INTERNAL
+export const systemFindById = internalQuery({
+  args: { id: v.id("files") },
+  handler: async (ctx, { id }) => {
+    return ctx.db.get(id);
   },
 });

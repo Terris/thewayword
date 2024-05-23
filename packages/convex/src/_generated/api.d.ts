@@ -34,6 +34,7 @@ import type * as lib_transactional from "../lib/transactional.js";
 import type * as lib_utils from "../lib/utils.js";
 import type * as likes from "../likes.js";
 import type * as me from "../me.js";
+import type * as migrations from "../migrations.js";
 import type * as optimizerActions from "../optimizerActions.js";
 import type * as orderActions from "../orderActions.js";
 import type * as orders from "../orders.js";
@@ -81,6 +82,7 @@ declare const fullApi: ApiFromModules<{
   "lib/utils": typeof lib_utils;
   likes: typeof likes;
   me: typeof me;
+  migrations: typeof migrations;
   optimizerActions: typeof optimizerActions;
   orderActions: typeof orderActions;
   orders: typeof orders;

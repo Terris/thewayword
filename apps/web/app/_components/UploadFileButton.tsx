@@ -77,7 +77,6 @@ export function UploadFileButton({
           }/${keyPrefixRef.current}-${file.name.replace(/\s/g, "-")}`;
           return {
             url,
-            originalUrl: url,
             fileName: file.name.replace(/\s/g, "-"),
             mimeType: file.type,
             type: file.type.includes("image") ? "image" : "document",
