@@ -19,12 +19,13 @@ export default function HomePage() {
 
   return (
     <div className="w-full p-8">
-      <div className="mx-auto md:w-[700px]">
+      <div className="mx-auto md:w-[660px]">
         <Text
           as="h1"
-          className="text-2xl pb-16 text-center font-bold md:text-4xl"
+          className="text-2xl pb-16 text-center tracking-tight md:text-4xl"
         >
-          An adventure club for those whose favorite days are spent outdoors.
+          We're building an adventure club for those whose favorite days are
+          spent outdoors.
         </Text>
         <div className="mx-auto text-center">
           <Link href="/signup">
