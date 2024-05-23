@@ -30,9 +30,7 @@ export const optimizeImage = internalAction({
     const { width, height, size } =
       await sharp(optimizedImageBuffer).metadata();
 
-    const s3FileKey = `${process.env.S3_FOLDER}/optimized-w1400-${
-      file._id
-    }-${new Date().toISOString()}.webp`;
+    const s3FileKey = `${process.env.S3_FOLDER}/optimized-w1400-${file._id}.webp`;
 
     // upload to S3
     await new Upload({
