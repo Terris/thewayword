@@ -44,7 +44,9 @@ export const optimizeImage = internalAction({
       }),
       params: {
         Bucket: process.env.S3_BUCKET_NAME,
-        Key: `${process.env.S3_FOLDER}/optimized-1400-${file._id}.webp`,
+        Key: `${process.env.S3_FOLDER}/optimized-w1400-${file._id}-${
+          new Date().toISOString
+        }.webp`,
         Body: optimizedImageBuffer,
       },
     }).done();
