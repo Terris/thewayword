@@ -5,7 +5,7 @@ export function TextBlock({ content }: { content?: string }) {
   return (
     <RichTextReader
       content={content}
-      className="w-full max-w-[740px] mx-auto whitespace-pre-wrap font-mono leading-relaxed text-sm md:text-base"
+      className="w-full max-w-[740px] mx-auto whitespace-pre-wrap font-mono leading-relaxed text-sm text-gray-700 md:text-base"
     />
   );
 }

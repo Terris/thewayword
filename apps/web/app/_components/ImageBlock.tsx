@@ -26,7 +26,7 @@ export function ImageBlock({
         width={file.dimensions?.width}
         height={file.dimensions?.height}
         alt="Adventure log image"
-        className={cn("mx-auto rounded object-contain", className)}
+        className={cn("mx-auto my-4 rounded object-contain", className)}
       />
       {caption ? (
         <Text className="text-sm text-neutral-400 py-1">{caption}</Text>

@@ -16,6 +16,7 @@ const config = {
     extend: {
       fontFamily: {
         futura: ["futura-pt", "sans-serif"],
+        "meta-serif": ["ff-meta-serif-web-pro", "serif"],
       },
       colors: {
         border: "var(--border)",

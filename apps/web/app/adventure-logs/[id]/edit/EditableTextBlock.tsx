@@ -29,7 +29,7 @@ export function EditableTextBlock({
           handleSetContent(value);
         }}
         initialContent={content}
-        className="w-full bg-transparent outline-none font-mono leading-relaxed"
+        className="w-full bg-transparent outline-none font-mono leading-relaxed text-sm text-gray-700 md:text-base"
         editable={isSelected}
       />
     </div>

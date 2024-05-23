@@ -43,7 +43,7 @@ export default function AdventureLogPage() {
       <div className="relative z-50 w-full container bg-background -mt-28">
         <div className="max-w-[1024px] mx-auto p-8 md:pt-12 md:pb-20">
           <AdventureLogTags adventureLogId={id as Id<"adventureLogs">} />
-          <Text className="w-full text-2xl font-bold tracking-tight md:text-4xl pb-4 bg-transparent outline-none focus:underline">
+          <Text className="w-full text-2xl font-meta-serif font-black tracking-tight md:text-4xl pb-4 bg-transparent">
             {adventureLog.title}
           </Text>
           <div className="flex flex-col-reverse md:flex-row md:items-center border-t border-dashed">
