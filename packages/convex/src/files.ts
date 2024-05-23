@@ -1,7 +1,8 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
+import { internal } from "./_generated/api";
 
 export const findById = query({
   args: { id: v.id("files") },
@@ -37,7 +38,7 @@ export const create = mutation({
       uploads,
       async ({ url, fileName, mimeType, type, size, dimensions, userId }) => {
         if (!url) throw new Error("Storage file url not found");
-        return await ctx.db.insert("files", {
+        const newFileId = await ctx.db.insert("files", {
           url,
           fileName,
           mimeType,
@@ -46,8 +47,28 @@ export const create = mutation({
           dimensions,
           userId,
         });
+        if (type === "image") {
+          // optimize in an action
+          await ctx.scheduler.runAfter(
+            0,
+            internal.optimizerActions.optimizeImage,
+            {
+              fileId: newFileId,
+            }
+          );
+        }
       }
     );
     return fileIds;
+  },
+});
+
+export const update = mutation({
+  args: { id: v.id("files"), url: v.optional(v.string()) },
+  handler: async (ctx, { id, url }) => {
+    await validateIdentity(ctx);
+    const existingFile = await ctx.db.get(id);
+    if (!existingFile) throw new ConvexError("File not found");
+    return await ctx.db.patch(id, { url: url ?? existingFile.url });
   },
 });

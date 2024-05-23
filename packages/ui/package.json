@@ -51,6 +51,7 @@
     "@config/eslint-config": "workspace:*",
     "@config/tailwind-config": "workspace:*",
     "@config/typescript-config": "workspace:*",
+    "@types/node": "^20.10.6",
     "@types/react": "^18.2.46",
     "postcss": "^8.4.5",
     "react": "^18.2.0",

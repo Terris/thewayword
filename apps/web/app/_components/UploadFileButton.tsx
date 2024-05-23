@@ -71,17 +71,21 @@ export function UploadFileButton({
     try {
       await Promise.all(files.map((file) => uploadFile(file)));
       const fileDetails = await Promise.all(
-        files.map(async (file) => ({
-          url: `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/${
+        files.map(async (file) => {
+          const url = `${process.env.NEXT_PUBLIC_S3_BUCKET_URL}/${
             process.env.NEXT_PUBLIC_S3_FOLDER
-          }/${keyPrefixRef.current}-${file.name.replace(/\s/g, "-")}`,
-          fileName: file.name.replace(/\s/g, "-"),
-          mimeType: file.type,
-          type: file.type.includes("image") ? "image" : "document",
-          size: file.size,
-          dimensions: await getImageDimensions(file),
-          userId: me.id,
-        }))
+          }/${keyPrefixRef.current}-${file.name.replace(/\s/g, "-")}`;
+          return {
+            url,
+            originalUrl: url,
+            fileName: file.name.replace(/\s/g, "-"),
+            mimeType: file.type,
+            type: file.type.includes("image") ? "image" : "document",
+            size: file.size,
+            dimensions: await getImageDimensions(file),
+            userId: me.id,
+          };
+        })
       );
 
       const fileIds = await createFileRecords({

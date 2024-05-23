@@ -63,6 +63,7 @@ export default defineSchema({
   }).index("by_is_done", ["isDone"]),
   files: defineTable({
     url: v.string(),
+    originalUrl: v.optional(v.string()),
     fileName: v.string(),
     mimeType: v.string(),
     type: v.string(),
