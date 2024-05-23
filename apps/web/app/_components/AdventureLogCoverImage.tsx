@@ -19,12 +19,12 @@ export function AdventureLogCoverImage({
 
   const isLoading = coverImageFile === undefined;
 
-  if (isLoading || !coverImageFile) return null;
+  if (isLoading) return null;
 
   return (
     <Image
-      src={coverImageFile.url}
-      alt={coverImageFile.fileName}
+      src={coverImageFile?.url ?? "/img/tww-fallback-cover.png"}
+      alt="Log Cover Image"
       // width={coverImageFile.dimensions?.width}
       // height={coverImageFile.dimensions?.height}
       sizes="auto"
