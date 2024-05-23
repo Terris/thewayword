@@ -4,12 +4,13 @@ import Image from "next/image";
 export default function AboutPage() {
   return (
     <div className="w-full container p-8 pt-16 text-lg">
+      <Text className="max-w-[820px] mx-auto text-center text-3xl font-bold tracking-tight md:text-4xl pb-8 md:pb-16">
+        We&rsquo;re patrons of the outdoors and the organizations and
+        institutions that help keep it pristine.
+      </Text>
+      <hr className="max-w-[220px] mx-auto border-amber-400 mb-8 md:mb-16" />
       <div className="flex flex-col items-start md:flex-row md:gap-16 md:px-16 pb-16">
-        <div className="w-full md:w-3/5">
-          <Text className="text-3xl font-bold tracking-tight md:text-4xl pb-8">
-            We&rsquo;re patrons of the outdoors and the organizations and
-            institutions that help keep it pristine.
-          </Text>
+        <div className="w-full md:w-1/2">
           <Text className="text-lg pb-10">
             The Wayword is dedicated to building a vibrant community of outdoor
             enthusiasts who share a profound appreciation for nature and a
@@ -37,14 +38,7 @@ export default function AboutPage() {
             Terris Kremer - Founder, The Wayword
           </Text>
         </div>
-        <div className="w-full md:w-2/5">
-          <Image
-            src="/img/about-page-image.jpg"
-            width="640"
-            height="427"
-            alt="Looking out over an expanse of mountains from inside a tent"
-            className="rounded mb-8"
-          />
+        <div className="w-full md:w-1/2">
           <Text className="font-bold uppercase tracking-wide pb-4">
             Core Values
           </Text>
