@@ -19,6 +19,7 @@ export const optimizeImage = internalAction({
     const fileImageBytesRes = await fetch(file.url);
     const fileImageBytes = await fileImageBytesRes.arrayBuffer();
     const optimizedImageBuffer = await sharp(fileImageBytes)
+      .rotate()
       .resize({
         width: 1400,
         fit: "inside",

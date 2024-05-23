@@ -21,11 +21,8 @@ export function AdventureLogFeedItem({
           className="relative w-full rounded mb-2 overflow-hidden"
           style={{ aspectRatio: "4 / 3" }}
         >
-          <AdventureLogCoverImage
-            adventureLogId={adventureLog._id}
-            className="group-hover:opacity-90 transition-opacity"
-          />
-          <div className="hidden group-hover:block absolute top-0 left-0 right-0 h-1 bg-amber-400" />
+          <AdventureLogCoverImage adventureLogId={adventureLog._id} />
+          <div className="opacity-0 group-hover:opacity-100 absolute top-0 left-0 right-0 h-1 bg-amber-400 transition-opacity" />
         </div>
         <Text className="w-full font-bold uppercase text-xs tracking-wider truncate pb-1 group-hover:text-amber-400">
           {adventureLog.title}
@@ -44,7 +41,7 @@ export function AdventureLogFeedItem({
             className="w-5 h-5 rounded-full mr-2"
           />
         ) : null}
-        <Text className="text-sm text-center group-hover:underline">
+        <Text className="text-sm text-center group-hover:text-amber-400">
           {adventureLog.user.name}
         </Text>
       </Link>
