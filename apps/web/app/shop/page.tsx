@@ -15,7 +15,7 @@ export default function ShopPage() {
 
   return (
     <div className="w-full p-8 ">
-      <Text className="max-w-[600px] mx-auto text-2xl text-center font-bold tracking-tight p-4 bg-amber-400 text-white rounded">
+      <Text className="text-2xl text-center font-bold tracking-tight pb-8 text-amber-400">
         Free shipping till the end of June!
       </Text>
       {allProducts.length ? (
