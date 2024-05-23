@@ -15,6 +15,9 @@ export default function ShopPage() {
 
   return (
     <div className="w-full p-8 ">
+      <Text className="max-w-[600px] mx-auto text-2xl text-center font-bold tracking-tight p-4 bg-amber-400 text-white rounded">
+        Free shipping till the end of June!
+      </Text>
       {allProducts.length ? (
         <div className="container grid grid-cols-1 md:grid-cols-3 gap-4">
           {allProducts.map((product) => (
