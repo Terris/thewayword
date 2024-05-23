@@ -82,12 +82,12 @@ export default function AdventureLogPage() {
           <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
         </div>
 
-        <div className="p-8 flex justify-center items-center w-full lg:z-50 lg:w-auto lg:flex-col lg:fixed lg:top-[50vh] lg:h-[1px] lg:right-0  ">
+        <div className="p-8 flex justify-center items-center lg:z-50 lg:w-auto lg:flex-col lg:fixed lg:top-[50vh] lg:h-[1px] lg:right-1  ">
           <div className="flex flex-row lg:flex-col gap-4">
             {meIsLogOwner ? (
               <Link
                 href={`/adventure-logs/${id as string}/edit`}
-                className="bg-background border rounded-full p-3 hover:bg-neutral-200"
+                className="bg-background border rounded-full p-3 hover:bg-neutral-200 lg:shadow-md"
               >
                 <Pencil className="w-4 h-4 " />
               </Link>
@@ -97,7 +97,7 @@ export default function AdventureLogPage() {
             />
             <Link
               href="#comments"
-              className="bg-background border rounded-full p-3 hover:bg-neutral-200"
+              className="bg-background border rounded-full p-3 hover:bg-neutral-200 lg:shadow-md"
             >
               <MessageCircle className="w-4 h-4 " />
             </Link>
