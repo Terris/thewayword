@@ -47,10 +47,10 @@ export default function FeedbackPage() {
     >
       {({ isSubmitting, dirty, isValid }) => (
         <Form className="w-full p-8 max-w-[740px] mx-auto">
-          <Text className="text-3xl md:text-4xl pb-8 font-bold tracking-tight">
+          <Text className="text-2xl md:text-3xl pb-8 font-bold tracking-tight">
             Provide feedback
           </Text>
-          <Text className="text-lg pb-8">
+          <Text className="font-meta-serif font-medium text-lg pb-8">
             At The Wayword, we want to make a product you love using. So, if you
             feel that there is anything you think we can do better, please let
             us know. We greatly appreciate your time and input.

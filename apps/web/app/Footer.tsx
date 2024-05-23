@@ -20,7 +20,6 @@ export function Footer() {
             <FooterLink href="/about">About</FooterLink>
             <FooterLink href="/shop">Shop</FooterLink>
             <FooterLink href="/feedback">Feedback</FooterLink>
-            <FooterLink href="/roadmap">Roadmap</FooterLink>
           </div>
         ) : null}
       </div>
