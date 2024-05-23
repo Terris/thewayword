@@ -1,4 +1,5 @@
 import { type Id, api } from "@repo/convex";
+import { cn } from "@repo/utils";
 import { useQuery } from "convex/react";
 import Image from "next/image";
 
@@ -27,7 +28,7 @@ export function AdventureLogCoverImage({
       width={coverImageFile.dimensions?.width}
       height={coverImageFile.dimensions?.height}
       sizes="auto"
-      className="rounded object-cover w-full"
+      className={cn("rounded object-cover w-full", className)}
     />
   );
 }
