@@ -25,7 +25,6 @@ export const optimizeImage = internalAction({
         fit: "inside",
         withoutEnlargement: true,
       })
-      .toFormat("webp")
       .toBuffer();
 
     const { width, height, size } =
