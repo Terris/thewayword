@@ -66,7 +66,11 @@ export default function FeedbackPage() {
               </div>
             )}
           </Field>
-          <Button type="submit" disabled={!dirty || !isValid || isSubmitting}>
+          <Button
+            type="submit"
+            disabled={!dirty || !isValid || isSubmitting}
+            className="mt-4"
+          >
             Submit
           </Button>
         </Form>
