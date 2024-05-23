@@ -57,6 +57,7 @@ export const create = mutation({
             }
           );
         }
+        return newFileId;
       }
     );
     return fileIds;
