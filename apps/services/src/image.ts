@@ -19,6 +19,7 @@ export async function optimizeFileImage(req: Request, res: Response) {
       fit: "inside",
       withoutEnlargement: true,
     })
+    .withMetadata()
     .toFormat("webp")
     .toBuffer();
 
