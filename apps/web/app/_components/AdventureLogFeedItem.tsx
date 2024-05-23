@@ -18,15 +18,16 @@ export function AdventureLogFeedItem({
         className="group w-full pb-4 cursor-pointer"
       >
         <div
-          className="relative w-full rounded mb-2"
+          className="relative w-full rounded mb-2 overflow-hidden"
           style={{ aspectRatio: "4 / 3" }}
         >
           <AdventureLogCoverImage
             adventureLogId={adventureLog._id}
-            className="group-hover:opacity-50 transition-opacity"
+            className="group-hover:opacity-90 transition-opacity"
           />
+          <div className="hidden group-hover:block absolute top-0 left-0 right-0 h-1 bg-amber-400" />
         </div>
-        <Text className="w-full font-bold uppercase text-xs tracking-wider truncate pb-1">
+        <Text className="w-full font-bold uppercase text-xs tracking-wider truncate pb-1 group-hover:text-amber-400">
           {adventureLog.title}
         </Text>
       </Link>
