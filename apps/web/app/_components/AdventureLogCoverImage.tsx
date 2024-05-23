@@ -25,9 +25,10 @@ export function AdventureLogCoverImage({
     <Image
       src={coverImageFile.url}
       alt={coverImageFile.fileName}
-      width={coverImageFile.dimensions?.width}
-      height={coverImageFile.dimensions?.height}
+      // width={coverImageFile.dimensions?.width}
+      // height={coverImageFile.dimensions?.height}
       sizes="auto"
+      fill
       className={cn("rounded object-cover w-full", className)}
     />
   );
