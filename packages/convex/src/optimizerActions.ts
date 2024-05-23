@@ -16,7 +16,7 @@ export const optimizeImage = internalAction({
     });
     if (!file) throw new ConvexError("File not found");
 
-    const fileImageBytesRes = await fetch(file.url);
+    const fileImageBytesRes = await fetch(file.originalUrl);
     const fileImageBytes = await fileImageBytesRes.arrayBuffer();
     const optimizedImageBuffer = await sharp(fileImageBytes)
       .rotate()
@@ -25,6 +25,7 @@ export const optimizeImage = internalAction({
         fit: "inside",
         withoutEnlargement: true,
       })
+      .toFormat("webp")
       .toBuffer();
 
     const { width, height, size } =
