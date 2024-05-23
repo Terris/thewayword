@@ -3,6 +3,10 @@
 import { ConvexError, v } from "convex/values";
 import { internalAction } from "./_generated/server";
 import { api } from "./_generated/api";
+import { Upload } from "@aws-sdk/lib-storage";
+import { S3Client } from "@aws-sdk/client-s3";
+import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
+import sharp from "sharp";
 
 export const optimizeImage = internalAction({
   args: { fileId: v.id("files") },
@@ -10,13 +14,42 @@ export const optimizeImage = internalAction({
     const file = await ctx.runQuery(api.files.findById, { id: fileId });
     if (!file) throw new ConvexError("File not found");
 
-    // const res = await fetch();
+    const fileImageBytesRes = await fetch(file.url);
+    const fileImageBytes = await fileImageBytesRes.arrayBuffer();
+    const optimizedImageBuffer = await sharp(fileImageBytes)
+      .resize({
+        width: 1400,
+        fit: "inside",
+        withoutEnlargement: true,
+      })
+      .toFormat("webp")
+      .toBuffer();
+
+    const s3FileKey = `${process.env.S3_FOLDER}/optimized-1400-${file._id}.webp`;
+
+    // upload to S3
+    await new Upload({
+      client: new S3Client({
+        credentials: fromCognitoIdentityPool({
+          clientConfig: { region: "us-east-2" },
+          identityPoolId: process.env.AWS_IDENTITY_POOL_ID!,
+        }),
+        region: "us-east-1",
+      }),
+      params: {
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: `${process.env.S3_FOLDER}/optimized-1400-${file._id}.webp`,
+        Body: optimizedImageBuffer,
+      },
+    }).done();
+
+    const optimizedUrl = `${process.env.S3_BUCKET_URL}/${process.env.S3_FOLDER}/${s3FileKey}`;
 
     // update the file with the new url
-    // await ctx.runMutation(api.files.update, {
-    //   id: fileId,
-    //   url: optimizedUrl,
-    // });
+    await ctx.runMutation(api.files.update, {
+      id: fileId,
+      url: optimizedUrl,
+    });
 
     return true;
   },

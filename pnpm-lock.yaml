@@ -323,6 +323,15 @@ importers:
 
   packages/convex:
     dependencies:
+      '@aws-sdk/client-s3':
+        specifier: ^3.523.0
+        version: 3.523.0
+      '@aws-sdk/credential-providers':
+        specifier: ^3.523.0
+        version: 3.523.0
+      '@aws-sdk/lib-storage':
+        specifier: ^3.578.0
+        version: 3.578.0(@aws-sdk/client-s3@3.523.0)
       '@clerk/clerk-sdk-node':
         specifier: ^5.0.4
         version: 5.0.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -335,6 +344,9 @@ importers:
       resend:
         specifier: ^3.1.0
         version: 3.2.0
+      sharp:
+        specifier: ^0.33.4
+        version: 0.33.4
       stripe:
         specifier: ^15.7.0
         version: 15.7.0

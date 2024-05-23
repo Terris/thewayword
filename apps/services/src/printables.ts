@@ -1,19 +1,12 @@
 import { Request, Response } from "express";
 import PDFDocument from "pdfkit";
-import { ConvexHttpClient } from "convex/browser";
-import { Id, api } from "@repo/convex";
 import { extractTextRecursively } from "./utils";
 import { Upload } from "@aws-sdk/lib-storage";
 import { S3Client } from "@aws-sdk/client-s3";
 import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
 
 export async function createPdfLogCover(req: Request, res: Response) {
-  const convexClient = new ConvexHttpClient(process.env.CONVEX_URL!);
-  const adventureLog = await convexClient
-    // @ts-ignore
-    .query(api.printables.findAdventureLogByIdAsMachine, {
-      id: "mh7b0cz1ybwcwmaz0yw7y8x6zx6sg2fp" as Id<"adventureLogs">,
-    });
+  const { adventureLog } = req.body;
 
   if (!adventureLog) {
     return res.status(404).send("Adventure log not found!");
@@ -95,12 +88,7 @@ export async function createPdfLogCover(req: Request, res: Response) {
 }
 
 export async function createPdfLogInteriorPages(req: Request, res: Response) {
-  const convexClient = new ConvexHttpClient(process.env.CONVEX_URL!);
-  const adventureLog = await convexClient
-    // @ts-ignore
-    .query(api.printables.findAdventureLogByIdAsMachine, {
-      id: "mh7b0cz1ybwcwmaz0yw7y8x6zx6sg2fp" as Id<"adventureLogs">,
-    });
+  const { adventureLog } = req.body;
 
   if (!adventureLog) {
     return res.status(404).send("Adventure log not found!");
