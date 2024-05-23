@@ -41,43 +41,58 @@ export default function AdventureLogPage() {
         ) : null}
       </div>
       <div className="relative z-50 w-full container bg-background -mt-28">
-        <div className="max-w-[900px] mx-auto p-8 md:p-10 md:pt-12">
+        <div className="max-w-[1024px] mx-auto p-8 md:pt-12 md:pb-20">
           <AdventureLogTags adventureLogId={id as Id<"adventureLogs">} />
-          <Text className="w-full text-2xl font-bold tracking-tight md:text-4xl mb-4 bg-transparent outline-none focus:underline">
+          <Text className="w-full text-2xl font-bold tracking-tight md:text-4xl pb-6 bg-transparent outline-none focus:underline">
             {adventureLog.title}
           </Text>
-
-          <Text className="font-bold uppercase text-xs  tracking-wider pb-1">
-            {adventureLog.location?.name}{" "}
-            {adventureLog.adventureStartDate
-              ? `- ${formatDate(adventureLog.adventureStartDate)}`
-              : null}
-            {adventureLog.adventureEndDate
-              ? `-${formatDate(adventureLog.adventureEndDate)}`
-              : null}
-          </Text>
-
-          <Link
-            href={`/user/${adventureLog.user?._id}/adventure-logs/`}
-            className="inline-flex items-center hover:text-amber-400 transition-opacity"
-          >
-            {adventureLog.user?.avatarUrl ? (
-              <Image
-                src={adventureLog.user.avatarUrl}
-                width="20"
-                height="20"
-                alt="User"
-                className="w-5 h-5 rounded-full mr-2"
-              />
-            ) : null}
-            <Text
-              as="span"
-              className="inine-block text-sm text-center leading-none"
-            >
-              {adventureLog.user?.name}
-            </Text>
-          </Link>
+          <div className="flex items-center border-t border-dashed">
+            <div className="border-r border-dashed pr-4 pt-1">
+              <Link
+                href={`/user/${adventureLog.user?._id}/adventure-logs/`}
+                className="flex items-center text-neutral-400 hover:text-amber-400 transition-opacity"
+              >
+                {adventureLog.user?.avatarUrl ? (
+                  <Image
+                    src={adventureLog.user.avatarUrl}
+                    width="20"
+                    height="20"
+                    alt="User"
+                    className="w-5 h-5 rounded-full mr-2"
+                  />
+                ) : null}
+                <Text
+                  as="span"
+                  className="font-bold uppercase text-xs tracking-wider"
+                >
+                  {adventureLog.user?.name}
+                </Text>
+              </Link>
+            </div>
+            <div className="border-r border-dashed px-4 pt-1">
+              <Text className="font-bold uppercase text-xs text-neutral-400 tracking-wider">
+                {adventureLog.location?.name}{" "}
+              </Text>
+            </div>
+            <div className="border-r border-dashed px-4 pt-1">
+              <Text className="font-bold uppercase text-xs text-neutral-400 tracking-wider">
+                {adventureLog.location?.latitude},{" "}
+                {adventureLog.location?.longitude}
+              </Text>
+            </div>
+            <div className="px-4 pt-1">
+              <Text className="font-bold uppercase text-xs text-neutral-400 tracking-wider">
+                {adventureLog.adventureStartDate
+                  ? formatDate(adventureLog.adventureStartDate)
+                  : null}
+                {adventureLog.adventureEndDate
+                  ? `-${formatDate(adventureLog.adventureEndDate)}`
+                  : null}
+              </Text>
+            </div>
+          </div>
         </div>
+
         <div className="container">
           <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
         </div>
