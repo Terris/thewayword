@@ -96,7 +96,6 @@ export function AdventureLogCommentForm({
               type="submit"
               disabled={!dirty || !isValid || isSubmitting}
               size="sm"
-              variant="outline"
             >
               Submit
             </Button>

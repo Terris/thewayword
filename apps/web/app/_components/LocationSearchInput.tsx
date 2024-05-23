@@ -47,6 +47,12 @@ function PlaceAutocompleteInput({
   const inputRef = useRef<HTMLInputElement>(null);
   const places = useMapsLibrary("places");
 
+  // Hack that allows interacting with the autocomplete dropdown in dialogs
+  useEffect(() => {
+    // Disable Radix ui dialog pointer events lockout
+    setTimeout(() => (document.body.style.pointerEvents = ""), 0);
+  });
+
   useEffect(() => {
     if (!places || !inputRef.current) return;
 

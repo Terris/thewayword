@@ -12,6 +12,7 @@ import {
   Dialog,
   DialogContent,
   DialogHeader,
+  DialogPortal,
   DialogTitle,
   DialogTrigger,
   LoadingScreen,
@@ -90,43 +91,60 @@ export function EditableLocationForm({
           <Pencil className="hidden w-3 h-3 group-hover:inline-block ml-1 -mt-1" />
         </Text>
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle className="pb-4">Where did you go?</DialogTitle>
-          <Formik<EditableLocationFormValues>
-            initialValues={{
-              location: {
-                latitude: adventureLog.location?.latitude?.toString() ?? "",
-                longitude: adventureLog.location?.longitude?.toString() ?? "",
-                name: adventureLog.location?.name ?? "",
-                fullAddress: adventureLog.location?.fullAddress ?? "",
-              },
-            }}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-          >
-            <Form>
-              <Field name="location">
-                {({ form, meta }: FieldProps) => (
-                  <>
-                    <LocationSearchInput
-                      onChange={(location) => {
-                        void form.setFieldValue("location", location);
-                      }}
-                    />
-                    {meta.touched && meta.error ? (
-                      <Text className="text-destructive">{meta.error}</Text>
-                    ) : null}
-                  </>
-                )}
-              </Field>
-              <Button type="submit" className="w-full mt-4">
-                Save
-              </Button>
-            </Form>
-          </Formik>
-        </DialogHeader>
-      </DialogContent>
+      <DialogPortal>
+        <DialogContent
+          onInteractOutside={(e) => {
+            const hasPacContainer = e.composedPath().some((el: EventTarget) => {
+              if ("classList" in el) {
+                return Array.from((el as Element).classList).includes(
+                  "pac-container"
+                );
+              }
+              return false;
+            });
+
+            if (hasPacContainer) {
+              e.preventDefault();
+            }
+          }}
+        >
+          <DialogHeader>
+            <DialogTitle className="pb-4">Where did you go?</DialogTitle>
+            <Formik<EditableLocationFormValues>
+              initialValues={{
+                location: {
+                  latitude: adventureLog.location?.latitude?.toString() ?? "",
+                  longitude: adventureLog.location?.longitude?.toString() ?? "",
+                  name: adventureLog.location?.name ?? "",
+                  fullAddress: adventureLog.location?.fullAddress ?? "",
+                },
+              }}
+              validationSchema={validationSchema}
+              onSubmit={onSubmit}
+            >
+              <Form>
+                <Field name="location">
+                  {({ form, meta }: FieldProps) => (
+                    <>
+                      <LocationSearchInput
+                        onChange={(location) => {
+                          void form.setFieldValue("location", location);
+                        }}
+                      />
+                      {meta.touched && meta.error ? (
+                        <Text className="text-destructive">{meta.error}</Text>
+                      ) : null}
+                    </>
+                  )}
+                </Field>
+                <Button type="submit" className="relative w-full mt-4">
+                  Save
+                </Button>
+              </Form>
+            </Formik>
+          </DialogHeader>
+        </DialogContent>
+      </DialogPortal>
     </Dialog>
   );
 }

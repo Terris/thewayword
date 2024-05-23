@@ -20,7 +20,7 @@ export function AdventureLogTags({
     <Text className="font-bold text-xs uppercase tracking-widest text-neutral-400 pb-2">
       {adventureLogTags.map((tag, index) => (
         <span key={tag?.slug}>
-          <Link href={`/tags/${tag?.slug}`} className="hover:underline">
+          <Link href={`/tags/${tag?.slug}`} className="hover:text-amber-400">
             {tag?.name}
           </Link>
           {index + 1 < adventureLogTags.length ? ", " : ""}

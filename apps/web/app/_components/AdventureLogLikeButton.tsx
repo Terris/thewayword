@@ -28,7 +28,7 @@ export function AdventureLogLikeButton({
     <button
       type="button"
       className={cn(
-        "relative bg-background border rounded-full p-3 hover:bg-muted",
+        "relative bg-background border rounded-full p-3 hover:bg-neutral-200",
         userLikesAdventureLog && "text-red-500"
       )}
       onClick={() => {

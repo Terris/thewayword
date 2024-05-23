@@ -82,7 +82,6 @@ export function EditCommentForm({ comment, onSuccess }: CommentProps) {
               disabled={!dirty || !isValid || isSubmitting}
               className="w-full"
               size="sm"
-              variant="outline"
             >
               Save
             </Button>

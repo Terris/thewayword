@@ -59,7 +59,7 @@ export default function AdventureLogPage() {
 
           <Link
             href={`/user/${adventureLog.user?._id}/adventure-logs/`}
-            className="inline-flex items-center hover:opacity-80 transition-opacity"
+            className="inline-flex items-center hover:text-amber-400 transition-opacity"
           >
             {adventureLog.user?.avatarUrl ? (
               <Image
@@ -87,7 +87,7 @@ export default function AdventureLogPage() {
             {meIsLogOwner ? (
               <Link
                 href={`/adventure-logs/${id as string}/edit`}
-                className="bg-background border rounded-full p-3 hover:bg-muted"
+                className="bg-background border rounded-full p-3 hover:bg-neutral-200"
               >
                 <Pencil className="w-4 h-4 " />
               </Link>
@@ -97,7 +97,7 @@ export default function AdventureLogPage() {
             />
             <Link
               href="#comments"
-              className="bg-background border rounded-full p-3 hover:bg-muted"
+              className="bg-background border rounded-full p-3 hover:bg-neutral-200"
             >
               <MessageCircle className="w-4 h-4 " />
             </Link>

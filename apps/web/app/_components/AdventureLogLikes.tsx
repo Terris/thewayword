@@ -20,7 +20,7 @@ export function AdventureLogLikes({
       {likes?.map((like) => (
         <Link
           href={`/user/${like.userId}/adventure-logs`}
-          className="inline-flex flex-row items-center gap-2 pb-4 text-sm text-neutral-400 hover:text-amber-400"
+          className="inline-flex flex-row items-center gap-2 pb-4 text-sm hover:text-amber-400"
           key={like._id}
         >
           {like.user.avatarUrl ? (
