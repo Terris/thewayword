@@ -10,7 +10,12 @@ const port = process.env.PORT || 3020;
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [
+      "http://localhost:3000",
+      "https://www.thewayword.com",
+      "https://sleek-chihuahua-712.convex.cloud",
+      "https://dutiful-chameleon-43.convex.cloud",
+    ],
   })
 );
 
