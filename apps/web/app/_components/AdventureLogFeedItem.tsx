@@ -12,12 +12,15 @@ export function AdventureLogFeedItem({
   adventureLog,
 }: AdventureLogFeedItemProps) {
   return (
-    <div>
+    <div className="w-full">
       <Link
         href={`/adventure-logs/${adventureLog._id}`}
         className="group w-full pb-4 cursor-pointer"
       >
-        <div className="relative flex items-center justify-center bg-primary rounded mb-2">
+        <div
+          className="relative w-full rounded mb-2"
+          style={{ aspectRatio: "4 / 3" }}
+        >
           <AdventureLogCoverImage
             adventureLogId={adventureLog._id}
             className="group-hover:opacity-50 transition-opacity"
