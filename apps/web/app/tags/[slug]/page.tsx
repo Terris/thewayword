@@ -67,7 +67,7 @@ export default function TagPage() {
   return (
     <div className="w-full p-8">
       <Text className="w-full pb-4 text-2xl capitalize md:text-4xl font-bold bg-transparent outline-none focus:underline">
-        <span className="text-muted">#</span>
+        <span className="text-neutral-400">#</span>
         {tag?.name}
       </Text>
 

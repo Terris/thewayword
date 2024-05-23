@@ -86,7 +86,7 @@ export function EditableLocationForm({
       }}
     >
       <DialogTrigger>
-        <Text className="group w-full font-bold tracking-wider uppercase text-xs text-muted-foreground pt-1 cursor-pointer hover:underline ">
+        <Text className="group w-full font-bold tracking-wider uppercase text-xs text-neutral-400 pt-1 cursor-pointer hover:underline ">
           {adventureLog.location?.name ? adventureLog.location.name : null}
           <Pencil className="hidden w-3 h-3 group-hover:inline-block ml-1 -mt-1" />
         </Text>

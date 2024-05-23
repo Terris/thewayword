@@ -10,11 +10,11 @@ export default function FeedbackSuccessPage() {
         address your thoughts as soon as possible.
       </Text>
       <Text>
-        <Link href="/feed" className="underline hover:text-muted">
+        <Link href="/feed" className="underline hover:text-amber-400">
           Go back to the home page
         </Link>{" "}
         or{" "}
-        <Link href="/feedback" className="underline hover:text-muted">
+        <Link href="/feedback" className="underline hover:text-amber-400">
           submit more feedback
         </Link>
         .
