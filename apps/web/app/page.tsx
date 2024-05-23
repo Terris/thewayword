@@ -24,8 +24,8 @@ export default function HomePage() {
           as="h1"
           className="text-2xl pb-16 text-center tracking-tight md:text-4xl"
         >
-          We're building an adventure club for those whose favorite days are
-          spent outdoors.
+          We&rsquo;re building an adventure club for those whose favorite days
+          are spent outdoors.
         </Text>
         <div className="mx-auto text-center">
           <Link href="/signup">
