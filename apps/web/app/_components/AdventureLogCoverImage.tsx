@@ -1,5 +1,4 @@
 import { type Id, api } from "@repo/convex";
-import { LoadingBox } from "@repo/ui";
 import { useQuery } from "convex/react";
 import Image from "next/image";
 
