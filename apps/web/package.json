@@ -11,7 +11,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.523.0",
     "@aws-sdk/credential-providers": "^3.523.0",
-    "@clerk/nextjs": "^5.0.4",
+    "@clerk/nextjs": "^5.1.0",
     "@repo/auth": "workspace:*",
     "@repo/convex": "workspace:*",
     "@repo/hooks": "workspace:*",
@@ -29,7 +29,7 @@
     "@vis.gl/react-google-maps": "^1.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
-    "convex": "^1.11.3",
+    "convex": "^1.12.0",
     "date-fns": "^3.6.0",
     "formik": "^2.4.5",
     "lucide-react": "^0.331.0",
