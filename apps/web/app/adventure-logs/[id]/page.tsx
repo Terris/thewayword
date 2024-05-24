@@ -41,7 +41,7 @@ export default function AdventureLogPage() {
         ) : null}
       </div>
       <div className="relative z-50 w-full container bg-background -mt-28">
-        <div className="max-w-[1024px] mx-auto p-8 md:pt-12 md:pb-20">
+        <div className="max-w-[980px] mx-auto py-8 md:pt-12 md:pb-20">
           <AdventureLogTags adventureLogId={id as Id<"adventureLogs">} />
           <Text className="w-full text-2xl font-meta-serif font-black tracking-tight md:text-4xl pb-4 bg-transparent">
             {adventureLog.title}
@@ -95,8 +95,7 @@ export default function AdventureLogPage() {
             </div>
           </div>
         </div>
-
-        <div className="container">
+        <div className="max-w-[740px] mx-auto">
           <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
         </div>
 
