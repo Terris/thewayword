@@ -43,11 +43,11 @@ export default function AdventureLogPage() {
       <div className="relative z-50 w-full container bg-background -mt-28">
         <div className="max-w-[980px] mx-auto py-8 md:pt-12 md:pb-20">
           <AdventureLogTags adventureLogId={id as Id<"adventureLogs">} />
-          <Text className="w-full text-2xl font-meta-serif font-black tracking-tight md:text-4xl pb-4 bg-transparent">
+          <Text className="w-full text-2xl font-meta-serif font-bold tracking-tight md:text-4xl pb-4 bg-transparent">
             {adventureLog.title}
           </Text>
           <div className="flex flex-col-reverse md:flex-row md:items-center border-t border-dashed">
-            <div className="border-r border-dashed pr-4 pt-1">
+            <div className="md:border-r md:border-dashed pr-4 pt-1">
               <Link
                 href={`/user/${adventureLog.user?._id}/adventure-logs/`}
                 className="flex items-center text-neutral-400 hover:text-amber-400 transition-opacity"
