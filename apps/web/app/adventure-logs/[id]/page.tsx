@@ -95,7 +95,7 @@ export default function AdventureLogPage() {
             </div>
           </div>
         </div>
-        <div className="max-w-[740px] mx-auto">
+        <div className="max-w-[1440px] mx-auto">
           <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
         </div>
 
