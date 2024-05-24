@@ -63,7 +63,7 @@ export function EditableComment({ comment }: CommentProps) {
             }}
           />
         ) : (
-          <Text className="w-full font-mono leading-relaxed text-sm">
+          <Text className="w-full font-mono leading-relaxed tracking-tight text-sm text-gray-700">
             {comment.message}
           </Text>
         )}

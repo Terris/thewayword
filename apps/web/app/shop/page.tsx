@@ -22,9 +22,9 @@ export default function ShopPage() {
         <div className="container grid grid-cols-1 md:grid-cols-3 gap-4">
           {allProducts.map((product) => (
             <div className="group" key={product._id}>
-              <Link href={`/shop/products/${product._id}`}>
+              <Link href={`/shop/products/${product._id}`} className="group">
                 <ShopProductCoverImage shopProductId={product._id} />
-                <Text className="text-lg font-bold text-center pr-4 pt-8">
+                <Text className="text-lg font-bold text-center pr-4 pt-8 group-hover:text-amber-400">
                   {product.name}
                 </Text>
                 <Text className="text-center pr-4 text-neutral-500">

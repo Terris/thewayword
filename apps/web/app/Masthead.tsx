@@ -25,7 +25,7 @@ export function Masthead() {
 
   return (
     <>
-      <div className="w-full  pt-8 pb-7 px-9 flex flex-row items-center justify-between leading-none font-bold">
+      <div className="w-full pt-8 pb-7 px-9 flex flex-row items-center justify-between leading-none font-bold">
         <Button
           variant="ghost"
           onClick={() => {
