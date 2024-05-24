@@ -98,7 +98,6 @@ export default function AdventureLogPage() {
         <div className="max-w-[1440px] mx-auto">
           <AdventureLogBlocks adventureLogId={id as Id<"adventureLogs">} />
         </div>
-
         <div className="p-8 flex justify-center items-center lg:z-50 lg:w-auto lg:flex-col lg:fixed lg:top-[50vh] lg:h-[1px] lg:right-1  ">
           <div className="flex flex-row lg:flex-col gap-4">
             {meIsLogOwner ? (

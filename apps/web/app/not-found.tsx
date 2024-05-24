@@ -9,7 +9,7 @@ export default function NotFound() {
       </Text>
       <Text className="text-center">
         Go back to the{" "}
-        <Link href="/" className="underline">
+        <Link href="/" className="underline hover:text-amber-400">
           home page
         </Link>
         .

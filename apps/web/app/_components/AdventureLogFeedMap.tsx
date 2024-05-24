@@ -52,7 +52,7 @@ export function AdventureLogFeedMap({
                     <Text className="font-futura font-bold pb-4 leading-4">
                       <Link
                         href={`/adventure-logs/${adventureLog._id}`}
-                        className="hover:underline"
+                        className="hover:text-amber-400"
                       >
                         {adventureLog.title}
                       </Link>
@@ -73,7 +73,7 @@ export function AdventureLogFeedMap({
                           className="w-5 h-5 rounded-full mr-2"
                         />
                       ) : null}
-                      <Text className="font-futura text-sm text-neutral-400 group-hover:underline">
+                      <Text className="font-futura text-sm text-neutral-400 group-hover:text-amber-400">
                         {adventureLog.user.name}
                       </Text>
                     </Link>

@@ -79,7 +79,7 @@ export function EditableAdventureDateForm({
       }}
     >
       <DialogTrigger>
-        <Text className="group w-full font-bold tracking-wider uppercase text-xs text-neutral-400 pt-1 cursor-pointer hover:underline ">
+        <Text className="group w-full font-bold tracking-wider uppercase text-xs text-neutral-400 pt-1 cursor-pointer hover:text-amber-400">
           {adventureLog.adventureStartDate
             ? formatDate(adventureLog.adventureStartDate)
             : null}

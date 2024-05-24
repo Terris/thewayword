@@ -22,7 +22,7 @@ const columns: ColumnDef<CartItemRow>[] = [
         <Text>
           <Link
             href={`/shop/products/${row.original.product?._id}`}
-            className="underline hover:opacity-75"
+            className="hover:text-amber-400"
           >
             {row.original.product?.name}
           </Link>
