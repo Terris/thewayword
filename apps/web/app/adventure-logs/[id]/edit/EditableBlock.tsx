@@ -22,7 +22,8 @@ export function EditableBlock({
   const [updatedContent, setUpdatedContent] = useState(block.content);
   const [updatedFileId, setUpdatedFileId] = useState(block.fileId);
 
-  const canUpdateBlock = updatedContent !== block.content;
+  const canUpdateTextBlock = updatedContent !== block.content;
+  const canUpdateImageBlock = updatedFileId !== block.fileId;
 
   const updateAdventureLogBlock = useMutation(api.adventureLogBlocks.update);
 
@@ -33,26 +34,38 @@ export function EditableBlock({
 
   const deleteAdventureLogBlock = useMutation(api.adventureLogBlocks.destroy);
 
-  // Attempt to save updated block when block is deselected
+  // Attempt to save updated text block when block is deselected
   useEffect(() => {
-    if (!isSelected && canUpdateBlock) {
+    if (!isSelected && canUpdateTextBlock) {
       setIsSaving(true);
       void updateAdventureLogBlock({
         id: block._id,
-        content:
-          updatedContent !== block.content ? updatedContent : block.content,
-        fileId: updatedFileId !== block.fileId ? updatedFileId : block.fileId,
+        content: updatedContent,
       });
     }
   }, [
     block._id,
-    block.content,
-    block.fileId,
-    canUpdateBlock,
+    canUpdateTextBlock,
     isSelected,
     updateAdventureLogBlock,
     updatedContent,
+    setIsSaving,
+  ]);
+
+  // Attempt to save updated image block when block is deselected
+  useEffect(() => {
+    if (canUpdateImageBlock) {
+      setIsSaving(true);
+      void updateAdventureLogBlock({
+        id: block._id,
+        fileId: updatedFileId,
+      });
+    }
+  }, [
+    block._id,
+    canUpdateImageBlock,
     updatedFileId,
+    updateAdventureLogBlock,
     setIsSaving,
   ]);
 
