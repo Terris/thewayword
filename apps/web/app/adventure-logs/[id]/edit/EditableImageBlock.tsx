@@ -37,7 +37,7 @@ export function EditableImageBlock({
   if (!file || !fileId) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center my-4">
+    <div className="flex flex-col items-center justify-center">
       <div className="w-full flex flex-col">
         <Image
           src={file.url}
