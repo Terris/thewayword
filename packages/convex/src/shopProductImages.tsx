@@ -2,6 +2,7 @@ import { v } from "convex/values";
 import { internalQuery, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
+import { internal } from "./_generated/api";
 
 export const findAllByShopProductId = query({
   args: {
@@ -70,7 +71,14 @@ export const deleteById = mutation({
     if (!existingShopImage) throw new Error("Shop product image not found");
 
     // delete the file
-    await ctx.db.delete(existingShopImage.fileId);
+    // schedule delete old associated file
+    await ctx.scheduler.runAfter(
+      0,
+      internal.fileActions.systemDeleteFileAndS3ObjectsById,
+      {
+        id: existingShopImage.fileId,
+      }
+    );
 
     // delete the shop product image
     return ctx.db.delete(id);

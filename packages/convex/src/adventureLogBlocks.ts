@@ -2,6 +2,7 @@ import { ConvexError, v } from "convex/values";
 import { internalQuery, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
+import { internal } from "./_generated/api";
 
 export const findAllByAdventureLogId = query({
   args: {
@@ -136,7 +137,17 @@ export const update = mutation({
     if (existingAdventureLog.userId !== user._id)
       throw new ConvexError("Not the owner of this adventure log");
 
-    console.log("NEW FILE ID", fileId);
+    if (fileId && existingAdventureLogBlock.fileId) {
+      // schedule delete old associated file
+      const existingFileId = existingAdventureLogBlock.fileId;
+      await ctx.scheduler.runAfter(
+        100,
+        internal.fileActions.systemDeleteFileAndS3ObjectsById,
+        {
+          id: existingFileId,
+        }
+      );
+    }
 
     return ctx.db.patch(id, {
       fileId: fileId ?? existingAdventureLogBlock.fileId,
@@ -245,6 +256,18 @@ export const destroy = mutation({
     if (existingAdventureLog.userId !== user._id)
       throw new ConvexError("Not the owner of this adventure log");
 
+    // schedule delete associated file
+    if (existingAdventureLogBlock.fileId) {
+      await ctx.scheduler.runAfter(
+        0,
+        internal.fileActions.systemDeleteFileAndS3ObjectsById,
+        {
+          id: existingAdventureLogBlock.fileId,
+        }
+      );
+    }
+
+    // reorder all blocks after this one
     const existingAdventureLogBlocks = await ctx.db
       .query("adventureLogBlocks")
       .withIndex("by_adventure_log_id", (q) =>
@@ -263,6 +286,7 @@ export const destroy = mutation({
       }
     );
 
+    // delete block
     await ctx.db.delete(id);
     return true;
   },
