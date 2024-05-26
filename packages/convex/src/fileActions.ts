@@ -6,7 +6,6 @@ import { fromCognitoIdentityPool } from "@aws-sdk/credential-providers";
 import { ConvexError, v } from "convex/values";
 import { internal } from "./_generated/api";
 import { internalAction } from "./_generated/server";
-import { asyncMap } from "convex-helpers";
 
 export const systemDeleteFileAndS3ObjectsById = internalAction({
   args: { id: v.id("files") },
