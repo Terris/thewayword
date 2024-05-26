@@ -33,7 +33,8 @@ export default defineSchema({
   })
     .index("by_adventure_log_id", ["adventureLogId"])
     .index("by_order", ["order"])
-    .index("by_adventure_log_id_order", ["adventureLogId", "order"]),
+    .index("by_adventure_log_id_order", ["adventureLogId", "order"])
+    .index("by_file_id", ["fileId"]),
   adventureLogTags: defineTable({
     adventureLogId: v.id("adventureLogs"),
     tagId: v.id("tags"),
@@ -158,7 +159,9 @@ export default defineSchema({
     shopProductId: v.id("shopProducts"),
     order: v.number(),
     fileId: v.id("files"),
-  }).index("by_shop_product_id", ["shopProductId"]),
+  })
+    .index("by_shop_product_id", ["shopProductId"])
+    .index("by_file_id", ["fileId"]),
   tags: defineTable({
     name: v.string(),
     slug: v.string(),

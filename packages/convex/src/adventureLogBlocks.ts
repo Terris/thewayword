@@ -1,5 +1,5 @@
 import { ConvexError, v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { internalQuery, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
 
@@ -265,5 +265,16 @@ export const destroy = mutation({
 
     await ctx.db.delete(id);
     return true;
+  },
+});
+
+// INTERNAL
+export const systemFindByFileId = internalQuery({
+  args: { fileId: v.id("files") },
+  handler: async (ctx, { fileId }) => {
+    return ctx.db
+      .query("adventureLogBlocks")
+      .withIndex("by_file_id", (q) => q.eq("fileId", fileId))
+      .first();
   },
 });

@@ -1,8 +1,11 @@
+"use node";
+
 import { v } from "convex/values";
 import { internalAction } from "./_generated/server";
 import { stripe } from "./lib/stripe";
 import { internal } from "./_generated/api";
 
+// INTERNAL
 export const internalCreateStripeProduct = internalAction({
   args: {
     name: v.string(),

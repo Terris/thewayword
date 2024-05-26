@@ -70,6 +70,22 @@ export const create = mutation({
   },
 });
 
+// INTERNAL
+
+export const systemFindAll = internalQuery({
+  args: {},
+  handler: async (ctx) => {
+    return ctx.db.query("files").collect();
+  },
+});
+
+export const systemFindById = internalQuery({
+  args: { id: v.id("files") },
+  handler: async (ctx, { id }) => {
+    return ctx.db.get(id);
+  },
+});
+
 export const systemUpdate = internalMutation({
   args: {
     id: v.id("files"),
@@ -93,10 +109,11 @@ export const systemUpdate = internalMutation({
   },
 });
 
-// INTERNAL
-export const systemFindById = internalQuery({
+export const systemDeleteById = internalMutation({
   args: { id: v.id("files") },
   handler: async (ctx, { id }) => {
-    return ctx.db.get(id);
+    const existingFile = await ctx.db.get(id);
+    if (!existingFile) throw new ConvexError("File not found");
+    return ctx.db.delete(id);
   },
 });
