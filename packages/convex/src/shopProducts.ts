@@ -1,8 +1,12 @@
 import { ConvexError, v } from "convex/values";
-import { internalMutation, mutation, query } from "./_generated/server";
+import {
+  internalMutation,
+  internalQuery,
+  mutation,
+  query,
+} from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { internal } from "./_generated/api";
-import { asyncMap } from "convex-helpers";
 
 export const findById = query({
   args: { id: v.id("shopProducts") },
@@ -125,7 +129,15 @@ export const editById = mutation({
   },
 });
 
-export const internalSyncStripeProduct = internalMutation({
+// INTERNAL
+export const systemFindById = internalQuery({
+  args: { id: v.id("shopProducts") },
+  handler: async (ctx, { id }) => {
+    return ctx.db.get(id);
+  },
+});
+
+export const systemSyncStripeProduct = internalMutation({
   args: {
     id: v.id("shopProducts"),
     stripeProductId: v.string(),

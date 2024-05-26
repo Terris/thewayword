@@ -1,14 +1,30 @@
+import { asyncMap } from "convex-helpers";
 import { internal } from "./_generated/api";
-import { internalAction } from "./_generated/server";
+import { internalMutation } from "./_generated/server";
 
-export const cleanUpFiles = internalAction({
+export const cleanUpShopProductImages = internalMutation({
   args: {},
   handler: async (ctx) => {
-    const allFiles = await ctx.runQuery(internal.files.systemFindAll);
-    // figure out if the file is used anywhere
+    const allShopProductImages = await ctx.db
+      .query("shopProductImages")
+      .collect();
 
-    // if not, delete the s3 file
+    await asyncMap(allShopProductImages, async (shopProductImage) => {
+      // look for shop product
+      const shopProduct = await ctx.db.get(shopProductImage.shopProductId);
 
-    // finally, delete the file record
+      // if shop product exists do nothing
+      if (shopProduct) return;
+
+      // if it doesn't exist, delete the related file and shop product image
+      await ctx.scheduler.runAfter(
+        100,
+        internal.fileActions.systemDeleteFileAndS3ObjectsById,
+        {
+          id: shopProductImage.fileId,
+        }
+      );
+      await ctx.db.delete(shopProductImage._id);
+    });
   },
 });

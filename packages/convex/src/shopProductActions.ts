@@ -27,7 +27,7 @@ export const internalCreateStripeProduct = internalAction({
     });
 
     // update the related product with the stripe product id and price id
-    await ctx.runMutation(internal.shopProducts.internalSyncStripeProduct, {
+    await ctx.runMutation(internal.shopProducts.systemSyncStripeProduct, {
       id: args.shopProductId,
       stripeProductId: stripeProduct.id,
       stripePriceId: stripeProduct.default_price as string,
@@ -63,7 +63,7 @@ export const internalUpdateStripeProduct = internalAction({
     });
 
     // update the related product with the stripe product id and price id
-    await ctx.runMutation(internal.shopProducts.internalSyncStripeProduct, {
+    await ctx.runMutation(internal.shopProducts.systemSyncStripeProduct, {
       id: args.shopProductId,
       stripeProductId: args.stripeProductId,
       stripePriceId: stripeProduct.default_price as string,

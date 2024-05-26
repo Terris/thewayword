@@ -86,6 +86,13 @@ export const deleteById = mutation({
 });
 
 // INTERNAL
+export const systemFindAll = internalQuery({
+  args: {},
+  handler: async (ctx) => {
+    return ctx.db.query("shopProductImages").collect();
+  },
+});
+
 export const systemFindByFileId = internalQuery({
   args: { fileId: v.id("files") },
   handler: async (ctx, { fileId }) => {
