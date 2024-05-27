@@ -6,8 +6,6 @@ import Typography from "@tiptap/extension-typography";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { StarterKit } from "@tiptap/starter-kit";
 
-const extensions = [StarterKit, Typography, TextAlign, Link];
-
 const emptyJSON = '""';
 
 interface RichTextReaderProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -20,7 +18,27 @@ export function RichTextReader({
 }: RichTextReaderProps) {
   const editor = useEditor({
     editable: false,
-    extensions,
+    extensions: [
+      StarterKit.configure({
+        blockquote: {
+          HTMLAttributes: {
+            class: "block px-4 md:px-16",
+          },
+        },
+      }),
+      Typography,
+      TextAlign.configure({
+        types: ["heading", "paragraph", "blockquote"],
+      }),
+      Link.configure({
+        HTMLAttributes: {
+          class: "underline hover:text-amber-400",
+        },
+        autolink: true,
+        openOnClick: false,
+        protocols: ["http"],
+      }),
+    ],
     // eslint-disable-next-line -- @typescript-eslint/no-unsafe-assignment
     content: JSON.parse(content === "" ? emptyJSON : content),
   });
