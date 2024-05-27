@@ -6,7 +6,7 @@ import { internalMutation, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { internal } from "./_generated/api";
 import { stringToSlug } from "./lib/utils";
-import { compareAsc } from "date-fns";
+import { compareAsc, parseISO } from "date-fns";
 import { extractTipTapTextRecursively } from "./lib/tiptap";
 
 export const search = query({
@@ -469,12 +469,15 @@ export const systemIndexSearchContent = internalMutation({
       // if the log has been indexed after it was last updated, skip it
       console.log("======> ", log._id, log.indexedAt);
       if (
-        !!log.indexedAt &&
-        !!log.indexableContentUpdatedAt &&
+        log.indexedAt &&
+        log.indexableContentUpdatedAt &&
         // return 1 if the first date is after the second,
         // -1 if the first date is before the second
         // or 0 if dates are equal.
-        compareAsc(log.indexedAt, log.indexableContentUpdatedAt) >= 0
+        compareAsc(
+          parseISO(log.indexedAt),
+          parseISO(log.indexableContentUpdatedAt)
+        ) >= 0
       )
         return;
 
