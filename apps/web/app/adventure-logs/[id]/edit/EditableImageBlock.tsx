@@ -4,7 +4,7 @@ import { useQuery } from "convex/react";
 import { ImageIcon } from "lucide-react";
 import { api, type Id } from "@repo/convex";
 import { useDebounce } from "@repo/hooks";
-import { Button, Input, LoadingBox, Text } from "@repo/ui";
+import { Button, Input, LoadingBox, Text, Topography } from "@repo/ui";
 import { UploadFileButton } from "../../../_components/UploadFileButton";
 import { useBlockEditorContext } from "./BlockEditorContext";
 
@@ -21,7 +21,7 @@ export function EditableImageBlock({
   const fileQueryArgs = fileId ? { id: fileId } : "skip";
   const file = useQuery(api.files.findById, fileQueryArgs);
   const isLoading = file === undefined;
-
+  const [imageIsLoaded, setImageIsLoaded] = useState(false);
   const [updatedCaption, setUpdatedCaption] = useState(caption);
   const debouncedUpdatedCaption = useDebounce(updatedCaption, 500);
 
@@ -48,7 +48,11 @@ export function EditableImageBlock({
           height={file.dimensions?.height}
           alt="Adventure log image"
           className="mx-auto rounded"
+          onLoadingComplete={() => setImageIsLoaded(true)}
         />
+        {!imageIsLoaded && (
+          <Topography className="bg-neutral-100 fill-foreground animate-pulse" />
+        )}
         {caption ? <Text className="text-sm py-1">{caption}</Text> : null}
       </div>
       {isSelected ? (
