@@ -105,7 +105,7 @@ export default function CreatePage() {
             <div className="w-full p-8 flex flex-col md:flex-row md:items-center gap-4">
               <div className="w-full md:w-1/2">
                 <div className="max-w-[600px] mx-auto">
-                  <Text className="text-4xl font-bold pb-16 text-center">
+                  <Text className="text-4xl font-bold tracking-tight pb-16 text-center">
                     Log an Adventure!
                   </Text>
                   {currentStep === 0 ? (

@@ -19,7 +19,7 @@ export const search = query({
         q.search("indexableSearchContent", queryTerm).eq("isPublic", true)
       )
       .collect();
-    await asyncMap(results, async (log) => {
+    return await asyncMap(results, async (log) => {
       const user = await ctx.db.get(log.userId);
       if (!user) throw new ConvexError("Adventure log user not found");
       return {

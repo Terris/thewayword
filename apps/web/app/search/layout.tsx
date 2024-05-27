@@ -2,17 +2,13 @@
 
 import { useDebounce } from "@repo/hooks";
 import {
-  Button,
   Input,
-  LoadingBox,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Text,
 } from "@repo/ui";
-import { Search } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 

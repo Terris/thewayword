@@ -12,6 +12,8 @@ import { cn } from "@repo/utils";
 import { UserMenu } from "./_components/UserMenu";
 import { UserAlertsMenu } from "./_components/UserAlertsMenu";
 import { ShoppingCartButton } from "./_components/ShoppingCartButton";
+import { SearchForm } from "./_components/SearchForm";
+import { CreateMenu } from "./_components/CreateMenu";
 
 export function Masthead() {
   const pathname = usePathname();
@@ -66,9 +68,8 @@ export function Masthead() {
         <div className="w-1/3 flex flex-row items-center justify-end gap-4">
           {me ? (
             <div className="hidden md:flex flex-row items-center justify-end gap-4">
-              <MastheadLink href="/adventure-logs/create">
-                Log an adventure
-              </MastheadLink>
+              {!pathname.includes("search") ? <SearchForm /> : null}
+              <CreateMenu />
             </div>
           ) : null}
           {me ? (
@@ -100,6 +101,7 @@ function PagesMenu() {
           <MastheadLink href="/feed">Feed</MastheadLink>
           {/* <MastheadLink href="/feed/popular">Popular</MastheadLink> */}
           <MastheadLink href="/shop">Shop</MastheadLink>
+          <MastheadLink href="/search">Search</MastheadLink>
         </>
       ) : (
         <>
