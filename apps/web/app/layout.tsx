@@ -26,9 +26,9 @@ export default function RootLayout({ children, modal }: RootLayoutProps) {
       </head>
       <body className="min-h-screen antialiased font-futura font-medium border-b-8 border-b-amber-400">
         <AppProviders>
-          <div className="flex flex-col w-full h-full min-h-screen flex-1">
+          <div className="flex flex-col w-full flex-1">
             <Masthead />
-            <main className="w-full flex flex-col items-start justify-start md:min-h-[75vh]">
+            <main className="w-full flex flex-col items-start justify-start">
               {children}
             </main>
             <Footer />
