@@ -7,10 +7,12 @@ import {
   BubbleMenu,
 } from "@tiptap/react";
 import { Placeholder } from "@tiptap/extension-placeholder";
+import { Link } from "@tiptap/extension-link";
 import { StarterKit } from "@tiptap/starter-kit";
-import { Bold, Italic, Strikethrough } from "lucide-react";
+import { Bold, Italic, LinkIcon, Strikethrough } from "lucide-react";
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@repo/ui";
 import { cn } from "@repo/utils";
+import { useCallback } from "react";
 
 const emptyJSON = '""';
 
@@ -32,6 +34,14 @@ export function RichTextEditor({
       Placeholder.configure({
         placeholder: "Start typing…",
       }),
+      Link.configure({
+        HTMLAttributes: {
+          class: "underline hover:text-amber-400",
+        },
+        autolink: true,
+        openOnClick: false,
+        protocols: ["http"],
+      }),
     ],
     // eslint-disable-next-line -- @typescript-eslint/no-unsafe-assignment
     content: JSON.parse(initialContent === "" ? emptyJSON : initialContent),
@@ -52,6 +62,41 @@ export function RichTextEditor({
 }
 
 function InlineMenu({ editor }: { editor: Editor | null }) {
+  const setLink = useCallback(() => {
+    const previousUrl = editor?.getAttributes("link").href;
+    // remove protocol from previous url
+    const previousUrlWithoutProtocol = previousUrl?.replace(
+      /(^\w+:|^)\/\//,
+      ""
+    );
+    const url = window.prompt("URL", previousUrlWithoutProtocol);
+
+    // cancelled
+    if (url === null) {
+      return;
+    }
+
+    // empty
+    if (url === "") {
+      editor?.chain().focus().extendMarkRange("link").unsetLink().run();
+      return;
+    }
+
+    // add https protocol if not present
+    let forgedUrl = url;
+    if (!forgedUrl.match(/^[a-zA-Z]+:\/\//)) {
+      forgedUrl = `https://${url}`;
+    }
+
+    // update link
+    editor
+      ?.chain()
+      .focus()
+      .extendMarkRange("link")
+      .setLink({ href: forgedUrl })
+      .run();
+  }, [editor]);
+
   if (!editor) return null;
   return (
     <BubbleMenu
@@ -84,6 +129,15 @@ function InlineMenu({ editor }: { editor: Editor | null }) {
         helpText="Strike"
       >
         <Strikethrough className="w-4 h-4" />
+      </ToolbarButton>
+
+      <ToolbarButton
+        onClick={setLink}
+        // disabled={!editor.can().chain().focus().setLink()}
+        isActive={editor.isActive("link")}
+        helpText="Link"
+      >
+        <LinkIcon className="w-4 h-4" />
       </ToolbarButton>
 
       {/* <ToolbarButton

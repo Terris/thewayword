@@ -1,9 +1,10 @@
 "use client";
 
+import Link from "@tiptap/extension-link";
 import { EditorContent, useEditor } from "@tiptap/react";
 import { StarterKit } from "@tiptap/starter-kit";
 
-const extensions = [StarterKit];
+const extensions = [StarterKit, Link];
 
 const emptyJSON = '""';
 
