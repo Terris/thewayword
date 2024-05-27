@@ -481,7 +481,7 @@ export const systemIndexSearchContent = internalMutation({
       )
         return;
 
-      let indexableSearchContent = `${log.title} `;
+      let indexableSearchContent = `${log.title} ${log.location?.fullAddress} `;
 
       // loop over related tags and build the indexable search content
       const allAdventureLogTags = await ctx.db

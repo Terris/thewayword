@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { Field, Form, Formik, type FieldProps } from "formik";
 import { useMutation } from "convex/react";
 import { api } from "@repo/convex";
-import { Input, Text, Button, DatePicker } from "@repo/ui";
+import { Input, Text, Button, DatePicker, Checkbox, Label } from "@repo/ui";
 import { useToast } from "@repo/ui/hooks";
 import { cn } from "@repo/utils";
 import { type LocationInputValue } from "../../_components/LocationSearchInput";
@@ -24,6 +24,7 @@ const validationSchema = Yup.object().shape({
     .required("Location is required"),
   tagsAsString: Yup.string().required("At least one tag is required"),
   adventureStartDate: Yup.string().required("Date is required"),
+  multiday: Yup.boolean(),
   adventureEndDate: Yup.string(),
 });
 
@@ -31,6 +32,7 @@ interface CreateAdventureLogFormValues {
   location: LocationInputValue;
   tagsAsString: string;
   adventureStartDate: string;
+  multiday: boolean;
   adventureEndDate?: string;
 }
 
@@ -83,6 +85,7 @@ export default function CreatePage() {
         },
         tagsAsString: "",
         adventureStartDate: new Date().toISOString(),
+        multiday: false,
         adventureEndDate: "",
       }}
       validationSchema={validationSchema}
@@ -154,6 +157,44 @@ export default function CreatePage() {
                           </>
                         )}
                       </Field>
+                      <Field name="multiday">
+                        {({ field, form }: FieldProps) => (
+                          <div className="flex flex-row items-center py-4">
+                            <Checkbox
+                              value="multiday"
+                              id="multiday"
+                              checked={field.value as boolean}
+                              onCheckedChange={(v) =>
+                                form.setFieldValue("multiday", v)
+                              }
+                              className="mr-2"
+                            />
+                            <Label htmlFor="multiday">
+                              Multiday adventure?
+                            </Label>
+                          </div>
+                        )}
+                      </Field>
+                      {values.multiday ? (
+                        <Field name="adventureEndDate" className="pb-4">
+                          {({ meta, field, form }: FieldProps) => (
+                            <>
+                              <DatePicker
+                                placeholder="Pick an adventure end date"
+                                dateAsISOString={field.value as string}
+                                setDate={(v) =>
+                                  form.setFieldValue("adventureEndDate", v)
+                                }
+                              />
+                              {meta.touched && meta.error ? (
+                                <Text className="text-destructive">
+                                  {meta.error}
+                                </Text>
+                              ) : null}
+                            </>
+                          )}
+                        </Field>
+                      ) : null}
                     </>
                   ) : null}
                   {currentStep === 2 ? (

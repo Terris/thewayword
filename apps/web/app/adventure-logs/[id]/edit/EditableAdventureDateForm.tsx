@@ -99,6 +99,8 @@ export function EditableAdventureDateForm({
               adventureStartDate:
                 adventureLog.adventureStartDate ?? new Date().toISOString(),
               multiday: Boolean(adventureLog.adventureEndDate),
+              adventureEndDate:
+                adventureLog.adventureEndDate ?? new Date().toISOString(),
             }}
             validationSchema={validationSchema}
             onSubmit={onSubmit}
