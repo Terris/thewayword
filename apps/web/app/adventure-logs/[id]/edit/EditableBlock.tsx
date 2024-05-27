@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
 import { useMutation } from "convex/react";
 import { MoveDown, MoveUp, Trash2 } from "lucide-react";
-import { Id, api, type Doc } from "@repo/convex";
+import { type Id, type Doc, api } from "@repo/convex";
 import { cn } from "@repo/utils";
 import { ImageBlockDisplaySizeWrapper } from "../../../_components/ImageBlockDisplaySizeWrapper";
 import { EditableTextBlock } from "./EditableTextBlock";
