@@ -33,6 +33,11 @@ export function EditableImageBlock({
     }
   }, [caption, debouncedUpdatedCaption, handleUpdateBlock, updatedCaption]);
 
+  function handleUpdateFileId(fileIds: Id<"files">[]) {
+    if (!fileIds[0] || fileIds[0] === fileId) return;
+    handleUpdateBlock({ fileId: fileIds[0] });
+  }
+
   if (isLoading) return <LoadingBox />;
   if (!file || !fileId) return null;
 
@@ -81,12 +86,7 @@ export function EditableImageBlock({
             >
               <ImageIcon size={24} />
             </Button>
-            <UploadFileButton
-              onSuccess={(fileIds) => {
-                if (!fileIds[0]) return;
-                setFileId(fileIds[0]);
-              }}
-            >
+            <UploadFileButton onSuccess={handleUpdateFileId}>
               Upload new image
             </UploadFileButton>
           </div>
