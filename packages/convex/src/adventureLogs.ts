@@ -469,8 +469,8 @@ export const systemIndexSearchContent = internalMutation({
       // if the log has been indexed after it was last updated, skip it
       console.log("======> ", log._id, log.indexedAt);
       if (
-        log.indexedAt &&
-        log.indexableContentUpdatedAt &&
+        !!log.indexedAt &&
+        !!log.indexableContentUpdatedAt &&
         // return 1 if the first date is after the second,
         // -1 if the first date is before the second
         // or 0 if dates are equal.
