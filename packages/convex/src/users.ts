@@ -6,10 +6,34 @@ import {
   query,
 } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
-import { api, internal } from "./_generated/api";
+import { internal } from "./_generated/api";
+import { asyncMap } from "convex-helpers";
 
 // SESSIONED USER FUNCTIONS
 // ==================================================
+
+export const search = query({
+  args: { queryTerm: v.string() },
+  handler: async (ctx, { queryTerm }) => {
+    const { user } = await validateIdentity(ctx);
+    const results = await ctx.db
+      .query("users")
+      .withSearchIndex("search_name", (q) => q.search("name", queryTerm))
+      .collect();
+
+    return await asyncMap(
+      results.filter((result) => result._id !== user._id),
+      async (result) => {
+        return {
+          _id: result._id,
+          name: result.name,
+          avatarUrl: result.avatarUrl,
+          createdAt: result._creationTime,
+        };
+      }
+    );
+  },
+});
 
 export const sessionedFindPublicUserById = query({
   args: { id: v.id("users") },

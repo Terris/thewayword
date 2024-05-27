@@ -68,5 +68,10 @@ export const updateByAdventureLogId = mutation({
         });
       }
     });
+
+    // reset the indexableContentUpdatedAt on the adventure log
+    await ctx.db.patch(adventureLogId, {
+      indexableContentUpdatedAt: new Date().toISOString(),
+    });
   },
 });

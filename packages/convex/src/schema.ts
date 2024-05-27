@@ -16,10 +16,18 @@ export default defineSchema({
     isPublic: v.boolean(),
     adventureStartDate: v.optional(v.string()),
     adventureEndDate: v.optional(v.string()),
+    companionUserIds: v.optional(v.array(v.id("users"))),
+    indexableSearchContent: v.optional(v.string()),
+    indexedAt: v.optional(v.string()),
+    indexableContentUpdatedAt: v.optional(v.string()),
   })
     .index("by_user_id", ["userId"])
     .index("by_is_public", ["isPublic"])
-    .index("by_user_id_is_public", ["userId", "isPublic"]),
+    .index("by_user_id_is_public", ["userId", "isPublic"])
+    .searchIndex("search_indexable_search_content", {
+      searchField: "indexableSearchContent",
+      filterFields: ["isPublic"],
+    }),
   adventureLogBlocks: defineTable({
     adventureLogId: v.id("adventureLogs"),
     type: v.union(v.literal("text"), v.literal("image")),
@@ -183,7 +191,10 @@ export default defineSchema({
     .index("by_token", ["tokenIdentifier"])
     .index("by_email", ["email"])
     .index("by_clerk_user_id", ["clerkUserId"])
-    .index("by_stripe_customer_id", ["stripeCustomerId"]),
+    .index("by_stripe_customer_id", ["stripeCustomerId"])
+    .searchIndex("search_name", {
+      searchField: "name",
+    }),
   userAlerts: defineTable({
     userId: v.id("users"),
     message: v.string(),

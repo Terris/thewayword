@@ -335,6 +335,9 @@ importers:
       convex-helpers:
         specifier: ^0.1.38
         version: 0.1.38(convex@1.12.0(@clerk/clerk-react@5.2.0(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
+      date-fns:
+        specifier: ^3.6.0
+        version: 3.6.0
       resend:
         specifier: ^3.2.0
         version: 3.2.0

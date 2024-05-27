@@ -149,7 +149,12 @@ export const update = mutation({
       );
     }
 
-    return ctx.db.patch(id, {
+    // reset the indexableContentUpdatedAt on the adventure log
+    await ctx.db.patch(existingAdventureLogBlock.adventureLogId, {
+      indexableContentUpdatedAt: new Date().toISOString(),
+    });
+
+    return await ctx.db.patch(id, {
       fileId: fileId ?? existingAdventureLogBlock.fileId,
       content: content ?? existingAdventureLogBlock.content,
       displaySize: displaySize ?? existingAdventureLogBlock.displaySize,

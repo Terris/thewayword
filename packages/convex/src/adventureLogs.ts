@@ -6,6 +6,33 @@ import { internalMutation, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { internal } from "./_generated/api";
 import { stringToSlug } from "./lib/utils";
+import { compareAsc } from "date-fns";
+import { extractTipTapTextRecursively } from "./lib/tiptap";
+
+export const search = query({
+  args: { queryTerm: v.string() },
+  handler: async (ctx, { queryTerm }) => {
+    await validateIdentity(ctx);
+    const results = await ctx.db
+      .query("adventureLogs")
+      .withSearchIndex("search_indexable_search_content", (q) =>
+        q.search("indexableSearchContent", queryTerm).eq("isPublic", true)
+      )
+      .collect();
+    await asyncMap(results, async (log) => {
+      const user = await ctx.db.get(log.userId);
+      if (!user) throw new ConvexError("Adventure log user not found");
+      return {
+        ...log,
+        user: {
+          id: user?._id,
+          name: user?.name,
+          avatarUrl: user?.avatarUrl,
+        },
+      };
+    });
+  },
+});
 
 export const findById = query({
   args: { id: v.id("adventureLogs") },
@@ -292,6 +319,7 @@ export const create = mutation({
       isPublic: false,
       adventureStartDate,
       adventureEndDate,
+      indexableContentUpdatedAt: new Date().toISOString(),
     });
 
     if (tags?.length) {
@@ -347,6 +375,11 @@ export const update = mutation({
     if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
     if (existingAdventureLog.userId !== user._id)
       throw new ConvexError("Not the owner of this adventure log");
+
+    // reset the indexableContentUpdatedAt on the adventure log
+    await ctx.db.patch(id, {
+      indexableContentUpdatedAt: new Date().toISOString(),
+    });
 
     return ctx.db.patch(id, {
       title: title ?? existingAdventureLog.title,
@@ -423,5 +456,65 @@ export const systemDeleteLogsAndRelatedObjects = internalMutation({
 
     // Delete the adventure log
     await ctx.db.delete(id);
+  },
+});
+
+export const systemIndexSearchContent = internalMutation({
+  args: {},
+  handler: async (ctx) => {
+    const allAdventureLogs = await ctx.db.query("adventureLogs").collect();
+
+    // loop over all adventure logs and update the indexable search content
+    await asyncMap(allAdventureLogs, async (log) => {
+      // if the log has been indexed after it was last updated, skip it
+      if (
+        log.indexedAt &&
+        log.indexableContentUpdatedAt &&
+        // return 1 if the first date is after the second,
+        // -1 if the first date is before the second
+        // or 0 if dates are equal.
+        compareAsc(log.indexedAt, log.indexableContentUpdatedAt) >= 0
+      )
+        return;
+
+      let indexableSearchContent = `${log.title} `;
+
+      // loop over related tags and build the indexable search content
+      const allAdventureLogTags = await ctx.db
+        .query("adventureLogTags")
+        .withIndex("by_adventure_log_id", (q) =>
+          q.eq("adventureLogId", log._id)
+        )
+        .collect();
+      await asyncMap(allAdventureLogTags, async (logTag) => {
+        const tag = await ctx.db.get(logTag.tagId);
+        if (!tag) throw new ConvexError("Tag not found");
+        indexableSearchContent += `${tag.name} `;
+      });
+
+      // loop over related blocks and build the indexable search content
+      const allAdventureLogBlocks = await ctx.db
+        .query("adventureLogBlocks")
+        .withIndex("by_adventure_log_id", (q) =>
+          q.eq("adventureLogId", log._id)
+        )
+        .collect();
+      await asyncMap(allAdventureLogBlocks, async (block) => {
+        if (block.type === "text" && block.content) {
+          const textAsJson = JSON.parse(block.content);
+          const blockContent = extractTipTapTextRecursively(textAsJson.content);
+          indexableSearchContent += `${blockContent} `;
+        } else if (block.caption) {
+          indexableSearchContent += `${block.caption} `;
+        }
+      });
+
+      await ctx.db.patch(log._id, {
+        indexableSearchContent: indexableSearchContent
+          .replace(/\s+/g, " ")
+          .trim(),
+        indexedAt: new Date().toISOString(),
+      });
+    });
   },
 });
