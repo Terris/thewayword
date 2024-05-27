@@ -6,11 +6,7 @@ import { cn } from "@repo/utils";
 import { EditableBlock } from "./EditableBlock";
 import { BlockEditorProvider } from "./BlockEditorContext";
 
-export function EditableAdventureLogBlocks({
-  setIsSaving,
-}: {
-  setIsSaving: (value: boolean) => void;
-}) {
+export function EditableAdventureLogBlocks() {
   const { id } = useParams();
   const adventureLogBlocks = useQuery(
     api.adventureLogBlocks.findAllByAdventureLogId,
@@ -18,7 +14,6 @@ export function EditableAdventureLogBlocks({
       adventureLogId: id as Id<"adventureLogs">,
     }
   );
-
   const isLoading = adventureLogBlocks === undefined;
 
   if (isLoading) return <LoadingBox />;
@@ -28,7 +23,7 @@ export function EditableAdventureLogBlocks({
       <div className={cn(adventureLogBlocks.length && "mb-16")}>
         {adventureLogBlocks.map((block) => (
           <div key={block._id} className="pb-8">
-            <EditableBlock block={block} setIsSaving={setIsSaving} />
+            <EditableBlock block={block} />
           </div>
         ))}
       </div>

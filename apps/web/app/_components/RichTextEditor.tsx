@@ -36,16 +36,11 @@ export function RichTextEditor({
     ],
     // eslint-disable-next-line -- @typescript-eslint/no-unsafe-assignment
     content: JSON.parse(initialContent === "" ? emptyJSON : initialContent),
+    onUpdate: ({ editor }) => {
+      const json = editor.getJSON();
+      onChange?.(JSON.stringify(json));
+    },
   });
-
-  const contentString = JSON.stringify(editor?.getJSON());
-  const hasChanges = initialContent !== contentString;
-
-  // Fire onChange when the content changes
-  useEffect(() => {
-    if (!hasChanges) return;
-    onChange?.(contentString);
-  }, [contentString, hasChanges, onChange]);
 
   if (!editor) return null;
   return (

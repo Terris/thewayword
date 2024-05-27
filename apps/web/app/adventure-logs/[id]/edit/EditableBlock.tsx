@@ -1,31 +1,18 @@
 import { useEffect, useState } from "react";
 import { useMutation } from "convex/react";
 import { MoveDown, MoveUp, Trash2 } from "lucide-react";
-import { api, type Doc } from "@repo/convex";
+import { Id, api, type Doc } from "@repo/convex";
 import { cn } from "@repo/utils";
 import { ImageBlockDisplaySizeWrapper } from "../../../_components/ImageBlockDisplaySizeWrapper";
 import { EditableTextBlock } from "./EditableTextBlock";
 import { EditableImageBlock } from "./EditableImageBlock";
 import { useBlockEditorContext } from "./BlockEditorContext";
 
-export function EditableBlock({
-  block,
-  setIsSaving,
-}: {
-  block: Doc<"adventureLogBlocks">;
-  setIsSaving: (value: boolean) => void;
-}) {
+export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
   const thisBlockId = block._id;
-  const { editingBlockId, setEditingBlockId } = useBlockEditorContext();
+  const { editingBlockId, setEditingBlockId, handleUpdateBlock } =
+    useBlockEditorContext();
   const isSelected = editingBlockId === thisBlockId;
-
-  const [updatedContent, setUpdatedContent] = useState(block.content);
-  const [updatedFileId, setUpdatedFileId] = useState(block.fileId);
-
-  const canUpdateTextBlock = updatedContent !== block.content;
-  const canUpdateImageBlock = updatedFileId !== block.fileId;
-
-  const updateAdventureLogBlock = useMutation(api.adventureLogBlocks.update);
 
   const moveBlockOrderUp = useMutation(api.adventureLogBlocks.moveBlockOrderUp);
   const moveBlockOrderDown = useMutation(
@@ -35,39 +22,20 @@ export function EditableBlock({
   const deleteAdventureLogBlock = useMutation(api.adventureLogBlocks.destroy);
 
   // Attempt to save updated text block when block is deselected
-  useEffect(() => {
-    if (!isSelected && canUpdateTextBlock) {
-      setIsSaving(true);
-      void updateAdventureLogBlock({
-        id: block._id,
-        content: updatedContent,
-      });
-    }
-  }, [
-    block._id,
-    canUpdateTextBlock,
-    isSelected,
-    updateAdventureLogBlock,
-    updatedContent,
-    setIsSaving,
-  ]);
+  async function handleUpdateBlockContent(updatedContent: string) {
+    if (updatedContent === block.content) return;
+    await handleUpdateBlock({
+      content: updatedContent,
+    });
+  }
 
-  // Attempt to save updated image block when block is deselected
-  useEffect(() => {
-    if (canUpdateImageBlock) {
-      setIsSaving(true);
-      void updateAdventureLogBlock({
-        id: block._id,
-        fileId: updatedFileId,
-      });
-    }
-  }, [
-    block._id,
-    canUpdateImageBlock,
-    updatedFileId,
-    updateAdventureLogBlock,
-    setIsSaving,
-  ]);
+  // Attempt to save updated image block when new file is uploaded
+  async function handleUpdateImageBlockFileId(updatedFileId: Id<"files">) {
+    if (updatedFileId !== block.fileId) return;
+    await handleUpdateBlock({
+      fileId: updatedFileId,
+    });
+  }
 
   return (
     <>
@@ -99,18 +67,16 @@ export function EditableBlock({
           <ImageBlockDisplaySizeWrapper displaySize={block.displaySize}>
             <EditableImageBlock
               isSelected={isSelected}
-              fileId={updatedFileId}
-              setFileId={(fileId) => {
-                setUpdatedFileId(fileId);
-              }}
+              fileId={block.fileId}
+              setFileId={handleUpdateImageBlockFileId}
               caption={block.caption}
             />
           </ImageBlockDisplaySizeWrapper>
         ) : (
           <EditableTextBlock
             isSelected={isSelected}
-            content={updatedContent}
-            setContent={setUpdatedContent}
+            content={block.content}
+            setContent={handleUpdateBlockContent}
           />
         )}
         {isSelected ? (

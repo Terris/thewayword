@@ -90,7 +90,7 @@ export default function EditLogPage() {
               <Text className="italic text-neutral-400">Your story</Text>
             </div>
             <div className="md:w-11/12 md:pt-1">
-              <EditableAdventureLogBlocks setIsSaving={setIsSaving} />
+              <EditableAdventureLogBlocks />
               <hr className="w-fill border-dashed mt-4" />
               <div className="w-[200px] mx-auto -mt-[29px] bg-background border border-dashed rounded-xl p-2 flex flex-row items-center justify-center gap-2">
                 <AddImageBlockButton

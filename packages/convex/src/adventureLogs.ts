@@ -467,6 +467,7 @@ export const systemIndexSearchContent = internalMutation({
     // loop over all adventure logs and update the indexable search content
     await asyncMap(allAdventureLogs, async (log) => {
       // if the log has been indexed after it was last updated, skip it
+      console.log("======> ", log._id, log.indexedAt);
       if (
         log.indexedAt &&
         log.indexableContentUpdatedAt &&

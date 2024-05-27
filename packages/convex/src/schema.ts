@@ -19,7 +19,7 @@ export default defineSchema({
     companionUserIds: v.optional(v.array(v.id("users"))),
     indexableSearchContent: v.optional(v.string()),
     indexedAt: v.optional(v.string()),
-    indexableContentUpdatedAt: v.optional(v.string()),
+    indexableContentUpdatedAt: v.string(),
   })
     .index("by_user_id", ["userId"])
     .index("by_is_public", ["isPublic"])

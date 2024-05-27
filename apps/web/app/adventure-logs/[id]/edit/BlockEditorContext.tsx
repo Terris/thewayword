@@ -7,12 +7,15 @@ import { api, type Id } from "@repo/convex";
 interface EditableBlockProps {
   displaySize?: "small" | "medium" | "large";
   caption?: string;
+  content?: string;
+  fileId?: Id<"files">;
 }
 interface BlockEditorContextProps {
   adventureLogId?: Id<"adventureLogBlocks">;
   editingBlockId: Id<"adventureLogBlocks"> | null | undefined;
   setEditingBlockId: (value: Id<"adventureLogBlocks"> | null) => void;
-  handleUpdateBlock: (props: { values: EditableBlockProps }) => void;
+  handleUpdateBlock: (values: EditableBlockProps) => void;
+  isSaving: boolean;
 }
 
 const initialProps = {
@@ -20,6 +23,7 @@ const initialProps = {
   editingBlockId: null,
   setEditingBlockId: () => null,
   handleUpdateBlock: () => null,
+  isSaving: false,
 };
 
 export const BlockEditorContext =
@@ -37,21 +41,18 @@ export function BlockEditorProvider({
   const [editingBlockId, setEditingBlockId] = useState<
     Id<"adventureLogBlocks"> | null | undefined
   >(null);
-
+  const [isSaving, setIsSaving] = useState(false);
   const updateAdventureLogBlock = useMutation(api.adventureLogBlocks.update);
 
-  const handleUpdateBlock = async ({
-    values,
-  }: {
-    values: EditableBlockProps;
-  }) => {
+  async function handleUpdateBlock(values: EditableBlockProps) {
     if (!editingBlockId) return;
-
+    setIsSaving(true);
     await updateAdventureLogBlock({
       id: editingBlockId,
       ...values,
     });
-  };
+    setIsSaving(false);
+  }
 
   return (
     <BlockEditorContext.Provider
@@ -60,6 +61,7 @@ export function BlockEditorProvider({
         editingBlockId,
         setEditingBlockId,
         handleUpdateBlock,
+        isSaving,
       }}
     >
       {children}

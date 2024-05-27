@@ -29,7 +29,7 @@ export function EditableImageBlock({
 
   useEffect(() => {
     if (caption !== debouncedUpdatedCaption) {
-      handleUpdateBlock({ values: { caption: debouncedUpdatedCaption } });
+      handleUpdateBlock({ caption: debouncedUpdatedCaption });
     }
   }, [caption, debouncedUpdatedCaption, handleUpdateBlock, updatedCaption]);
 
@@ -56,7 +56,7 @@ export function EditableImageBlock({
               variant="outline"
               size="sm"
               onClick={() => {
-                handleUpdateBlock({ values: { displaySize: "small" } });
+                handleUpdateBlock({ displaySize: "small" });
               }}
             >
               <ImageIcon size={12} />
@@ -66,7 +66,7 @@ export function EditableImageBlock({
               variant="outline"
               size="sm"
               onClick={() => {
-                handleUpdateBlock({ values: { displaySize: "medium" } });
+                handleUpdateBlock({ displaySize: "medium" });
               }}
             >
               <ImageIcon size={18} />
@@ -76,7 +76,7 @@ export function EditableImageBlock({
               variant="outline"
               size="sm"
               onClick={() => {
-                handleUpdateBlock({ values: { displaySize: "large" } });
+                handleUpdateBlock({ displaySize: "large" });
               }}
             >
               <ImageIcon size={24} />
