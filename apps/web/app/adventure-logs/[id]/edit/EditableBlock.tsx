@@ -21,20 +21,6 @@ export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
   const deleteAdventureLogBlock = useMutation(api.adventureLogBlocks.destroy);
 
   // Attempt to save updated text block when block is deselected
-  async function handleUpdateBlockContent(updatedContent: string) {
-    if (updatedContent === block.content) return;
-    await handleUpdateBlock({
-      content: updatedContent,
-    });
-  }
-
-  // Attempt to save updated image block when new file is uploaded
-  async function handleUpdateImageBlockFileId(updatedFileId: Id<"files">) {
-    if (updatedFileId !== block.fileId) return;
-    await handleUpdateBlock({
-      fileId: updatedFileId,
-    });
-  }
 
   return (
     <>
@@ -67,16 +53,11 @@ export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
             <EditableImageBlock
               isSelected={isSelected}
               fileId={block.fileId}
-              setFileId={handleUpdateImageBlockFileId}
               caption={block.caption}
             />
           </ImageBlockDisplaySizeWrapper>
         ) : (
-          <EditableTextBlock
-            isSelected={isSelected}
-            content={block.content}
-            setContent={handleUpdateBlockContent}
-          />
+          <EditableTextBlock isSelected={isSelected} content={block.content} />
         )}
         {isSelected ? (
           <div className="absolute right-[-17px] bg-foreground text-background p-2 rounded-lg shadow-md flex flex-col gap-2">

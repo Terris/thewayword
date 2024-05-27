@@ -1,32 +1,36 @@
 "use client";
 
 import { RichTextEditor } from "../../../_components/RichTextEditor";
+import { useBlockEditorContext } from "./BlockEditorContext";
 
 export function EditableTextBlock({
   isSelected,
   content,
-  setContent,
 }: {
   isSelected: boolean;
   content?: string;
-  setContent: (value: string) => void;
 }) {
-  function handleSetContent(value: string) {
-    if (content === value) return;
-    if (value === '{"type":"doc","content":[{"type":"paragraph"}]}') {
-      setContent(
-        '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Start typing..."}]}]}'
-      );
+  const { handleUpdateBlock } = useBlockEditorContext();
+
+  function handleUpdateBlockContent(updatedContent: string) {
+    if (updatedContent === content) return;
+    if (updatedContent === '{"type":"doc","content":[{"type":"paragraph"}]}') {
+      handleUpdateBlock({
+        content:
+          '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Start typing..."}]}]}',
+      });
       return;
     }
-    setContent(value);
+    handleUpdateBlock({
+      content: updatedContent,
+    });
   }
 
   return (
     <div className="w-full max-w-[740px] mx-auto">
       <RichTextEditor
         onChange={(value) => {
-          handleSetContent(value);
+          handleUpdateBlockContent(value);
         }}
         initialContent={content}
         className="w-full bg-transparent outline-none font-mono leading-relaxed text-sm text-gray-700 md:text-base"

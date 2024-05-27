@@ -11,12 +11,10 @@ import { useBlockEditorContext } from "./BlockEditorContext";
 export function EditableImageBlock({
   isSelected,
   fileId,
-  setFileId,
   caption,
 }: {
   isSelected: boolean;
   fileId?: Id<"files">;
-  setFileId: (value: Id<"files">) => void;
   caption?: string;
 }) {
   const { handleUpdateBlock } = useBlockEditorContext();
