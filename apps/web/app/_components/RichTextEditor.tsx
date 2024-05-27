@@ -6,10 +6,22 @@ import {
   EditorContent,
   BubbleMenu,
 } from "@tiptap/react";
+import { Typography } from "@tiptap/extension-typography";
+import { TextAlign } from "@tiptap/extension-text-align";
 import { Placeholder } from "@tiptap/extension-placeholder";
 import { Link } from "@tiptap/extension-link";
 import { StarterKit } from "@tiptap/starter-kit";
-import { Bold, Italic, LinkIcon, Strikethrough } from "lucide-react";
+import {
+  AlignCenter,
+  AlignLeft,
+  AlignRight,
+  Bold,
+  Italic,
+  LinkIcon,
+  Pilcrow,
+  Quote,
+  Strikethrough,
+} from "lucide-react";
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@repo/ui";
 import { cn } from "@repo/utils";
 import { useCallback } from "react";
@@ -30,7 +42,17 @@ export function RichTextEditor({
 }: RichTextEditorProps) {
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        blockquote: {
+          HTMLAttributes: {
+            class: "block px-4 md:px-16",
+          },
+        },
+      }),
+      Typography,
+      TextAlign.configure({
+        types: ["heading", "paragraph", "blockquote"],
+      }),
       Placeholder.configure({
         placeholder: "Start typing…",
       }),
@@ -105,6 +127,45 @@ function InlineMenu({ editor }: { editor: Editor | null }) {
       className="w-full bg-secondary flex flex-wrap gap-1 items-center p-2 shadow-sm rounded"
     >
       <ToolbarButton
+        onClick={() => editor.chain().focus().setParagraph().run()}
+        isActive={editor.isActive("paragraph")}
+        helpText="Paragraph"
+      >
+        <Pilcrow className="w-4 h-4" />
+      </ToolbarButton>
+
+      <ToolbarButton
+        onClick={() => editor.chain().focus().toggleBlockquote().run()}
+        isActive={editor.isActive("blockquote")}
+        helpText="Blockquote"
+      >
+        <Quote className="w-4 h-4" />
+      </ToolbarButton>
+
+      <div className="h-4 border-r border-neutral-400 mx-4" />
+
+      <ToolbarButton
+        onClick={() => editor.chain().focus().setTextAlign("left").run()}
+        isActive={editor.isActive({ textAlign: "left" })}
+      >
+        <AlignLeft className="w-4 h-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().setTextAlign("center").run()}
+        isActive={editor.isActive({ textAlign: "center" })}
+      >
+        <AlignCenter className="w-4 h-4" />
+      </ToolbarButton>
+      <ToolbarButton
+        onClick={() => editor.chain().focus().setTextAlign("right").run()}
+        isActive={editor.isActive({ textAlign: "right" })}
+      >
+        <AlignRight className="w-4 h-4" />
+      </ToolbarButton>
+
+      <div className="h-4 border-r border-neutral-400 mx-4" />
+
+      <ToolbarButton
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
         isActive={editor.isActive("bold")}
@@ -140,13 +201,7 @@ function InlineMenu({ editor }: { editor: Editor | null }) {
         <LinkIcon className="w-4 h-4" />
       </ToolbarButton>
 
-      {/* <ToolbarButton
-        onClick={() => editor.chain().focus().setParagraph().run()}
-        isActive={editor.isActive("paragraph")}
-        helpText="Paragraph"
-      >
-        <Pilcrow className="w-4 h-4" />
-      </ToolbarButton>
+      {/* 
 
       <ToolbarButton
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
@@ -194,14 +249,7 @@ function InlineMenu({ editor }: { editor: Editor | null }) {
       >
         <SquareCode className="w-4 h-4" />
       </ToolbarButton>
-
-      <ToolbarButton
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        isActive={editor.isActive("blockquote")}
-        helpText="Blockquote"
-      >
-        <Quote className="w-4 h-4" />
-      </ToolbarButton> */}
+       */}
     </BubbleMenu>
   );
 }
