@@ -8,7 +8,7 @@ export function AdventureLogCompanions({
 }: {
   companionUserIds?: Id<"users">[];
 }) {
-  if (!companionUserIds) return null;
+  if (!companionUserIds || !companionUserIds.length) return null;
   return (
     <>
       {" "}

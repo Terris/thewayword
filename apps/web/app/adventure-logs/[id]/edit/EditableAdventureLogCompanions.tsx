@@ -46,14 +46,16 @@ export function EditableAdventureLogCompanions({
   );
   const isLoading = currentAdventureLogCompanions === undefined;
 
-  const updateAdventureLog = useMutation(api.adventureLogs.update);
+  const updateAdventureLog = useMutation(
+    api.adventureLogCompanions.updateAdventureLogCompanionsAsOwner
+  );
   const [isOpen, setIsOpen] = useState(false);
 
   async function onSubmit(values: CompanionsFormValues) {
     setIsSaving(true);
     try {
       await updateAdventureLog({
-        id: id as Id<"adventureLogs">,
+        adventureLogId: id as Id<"adventureLogs">,
         companionUserIds: values.companionUserIds,
       });
       setIsOpen(false);
