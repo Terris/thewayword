@@ -1,7 +1,7 @@
 import { v } from "convex/values";
+import { asyncMap } from "convex-helpers";
 import { internalQuery, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
-import { asyncMap } from "convex-helpers";
 import { internal } from "./_generated/api";
 
 export const findAllByShopProductId = query({

@@ -3,6 +3,8 @@ import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
 
+// SESSIONED USER FUNCTIONS
+// ==================================================
 export const findAllByAdventureLogId = query({
   args: { adventureLogId: v.id("adventureLogs") },
   handler: async (ctx, { adventureLogId }) => {
@@ -21,6 +23,8 @@ export const findAllByAdventureLogId = query({
   },
 });
 
+// OWNER FUNCTIONS
+// ==================================================
 export const updateAdventureLogCompanionsAsOwner = mutation({
   args: {
     adventureLogId: v.id("adventureLogs"),

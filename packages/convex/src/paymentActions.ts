@@ -1,10 +1,10 @@
 "use node";
 
 import { ConvexError, v } from "convex/values";
+import { internal } from "./_generated/api";
 import { action } from "./_generated/server";
 import { stripe } from "./lib/stripe";
 import { validateActionIdentity } from "./lib/authorization";
-import { internal } from "./_generated/api";
 
 export const createPaymentIntent = action({
   args: { orderId: v.id("orders") },

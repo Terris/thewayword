@@ -426,6 +426,8 @@ export const scheduleDestroy = mutation({
   },
 });
 
+// INTERNAL SYSTEM FUNCTIONS
+// ==================================================
 export const systemDeleteLogsAndRelatedObjects = internalMutation({
   args: { id: v.id("adventureLogs") },
   handler: async (ctx, { id }) => {

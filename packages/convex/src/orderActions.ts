@@ -1,6 +1,6 @@
+import { ConvexError, v } from "convex/values";
 import { Resend } from "resend";
 import { internalAction } from "./_generated/server";
-import { ConvexError, v } from "convex/values";
 import { emailFromAddress } from "./lib/email";
 import { buildOrderConfirmationEmailHTML } from "./lib/transactional";
 

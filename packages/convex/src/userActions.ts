@@ -1,12 +1,12 @@
 "use node";
 
-import { Webhook } from "svix";
-import { UserJSON, WebhookEvent, clerkClient } from "@clerk/clerk-sdk-node";
 import { ConvexError, v } from "convex/values";
+import { Webhook } from "svix";
+import { Resend } from "resend";
+import { UserJSON, WebhookEvent } from "@clerk/clerk-sdk-node";
 import { internalAction } from "./_generated/server";
 import { internal } from "./_generated/api";
 import { emailFromAddress } from "./lib/email";
-import { Resend } from "resend";
 import { stripe } from "./lib/stripe";
 
 // INTERNAL FUNCTIONS

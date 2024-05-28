@@ -2,7 +2,6 @@ import { asyncMap } from "convex-helpers";
 import { internalQuery, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { v } from "convex/values";
-import { Id } from "./_generated/dataModel";
 
 export const findBySessionedUser = query({
   args: {},

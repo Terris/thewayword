@@ -54,8 +54,6 @@ import type * as tags from "../tags.js";
 import type * as userActions from "../userActions.js";
 import type * as userAlerts from "../userAlerts.js";
 import type * as users from "../users.js";
-import type * as waitlist from "../waitlist.js";
-import type * as waitlistActions from "../waitlistActions.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -106,8 +104,6 @@ declare const fullApi: ApiFromModules<{
   userActions: typeof userActions;
   userAlerts: typeof userAlerts;
   users: typeof users;
-  waitlist: typeof waitlist;
-  waitlistActions: typeof waitlistActions;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

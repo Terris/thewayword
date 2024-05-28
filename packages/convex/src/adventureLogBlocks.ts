@@ -4,6 +4,8 @@ import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
 import { internal } from "./_generated/api";
 
+// SESSIONED USER FUNCTIONS
+// ==================================================
 export const findAllByAdventureLogId = query({
   args: {
     adventureLogId: v.id("adventureLogs"),
@@ -84,6 +86,8 @@ export const findCoverImageByAdventureLogId = query({
   },
 });
 
+// OWNER FUNCTIONS
+// ==================================================
 export const create = mutation({
   args: {
     adventureLogId: v.id("adventureLogs"),
@@ -319,7 +323,8 @@ export const destroy = mutation({
   },
 });
 
-// INTERNAL
+// INTERNAL SYSTEM FUNCTIONS
+// ==================================================
 export const systemFindByFileId = internalQuery({
   args: { fileId: v.id("files") },
   handler: async (ctx, { fileId }) => {

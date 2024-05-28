@@ -223,11 +223,4 @@ export default defineSchema({
     .index("by_user_id", ["userId"])
     .index("by_user_id_read", ["userId", "read"])
     .index("by_reference_id", ["referenceId"]),
-  userWhitelist: defineTable({
-    email: v.string(),
-  }).index("by_email", ["email"]),
-  waitlist: defineTable({
-    email: v.string(),
-    submitCount: v.optional(v.number()),
-  }).index("by_email", ["email"]),
 });
