@@ -76,7 +76,10 @@ export const createAsAdventureLogOwner = mutation({
 });
 
 export const updateAsOwner = mutation({
-  args: { galleryId: v.id("galleries"), layout: v.optional(v.string()) },
+  args: {
+    galleryId: v.id("galleries"),
+    layout: v.union(v.literal("1x2"), v.literal("2x1"), v.literal("row")),
+  },
   handler: async (ctx, { galleryId, layout }) => {
     const { user } = await validateIdentity(ctx);
     const existingGallery = await ctx.db.get(galleryId);

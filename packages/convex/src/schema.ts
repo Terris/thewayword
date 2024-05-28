@@ -97,7 +97,9 @@ export default defineSchema({
     .index("by_owner_id_followee_user_id", ["ownerId", "followeeUserId"]),
   galleries: defineTable({
     userId: v.id("users"),
-    layout: v.optional(v.string()),
+    layout: v.optional(
+      v.union(v.literal("1x2"), v.literal("2x1"), v.literal("row"))
+    ),
     images: v.optional(
       v.array(v.object({ fileId: v.id("files"), order: v.number() }))
     ),
