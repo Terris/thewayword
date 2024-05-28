@@ -64,7 +64,6 @@ export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
         {block.type === "gallery" && block.galleryId ? (
           <ImageBlockDisplaySizeWrapper displaySize={block.displaySize}>
             <EditableGalleryBlock
-              adventureLogBlockId={block._id}
               galleryId={block.galleryId}
               caption={block.caption}
               isSelected={isSelected}
