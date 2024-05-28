@@ -26,6 +26,7 @@ import type * as feedbackActions from "../feedbackActions.js";
 import type * as fileActions from "../fileActions.js";
 import type * as files from "../files.js";
 import type * as follows from "../follows.js";
+import type * as galleries from "../galleries.js";
 import type * as http from "../http.js";
 import type * as inviteActions from "../inviteActions.js";
 import type * as invites from "../invites.js";
@@ -76,6 +77,7 @@ declare const fullApi: ApiFromModules<{
   fileActions: typeof fileActions;
   files: typeof files;
   follows: typeof follows;
+  galleries: typeof galleries;
   http: typeof http;
   inviteActions: typeof inviteActions;
   invites: typeof invites;

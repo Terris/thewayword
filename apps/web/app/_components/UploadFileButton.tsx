@@ -15,6 +15,7 @@ interface UploadFileButtonProps extends VariantProps<typeof buttonVariants> {
   multiple?: boolean;
   onSuccess?: (fileIds: Id<"files">[]) => void;
   setPreviewURL?: (url: string) => void;
+  uniqueId?: string;
 }
 
 export function UploadFileButton({
@@ -25,6 +26,7 @@ export function UploadFileButton({
   multiple,
   onSuccess,
   setPreviewURL,
+  uniqueId,
 }: UploadFileButtonProps) {
   const { toast } = useToast();
   const { me } = useMeContext();
@@ -106,22 +108,20 @@ export function UploadFileButton({
   }
 
   return (
-    <div>
-      <label
-        htmlFor="file-upload"
-        className={cn(buttonVariants({ variant, size, className }))}
-      >
-        <input
-          type="file"
-          onChange={onSelectFiles}
-          id="file-upload"
-          className="hidden"
-          multiple={multiple}
-          accept="image/png, image/gif, image/jpeg"
-        />
-        {isUploading ? <Loader /> : children}
-      </label>
-    </div>
+    <label
+      htmlFor={`file-upload${uniqueId ? "-" + uniqueId : ""}`}
+      className={cn(buttonVariants({ variant, size, className }))}
+    >
+      <input
+        type="file"
+        onChange={onSelectFiles}
+        id={`file-upload${uniqueId ? "-" + uniqueId : ""}`}
+        className="hidden"
+        multiple={multiple}
+        accept="image/png, image/gif, image/jpeg"
+      />
+      {isUploading ? <Loader /> : children}
+    </label>
   );
 }
 

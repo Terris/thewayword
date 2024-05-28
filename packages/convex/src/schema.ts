@@ -30,7 +30,7 @@ export default defineSchema({
     }),
   adventureLogBlocks: defineTable({
     adventureLogId: v.id("adventureLogs"),
-    type: v.union(v.literal("text"), v.literal("image")),
+    type: v.union(v.literal("text"), v.literal("image"), v.literal("gallery")),
     order: v.number(),
     content: v.optional(v.string()),
     fileId: v.optional(v.id("files")),
@@ -38,6 +38,7 @@ export default defineSchema({
       v.union(v.literal("small"), v.literal("medium"), v.literal("large"))
     ),
     caption: v.optional(v.string()),
+    galleryId: v.optional(v.id("galleries")),
   })
     .index("by_adventure_log_id", ["adventureLogId"])
     .index("by_order", ["order"])
@@ -94,6 +95,13 @@ export default defineSchema({
     .index("by_owner_id", ["ownerId"])
     .index("by_followee_user_id", ["followeeUserId"])
     .index("by_owner_id_followee_user_id", ["ownerId", "followeeUserId"]),
+  galleries: defineTable({
+    userId: v.id("users"),
+    layout: v.optional(v.string()),
+    images: v.optional(
+      v.array(v.object({ fileId: v.id("files"), order: v.number() }))
+    ),
+  }),
   invites: defineTable({
     email: v.string(),
   }).index("by_email", ["email"]),

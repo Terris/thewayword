@@ -272,6 +272,28 @@ export const destroy = mutation({
       );
     }
 
+    // schedule delete of all associated galleries
+    if (existingAdventureLogBlock.galleryId) {
+      const existingGallery = await ctx.db.get(
+        existingAdventureLogBlock.galleryId
+      );
+      if (existingGallery && existingGallery.images) {
+        await asyncMap(existingGallery.images, async (image) => {
+          if (image.fileId) {
+            await ctx.scheduler.runAfter(
+              0,
+              internal.fileActions.systemDeleteFileAndS3ObjectsById,
+              {
+                id: image.fileId,
+              }
+            );
+          }
+        });
+      }
+      // delete gallery
+      await ctx.db.delete(existingAdventureLogBlock.galleryId);
+    }
+
     // reorder all blocks after this one
     const existingAdventureLogBlocks = await ctx.db
       .query("adventureLogBlocks")
