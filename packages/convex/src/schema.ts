@@ -30,7 +30,7 @@ export default defineSchema({
     }),
   adventureLogBlocks: defineTable({
     adventureLogId: v.id("adventureLogs"),
-    type: v.union(v.literal("text"), v.literal("image")),
+    type: v.union(v.literal("text"), v.literal("image"), v.literal("gallery")),
     order: v.number(),
     content: v.optional(v.string()),
     fileId: v.optional(v.id("files")),
@@ -38,6 +38,12 @@ export default defineSchema({
       v.union(v.literal("small"), v.literal("medium"), v.literal("large"))
     ),
     caption: v.optional(v.string()),
+    gallery: v.optional(
+      v.object({
+        layout: v.union(v.literal("grid"), v.literal("masonry")),
+        fileIds: v.array(v.id("files")),
+      })
+    ),
   })
     .index("by_adventure_log_id", ["adventureLogId"])
     .index("by_order", ["order"])

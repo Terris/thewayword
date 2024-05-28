@@ -14,13 +14,6 @@ export function EditableTextBlock({
 
   function handleUpdateBlockContent(updatedContent: string) {
     if (updatedContent === content) return;
-    if (updatedContent === '{"type":"doc","content":[{"type":"paragraph"}]}') {
-      handleUpdateBlock({
-        content:
-          '{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Start typing..."}]}]}',
-      });
-      return;
-    }
     handleUpdateBlock({
       content: updatedContent,
     });

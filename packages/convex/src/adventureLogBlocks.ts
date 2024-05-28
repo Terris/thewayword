@@ -3,6 +3,7 @@ import { internalQuery, mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
 import { internal } from "./_generated/api";
+import { calculateImageOrientation } from "./lib/image";
 
 export const findAllByAdventureLogId = query({
   args: {
@@ -29,6 +30,42 @@ export const findById = query({
   handler: async (ctx, { id }) => {
     await validateIdentity(ctx);
     return ctx.db.get(id);
+  },
+});
+
+export const findAndForgeGalleryById = query({
+  args: { id: v.id("adventureLogBlocks") },
+  handler: async (ctx, { id }) => {
+    await validateIdentity(ctx);
+    const galleryBlock = await ctx.db.get(id);
+    if (!galleryBlock || !galleryBlock.gallery?.fileIds) return null;
+
+    const galleryBlockFiles = await asyncMap(
+      galleryBlock?.gallery?.fileIds,
+      async (fileId) => {
+        const file = await ctx.db.get(fileId);
+        if (!file) throw new ConvexError("File not found");
+
+        return {
+          ...file,
+          orientation:
+            file.dimensions?.width && file.dimensions?.height
+              ? calculateImageOrientation({
+                  width: file.dimensions.width,
+                  height: file.dimensions.height,
+                })
+              : "auto",
+        };
+      }
+    );
+
+    return {
+      ...galleryBlock,
+      gallery: {
+        ...galleryBlock.gallery,
+        files: galleryBlockFiles,
+      },
+    };
   },
 });
 
@@ -87,11 +124,17 @@ export const findCoverImageByAdventureLogId = query({
 export const create = mutation({
   args: {
     adventureLogId: v.id("adventureLogs"),
-    type: v.union(v.literal("text"), v.literal("image")),
+    type: v.union(v.literal("text"), v.literal("image"), v.literal("gallery")),
     fileId: v.optional(v.id("files")),
     content: v.optional(v.string()),
+    gallery: v.optional(
+      v.object({
+        fileIds: v.array(v.id("files")),
+        layout: v.union(v.literal("grid"), v.literal("masonry")),
+      })
+    ),
   },
-  handler: async (ctx, { adventureLogId, type, fileId, content }) => {
+  handler: async (ctx, { adventureLogId, type, fileId, content, gallery }) => {
     const { user } = await validateIdentity(ctx);
     const existingAdventureLog = await ctx.db.get(adventureLogId);
     if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
@@ -111,6 +154,7 @@ export const create = mutation({
       type,
       fileId,
       content: content ?? "",
+      gallery,
     });
   },
 });
@@ -124,8 +168,17 @@ export const update = mutation({
       v.union(v.literal("small"), v.literal("medium"), v.literal("large"))
     ),
     caption: v.optional(v.string()),
+    gallery: v.optional(
+      v.object({
+        layout: v.union(v.literal("grid"), v.literal("masonry")),
+        fileIds: v.array(v.id("files")),
+      })
+    ),
   },
-  handler: async (ctx, { id, content, fileId, displaySize, caption }) => {
+  handler: async (
+    ctx,
+    { id, content, fileId, displaySize, caption, gallery }
+  ) => {
     const { user } = await validateIdentity(ctx);
     const existingAdventureLogBlock = await ctx.db.get(id);
     if (!existingAdventureLogBlock)
@@ -159,6 +212,7 @@ export const update = mutation({
       content: content ?? existingAdventureLogBlock.content,
       displaySize: displaySize ?? existingAdventureLogBlock.displaySize,
       caption: caption ?? existingAdventureLogBlock.caption,
+      gallery: gallery ?? existingAdventureLogBlock.gallery,
     });
   },
 });
@@ -261,13 +315,29 @@ export const destroy = mutation({
     if (existingAdventureLog.userId !== user._id)
       throw new ConvexError("Not the owner of this adventure log");
 
-    // schedule delete associated file
+    // schedule delete associated single image file
     if (existingAdventureLogBlock.fileId) {
       await ctx.scheduler.runAfter(
         0,
         internal.fileActions.systemDeleteFileAndS3ObjectsById,
         {
           id: existingAdventureLogBlock.fileId,
+        }
+      );
+    }
+
+    // schedule delete associated files in gallery
+    if (existingAdventureLogBlock.gallery) {
+      await asyncMap(
+        existingAdventureLogBlock.gallery.fileIds,
+        async (fileId) => {
+          await ctx.scheduler.runAfter(
+            0,
+            internal.fileActions.systemDeleteFileAndS3ObjectsById,
+            {
+              id: fileId,
+            }
+          );
         }
       );
     }

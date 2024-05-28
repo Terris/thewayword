@@ -9,6 +9,10 @@ interface EditableBlockProps {
   caption?: string;
   content?: string;
   fileId?: Id<"files">;
+  gallery?: {
+    layout: "grid" | "masonry";
+    fileIds: Id<"files">[];
+  };
 }
 interface BlockEditorContextProps {
   adventureLogId?: Id<"adventureLogBlocks">;

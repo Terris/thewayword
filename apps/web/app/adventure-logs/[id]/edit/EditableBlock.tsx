@@ -6,6 +6,7 @@ import { ImageBlockDisplaySizeWrapper } from "../../../_components/ImageBlockDis
 import { EditableTextBlock } from "./EditableTextBlock";
 import { EditableImageBlock } from "./EditableImageBlock";
 import { useBlockEditorContext } from "./BlockEditorContext";
+import { EditableGalleryBlock } from "./EditableGalleryBlock";
 
 export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
   const thisBlockId = block._id;
@@ -48,6 +49,9 @@ export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
         role="button"
         tabIndex={0}
       >
+        {block.type === "text" ? (
+          <EditableTextBlock isSelected={isSelected} content={block.content} />
+        ) : null}
         {block.type === "image" && block.fileId ? (
           <ImageBlockDisplaySizeWrapper displaySize={block.displaySize}>
             <EditableImageBlock
@@ -56,9 +60,16 @@ export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
               caption={block.caption}
             />
           </ImageBlockDisplaySizeWrapper>
-        ) : (
-          <EditableTextBlock isSelected={isSelected} content={block.content} />
-        )}
+        ) : null}
+        {block.type === "gallery" ? (
+          <ImageBlockDisplaySizeWrapper displaySize={block.displaySize}>
+            <EditableGalleryBlock
+              adventureLogBlockId={block._id}
+              isSelected={isSelected}
+            />
+          </ImageBlockDisplaySizeWrapper>
+        ) : null}
+
         {isSelected ? (
           <div className="absolute right-[-17px] bg-foreground text-background p-2 rounded-lg shadow-md flex flex-col gap-2">
             <button

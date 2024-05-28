@@ -36,8 +36,3 @@ export function AddImageBlockButton({ adventureLogId }: UploadButtonProps) {
     </UploadFileButton>
   );
 }
-
-export interface ImageDimensions {
-  width?: number;
-  height?: number;
-}

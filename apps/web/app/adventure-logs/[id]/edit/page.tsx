@@ -4,7 +4,15 @@ import { useEffect, useState } from "react";
 import { useQuery } from "convex/react";
 import { useParams, useRouter } from "next/navigation";
 import { type Id, api } from "@repo/convex";
-import { Button, LoadingScreen, Text } from "@repo/ui";
+import {
+  Button,
+  LoadingScreen,
+  Text,
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@repo/ui";
 import { cn } from "@repo/utils";
 import { AddImageBlockButton } from "./AddImageBlockButton";
 import { AddTextBlockButton } from "./AddTextBlockButton";
@@ -15,6 +23,7 @@ import { EditableAdventureDateForm } from "./EditableAdventureDateForm";
 import { EditableLocationForm } from "./EditableLocationForm";
 import { EditableAdventureLogTags } from "./EditableAdventureLogTags";
 import { DeleteAdventureLogButton } from "./DeleteAdventureLogButton";
+import { AddGalleryBlockButton } from "./AddGalleryBlockButton";
 
 export default function EditLogPage() {
   const { id } = useParams();
@@ -93,12 +102,38 @@ export default function EditLogPage() {
               <EditableAdventureLogBlocks />
               <hr className="w-fill border-dashed mt-4" />
               <div className="w-[200px] mx-auto -mt-[29px] bg-background border border-dashed rounded-xl p-2 flex flex-row items-center justify-center gap-2">
-                <AddImageBlockButton
-                  adventureLogId={id as Id<"adventureLogs">}
-                />
-                <AddTextBlockButton
-                  adventureLogId={id as Id<"adventureLogs">}
-                />
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <AddTextBlockButton
+                        adventureLogId={id as Id<"adventureLogs">}
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent>Add a text block.</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <AddImageBlockButton
+                        adventureLogId={id as Id<"adventureLogs">}
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent>Add a single image block.</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+
+                <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <AddGalleryBlockButton
+                        adventureLogId={id as Id<"adventureLogs">}
+                      />
+                    </TooltipTrigger>
+                    <TooltipContent>Add a gallery block.</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
               </div>
             </div>
           </div>

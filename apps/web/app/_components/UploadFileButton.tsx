@@ -22,7 +22,7 @@ export function UploadFileButton({
   size,
   className,
   children,
-  multiple,
+  multiple = false,
   onSuccess,
   setPreviewURL,
 }: UploadFileButtonProps) {
@@ -107,14 +107,10 @@ export function UploadFileButton({
 
   return (
     <div>
-      <label
-        htmlFor="file-upload"
-        className={cn(buttonVariants({ variant, size, className }))}
-      >
+      <label className={cn(buttonVariants({ variant, size, className }))}>
         <input
           type="file"
           onChange={onSelectFiles}
-          id="file-upload"
           className="hidden"
           multiple={multiple}
           accept="image/png, image/gif, image/jpeg"

@@ -31,6 +31,7 @@ import type * as inviteActions from "../inviteActions.js";
 import type * as invites from "../invites.js";
 import type * as lib_authorization from "../lib/authorization.js";
 import type * as lib_email from "../lib/email.js";
+import type * as lib_image from "../lib/image.js";
 import type * as lib_stripe from "../lib/stripe.js";
 import type * as lib_tiptap from "../lib/tiptap.js";
 import type * as lib_transactional from "../lib/transactional.js";
@@ -81,6 +82,7 @@ declare const fullApi: ApiFromModules<{
   invites: typeof invites;
   "lib/authorization": typeof lib_authorization;
   "lib/email": typeof lib_email;
+  "lib/image": typeof lib_image;
   "lib/stripe": typeof lib_stripe;
   "lib/tiptap": typeof lib_tiptap;
   "lib/transactional": typeof lib_transactional;

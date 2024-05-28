@@ -93,7 +93,7 @@ export function EditableImageBlock({
             </UploadFileButton>
           </div>
           <Input
-            placeholder="Add an image caption"
+            placeholder="Image caption"
             value={updatedCaption}
             onChange={(e) => {
               setUpdatedCaption(e.currentTarget.value);
