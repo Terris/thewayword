@@ -29,8 +29,6 @@ import type * as files from "../files.js";
 import type * as follows from "../follows.js";
 import type * as galleries from "../galleries.js";
 import type * as http from "../http.js";
-import type * as inviteActions from "../inviteActions.js";
-import type * as invites from "../invites.js";
 import type * as lib_authorization from "../lib/authorization.js";
 import type * as lib_email from "../lib/email.js";
 import type * as lib_stripe from "../lib/stripe.js";
@@ -79,8 +77,6 @@ declare const fullApi: ApiFromModules<{
   follows: typeof follows;
   galleries: typeof galleries;
   http: typeof http;
-  inviteActions: typeof inviteActions;
-  invites: typeof invites;
   "lib/authorization": typeof lib_authorization;
   "lib/email": typeof lib_email;
   "lib/stripe": typeof lib_stripe;

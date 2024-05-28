@@ -104,9 +104,6 @@ export default defineSchema({
       v.array(v.object({ fileId: v.id("files"), order: v.number() }))
     ),
   }),
-  invites: defineTable({
-    email: v.string(),
-  }).index("by_email", ["email"]),
   likes: defineTable({
     userId: v.id("users"),
     adventureLogId: v.id("adventureLogs"),
