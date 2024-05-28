@@ -3,6 +3,7 @@ import Image from "next/image";
 import { type Doc } from "@repo/convex";
 import { Text } from "@repo/ui";
 import { AdventureLogCoverImage } from "./AdventureLogCoverImage";
+import { AdventureLogCompanions } from "./AdventureLogCompanions";
 
 interface AdventureLogFeedItemProps {
   adventureLog: Doc<"adventureLogs"> & { user: Partial<Doc<"users">> };
@@ -28,23 +29,31 @@ export function AdventureLogFeedItem({
           {adventureLog.title}
         </Text>
       </Link>
-      <Link
-        href={`/user/${adventureLog.userId}/adventure-logs`}
-        className="group flex items-center cursor-pointer"
-      >
-        {adventureLog.user.avatarUrl ? (
-          <Image
-            src={adventureLog.user.avatarUrl}
-            width="20"
-            height="20"
-            alt="User"
-            className="w-5 h-5 rounded-full mr-2"
+      <div className="flex items-center gap-1">
+        <Link
+          href={`/user/${adventureLog.userId}/adventure-logs`}
+          className="group inline-flex items-center cursor-pointer whitespace-nowrap"
+        >
+          {adventureLog.user.avatarUrl ? (
+            <Image
+              src={adventureLog.user.avatarUrl}
+              width="20"
+              height="20"
+              alt="User"
+              className="w-5 h-5 rounded-full mr-2"
+            />
+          ) : null}
+
+          <Text className="inline text-sm text-center group-hover:text-amber-400">
+            {adventureLog.user.name}{" "}
+          </Text>
+        </Link>
+        <Text className="inline text-sm text-center truncate">
+          <AdventureLogCompanions
+            companionUserIds={adventureLog.companionUserIds}
           />
-        ) : null}
-        <Text className="text-sm text-center group-hover:text-amber-400">
-          {adventureLog.user.name}
         </Text>
-      </Link>
+      </div>
     </div>
   );
 }

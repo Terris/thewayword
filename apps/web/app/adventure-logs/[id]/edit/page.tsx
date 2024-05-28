@@ -25,6 +25,7 @@ import { EditableAdventureLogTags } from "./EditableAdventureLogTags";
 import { DeleteAdventureLogButton } from "./DeleteAdventureLogButton";
 import { useMeContext } from "@repo/auth/context";
 import { AddGalleryBlockButton } from "./AddGalleryBlockButton";
+import { EditableAdventureLogCompanions } from "./EditableAdventureLogCompanions";
 
 export default function EditLogPage() {
   const { me } = useMeContext();
@@ -86,6 +87,14 @@ export default function EditLogPage() {
             </div>
             <div className="md:w-11/12">
               <EditableAdventureDateForm setIsSaving={setIsSaving} />
+            </div>
+          </div>
+          <div className="flex flex-col pb-4 md:flex-row md:gap-8">
+            <div className="md:w-1/12 md:text-right">
+              <Text className="italic text-neutral-400">Companions</Text>
+            </div>
+            <div className="md:w-11/12">
+              <EditableAdventureLogCompanions setIsSaving={setIsSaving} />
             </div>
           </div>
           <div className="flex flex-col pb-4 md:flex-row md:gap-8">

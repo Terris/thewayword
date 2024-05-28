@@ -365,10 +365,19 @@ export const update = mutation({
         fullAddress: v.optional(v.string()),
       })
     ),
+    companionUserIds: v.optional(v.array(v.id("users"))),
   },
   handler: async (
     ctx,
-    { id, title, isPublic, adventureStartDate, adventureEndDate, location }
+    {
+      id,
+      title,
+      isPublic,
+      adventureStartDate,
+      adventureEndDate,
+      location,
+      companionUserIds,
+    }
   ) => {
     const { user } = await validateIdentity(ctx);
     const existingAdventureLog = await ctx.db.get(id);
@@ -389,6 +398,8 @@ export const update = mutation({
       adventureEndDate:
         adventureEndDate ?? existingAdventureLog.adventureEndDate,
       location: location ?? existingAdventureLog.location,
+      companionUserIds:
+        companionUserIds ?? existingAdventureLog.companionUserIds,
     });
   },
 });

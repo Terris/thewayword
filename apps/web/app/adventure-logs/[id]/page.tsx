@@ -15,6 +15,7 @@ import { AdventureLogComments } from "../../_components/AdventureLogComments";
 import { AdventureLogLikeButton } from "../../_components/AdventureLogLikeButton";
 import { AdventureLogTags } from "../../_components/AdventureLogTags";
 import { AdventureLogLikes } from "../../_components/AdventureLogLikes";
+import { AdventureLogCompanions } from "../../_components/AdventureLogCompanions";
 
 export default function AdventureLogPage() {
   const { id } = useParams();
@@ -47,7 +48,7 @@ export default function AdventureLogPage() {
             {adventureLog.title}
           </Text>
           <div className="flex flex-col-reverse md:flex-row md:items-center border-t border-dashed">
-            <div className="md:border-r md:border-dashed pr-4 pt-1">
+            <div className="md:border-r md:border-dashed pr-4 pt-1 flex items-center gap-1">
               <Link
                 href={`/user/${adventureLog.user?._id}/adventure-logs/`}
                 className="flex items-center text-neutral-400 hover:text-amber-400 transition-opacity"
@@ -68,6 +69,11 @@ export default function AdventureLogPage() {
                   {adventureLog.user?.name}
                 </Text>
               </Link>
+              <Text className="font-bold uppercase text-xs tracking-wider">
+                <AdventureLogCompanions
+                  companionUserIds={adventureLog.companionUserIds}
+                />
+              </Text>
             </div>
             <div className="hidden md:block md:border-r border-dashed md:px-4 pt-1">
               <Text className="font-bold uppercase text-xs text-neutral-400 tracking-wider">
