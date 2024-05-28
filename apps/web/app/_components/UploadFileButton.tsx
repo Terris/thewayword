@@ -16,6 +16,7 @@ interface UploadFileButtonProps extends VariantProps<typeof buttonVariants> {
   onSuccess?: (fileIds: Id<"files">[]) => void;
   setPreviewURL?: (url: string) => void;
   uniqueId?: string;
+  disabled?: boolean;
 }
 
 export function UploadFileButton({
@@ -27,6 +28,7 @@ export function UploadFileButton({
   onSuccess,
   setPreviewURL,
   uniqueId,
+  disabled,
 }: UploadFileButtonProps) {
   const { toast } = useToast();
   const { me } = useMeContext();
@@ -119,6 +121,7 @@ export function UploadFileButton({
         className="hidden"
         multiple={multiple}
         accept="image/png, image/gif, image/jpeg"
+        disabled={disabled}
       />
       {isUploading ? <Loader /> : children}
     </label>

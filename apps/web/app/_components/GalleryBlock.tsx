@@ -35,8 +35,8 @@ function GalleryLayout({ gallery }: { gallery: Doc<"galleries"> }) {
   return (
     <>
       {gallery.layout === "1x2" ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="w-full h-full min-h-[600px]">
+        <div className="grid grid-cols-2 gap-4">
+          <div className="w-full h-full">
             {image1 && image1.fileId ? (
               <GalleryImage fileId={image1.fileId} />
             ) : null}
@@ -56,7 +56,7 @@ function GalleryLayout({ gallery }: { gallery: Doc<"galleries"> }) {
         </div>
       ) : null}
       {gallery.layout === "2x1" ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-4 overflow-hidden">
             <div className="w-full h-1/2">
               {image2 && image2.fileId ? (
