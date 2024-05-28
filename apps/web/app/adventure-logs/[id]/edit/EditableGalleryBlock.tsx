@@ -140,8 +140,8 @@ function EditableGalleryLayout({
   return (
     <>
       {gallery.layout === "1x2" ? (
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-neutral-100 rounded w-full h-full min-h-[600px]">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-neutral-100 rounded w-full h-full md:min-h-[600px]">
             {image1 && image1.fileId ? (
               <GalleryImage fileId={image1.fileId} />
             ) : (
@@ -154,7 +154,7 @@ function EditableGalleryLayout({
                     className="w-full h-full"
                     uniqueId="gallery-image-1"
                   >
-                    Upload new image
+                    Select image
                   </UploadFileButton>
                 )}
               </>
@@ -174,7 +174,7 @@ function EditableGalleryLayout({
                       className="w-full h-full"
                       uniqueId="gallery-image-2"
                     >
-                      Upload new image
+                      Select image
                     </UploadFileButton>
                   )}
                 </>
@@ -193,7 +193,7 @@ function EditableGalleryLayout({
                       className="w-full h-full"
                       uniqueId="gallery-image-3"
                     >
-                      Upload new image
+                      Select image
                     </UploadFileButton>
                   )}
                 </>
@@ -204,7 +204,7 @@ function EditableGalleryLayout({
       ) : null}
 
       {gallery.layout === "2x1" ? (
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex flex-col gap-4 overflow-hidden">
             <div className="w-full h-1/2 bg-neutral-100 rounded">
               {image2 && image2.fileId ? (
@@ -219,7 +219,7 @@ function EditableGalleryLayout({
                       className="w-full h-full"
                       uniqueId="gallery-image-2"
                     >
-                      Upload new image
+                      Select image
                     </UploadFileButton>
                   )}
                 </>
@@ -238,7 +238,7 @@ function EditableGalleryLayout({
                       className="w-full h-full"
                       uniqueId="gallery-image-3"
                     >
-                      Upload new image
+                      Select image
                     </UploadFileButton>
                   )}
                 </>

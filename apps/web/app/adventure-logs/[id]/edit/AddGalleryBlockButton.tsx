@@ -1,4 +1,4 @@
-import { GalleryThumbnails } from "lucide-react";
+import { LayoutDashboard } from "lucide-react";
 import { useToast } from "@repo/ui/hooks";
 import { useMutation } from "convex/react";
 import { type Id, api } from "@repo/convex";
@@ -36,7 +36,7 @@ export function AddGalleryBlockButton({ adventureLogId }: UploadButtonProps) {
           void handleAddGalleryBlock();
         }}
       >
-        <GalleryThumbnails className="w-4 h-4" />
+        <LayoutDashboard className="w-4 h-4" />
       </Button>
     </>
   );

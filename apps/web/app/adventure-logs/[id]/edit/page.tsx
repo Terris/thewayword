@@ -23,7 +23,6 @@ import { EditableAdventureDateForm } from "./EditableAdventureDateForm";
 import { EditableLocationForm } from "./EditableLocationForm";
 import { EditableAdventureLogTags } from "./EditableAdventureLogTags";
 import { DeleteAdventureLogButton } from "./DeleteAdventureLogButton";
-import { GalleryBuilder } from "./GalleryBuilder";
 import { useMeContext } from "@repo/auth/context";
 import { AddGalleryBlockButton } from "./AddGalleryBlockButton";
 
