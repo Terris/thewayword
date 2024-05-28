@@ -54,7 +54,9 @@ export const createAsAdventureLogOwner = mutation({
 
     const existingLogBlocks = await ctx.db
       .query("adventureLogBlocks")
-      .withIndex("by_adventure_log_id")
+      .withIndex("by_adventure_log_id", (q) =>
+        q.eq("adventureLogId", adventureLogId)
+      )
       .collect();
 
     const newGalleryId = await ctx.db.insert("galleries", {
