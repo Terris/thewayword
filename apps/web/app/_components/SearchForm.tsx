@@ -1,12 +1,10 @@
-import { useDebounce } from "@repo/hooks";
 import { Button, Input } from "@repo/ui";
 import { Search } from "lucide-react";
-import { usePathname, useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 
 export function SearchForm() {
   const router = useRouter();
-  const pathname = usePathname();
   const searchParams = useSearchParams();
   const query = searchParams.get("query");
   const [queryTerm, setQueryTerm] = useState<string>(query ?? "");
@@ -33,10 +31,13 @@ export function SearchForm() {
         onChange={(e) => {
           setQueryTerm(e.currentTarget.value);
         }}
+        sizeY="sm"
+        className="pr-8"
       />
       <Button
         type="submit"
         variant="ghost"
+        size="sm"
         className="absolute right-0 top-1/2 transform -translate-y-1/2"
       >
         <Search className="w-4 h-4" />
