@@ -1,5 +1,5 @@
 import { ConvexError, v } from "convex/values";
-import { query } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { validateIdentity } from "./lib/authorization";
 import { asyncMap } from "convex-helpers";
 
@@ -18,5 +18,39 @@ export const findAllByAdventureLogId = query({
         return { companionUserId, user };
       }
     );
+  },
+});
+
+export const updateAdventureLogCompanionsAsOwner = mutation({
+  args: {
+    adventureLogId: v.id("adventureLogs"),
+    companionUserIds: v.array(v.id("users")),
+  },
+  handler: async (ctx, { adventureLogId, companionUserIds }) => {
+    const { user } = await validateIdentity(ctx);
+    const existingAdventureLog = await ctx.db.get(adventureLogId);
+    if (!existingAdventureLog) throw new ConvexError("Adventure log not found");
+    if (existingAdventureLog.userId !== user._id)
+      throw new ConvexError("Not authorized");
+
+    const newCompanionUserIds = companionUserIds.filter(
+      (userId) => !existingAdventureLog.companionUserIds?.includes(userId)
+    );
+
+    await ctx.db.patch(adventureLogId, { companionUserIds });
+
+    // create a user alert for every new companion user id
+    await asyncMap(newCompanionUserIds, async (companionUserId) => {
+      await ctx.db.insert("userAlerts", {
+        userId: companionUserId,
+        message: `${user.name} added you as a companion to ${existingAdventureLog.title}`,
+        link: `/adventure-logs/${adventureLogId}`,
+        read: false,
+        seen: false,
+        referenceId: adventureLogId,
+      });
+    });
+
+    return true;
   },
 });

@@ -69,7 +69,7 @@ export default function AdventureLogPage() {
                   {adventureLog.user?.name}
                 </Text>
               </Link>
-              <Text className="font-bold uppercase text-xs tracking-wider">
+              <Text className="font-bold uppercase text-xs tracking-wider text-neutral-400">
                 <AdventureLogCompanions
                   companionUserIds={adventureLog.companionUserIds}
                 />

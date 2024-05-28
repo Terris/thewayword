@@ -210,7 +210,12 @@ export default defineSchema({
     seen: v.boolean(),
     read: v.boolean(),
     referenceId: v.optional(
-      v.union(v.id("likes"), v.id("comments"), v.id("follows"))
+      v.union(
+        v.id("adventureLogs"),
+        v.id("likes"),
+        v.id("comments"),
+        v.id("follows")
+      )
     ),
   })
     .index("by_user_id", ["userId"])
