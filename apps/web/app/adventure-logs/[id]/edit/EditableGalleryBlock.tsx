@@ -106,7 +106,7 @@ export function EditableGalleryBlock({
             <div className="h-4 border-r border-neutral-400" />
 
             <Input
-              placeholder="Add an image caption"
+              placeholder="Add an gallery caption"
               value={updatedCaption}
               onChange={(e) => {
                 setUpdatedCaption(e.currentTarget.value);
