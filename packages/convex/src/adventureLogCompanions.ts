@@ -39,17 +39,19 @@ export const updateAdventureLogCompanionsAsOwner = mutation({
 
     await ctx.db.patch(adventureLogId, { companionUserIds });
 
-    // create a user alert for every new companion user id
-    await asyncMap(newCompanionUserIds, async (companionUserId) => {
-      await ctx.db.insert("userAlerts", {
-        userId: companionUserId,
-        message: `${user.name} added you as a companion to ${existingAdventureLog.title}`,
-        link: `/adventure-logs/${adventureLogId}`,
-        read: false,
-        seen: false,
-        referenceId: adventureLogId,
+    if (existingAdventureLog.isPublic) {
+      // create a user alert for every new companion user id
+      await asyncMap(newCompanionUserIds, async (companionUserId) => {
+        await ctx.db.insert("userAlerts", {
+          userId: companionUserId,
+          message: `${user.name} added you as a companion to ${existingAdventureLog.title}`,
+          link: `/adventure-logs/${adventureLogId}`,
+          read: false,
+          seen: false,
+          referenceId: adventureLogId,
+        });
       });
-    });
+    }
 
     return true;
   },
