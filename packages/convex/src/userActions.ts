@@ -116,7 +116,9 @@ export const internalHandleClerkWebhook = internalAction({
           await ctx.runMutation(internal.users.systemUpdateUserProfile, {
             userId: user._id,
             email: primaryEmail?.email_address,
-            name: `${eventData.first_name} ${eventData.last_name}`,
+            name: `${eventData.first_name} ${
+              eventData.last_name !== "null" ? eventData.last_name : ""
+            }`,
             avatarUrl: eventData.image_url,
           });
           if (primaryEmail) {
