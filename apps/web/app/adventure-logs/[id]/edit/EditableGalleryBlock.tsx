@@ -7,6 +7,7 @@ import { useDebounce } from "@repo/hooks";
 import { Button, Input, LoadingBox, Text } from "@repo/ui";
 import { UploadFileButton } from "../../../_components/UploadFileButton";
 import { useBlockEditorContext } from "./BlockEditorContext";
+import { cn } from "@repo/utils";
 
 export function EditableGalleryBlock({
   galleryId,
@@ -42,7 +43,7 @@ export function EditableGalleryBlock({
         {caption ? <Text className="text-sm py-1">{caption}</Text> : null}
       </div>
       {isSelected ? (
-        <div className="fixed md:absolute bg-background p-4 rounded-lg shadow">
+        <div className="absolute -bottom-[120px] bg-background p-4 rounded-lg shadow">
           <div className="flex items-center justify-center gap-2 pb-2">
             <Button
               type="button"
@@ -138,136 +139,74 @@ function EditableGalleryLayout({
   }
 
   return (
-    <>
-      {gallery.layout === "1x2" ? (
-        <div className="grid grid-cols-2 gap-4">
-          <div className="rounded w-full h-full md:min-h-[300px]">
-            {image1 && image1.fileId ? (
-              <GalleryImage fileId={image1.fileId} />
-            ) : (
-              <div className="min-h-[200px] bg-neutral-100 rounded w-full h-full">
-                {isSelected && (
-                  <UploadFileButton
-                    onSuccess={(fileIds) =>
-                      handleAddGalleryImage({ order: 0, fileIds })
-                    }
-                    className="w-full h-full leading-tight text-center"
-                    uniqueId="gallery-image-1"
-                    disabled={!isSelected}
-                  >
-                    Select image
-                  </UploadFileButton>
-                )}
-              </div>
+    <div className="grid grid-cols-2 gap-4">
+      <div
+        className={cn(
+          "w-full h-full md:min-h-[300px]",
+          gallery.layout === "1x2" && "order-first",
+          gallery.layout === "2x1" && "order-last"
+        )}
+      >
+        {image1 && image1.fileId ? (
+          <GalleryImage fileId={image1.fileId} />
+        ) : (
+          <div className="min-h-[200px] bg-neutral-100 rounded w-full h-full">
+            {isSelected && (
+              <UploadFileButton
+                onSuccess={(fileIds) =>
+                  handleAddGalleryImage({ order: 0, fileIds })
+                }
+                className="w-full h-full leading-tight text-center"
+                uniqueId="gallery-image-1"
+                disabled={!isSelected}
+              >
+                Select image
+              </UploadFileButton>
             )}
           </div>
-          <div className="flex flex-col gap-4 overflow-hidden">
-            <div className="w-full h-1/2">
-              {image2 && image2.fileId ? (
-                <GalleryImage fileId={image2.fileId} />
-              ) : (
-                <div className="bg-neutral-100 rounded w-full h-full">
-                  {isSelected && (
-                    <UploadFileButton
-                      onSuccess={(fileIds) =>
-                        handleAddGalleryImage({ order: 1, fileIds })
-                      }
-                      className="w-full h-full leading-tight text-center"
-                      uniqueId="gallery-image-2"
-                    >
-                      Select image
-                    </UploadFileButton>
-                  )}
-                </div>
+        )}
+      </div>
+      <div className="flex flex-col gap-4">
+        <div className="w-full h-1/2">
+          {image2 && image2.fileId ? (
+            <GalleryImage fileId={image2.fileId} />
+          ) : (
+            <div className="bg-neutral-100 rounded w-full h-full">
+              {isSelected && (
+                <UploadFileButton
+                  onSuccess={(fileIds) =>
+                    handleAddGalleryImage({ order: 1, fileIds })
+                  }
+                  className="w-full h-full leading-tight text-center"
+                  uniqueId="gallery-image-2"
+                >
+                  Select image
+                </UploadFileButton>
               )}
             </div>
-            <div className="w-full h-1/2">
-              {image3 && image3.fileId ? (
-                <GalleryImage fileId={image3.fileId} />
-              ) : (
-                <div className="bg-neutral-100 rounded w-full h-full">
-                  {isSelected && (
-                    <UploadFileButton
-                      onSuccess={(fileIds) =>
-                        handleAddGalleryImage({ order: 2, fileIds })
-                      }
-                      className="w-full h-full leading-tight text-center"
-                      uniqueId="gallery-image-3"
-                    >
-                      Select image
-                    </UploadFileButton>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
+          )}
         </div>
-      ) : null}
-
-      {gallery.layout === "2x1" ? (
-        <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col gap-4 overflow-hidden">
-            <div className="w-full h-1/2 bg-neutral-100 rounded">
-              {image2 && image2.fileId ? (
-                <GalleryImage fileId={image2.fileId} />
-              ) : (
-                <>
-                  {isSelected && (
-                    <UploadFileButton
-                      onSuccess={(fileIds) =>
-                        handleAddGalleryImage({ order: 1, fileIds })
-                      }
-                      className="w-full h-full leading-tight"
-                      uniqueId="gallery-image-2"
-                    >
-                      Select image
-                    </UploadFileButton>
-                  )}
-                </>
+        <div className="w-full h-1/2">
+          {image3 && image3.fileId ? (
+            <GalleryImage fileId={image3.fileId} />
+          ) : (
+            <div className="bg-neutral-100 rounded w-full h-full">
+              {isSelected && (
+                <UploadFileButton
+                  onSuccess={(fileIds) =>
+                    handleAddGalleryImage({ order: 2, fileIds })
+                  }
+                  className="w-full h-full leading-tight text-center"
+                  uniqueId="gallery-image-3"
+                >
+                  Select image
+                </UploadFileButton>
               )}
             </div>
-            <div className="w-full h-1/2 bg-neutral-100 rounded">
-              {image3 && image3.fileId ? (
-                <GalleryImage fileId={image3.fileId} />
-              ) : (
-                <>
-                  {isSelected && (
-                    <UploadFileButton
-                      onSuccess={(fileIds) =>
-                        handleAddGalleryImage({ order: 2, fileIds })
-                      }
-                      className="w-full h-full leading-tight"
-                      uniqueId="gallery-image-3"
-                    >
-                      Select image
-                    </UploadFileButton>
-                  )}
-                </>
-              )}
-            </div>
-          </div>
-          <div className="bg-neutral-100 rounded w-full h-full min-h-[300px]">
-            {image1 && image1.fileId ? (
-              <GalleryImage fileId={image1.fileId} />
-            ) : (
-              <>
-                {isSelected && (
-                  <UploadFileButton
-                    onSuccess={(fileIds) =>
-                      handleAddGalleryImage({ order: 0, fileIds })
-                    }
-                    className="w-full h-full"
-                    uniqueId="gallery-image-1"
-                  >
-                    Upload new image
-                  </UploadFileButton>
-                )}
-              </>
-            )}
-          </div>
+          )}
         </div>
-      ) : null}
-    </>
+      </div>
+    </div>
   );
 }
 
