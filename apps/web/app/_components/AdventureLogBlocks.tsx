@@ -1,7 +1,10 @@
-import { type Id, api } from "@repo/convex";
+import { type Id, type Doc, api } from "@repo/convex";
 import { useQuery } from "convex/react";
 import { LoadingBox } from "@repo/ui";
-import { Block } from "./Block";
+import { TextBlock } from "./TextBlock";
+import { ImageBlockDisplaySizeWrapper } from "./ImageBlockDisplaySizeWrapper";
+import { ImageBlock } from "./ImageBlock";
+import { GalleryBlock } from "./GalleryBlock";
 
 export function AdventureLogBlocks({
   adventureLogId,
@@ -24,4 +27,24 @@ export function AdventureLogBlocks({
       <Block block={block} />
     </div>
   ));
+}
+
+function Block({ block }: { block: Doc<"adventureLogBlocks"> }) {
+  return (
+    <div className="rounded">
+      {block.type === "text" && block.content ? (
+        <TextBlock content={block.content} />
+      ) : null}
+      {block.type === "image" && block.fileId ? (
+        <ImageBlockDisplaySizeWrapper displaySize={block.displaySize}>
+          <ImageBlock fileId={block.fileId} caption={block.caption} />
+        </ImageBlockDisplaySizeWrapper>
+      ) : null}
+      {block.type === "gallery" && block.galleryId ? (
+        <ImageBlockDisplaySizeWrapper displaySize={block.displaySize}>
+          <GalleryBlock galleryId={block.galleryId} caption={block.caption} />
+        </ImageBlockDisplaySizeWrapper>
+      ) : null}
+    </div>
+  );
 }

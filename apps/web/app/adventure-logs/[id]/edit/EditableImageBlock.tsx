@@ -20,7 +20,6 @@ export function EditableImageBlock({
   const { handleUpdateBlock } = useBlockEditorContext();
   const fileQueryArgs = fileId ? { id: fileId } : "skip";
   const file = useQuery(api.files.findById, fileQueryArgs);
-  const isLoading = file === undefined;
   const [updatedCaption, setUpdatedCaption] = useState(caption);
   const debouncedUpdatedCaption = useDebounce(updatedCaption, 500);
 
@@ -35,7 +34,6 @@ export function EditableImageBlock({
     handleUpdateBlock({ fileId: fileIds[0] });
   }
 
-  if (isLoading) return <LoadingBox />;
   if (!file || !fileId) return null;
 
   return (

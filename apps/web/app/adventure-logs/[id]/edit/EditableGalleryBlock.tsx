@@ -26,13 +26,10 @@ export function EditableGalleryBlock({
       handleUpdateBlock({ caption: debouncedUpdatedCaption });
     }
   }, [caption, debouncedUpdatedCaption, handleUpdateBlock, updatedCaption]);
-
   const gallery = useQuery(api.galleries.findByIdAsOwner, { id: galleryId });
-  const isLoading = gallery === undefined;
-
   const handleUpdateGallery = useMutation(api.galleries.updateAsOwner);
 
-  if (isLoading) return <LoadingBox />;
+  if (!gallery) return null;
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -300,9 +297,7 @@ function EditableGalleryLayout({
 
 function GalleryImage({ fileId }: { fileId: Id<"files"> }) {
   const file = useQuery(api.files.findById, { id: fileId });
-  const isLoading = file === undefined;
 
-  if (isLoading) return <LoadingBox />;
   if (!file) return null;
 
   return (

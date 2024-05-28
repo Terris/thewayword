@@ -14,11 +14,7 @@ export function ImageBlock({
   caption?: string;
 }) {
   const file = useQuery(api.files.findById, { id: fileId });
-  const isLoading = file === undefined;
-
-  if (isLoading) return <LoadingBox />;
   if (!file) return null;
-
   return (
     <div className="my-4">
       <Image

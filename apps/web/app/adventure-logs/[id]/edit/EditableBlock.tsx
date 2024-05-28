@@ -21,8 +21,6 @@ export function EditableBlock({ block }: { block: Doc<"adventureLogBlocks"> }) {
 
   const deleteAdventureLogBlock = useMutation(api.adventureLogBlocks.destroy);
 
-  // Attempt to save updated text block when block is deselected
-
   return (
     <>
       {isSelected ? (

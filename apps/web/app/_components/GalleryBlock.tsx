@@ -87,11 +87,7 @@ function GalleryLayout({ gallery }: { gallery: Doc<"galleries"> }) {
 
 function GalleryImage({ fileId }: { fileId: Id<"files"> }) {
   const file = useQuery(api.files.findById, { id: fileId });
-  const isLoading = file === undefined;
-
-  if (isLoading) return <LoadingBox />;
   if (!file) return null;
-
   return (
     <Image
       src={file.url}
