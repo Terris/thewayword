@@ -49,7 +49,7 @@ export function AdventureLogFeedMap({
                 markerTitle={adventureLog.title}
                 markerContent={
                   <>
-                    <Text className="font-futura font-bold pb-4 leading-4">
+                    <Text className="font-futura font-bold pb-1 leading-4">
                       <Link
                         href={`/adventure-logs/${adventureLog._id}`}
                         className="hover:text-amber-400"

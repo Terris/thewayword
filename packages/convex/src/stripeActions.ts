@@ -64,7 +64,6 @@ export const handleWebhook = internalAction({
 
       return { success: true };
     } catch (error: any) {
-      console.log("Error", error.message);
       return { success: false, error: error.message };
     }
   },

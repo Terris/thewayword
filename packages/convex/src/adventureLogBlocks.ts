@@ -177,7 +177,6 @@ export const moveBlockOrderUp = mutation({
     if (!adventureLogBlock)
       throw new ConvexError("Adventure log block not found");
     if (adventureLogBlock.order === 0) {
-      console.log("block is already at top");
       return true;
     }
     const adventureLog = await ctx.db.get(adventureLogBlock.adventureLogId);

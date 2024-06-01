@@ -16,8 +16,6 @@ export async function createPdfLogCover(req: Request, res: Response) {
   //   (block) => block.type === "image"
   // );
 
-  console.log(__dirname);
-
   // CREATE PDF
   const pageWidth = 630;
   const pageHeight = 513;
