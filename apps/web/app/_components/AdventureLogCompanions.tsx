@@ -1,7 +1,7 @@
 import { Id, api } from "@repo/convex";
-import { Text } from "@repo/ui";
 import { useQuery } from "convex/react";
 import Link from "next/link";
+import { Fragment } from "react";
 
 export function AdventureLogCompanions({
   companionUserIds,
@@ -14,11 +14,10 @@ export function AdventureLogCompanions({
       {" "}
       with{" "}
       {companionUserIds.map((userId, index) => (
-        <>
+        <Fragment key={userId}>
           <Link
             href={`/user/${userId}/adventure-logs`}
             className="inline-flex items-center cursor-pointer hover:text-amber-400"
-            key={userId}
           >
             <AdventureLogCompanion companionUserId={userId} />
           </Link>
@@ -26,7 +25,7 @@ export function AdventureLogCompanions({
           {companionUserIds.length > 1 && index === companionUserIds.length - 2
             ? " & "
             : null}
-        </>
+        </Fragment>
       ))}
     </>
   );
