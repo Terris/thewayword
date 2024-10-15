@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build": "npx convex deploy --cmd 'pnpm run build'",
+    "build": "npx convex deploy",
     "dev": "convex dev",
     "setup": "convex dev --until-success"
   },
