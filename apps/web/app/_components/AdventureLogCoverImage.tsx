@@ -36,7 +36,7 @@ export function AdventureLogCoverImage({
         sizes="auto"
         fill
         className={cn("rounded object-cover w-full bg-neutral-100", className)}
-        onLoadingComplete={() => setImageIsLoaded(true)}
+        onLoad={() => setImageIsLoaded(true)}
       />
       {!imageIsLoaded && (
         <Topography className="bg-neutral-100 fill-foreground animate-pulse" />

@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from "react";
+import { Fragment, type ReactNode, useState } from "react";
 import {
   APIProvider,
   AdvancedMarker,
@@ -40,7 +40,7 @@ export function AdventureLogFeedMap({
         className="w-full h-full rounded"
       >
         {adventureLogs.map((adventureLog) => (
-          <>
+          <Fragment key={adventureLog._id}>
             {adventureLog.location?.latitude &&
             adventureLog.location.longitude ? (
               <MarkerWithInfowindow
@@ -81,7 +81,7 @@ export function AdventureLogFeedMap({
                 }
               />
             ) : null}
-          </>
+          </Fragment>
         ))}
       </Map>
     </APIProvider>
