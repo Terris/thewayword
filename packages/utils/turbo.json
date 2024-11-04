@@ -1,12 +1,8 @@
 {
-  "extends": [
-    "//"
-  ],
-  "tasks": {
+  "extends": ["//"],
+  "pipeline": {
     "build": {
-      "outputs": [
-        "dist/**"
-      ]
+      "outputs": ["dist/**"]
     }
   }
 }
