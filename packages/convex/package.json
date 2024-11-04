@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
+    "build": "npx convex deploy",
     "dev": "convex dev",
     "setup": "convex dev --until-success"
   },
